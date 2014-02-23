@@ -98,7 +98,7 @@ Kohana::init(array(
 	'base_url'   => 'http://'.$_SERVER['HTTP_HOST'].'/',
 	'errors'  => true,
 	'profile' => false,
-	'caching' => false,
+	'caching' => false, // включать (3600) только на ПРОДАКШЕНЕ
     'index_file' => false,
 ));
 
@@ -116,8 +116,9 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
+	   'super-cache'      => MODPATH.'super-cache',
+	   'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	   'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	   'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	   'orm'        => MODPATH.'orm',        // Object Relationship Mapping
@@ -174,6 +175,3 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'Index',
 		'action'     => 'Index',
 	));
-	
-	
-

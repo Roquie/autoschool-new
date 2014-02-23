@@ -5,7 +5,7 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
     public function action_index()
 	{
-		$this->template->content = 'admin index';
+        $this->template->content = View::factory('admin/index');
 	}
 	
 

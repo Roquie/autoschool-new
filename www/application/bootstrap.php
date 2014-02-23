@@ -134,7 +134,6 @@ Kohana::modules(array(
  * defaults for the URI.
  */
 
-
 Route::set('all_media', '<folder>/<file>',
     array(
         'folder' => '(global|adm|profile|main|font|img)',
@@ -145,12 +144,11 @@ Route::set('all_media', '<folder>/<file>',
         'action'     => 'load'
     ));
 
-
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
-            'controller' => 'Index',
-            'action'     => 'Index',
-            'directory' => 'Admin'
+        'controller' => 'Index',
+        'action'     => 'Index',
+        'directory' => 'Admin'
     ));
 
 Route::set('profile', 'profile(/<controller>(/<action>(/<id>)))')

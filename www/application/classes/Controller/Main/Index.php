@@ -6,7 +6,9 @@ class Controller_Main_Index extends Controller_Main_Base
 
     public function action_index()
 	{
-		$this->template->content = 'main index';
+        $captcha = Captcha::instance()->render();
+
+		$this->template->content = View::factory('main/index', compact('captcha'));
 	}
 	
 

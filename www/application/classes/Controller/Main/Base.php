@@ -8,9 +8,12 @@ class Controller_Main_Base extends Controller_Template
     {
         parent::before();
 
-        $this->template->title = 'Main index';
+        $this->template->title = 'МПТ Автошкола';
+        $this->template->navbar = View::factory('main/navbar');
         $this->template->description = 'Main';
-        $this->template->content = '';
+        $this->template->content = null;
+        $this->template->footer = View::factory('main/footer');
+
     }
 
 

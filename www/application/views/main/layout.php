@@ -25,10 +25,13 @@
 </head>
 <body>
 
-<?//=$navbar.PHP_EOL?>
-<?=$content.PHP_EOL?>
-<?//=$footer.PHP_EOL?>
+<?=$navbar.PHP_EOL?>
 
+<div id="wrap">
+    <?=$content.PHP_EOL?>
+    <div id="push"></div>
+</div>
+<?=$footer.PHP_EOL?>
 
 </body>
 </html>

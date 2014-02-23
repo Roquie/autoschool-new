@@ -3,6 +3,15 @@
 class Controller_Media extends Controller
 {
 
+    public function action_download()
+    {
+        $folder = $this->request->param('folder');
+        $filename = $this->request->param('filename');
+        $format = $this->request->param('format');
+
+        $this->response->send_file(APPPATH.'download/'.$folder.'/'.$filename.'.'.$format);
+    }
+
     public function action_load()
     {
         // Get the file path from the request

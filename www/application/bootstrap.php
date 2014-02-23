@@ -123,6 +123,10 @@ Kohana::modules(array(
 	   'orm'        => MODPATH.'orm',        // Object Relationship Mapping
 	   'email' => MODPATH.'email',
 	   'htmlpurifier' => MODPATH.'htmlpurifier',
+	   'captcha' => MODPATH.'captcha',
+	   'docxtemplate' => MODPATH.'docxtemplate',
+	   //'transactional' => MODPATH.'transactional',
+	   'twitterapi' => MODPATH.'twitterapi',
 	));
 
 /**

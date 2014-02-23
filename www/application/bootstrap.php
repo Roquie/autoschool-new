@@ -135,11 +135,8 @@ Kohana::modules(array(
  */
 
 
-Route::set('all_media', '<type_media>(/<folder>(/<subfolder>(/<file>)))',
+Route::set('all_media', '<file>',
     array(
-        'type_media' => '(css|js|img|admin/css|admin/js)',
-        'folder' => '.+',
-        'subfolder' => '.+',
         'file' => '.+',
     ))
     ->defaults(array(

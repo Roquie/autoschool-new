@@ -1,0 +1,468 @@
+/*
+  страшный код и функции
+*/
+// @import "lesshat.less"; @todo: потом какнить его сюда приаттачить
+
+.box-shadow(@h: 0, @v: 0, @blur: 0, @opacity: 0.2) {
+  -webkit-box-shadow: @h @v @blur rgba(0, 0, 0, @opacity);
+  -moz-box-shadow: @h @v @blur rgba(0, 0, 0, @opacity);
+  box-shadow: @h @v @blur rgba(0, 0, 0, @opacity);
+}
+.shadowInBox() {
+  -webkit-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow:0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset;
+  box-shadow:0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset;
+}
+
+.font-setting(@size: 16pt, @line-height: 22px, @weight: 400) {
+  font-size: @size;
+  line-height: @line-height;
+  font-weight: @weight;
+}
+
+.border-radius (@radius) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.center() {
+  display: block;
+  margin: 0 auto;
+}
+
+.pic() {
+  opacity: 0.8;
+  .center();
+  padding-bottom: 10px;
+}
+
+/*
+  начало всего и вся
+*/
+
+/*--------------------------------------------------
+  Begin Sticky footer styles
+  --------------------------------------------------*/
+html,
+body {
+  height: 100%;
+}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 65px auto -60px !important;
+}
+
+#notification {
+  display: block;
+  position: fixed;
+  top: 70px;
+  right: 10px;
+  z-index: 9999;
+}
+.alert {
+  margin-bottom: 10px;
+}
+
+i {
+  &#forgot {
+    margin-top: 5px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+#push,
+.footer {
+  height: 60px;
+}
+/*--------------------------------------------------
+  End Sticky footer styles
+  --------------------------------------------------*/
+
+@media(min-width:768px) and (max-width:991px) {
+  .navbar-fixed-top {
+    position: relative;
+    top: auto;
+  }
+  #wrap {
+    margin-top: -65px !important;
+  }
+}
+
+ body * {
+   font-family: 'Open Sans', sans-serif;
+   font-weight: 300;
+   font-size: 11pt;
+   text-shadow: 0 0 1px rgba(0,0,0,0.1);
+ }
+
+ h1, h2 {
+   color: #535456;
+ }
+
+
+ h1 {
+  .font-setting();
+ }
+
+ h2 {
+   .font-setting(14pt, 1.2, 300);
+ }
+
+
+/*
+ Стили для добавленных текстов до/после поля
+*/
+.input-append.input-block-level,
+.input-prepend.input-block-level {
+  width: 100%;
+  display: table;
+  .add-on {
+    display: table-cell;
+    padding: 4px;
+    background-color:#e8e8e8;
+    &:hover {
+      background-color:#dddddd;
+    }
+  }
+  & > input {
+    //width: 100%;
+  }
+}
+.input-append.input-block-level > input {
+  border-right: 0;
+}
+.input-prepend.input-block-level > input {
+  border-left: 0;
+}
+.input-append .add-on:first-child,
+.input-prepend .btn:first-child,
+.input-prepend .add-on:first-child {.border-radius(0)}
+
+.input-append .add-on:last-child,
+.input-prepend .btn:last-child,
+.input-prepend .add-on:last-child {.border-radius(0)}
+/*
+    общие стили для элементов
+*/
+
+.theory, .contacts, .practice, .price {
+  padding: 50px 50px;
+}
+
+.practice, .contacts, .infoblocks {
+  .shadowInBox();
+}
+.infoblocks, .contacts, .practice{
+  background-color: #f5f5f5;
+}
+.price, .theory {
+  background-color: white;
+}
+.navbar-inner, footer {
+  background: #131f2b none;
+}
+
+/*
+    главный блок с машинкой и кнопкой
+*/
+
+.main {
+  margin-top: 55px;  // отступ для фиксированного навбара
+  padding: 30px 50px;
+  img {
+    .center();
+  }
+  img:last-child {    // отступ для знаков пдд
+    padding-top: 20px;
+  }
+  .span5 {
+    padding-top: 20px;
+  }
+  .span7 {
+    position: relative;
+  }
+  .text {
+    position: absolute;
+    top : 40px;//15px;
+    left : 13px;
+    span{
+      font-size: 14.5pt
+    }
+    span{
+      &.email {
+        a {
+          font-size: 14.5pt !important;
+          border-bottom: 1px dotted #cccccc;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
+  блок с информационными блоками о_О
+*/
+
+.infoblocks {
+  padding-bottom: 60px;
+  .center();
+  h2 {
+    text-align: center;
+    padding: 40px 30px;
+  }
+
+  .span3 {
+    background-color: #ffffff;
+    .box-shadow(0,1px,1px,0.07);
+    border: 1px solid #f5f5f5;
+    height: 230px;
+    margin-left: 18px; // чуть уменьшил расстояние между инфоблоками, т.к. изза 1px border"a уезжало на вторую строку
+    .grid {
+      padding: 20px;
+      img {
+        .pic();
+      }
+    }
+  }
+
+}
+
+/*
+  блок с теорией
+*/
+.theory {
+  .span6:first-child {
+    & > p {
+      padding-top: 18px
+    }
+  }
+}
+
+/*
+  тирЭ для списков
+*/
+
+ul.dash {
+  list-style: none;
+  position: relative;
+  & > li:before {
+    content: "—";
+    left: -23px;
+    position: absolute;
+  }
+  li {
+    span {
+      position: relative;
+      display: block;
+    }
+  }
+}
+
+
+/*
+  блок с ценой и документами
+*/
+.price {
+  .span2, .span3 {
+    img {
+      .pic();
+    }
+    p {
+      text-align: center;
+    }
+  }
+}
+
+/*
+  Контакты отступ карты + практика
+*/
+
+.contacts, .practice  {
+  .span6:last-child {
+    padding-top: 45px;
+  }
+
+}
+
+/*
+  для не кривого отображения формы в контактах
+*/
+form {
+  input {
+    &.in-name {
+      padding-right: 17px;
+    }
+  }  textarea {
+    resize: none;
+  }
+}
+
+
+/*
+  а тута футер
+*/
+
+footer {
+  text-align: center;
+  padding: 30px 0;
+  line-height: 10px;
+
+  p {
+    color: lightslategray;
+  }
+    ul {
+      padding-top: 10px;
+      font-size: 10pt;
+      li {
+        display: inline-block;
+        a {
+          color: lightslategray;
+        }
+        & > a:hover {
+          color: darkgray;
+        }
+      }
+    }
+}
+
+
+/*
+ стилизация навбара
+*/
+
+.navbar {
+  min-height: 55px;
+  margin-bottom: 0;
+  .box-shadow(0,0,20px, 0.5);
+}
+.navbar-inner {
+  padding: 5px 20px 0 20px;
+  min-height: 55px;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  filter: none;
+}
+
+.navbar {
+  .nav {
+    & > .active {
+      & > a {
+        background: none;
+      }
+      & > a {
+        &:hover, &:focus, &:active {
+          background: none;
+        }
+      }
+    }
+    & > li {
+      & > a {
+        margin: 0 10px;
+        padding: 11px 0 2px;
+        color: #ffffff;
+        float: none;
+        text-decoration: none;
+        &:hover, &:focus {
+          background: none;
+        }
+        &:hover {
+          border-bottom: 2px solid rgba(245,245,245, 0.2);
+          color: #ffffff;
+        }
+        strong {
+          &.caret {
+            border-top: 4px solid #ffffff;
+          }
+        }
+      }
+      & > #popup {
+        & > form {
+          margin-bottom: 0;
+          input {
+            .border-radius(0);
+          }
+        }
+      }
+    }
+    .text {
+      position: absolute;
+      top: 9px;
+      left: 200px;
+      width: 280px;
+      .phone {
+        margin-bottom: -5px;
+        padding-top: 1px;
+        span {
+          color: #ffffff;
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
+      span {
+        &.email {
+          a {
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+/*
+  кнопка подать документы
+*/
+.btn {
+  background-image: none;
+  text-shadow: none;
+  .font-setting(11pt, none, 400);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-docum {
+  margin-top: 6px;
+  line-height: 25px;
+  margin-left: 90px;
+}
+
+
+/*
+    Адаптивность - а нихрена не сделано :(
+*/
+
+/* Large desktop */
+@media (min-width: 1200px) {
+
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+}

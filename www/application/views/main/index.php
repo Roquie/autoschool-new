@@ -1,6 +1,6 @@
-<?=HTML::style('css/vendor/flexslider.css')?>
-<?=HTML::script('js/vendor/jquery.flexslider-min.js')?>
-<?=HTML::script('js/main/index.js')?>
+<?=HTML::style('main/css/flexslider.css')?>
+<?=HTML::script('main/js/jquery.flexslider-min.js')?>
+<?=HTML::script('main/js/index.js')?>
 <section class="row main">
     <div class="container">
         <div class="row">

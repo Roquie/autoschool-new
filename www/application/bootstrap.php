@@ -149,13 +149,35 @@ Route::set('all_media', '<type_media>(/<folder>(/<subfolder>(/<file>)))',
         'controller' => 'Media',
         'action'     => 'load'
     ));
-	
-	
+
+
+Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+            'controller' => 'Index',
+            'action'     => 'Index',
+            'directory' => 'Admin'
+    ));
+
+Route::set('profile', 'profile(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+            'controller' => 'Index',
+            'action'     => 'Index',
+            'directory' => 'Profile'
+    ));
+
+
+Route::set('main', '(<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'Index',
+        'action'     => 'Index',
+        'directory' => 'Main'
+    ));
+
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'Index',
 		'action'     => 'Index',
-		'directory' => 'Main'
 	));
 	
 	

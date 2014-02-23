@@ -8,7 +8,10 @@
     <title><?=$title?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="<?=$description?>">
+<<<<<<< Updated upstream
     <meta name="viewport" content="width=device-width, initial-scale=1">
+=======
+>>>>>>> Stashed changes
     <?=HTML::style('css/vendor/html5b/normalize.css')?>
     <?=HTML::style('css/vendor/html5b/main.css')?>
     <?=HTML::style('http://yandex.st/bootstrap/2.3.2/css/bootstrap.min.css')?>

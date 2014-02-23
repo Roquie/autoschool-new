@@ -135,8 +135,9 @@ Kohana::modules(array(
  */
 
 
-Route::set('all_media', '<file>',
+Route::set('all_media', '<folder>/<file>',
     array(
+        'folder' => '(global|adm|profile|main|font|img)',
         'file' => '.+',
     ))
     ->defaults(array(

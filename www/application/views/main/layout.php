@@ -6,13 +6,12 @@
     <meta name="description" content="<?=$title?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?=HTML::style('global/css/bootstrap.min.css')?>
-    <?=HTML::style('main/css/main.css')?>
-    <?=HTML::style('http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&subset=latin,cyrillic')?>
-    <?=HTML::style('global/css/font-awesome.min.css')?>
+    <?=HTML::style('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css')?>
     <?=HTML::style('main/css/datepicker.css')?>
     <?=HTML::style('main/css/validation.css')?>
     <?=HTML::style('global/css/pageslide.css')?>
     <?=HTML::style('global/css/twitter.css')?>
+    <?=HTML::style('main/css/main.css')?>
 
 
     <?=HTML::script('global/js/jquery.min.js')?>

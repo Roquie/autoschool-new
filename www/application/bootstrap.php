@@ -159,6 +159,10 @@ Route::set('profile', 'profile(/<controller>(/<action>(/<id>)))')
             'directory' => 'Profile'
     ));
 
+Route::set('users', 'users(/<action>(/<id>))')
+    ->defaults(array(
+        'controller' => 'Users',
+    ));
 
 Route::set('main', '(<controller>(/<action>(/<id>)))')
     ->defaults(array(
@@ -168,8 +172,8 @@ Route::set('main', '(<controller>(/<action>(/<id>)))')
     ));
 
 
+
+
+
 Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'Index',
-		'action'     => 'Index',
-	));
+	->defaults(null);

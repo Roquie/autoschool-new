@@ -17,6 +17,13 @@
     <?=HTML::script('global/js/jquery.min.js')?>
     <?=HTML::script('global/js/jquery-ui.min.js')?>
     <?=HTML::script('global/js/bootstrap.min.js')?>
+    <?=HTML::script('main/js/stylizationForm.js')?>
+    <?=HTML::script('global/js/placeholder.js')?>
+    <?=HTML::script('global/js/general_fns.js')?>
+    <?=HTML::script('global/js/notification.js')?>
+    <?=HTML::script('main/js/jquery.pageslide.js')?>
+    <?//=HTML::script('main/js/main.js')?> <!--flexslider крашится-->
+
 
     <!--[if IE]>
         <script src="/global/js/html5shiv.js"></script>

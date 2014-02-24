@@ -18,9 +18,9 @@
                     $email = Cookie::get('userEmail');
                     if (is_null($email)) :
                 ?>
-                    <a class="btn btn-success btn-docum" href="<?=URL::site('/statement')?>">Подать документы</a>
+                    <a class="btn btn-success btn-docum" href="<?=URL::site('/users/register')?>">Подать документы</a>
                 <? else : ?>
-                        <a class="btn btn-info btn-docum" href="<?=URL::site('/lk')?>">В личный кабинет</a>
+                        <a class="btn btn-info btn-docum" href="<?=URL::site('/users/login')?>">В личный кабинет</a>
                 <? endif; ?>
             </div>
         </div>

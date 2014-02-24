@@ -24,10 +24,6 @@ class Controller_Users extends Controller_Main_Base
                 $errors = $e->errors('validation');
             }
         }
-        else
-        {
-            throw new HTTP_Exception_404();
-        }
 
         $this->template->content = View::factory('main/login-signup', compact('errors'));
     }
@@ -79,12 +75,8 @@ class Controller_Users extends Controller_Main_Base
                 $errors = $e->errors('validation');
             }
         }
-        else
-        {
-            throw new HTTP_Exception_404();
-        }
 
-        $this->template->content = View::factory('main/login-signup', compact('errors_reg'));
+        $this->template->content = View::factory('main/register', compact('errors_reg'));
     }
 
     public function action_forgot()

@@ -61,7 +61,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 /**
  * Set the default language
  */
-I18n::lang('en-us');
+I18n::lang('ru-RU');
 
 /**
  * Set cookie salt
@@ -126,7 +126,7 @@ Kohana::modules(array(
 	   'htmlpurifier' => MODPATH.'htmlpurifier',
 	   'captcha' => MODPATH.'captcha',
 	   'docxtemplate' => MODPATH.'docxtemplate',
-	   //'transactional' => MODPATH.'transactional',
+	   'transactional' => MODPATH.'transactional',
 	   'twitterapi' => MODPATH.'twitterapi',
 	));
 

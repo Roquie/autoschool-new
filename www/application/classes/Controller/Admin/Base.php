@@ -12,8 +12,6 @@ class Controller_Admin_Base extends Controller_Template
         $this->template->navbar = View::factory('admin/navbar');
         $this->template->description = 'Main';
         $this->template->content = null;
-        $this->template->footer = View::factory('admin/footer');
-
     }
 
 

@@ -9,12 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="<?=$description?>">
 
-    <?=HTML::style('adm/css/admin.css')?>
+    <?=HTML::style('adm/css/global.css')?>
+    <?=HTML::style('global/css/popup.css')?>
     <?=HTML::style('global/css/bstrap.html5b.fawesome.min.css')?>
 
     <?=HTML::style('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css')?>
-    <?=HTML::script('global/js/jquery.min.js') ?>
-    <?=HTML::script('global/js/bootstrap.min.js') ?>
+    <?=HTML::script('global/js/jquery.min.js')?>
+    <?=HTML::script('global/js/bootstrap.min.js')?>
+    <?=HTML::script('global/js/popup.js')?>
+    <?=HTML::script('adm/js/global.js')?>
 
     <!--[if IE]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

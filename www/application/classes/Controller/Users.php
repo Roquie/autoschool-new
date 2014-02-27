@@ -7,7 +7,7 @@ class Controller_Users extends Controller_Main_Base
         $post = $this->request->post();
         $a = Auth::instance();
 
-        !$a->logged_in() ?: HTTP::redirect('/');
+        !$a->logged_in() ?: HTTP::redirect('/profile');
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
@@ -29,6 +29,52 @@ class Controller_Users extends Controller_Main_Base
         $this->template->content = View::factory('main/login', compact('errors'));
     }
 
+    public function action_social_login()
+    {
+        $a = Auth::instance();
+
+        if ($this->request->method() === Request::POST)
+        {
+            $s = file_get_contents(
+                'http://ulogin.ru/token.php?token=' . $this->request->post('token') . '&host=' . URL::base()
+            );
+            $user = json_decode($s, true);
+
+            if ((empty($user['photo_big']) || $user['photo_big'] === 'https://ulogin.ru/img/photo_big.png') && !array_key_exists('error', $user))
+                $user['photo_big'] = 'img/photo.jpg';
+
+
+            if (isset($user['verified_email']))
+            {
+
+                try
+                {
+                    $human = ORM::factory('User', array('email' => $user['email']));
+
+                    if ($human->loaded())
+                    {
+                        $a->force_login($user['email']);
+                        HTTP::redirect('/profile');
+                    }
+                    else
+                    {
+                        $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                    }
+
+                }
+                catch(Database_Exception $e)
+                {
+                    $errors = array('error_social_login', Kohana::message('users', 'error_social_login'));
+                }
+            }
+            else
+            {
+                $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
+            }
+        }
+
+        $this->template->content = View::factory('main/login', compact('errors'));
+    }
 
     public function action_register()
     {
@@ -226,16 +272,13 @@ class Controller_Users extends Controller_Main_Base
                     {
                         Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$user['email'].'</p> <p>Ваш пароль : '. $pass.' </p>', 'text/html')
                              ->to($user['email'])
-                             ->from('autompt@mpt.ru', 'Автошкола МПТ')
+                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
                              ->send();
                     }
                     catch(Swift_SwiftException $e)
                     {
                         die($e->getMessage());
                     }
-
-                    $role = array(1, 3);
-                    $users->add('roles', $role);
 
                     $a->force_login($data['email']);
                     HTTP::redirect('/profile');

@@ -33,6 +33,14 @@
                     </div>
                 </fieldset>
             </form>
+            <div class="span24">
+                <script src="//ulogin.ru/js/ulogin.js"></script>
+                <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name,city,country;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=Route::to('users', 'users#social_login')?>"></div>
+            </div>
+        </div>
+
+        <div>
+
         </div>
     </div>
 </div>

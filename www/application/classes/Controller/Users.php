@@ -13,7 +13,8 @@ class Controller_Users extends Controller_Main_Base
         {
             try
             {
-                $status = $a->login($post['email'], $post['password'], (bool)$post['remember']);
+                $status = $a->login($this->request->post('email'), $this->request->post('password'), (bool)$this->request->post('remember'));
+
                 if ($status)
                     HTTP::redirect('/');
                 else
@@ -25,7 +26,7 @@ class Controller_Users extends Controller_Main_Base
             }
         }
 
-        $this->template->content = View::factory('main/login-signup', compact('errors'));
+        $this->template->content = View::factory('main/login', compact('errors'));
     }
 
 
@@ -75,15 +76,22 @@ class Controller_Users extends Controller_Main_Base
                                 ))
                              ->pk();
 
-                    DB::insert('Statements')
-                      ->columns(array('famil', 'imya', 'ot4estvo', 'mob_tel', 'user_id'))
-                      ->values(array(
-                        'famil' => $post['famil'],
-                        'imya' => $post['imya'],
-                        'ot4estvo' => $post['ot4estvo'],
-                        'mob_tel' => $post['mob_tel'],
-                        'user_id' => $pk
-                      ))->execute();
+                    try
+                    {
+                        DB::insert('Statements')
+                            ->columns(array('famil', 'imya', 'ot4estvo', 'mob_tel', 'user_id'))
+                            ->values(array(
+                                'famil' => $post['famil'],
+                                'imya' => $post['imya'],
+                                'ot4estvo' => $post['ot4estvo'],
+                                'mob_tel' => $post['mob_tel'],
+                                'user_id' => $pk
+                            ))->execute();
+                    }
+                    catch(Database_Exception $e)
+                    {
+                        $errors = $e->getMessage();
+                    }
 
 
                     try
@@ -210,6 +218,9 @@ class Controller_Users extends Controller_Main_Base
                             'password',
                             'email',
                         ));
+
+                    $role = array(1, 3);
+                    $users->add('roles', $role);
 
                     try
                     {

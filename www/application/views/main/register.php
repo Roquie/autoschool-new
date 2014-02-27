@@ -16,40 +16,41 @@
         <?=HTML::script('main/js/statement.js')?>
         <?=HTML::script('main/js/stylizationForm.js')?>
 
-        <?=HTML::script('js/general/put_doc.js')?>
+        <?if(isset($errors)):?>
+            <div class="alert alert-danger"><?=array_shift($errors)?></div>
+        <?endif?>
         <div class="well form-block">
-            <!--<h2>Регистрация</h2>-->
-            <div class="row">
-                <p style="text-align: center; font-weight: 600; padding: 0 20px 10px 20px">Выберите Вашу соц. сеть. Это быстро и удобно. Тогда Вам не придется помнить пароль от профиля в Автошколе МПТ, поребуется нажать всего одну кнопку.</p>
-                <div class="span6 offset4">
-                    <script src="//ulogin.ru/js/ulogin.js"></script>
-                    <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name,city,country;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=URL::site('/users/social')?>"></div>
+            <div class="row-fluid">
+                <div class="span6 separator">
+                    <form id="statement" action="<?=Route::to('users', 'users#register')?>" method="post" novalidate>
+                        <h2 class="page_header">Обычная регистрация</h2>
+                        <label for="famil">Фамилия</label>
+                        <input type="text" id="famil" autofocus="autofocus" name="famil"  tabindex="1" value="<?=isset($post['famil']) ? $post['famil'] : null?>">
+                        <label for="imya">Имя</label>
+                        <input type="text" name="imya" id="imya" tabindex="2" value="<?=isset($post['imya']) ? $post['imya'] : null?>">
+                        <label for="ot4estvo">Отчество</label>
+                        <input type="text" name="ot4estvo" id="ot4estvo" tabindex="3" value="<?=isset($post['ot4estvo']) ? $post['ot4estvo'] : null?>">
+                        <label id="mob_tel">Мобильный телефон</label>
+                        <input type="text" id="mob_tel" name="mob_tel" placeholder="8 (926) 123-45-67" tabindex="4" value="<?=isset($post['mob_tel']) ? $post['mob_tel'] : null?>">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" tabindex="5" value="<?=isset($post['email']) ? $post['email'] : null?>">
+                        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                        <input type="submit" class="btn btn-info btn-block" value="Зарегистрироваться"/>
+                    </form>
+                </div>
+                <div class="span6 social">
+                    <h2 class="page_header">Регистрация через соц. сети</h2>
+                    <div class="icons">
+                        <script src="//ulogin.ru/js/ulogin.js"></script>
+                        <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name,city,country;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=URL::site('/users/social')?>"></div>
+                    </div><br>
+                    <div class="text">
+                        <p>Вы можете авторизоваться у нас без регистрации и ввода пароля. То есть если у Вас уже есть логин на одном из этих сайтов, Вы можете войти к нам с помощью этого сайта.</p>
+                    </div>
                 </div>
             </div>
-            <p style="text-align: center;  margin-top: 20px"> ... или зарегистрируйтесь обычным способом: </p>
-            <br/>
 
-            <form id="statement" action="#" method="post">
-                <div class="row-fluid">
-                    <div class="span6">
-                        <label for="family_name">Фамилия</label>
-                        <input type="text" id="family_name" autofocus="autofocus" name="family_name" data-placement="top" data-req="true" tabindex="1">
-                        <label for="first_name">Имя</label>
-                        <input type="text" name="first_name" id="first_name" data-req="true" tabindex="2">
-                        <label for="daddy_name">Отчество</label>
-                        <input type="text" name="daddy_name" id="daddy_name" tabindex="3">
-                    </div>
-                    <div class="span6">
-                        <label id="mob_tel">Мобильный телефон</label>
-                        <input type="text" id="mob_tel" name="mob_tel" placeholder="8 (926) 123-45-67" data-req="true"  tabindex="12">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" data-req="true" tabindex="2">
 
-                        <input style="margin-top: 25px" type="submit" class="btn btn-info btn-block" value="Зарегистрироваться"/>
-                    </div>
-                </div>
-
-            </form>
         </div>
 
         </div>

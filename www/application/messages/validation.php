@@ -25,7 +25,10 @@ return array(
 	'regex'         => ':field does not match the required format',
 	'url'           => ':field must be a url',
     'is_unique_email' => 'Такая почта уже есть',
-    'unique' => 'Такая почта уже есть', // @todo: говнокод validation/users.email.unique
+    'unique' => 'Такой пользователь уже зарегистрирован', // @todo: говнокод validation/users.email.unique
     'is_unique_group' => 'Такая группа уже есть',
-    'check_group' => 'Группа не найдена'
+    'check_group' => 'Группа не найдена',
+
+
+
 );

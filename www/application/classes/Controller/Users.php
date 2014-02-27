@@ -28,55 +28,95 @@ class Controller_Users extends Controller_Main_Base
         $this->template->content = View::factory('main/login-signup', compact('errors'));
     }
 
-    /**
-     * @todo: переписать с учетом новых данных
-     * @throws HTTP_Exception_404
-     */
+
     public function action_register()
     {
+        $a = Auth::instance();
         $post = $this->request->post();
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
             $post['photo'] = 'img/photo.jpg';
 
-            try
-            {
-                $users = ORM::factory('User');
-                $users->create_user(
-                    $post,
-                    array(
-                     'username',
-                     'lastname',
-                     'photo',
-                     'password',
-                     'email',
-                ));
+            $newpass = Text::random();
 
-                $role = ORM::factory('role')->where('name', '=', 'login')->find();
-                $users->add('roles', $role);
+            $valid = new Validation(Arr::map('trim', $post));
+            $valid->rule('famil', 'not_empty');
+            $valid->rule('famil', 'alpha', array(':value', true));
+            $valid->rule('famil', 'min_length', array(':value', 2));
+            $valid->rule('famil', 'max_length', array(':value', 50));
+            $valid->rule('imya', 'not_empty');
+            $valid->rule('imya', 'alpha', array(':value', true));
+            $valid->rule('imya', 'min_length', array(':value', 2));
+            $valid->rule('imya', 'max_length', array(':value', 50));
+            $valid->rule('ot4estvo', 'not_empty');
+            $valid->rule('ot4estvo', 'alpha', array(':value', true));
+            $valid->rule('ot4estvo', 'min_length', array(':value', 2));
+            $valid->rule('ot4estvo', 'max_length', array(':value', 50));
+            $valid->rule('mob_tel', 'not_empty');
+
+            if ($valid->check())
+            {
                 try
                 {
-                    Email::factory('Регистрация в Поспорим.ру', '<p>Ваш логин: '.$post['email'].'</p> <p>Ваш пароль : '. $post['password'].' </p>', 'text/html')
-                         ->to($post['email'])
-                         ->from('info@posporim.ru', 'Поспорим.ру')
-                         ->send();
-                }
-                catch(Swift_SwiftException $e)
-                {
-                    die($e->getMessage());
-                }
+                    $users = ORM::factory('User');
+                    $pk = $users
+                             ->create_user(
+                                array(
+                                    'photo' => $post['photo'],
+                                    'password' => $newpass,
+                                    'password_confirm' => $newpass,
+                                    'email' => $post['email']
+                                ),
+                                array(
+                                    'photo',
+                                    'password',
+                                    'email',
+                                ))
+                             ->pk();
 
-                Auth::instance()->force_login($post['email']);
-                HTTP::redirect('/');
+                    DB::insert('Statements')
+                      ->columns(array('famil', 'imya', 'ot4estvo', 'mob_tel', 'user_id'))
+                      ->values(array(
+                        'famil' => $post['famil'],
+                        'imya' => $post['imya'],
+                        'ot4estvo' => $post['ot4estvo'],
+                        'mob_tel' => $post['mob_tel'],
+                        'user_id' => $pk
+                      ))->execute();
+
+
+                    try
+                    {
+                        Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$post['email'].'</p> <p>Ваш пароль : '. $newpass.' </p>', 'text/html')
+                             ->to($post['email'])
+                             ->from('auto@mpt.ru', 'Автошкола МПТ')
+                             ->send();
+                    }
+                    catch(Swift_SwiftException $e)
+                    {
+                        die($e->getMessage());
+                    }
+
+                    $role = array(1, 3);
+                    $users->add('roles', $role);
+
+                    $a->force_login($post['email']);
+                    HTTP::redirect('/profile');
+                }
+                catch(ORM_Validation_Exception $e)
+                {
+                    $errors = $e->errors('validation');
+                }
             }
-            catch(ORM_Validation_Exception $e)
+            else
             {
-                $errors = $e->errors('validation');
+                $errors = $valid->errors('register');
             }
+
         }
 
-        $this->template->content = View::factory('main/register', compact('errors_reg'));
+        $this->template->content = View::factory('main/register', compact('errors', 'post'));
     }
 
     public function action_forgot()
@@ -149,60 +189,58 @@ class Controller_Users extends Controller_Main_Base
 
             $pass = Text::random();
 
-            $data = array(
-                'username' => $user['first_name'],
-                'lastname' => $user['last_name'],
-                'photo' => $user['photo_big'],
-                'password' => $pass,
-                'password_confirm' => $pass,
-                'email' => $user['email']
-            );
-
-            try
+            if (isset($user['verified_email']))
             {
-                $users = ORM::factory('User');
-                $users->create_user(
-                    $data,
-                    array(
-                        'username',
-                        'lastname',
-                        'photo',
-                        'password',
-                        'email',
-                    ));
+                $data = array(
+                    'username' => $user['first_name'],
+                    'lastname' => $user['last_name'],
+                    'photo' => $user['photo_big'],
+                    'password' => $pass,
+                    'password_confirm' => $pass,
+                    'email' => $user['email']
+                );
 
                 try
                 {
-                    Email::factory('Регистрация в Поспорим.ру', '<p>Ваш логин: '.$user['email'].'</p> <p>Ваш пароль : '. $pass.' </p>', 'text/html')
-                         ->to($user['email'])
-                         ->from('info@posporim.ru', 'Поспорим.ру')
-                         ->send();
+                    $users = ORM::factory('User');
+                    $users->create_user(
+                        $data,
+                        array(
+                            'photo',
+                            'password',
+                            'email',
+                        ));
+
+                    try
+                    {
+                        Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$user['email'].'</p> <p>Ваш пароль : '. $pass.' </p>', 'text/html')
+                             ->to($user['email'])
+                             ->from('autompt@mpt.ru', 'Автошкола МПТ')
+                             ->send();
+                    }
+                    catch(Swift_SwiftException $e)
+                    {
+                        die($e->getMessage());
+                    }
+
+                    $role = array(1, 3);
+                    $users->add('roles', $role);
+
+                    $a->force_login($data['email']);
+                    HTTP::redirect('/profile');
                 }
-                catch(Swift_SwiftException $e)
+                catch(ORM_Validation_Exception $e)
                 {
-                    die($e->getMessage());
+                    $errors = $e->errors('validation');
                 }
-
-                $role = ORM::factory('role')->where('name', '=', 'login')->find();
-                $users->add('roles', $role);
-
-                $a->force_login($data['email']);
-                HTTP::redirect('/');
             }
-            catch(ORM_Validation_Exception $e)
+            else
             {
-                $errors_valid = $e->errors('validation');
-                $errors_auth = array('found_user' => Kohana::message('auth', 'found_user'));
-                $errors = array_merge($errors_auth, $errors_valid);
-            }
-            if (isset($errors['found_user']))
-            {
-                $a->force_login($data['email']);
-                HTTP::redirect('/');
+                $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
             }
         }
 
-        $this->template->content = View::factory('main/login-signup', compact('errors_social'));
+        $this->template->content = View::factory('main/register', compact('errors'));
     }
 
 

@@ -30,6 +30,9 @@ class Model_User extends Model_Auth_User
     public function rules()
     {
         return array(
+            'id' => array(
+                array('digit')
+            ),
             'photo' => array(
                 array('not_empty')
             ),
@@ -51,6 +54,7 @@ class Model_User extends Model_Auth_User
     public function labels()
     {
         return array(
+            'id' => 'Номер пользователя',
             'email' => 'Почта',
             'status' => 'Статус',
             'group_id' => 'id группы'

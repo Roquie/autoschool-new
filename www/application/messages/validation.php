@@ -29,6 +29,4 @@ return array(
     'is_unique_group' => 'Такая группа уже есть',
     'check_group' => 'Группа не найдена',
 
-
-
 );

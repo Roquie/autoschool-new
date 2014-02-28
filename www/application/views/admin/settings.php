@@ -22,7 +22,8 @@
             <!--вкладка Администраторы -->
             <div class="tab-pane" id="administrators">
                 <?=View::factory('admin/html/settings/admins')
-                    //->set('all_admins', $all_admins)
+                    ->set('admins', $admins)
+                    ->bind('errors', $errors)
                     ->render()?>
             </div>
             <!--вкладка 2-->

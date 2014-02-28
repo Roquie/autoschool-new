@@ -1,10 +1,8 @@
 .admins {
   overflow: hidden;
-  div.span4 {
-    .newUser {
-      min-height: 280px;
-      height: 280px;
-    }
+  .newAdmin, .listAdmins {
+    min-height: 300px;
+    height: 300px;
   }
 }
 
@@ -27,19 +25,20 @@ table {
 
   thead {
     tr {
-      td:nth-child(1) {
-        width: 15px;
-      }
-      td:nth-child(2) {
-        padding-left: 60px;
-        width: 90px;
-      }
-      td:nth-child(3) {
-        width: 210px;
+      th:nth-child(1) {
+        width: 120px;
         text-align: center;
       }
-      td:nth-child(4) {
-        width: 100px;
+      th:nth-child(2) {
+        width: 110px;
+        text-align: center;
+      }
+      th:nth-child(3) {
+        width: 190px;
+        text-align: center;
+      }
+      th:nth-child(4) {
+        width: 80px;
         text-align: center;
       }
     }
@@ -48,21 +47,33 @@ table {
   tbody {
     tr {
       td:nth-child(1) {
-        width: 15px;
+        width: 120px;
+        text-align: center;
       }
       td:nth-child(2) {
-        width: 150px;
+        width: 110px;
         text-align: center;
       }
       td:nth-child(3) {
-        width: 210px;
+        width: 190px;
         text-align: center;
       }
       td:nth-child(4) {
+        width: 80px;
         text-align: center;
+      }
+      td {
+        a {
+          width: 13px;
+          height: 16px;
+          i {
+            &.icon-remove {
+              vertical-align: middle;
+            }
+          }
+        }
       }
     }
   }
 
 }
-

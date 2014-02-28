@@ -17,7 +17,11 @@
                 <?if(Auth::instance()->logged_in('user')):?>
                     <a class="btn btn-info btn-docum" href="<?=URL::site('/profile')?>">В личный кабинет</a>
                 <?else:?>
-                    <a class="btn btn-success btn-docum" href="<?=Route::to('users', 'users#register')?>">Подать документы</a>
+                    <?if(!Auth::instance()->logged_in('admin')):?>
+                        <a class="btn btn-success btn-docum" href="<?=Route::to('users', 'users#register')?>">Подать документы</a>
+                    <?else:?>
+                        <a class="btn btn-success btn-docum span2" href="<?=Route::to('users', 'users#login')?>">В админку</a>
+                    <?endif?>
                 <?endif?>
             </div>
         </div>

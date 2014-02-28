@@ -22,7 +22,7 @@
                     <li><a href="<?=URL::site('/#price')?>" id="ajax"><i class="icon-tags"></i> Цены</a></li>
                     <li><a href="<?=URL::site('/#contacts')?>" id="ajax"><i class="icon-book"></i> Контакты</a></li>
                     <!--<li><a href="<?/*=URL::site('/about')*/?>"><i class="icon-info-sign"></i> О нас</a></li>-->
-                    <?if(Auth::instance()->logged_in('user')):?>
+                    <?if(Auth::instance()->logged_in()):?>
                         <li><a href="<?=URL::site('/users/logout')?>"><i class="icon-signin"></i> Выйти</a></li>
                     <?else:?>
                         <li>

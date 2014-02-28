@@ -7,7 +7,15 @@ class Controller_Users extends Controller_Main_Base
         $post = $this->request->post();
         $a = Auth::instance();
 
-        !$a->logged_in() ?: HTTP::redirect('/profile');
+
+        if ($a->logged_in('user'))
+        {
+            HTTP::redirect('/profile');
+        }
+        elseif($a->logged_in('admin'))
+        {
+            HTTP::redirect('/admin');
+        }
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
@@ -40,10 +48,6 @@ class Controller_Users extends Controller_Main_Base
             );
             $user = json_decode($s, true);
 
-            if ((empty($user['photo_big']) || $user['photo_big'] === 'https://ulogin.ru/img/photo_big.png') && !array_key_exists('error', $user))
-                $user['photo_big'] = 'img/photo.jpg';
-
-
             if (isset($user['verified_email']))
             {
 
@@ -53,8 +57,22 @@ class Controller_Users extends Controller_Main_Base
 
                     if ($human->loaded())
                     {
-                        $a->force_login($user['email']);
-                        HTTP::redirect('/profile');
+                        $roles = $human->roles->find_all();
+
+                        foreach ($roles as $k => $v) {
+                            if ($v->name === 'user')
+                            {
+                                $a->force_login($user['email']);
+                                HTTP::redirect('/profile');
+                            }
+                            elseif ($v->name === 'admin')
+                            {
+                                $a->force_login($user['email']);
+                                HTTP::redirect('/admin');
+                            }
+
+                        }
+
                     }
                     else
                     {

@@ -24,7 +24,14 @@ class Controller_Users extends Controller_Main_Base
                 $status = $a->login($this->request->post('email'), $this->request->post('password'), (bool)$this->request->post('remember'));
 
                 if ($status)
-                    HTTP::redirect('/');
+                    if ($a->logged_in('user'))
+                    {
+                        HTTP::redirect('/profile');
+                    }
+                    elseif($a->logged_in('admin'))
+                    {
+                        HTTP::redirect('/admin');
+                    }
                 else
                     $errors = array('no_user' => Kohana::message('users', 'no_user'));
             }
@@ -101,8 +108,6 @@ class Controller_Users extends Controller_Main_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            $post['photo'] = 'img/photo.jpg';
-
             $newpass = Text::random();
 
             $valid = new Validation(Arr::map('trim', $post));
@@ -128,13 +133,11 @@ class Controller_Users extends Controller_Main_Base
                     $pk = $users
                              ->create_user(
                                 array(
-                                    'photo' => $post['photo'],
                                     'password' => $newpass,
                                     'password_confirm' => $newpass,
                                     'email' => $post['email']
                                 ),
                                 array(
-                                    'photo',
                                     'password',
                                     'email',
                                 ))
@@ -157,12 +160,18 @@ class Controller_Users extends Controller_Main_Base
                         $errors = $e->getMessage();
                     }
 
+                    $mail_content = View::factory('tmpmail/profile/registr')
+                                        ->set('user', $post)
+                                        ->set('login', $post['email'])
+                                        ->set('pass', $newpass);
+
+                    $message = View::factory('tmpmail/template', compact('mail_content'));
 
                     try
                     {
-                        Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$post['email'].'</p> <p>Ваш пароль : '. $newpass.' </p>', 'text/html')
+                        Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
                              ->to($post['email'])
-                             ->from('auto@mpt.ru', 'Автошкола МПТ')
+                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
                              ->send();
                     }
                     catch(Swift_SwiftException $e)
@@ -197,12 +206,12 @@ class Controller_Users extends Controller_Main_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            $pass = Text::random();
+            $newpass = Text::random();
 
             $data = array(
                 'email' => $this->request->post('email'),
-                'password' => $pass,
-                'password_confirm' => $pass,
+                'password' => $newpass,
+                'password_confirm' => $newpass,
             );
 
             try
@@ -217,11 +226,18 @@ class Controller_Users extends Controller_Main_Base
                             'password',
                         ));
 
+                    $mail_content = View::factory('tmpmail/profile/forgot')
+                        ->set('user', $post)
+                        ->set('login', $post['email'])
+                        ->set('pass', $newpass);
+
+                    $message = View::factory('tmpmail/template', compact('mail_content'));
+
                     try
                     {
-                        Email::factory('Новый пароль Поспорим.ру', '<p>Ваш логин: '.$data['email'].'</p> <p>Ваш <b>новый</b> пароль : '. $data['password'].' </p>', 'text/html')
-                            ->to($data['email'])
-                            ->from('info@posporim.ru', 'Поспорим.ру')
+                        Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
+                            ->to($post['email'])
+                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
                             ->send();
                     }
                     catch(Swift_SwiftException $e)

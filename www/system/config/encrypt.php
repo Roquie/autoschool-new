@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+q<?php defined('SYSPATH') OR die('No direct script access.');
 
 return array(
 

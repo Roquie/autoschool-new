@@ -1,41 +1,55 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6
+-- version 3.5.6
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Feb 28, 2014 at 11:25 AM
--- Server version: 5.5.33
--- PHP Version: 5.4.19
+-- Хост: 127.0.0.1:3306
+-- Время создания: Фев 28 2014 г., 23:23
+-- Версия сервера: 5.1.67-community-log
+-- Версия PHP: 5.4.11
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
--- Database: `mpt_auto`
+-- База данных: `mpt_auto`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Administrators`
+-- Структура таблицы `Administrators`
 --
 
-CREATE TABLE `Administrators` (
+CREATE TABLE IF NOT EXISTS `Administrators` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
   `family_name` varchar(255) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_id` int(10) unsigned NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Дамп данных таблицы `Administrators`
+--
+
+INSERT INTO `Administrators` (`id`, `first_name`, `family_name`, `timestamp`, `user_id`) VALUES
+(1, 'Виктор', 'Мельников', '2014-02-28 12:23:50', 1),
+(2, 'Максим', 'Иванов', '2014-02-28 14:17:31', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Contracts`
+-- Структура таблицы `Contracts`
 --
 
-CREATE TABLE `Contracts` (
+CREATE TABLE IF NOT EXISTS `Contracts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `famil` varchar(255) NOT NULL,
@@ -52,17 +66,17 @@ CREATE TABLE `Contracts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Educations`
+-- Структура таблицы `Educations`
 --
 
-CREATE TABLE `Educations` (
+CREATE TABLE IF NOT EXISTS `Educations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `obrazovanie` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `Educations`
+-- Дамп данных таблицы `Educations`
 --
 
 INSERT INTO `Educations` (`id`, `obrazovanie`) VALUES
@@ -72,10 +86,10 @@ INSERT INTO `Educations` (`id`, `obrazovanie`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Files`
+-- Структура таблицы `Files`
 --
 
-CREATE TABLE `Files` (
+CREATE TABLE IF NOT EXISTS `Files` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `filename` varchar(255) NOT NULL,
   `desc` varchar(255) NOT NULL,
@@ -84,7 +98,7 @@ CREATE TABLE `Files` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
--- Dumping data for table `Files`
+-- Дамп данных таблицы `Files`
 --
 
 INSERT INTO `Files` (`id`, `filename`, `desc`, `path`) VALUES
@@ -99,10 +113,10 @@ INSERT INTO `Files` (`id`, `filename`, `desc`, `path`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Groups`
+-- Структура таблицы `Groups`
 --
 
-CREATE TABLE `Groups` (
+CREATE TABLE IF NOT EXISTS `Groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
@@ -111,10 +125,10 @@ CREATE TABLE `Groups` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Messages`
+-- Структура таблицы `Messages`
 --
 
-CREATE TABLE `Messages` (
+CREATE TABLE IF NOT EXISTS `Messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `admin` int(11) NOT NULL DEFAULT '0',
@@ -128,17 +142,17 @@ CREATE TABLE `Messages` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Nationality`
+-- Структура таблицы `Nationality`
 --
 
-CREATE TABLE `Nationality` (
+CREATE TABLE IF NOT EXISTS `Nationality` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `grajdanstvo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `Nationality`
+-- Дамп данных таблицы `Nationality`
 --
 
 INSERT INTO `Nationality` (`id`, `grajdanstvo`) VALUES
@@ -148,10 +162,10 @@ INSERT INTO `Nationality` (`id`, `grajdanstvo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `News`
+-- Структура таблицы `News`
 --
 
-CREATE TABLE `News` (
+CREATE TABLE IF NOT EXISTS `News` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(150) NOT NULL,
   `message` varchar(900) NOT NULL,
@@ -160,7 +174,7 @@ CREATE TABLE `News` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `News`
+-- Дамп данных таблицы `News`
 --
 
 INSERT INTO `News` (`id`, `title`, `message`, `group_id`) VALUES
@@ -172,10 +186,10 @@ INSERT INTO `News` (`id`, `title`, `message`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Структура таблицы `roles`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -184,21 +198,21 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `roles`
+-- Дамп данных таблицы `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'login', 'Login privileges, granted after account confirmation'),
 (2, 'admin', 'Administrative user, has access to everything.'),
-(3, 'user', '');
+(3, 'user', 'user role for profile');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles_users`
+-- Структура таблицы `roles_users`
 --
 
-CREATE TABLE `roles_users` (
+CREATE TABLE IF NOT EXISTS `roles_users` (
   `user_id` int(10) unsigned NOT NULL,
   `role_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
@@ -206,20 +220,34 @@ CREATE TABLE `roles_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `roles_users`
+-- Дамп данных таблицы `roles_users`
 --
 
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
-(1, 1),
-(1, 3);
+(2, 1),
+(2, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Settings`
+-- Структура таблицы `sessions`
 --
 
-CREATE TABLE `Settings` (
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `session_id` varchar(24) NOT NULL,
+  `last_active` int(10) unsigned NOT NULL,
+  `contents` text NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_active` (`last_active`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Settings`
+--
+
+CREATE TABLE IF NOT EXISTS `Settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `value` varchar(900) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
@@ -227,7 +255,7 @@ CREATE TABLE `Settings` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `Settings`
+-- Дамп данных таблицы `Settings`
 --
 
 INSERT INTO `Settings` (`id`, `name`, `value`) VALUES
@@ -237,10 +265,10 @@ INSERT INTO `Settings` (`id`, `name`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Statements`
+-- Структура таблицы `Statements`
 --
 
-CREATE TABLE `Statements` (
+CREATE TABLE IF NOT EXISTS `Statements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `famil` varchar(255) NOT NULL,
@@ -264,7 +292,7 @@ CREATE TABLE `Statements` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `Statements`
+-- Дамп данных таблицы `Statements`
 --
 
 INSERT INTO `Statements` (`id`, `user_id`, `famil`, `imya`, `ot4estvo`, `data_rojdeniya`, `mesto_rojdeniya`, `adres_reg_po_pasporty`, `vrem_reg`, `pasport_seriya`, `pasport_nomer`, `pasport_data_vyda4i`, `pasport_kem_vydan`, `mob_tel`, `dom_tel`, `mesto_raboty`, `about`, `nationality_id`, `education_id`) VALUES
@@ -274,59 +302,65 @@ INSERT INTO `Statements` (`id`, `user_id`, `famil`, `imya`, `ot4estvo`, `data_ro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Структура таблицы `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `photo` varchar(255) NOT NULL,
+  `email` varchar(127) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `photo` varchar(255) NOT NULL DEFAULT 'img/photo.jpg',
   `logins` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_login` int(10) unsigned NOT NULL,
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+  `last_login` int(10) unsigned DEFAULT NULL,
+  `status` int(10) unsigned NOT NULL DEFAULT '0',
+  `group_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_email` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `Users`
+-- Дамп данных таблицы `users`
 --
 
-INSERT INTO `Users` (`id`, `email`, `password`, `photo`, `logins`, `last_login`, `group_id`, `status`) VALUES
-(1, 'vik.melnikov@gmail.com', 'c6e181e72f2cf4083b6ba1da892a4ebf06d55fbda6814eabe1c691c48dcfe171', 'img/photo.jpg', 0, 1393572301, 0, 0);
+INSERT INTO `users` (`id`, `email`, `password`, `photo`, `logins`, `last_login`, `status`, `group_id`) VALUES
+(2, 'roquie0@gmail.com', 'd333dfd5719c1a6b8c98b440ca9bc3c0cd874fb783f0ae868910fb13b5545aa0', 'https://lh5.googleusercontent.com/-8tZI2QQx310/AAAAAAAAAAI/AAAAAAAALk4/PHtvJOM_iDo/photo.jpg', 0, 1393615165, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_tokens`
+-- Структура таблицы `user_tokens`
 --
 
-CREATE TABLE `user_tokens` (
+CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `user_agent` varchar(40) NOT NULL,
-  `token` varchar(32) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `created` int(10) unsigned NOT NULL,
   `expires` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
--- Constraints for dumped tables
+-- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
--- Constraints for table `roles_users`
+-- Ограничения внешнего ключа таблицы `roles_users`
 --
 ALTER TABLE `roles_users`
   ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `user_tokens`
+-- Ограничения внешнего ключа таблицы `user_tokens`
 --
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

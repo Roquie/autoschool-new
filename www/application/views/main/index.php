@@ -139,9 +139,9 @@
             <div class="span6">
                 <h1>Документы для поступления</h1>
                 <ul class="dash">
-                    <li><span>заявление, <a href="<?=URL::site('media/download/documents/Zaivlenie.doc')?>">скачать</a>;</span></li>
-                    <li><span>договор, <a href="<?=URL::site('media/download/documents/Dogovor.doc')?>">скачать</a>;</span></li>
-                    <li><span>квитанция, <a href="<?=URL::site('media/download/documents/kvitanciya.doc')?>">скачать</a>;</span></li>
+                    <li><span>заявление, <a href="<?=URL::site('download/documents/Zaivlenie.doc')?>">скачать</a>;</span></li>
+                    <li><span>договор, <a href="<?=URL::site('download/documents/Dogovor.doc')?>">скачать</a>;</span></li>
+                    <li><span>квитанция, <a href="<?=URL::site('download/documents/kvitanciya.doc')?>">скачать</a>;</span></li>
                     <li><span>фотографии 3х4 – 3 шт (любые);</span></li>
                     <li><span>копия паспорта – первой страницы и прописки;</span></li>
                     <li><span>для жителей других городов – временная регистрация минимум на пол года.</span></li>

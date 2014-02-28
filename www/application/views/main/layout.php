@@ -19,10 +19,10 @@
     <?=HTML::script('global/js/bootstrap.min.js')?>
     <?=HTML::script('main/js/stylizationForm.js')?>
     <?=HTML::script('global/js/placeholder.js')?>
-    <?=HTML::script('global/js/general_fns.js')?>
     <?=HTML::script('global/js/notification.js')?>
     <?=HTML::script('main/js/jquery.pageslide.js')?>
-    <?//=HTML::script('main/js/main.js')?> <!--flexslider крашится-->
+    <?=HTML::script('global/js/general_fns.js')?>
+    <?=HTML::script('main/js/main.js')?> <!--flexslider крашится-->
 
 
     <!--[if IE]>

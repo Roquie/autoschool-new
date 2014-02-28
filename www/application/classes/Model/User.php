@@ -33,9 +33,6 @@ class Model_User extends Model_Auth_User
             'id' => array(
                 array('digit')
             ),
-            'photo' => array(
-                array('not_empty')
-            ),
             'email' => array(
                 array('not_empty'),
                 array('email'),

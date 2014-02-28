@@ -25,9 +25,9 @@
 </head>
 <body>
 
-<?//=$navbar.PHP_EOL?>
+<?=$navbar.PHP_EOL?>
 <?=$content.PHP_EOL?>
-<?//=$footer.PHP_EOL?>
+<?=$footer.PHP_EOL?>
 
 
 </body>

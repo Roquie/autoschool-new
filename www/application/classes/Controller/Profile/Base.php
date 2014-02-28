@@ -13,12 +13,22 @@ class Controller_Profile_Base extends Controller_Template
         {
             throw new HTTP_Exception_404();
         }
-        if ($this->auto_render)
-        {
-            $this->template->title = 'profile index';
-            $this->template->description = 'profile';
-            $this->template->content = '';
-        }
+
+        $a = Auth::instance();
+
+        $mergered = array_merge(
+            $a->get_user()->as_array(),
+            ORM::factory('Statements', $a->get_user()->id)->as_array()
+        );
+
+        View::bind_global('user', $mergered);
+
+        $this->template->title = 'profile index';
+        $this->template->description = 'profile';
+        $this->template->navbar = View::factory('main/navbar');
+        $this->template->content = null;
+        $this->template->footer = View::factory('main/footer');
+
 
     }
 

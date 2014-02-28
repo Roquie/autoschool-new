@@ -75,7 +75,7 @@
                             <span class="muted"><?=$admin->email?></span><br>
                             Администратор
                             <div class="buttons">
-                                <a href="<?=URL::site('admin/settings#administrators')?>"><button class="btn">Настройки</button></a>
+                                <a href="<?=URL::site('admin/settings/administrators')?>"><button class="btn">Настройки</button></a>
                                 <a href="<?=URL::site('users/logout')?>"><button class="btn">Выйти</button></a>
                             </div>
                         </div>

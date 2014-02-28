@@ -146,6 +146,15 @@ Route::set('all_media', '<folder>/<file>',
         'action'     => 'load'
     ));
 
+Route::set('download', 'download(/<path>)',
+    array(
+         'path' => '.+'
+    ))
+    ->defaults(array(
+        'controller' => 'Media',
+        'action'     => 'download',
+   ));
+
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
         'controller' => 'Index',

@@ -5,11 +5,9 @@ class Controller_Media extends Controller
 
     public function action_download()
     {
-        $folder = $this->request->param('folder');
-        $filename = $this->request->param('filename');
-        $format = $this->request->param('format');
+        $path = $this->request->param('path');
 
-        $this->response->send_file(APPPATH.'download/'.$folder.'/'.$filename.'.'.$format);
+        $this->response->send_file(APPPATH.'download/'.$path);
     }
 
     public function action_load()

@@ -281,7 +281,7 @@
                         </td>
                     </tr></table>
 
-                <?=$content?>
+                <?=$mail_content?>
 
                 <table class="row contacts" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset; -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 0, 0, 0.1) inset; background: #F5F5F5; padding: 0px; border: 1px solid #f5f5f5;" bgcolor="#F5F5F5"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="center" align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;background-color:#eee;background-image:url('https://ea.twimg.com/email/t1/shadow-bottom.jpg');background-repeat:repeat-x;border-top-color:#ddd;border-top-style:solid;border-top-width:1px" valign="top">
                             <center style="width: 100%; min-width: 580px;">

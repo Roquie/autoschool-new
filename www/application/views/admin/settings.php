@@ -24,6 +24,7 @@
                 <?=View::factory('admin/html/settings/admins')
                     ->set('admins', $admins)
                     ->bind('errors', $errors)
+                    ->bind('data', $data)
                     ->render()?>
             </div>
             <!--вкладка 2-->

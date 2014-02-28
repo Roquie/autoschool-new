@@ -5,21 +5,27 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
     public function action_index()
     {
+        $this->template->content = View::factory('admin/html/settings/smtp');
+    }
+
+    public function action_administrators()
+    {
         $admins = array();
         $info = array();
+        $data = $this->request->post();
         $tmp = $this->request->query('csrf');
         $csrf = empty($tmp) ? $this->request->post('csrf') : $tmp;
 
         if (Security::is_token($csrf) && $this->request->method() === Request::GET)
         {
-            $data = $this->request->query();
+            $admin_id = $this->request->query();
 
-            $admin = ORM::factory('User', $data['id']);
+            $admin = ORM::factory('User', $admin_id['id']);
 
             if ($admin->loaded())
             {
                 $admin->delete();
-                HTTP::redirect(Request::initial()->uri().'#administrators');
+                HTTP::redirect(Request::initial()->uri());
             }
             else
             {
@@ -28,7 +34,6 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         }
         else if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
-            $data = $this->request->post();
             $data['photo'] = 'img/photo.jpg';
             $newpass = Text::random();
             try
@@ -49,7 +54,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                         ))
                     ->pk();
 
-                $admin = ORM::factory('Administrators')
+                ORM::factory('Administrators')
                     ->values(array(
                         'family_name' => $data['family_name'],
                         'first_name' => $data['first_name'],
@@ -71,24 +76,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
                 $role = array(1, 2);
                 $users->add('roles', $role);
-
-/*                try
-                {
-                    Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$post['email'].'</p> <p>Ваш пароль : '. $newpass.' </p>', 'text/html')
-                        ->to($post['email'])
-                        ->from('auto@mpt.ru', 'Автошкола МПТ')
-                        ->send();
-                }
-                catch(Swift_SwiftException $e)
-                {
-                    die($e->getMessage());
-                }
-
-                $role = array(1, 3);
-                $users->add('roles', $role);
-
-                $a->force_login($post['email']);
-                HTTP::redirect('/profile');*/
+                HTTP::redirect(Request::initial()->uri());
             }
             catch(ORM_Validation_Exception $e)
             {
@@ -102,7 +90,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             $roles = $v->roles->find_all();
             foreach($roles as $role) {
                 if ($role->name === 'admin') {
-                    $info = ORM::factory('Administrators', $v->id)->as_array();
+                    $info = ORM::factory('Administrators')->where('user_id', '=', $v->id)->find()->as_array();
                     $admins[] = array(
                         'id' => $v->id,
                         'email' => $v->email,
@@ -112,8 +100,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             }
         }
 
-        $this->template->content = View::factory('admin/settings', compact('errors', 'admins'));
+        $this->template->content = View::factory('admin/html/settings/admins', compact('errors', 'data', 'admins'));
     }
 
+    public function action_upload()
+    {
+        $this->template->content = View::factory('admin/html/settings/upload');
+    }
 
 }

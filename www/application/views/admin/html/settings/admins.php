@@ -1,62 +1,94 @@
-<? if(isset($errors)) : ?>
-    <div class="alert alert-danger"><?=array_shift($errors)?></div>
-<? endif ?>
-<div class="row admins">
-    <div class="span4">
-        <div class="well well-large newAdmin">
-            <!--
-                FORM NEW USER
-            -->
-            <form action="<?=Request::current()->url()?>" method="post" novalidate>
-                <legend>Новый администратор</legend>
+<?=HTML::style('adm/css/settings.css')?>
 
-                <label for="famil">Фамилия</label>
-                <input name="family_name" type="text" class="input-block-level" placeholder="" id="famil">
+<div class="container">
 
-                <label for="imya">Имя</label>
-                <input name="first_name" type="text" class="input-block-level" placeholder="" id="imya">
+    <h1><small>Настройки</small></h1>
 
-                <label for="email">Введите E-mail</label>
-                <input name="email" type="email" class="input-block-level" placeholder="example@gmail.com" id="email">
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
+            <li><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
+            <li><a href="<?=URL::site('admin/settings/')?>">Главная страница</a></li>
+        </ul>
+        <div class="tab-content">
+            <!--вкладка Главная страница-->
 
-                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+            <? if(isset($errors)) : ?>
+                <div class="alert alert-danger"><?=array_shift($errors)?></div>
+            <? endif ?>
+            <div class="row admins">
+                <div class="span4">
+                    <div class="well well-large newAdmin">
+                        <!--
+                            FORM NEW USER
+                        -->
+                        <form action="<?=Request::current()->url()?>" method="post" novalidate>
+                            <legend>Новый администратор</legend>
 
-                <input type="submit" class="btn btn-success btn-block" value="Добавить" style="margin-top: 10px">
-            </form>
+                            <label for="famil">Фамилия</label>
+                            <input name="family_name" type="text" class="input-block-level" placeholder="" id="famil" value="<?=isset($data['family_name']) ? $data['family_name'] : null?>">
 
+                            <label for="imya">Имя</label>
+                            <input name="first_name" type="text" class="input-block-level" placeholder="" id="imya" value="<?=isset($data['first_name']) ? $data['first_name'] : null?>">
+
+                            <label for="email">Введите E-mail</label>
+                            <input name="email" type="email" class="input-block-level" placeholder="example@gmail.com" id="email" value="<?=isset($data['email']) ? $data['email'] : null?>">
+
+                            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+
+                            <input type="submit" class="btn btn-success btn-block" value="Добавить" style="margin-top: 10px">
+                        </form>
+
+                    </div>
+                </div>
+                <div class="span8">
+                    <div class="well well-large listAdmins">
+                        <legend>Список администраторов</legend>
+                        <table id="table_admins" class="table table_admins">
+                            <thead>
+                            <tr>
+                                <th>Фамилия</th>
+                                <th>Имя</th>
+                                <th>E-mail</th>
+                                <th>Удалить</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <? foreach($admins as $admin): ?>
+                                <tr id="<?=$admin['id']?>">
+                                    <td><?=$admin['info']['family_name']?></td>
+                                    <td><?=$admin['info']['first_name']?></td>
+                                    <td><?=$admin['email']?></td>
+                                    <td>
+                                        <a class="badge badge-important" href="<?=Request::current()->url().'/?id='.$admin['id'].'&csrf='.Security::token()?>"><i class="icon-remove"></i></a>
+                                    </td>
+                                </tr>
+                            <? endforeach ?>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="span8">
-        <div class="well well-large listAdmins">
-            <legend>Список администраторов</legend>
-            <table id="table_admins" class="table table_admins">
-                <thead>
-                <tr>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>E-mail</th>
-                    <th>Удалить</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <? foreach($admins as $admin): ?>
-                    <tr id="<?=$admin['id']?>">
-                        <td><?=$admin['info']['family_name']?></td>
-                        <td><?=$admin['info']['first_name']?></td>
-                        <td><?=$admin['email']?></td>
-                        <td>
-                            <a class="badge badge-important" href="<?=Request::current()->url().'/?id='.$admin['id'].'&csrf='.Security::token()?>"><i class="icon-remove"></i></a>
-                        </td>
-                    </tr>
-                <? endforeach ?>
-
-                </tbody>
-            </table>
-
-        </div>
-    </div>
-
-
 
 </div>
+
+<!--модалка -->
+<div class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Удаление пользователя</h3>
+    </div>
+    <div class="modal-body">
+        <p>Вы действительно хотите удалить пользователя?</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="yes" class="btn btn-success" data-url="<?=URL::site('admin/settings/delAdmin/')?>">Да</a>
+        <a href="#" id="no" class="btn">Нет</a>
+    </div>
+</div>
+<!-- конец модалке -->

@@ -13,10 +13,13 @@ class Controller_Profile_Base extends Controller_Template
         {
             throw new HTTP_Exception_404();
         }
+        if ($this->auto_render)
+        {
+            $this->template->title = 'profile index';
+            $this->template->description = 'profile';
+            $this->template->content = '';
+        }
 
-        $this->template->title = 'profile index';
-        $this->template->description = 'profile';
-        $this->template->content = '';
     }
 
 

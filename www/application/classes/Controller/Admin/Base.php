@@ -13,15 +13,19 @@ class Controller_Admin_Base extends Controller_Template
             throw new HTTP_Exception_404();
         }
 
-        $a = Auth::instance();
-        $admin = $a->get_user();
+        if ($this->auto_render)
+        {
+            $a = Auth::instance();
+            $admin = $a->get_user();
 
-        $info = ORM::factory('Administrators', $admin->id);
+            $info = ORM::factory('Administrators', $admin->id);
 
-        $this->template->title = 'Администратор "МПТ Автошкола"';
-        $this->template->navbar = View::factory('admin/navbar', compact('admin', 'info'));
-        $this->template->description = 'Main';
-        $this->template->content = null;
+            $this->template->title = 'Администратор "МПТ Автошкола"';
+            $this->template->navbar = View::factory('admin/navbar', compact('admin', 'info'));
+            $this->template->description = 'Main';
+            $this->template->content = null;
+        }
+
     }
 
 

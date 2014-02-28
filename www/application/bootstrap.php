@@ -67,6 +67,7 @@ I18n::lang('ru-RU');
  * Set cookie salt
  */
 Cookie::$salt = 'rИVИ5Є"6♀И!╧21◘54є618╪1636☺►☺6♣1Л165☺☺t☺☺65☺65♦6529◘4е☺3213☻1╧♦65♦♦♦♥1♥1♥1adas^&*(+|l/';
+Cookie::$expiration = Date::MONTH;
 
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.

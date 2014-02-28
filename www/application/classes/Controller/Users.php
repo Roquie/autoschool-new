@@ -24,7 +24,14 @@ class Controller_Users extends Controller_Main_Base
                 $status = $a->login($this->request->post('email'), $this->request->post('password'), (bool)$this->request->post('remember'));
 
                 if ($status)
-                    HTTP::redirect('/');
+                    if ($a->logged_in('user'))
+                    {
+                        HTTP::redirect('/profile');
+                    }
+                    elseif($a->logged_in('admin'))
+                    {
+                        HTTP::redirect('/admin');
+                    }
                 else
                     $errors = array('no_user' => Kohana::message('users', 'no_user'));
             }
@@ -101,8 +108,6 @@ class Controller_Users extends Controller_Main_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            $post['photo'] = 'img/photo.jpg';
-
             $newpass = Text::random();
 
             $valid = new Validation(Arr::map('trim', $post));
@@ -128,13 +133,11 @@ class Controller_Users extends Controller_Main_Base
                     $pk = $users
                              ->create_user(
                                 array(
-                                    'photo' => $post['photo'],
                                     'password' => $newpass,
                                     'password_confirm' => $newpass,
                                     'email' => $post['email']
                                 ),
                                 array(
-                                    'photo',
                                     'password',
                                     'email',
                                 ))

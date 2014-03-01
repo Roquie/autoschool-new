@@ -17,13 +17,13 @@ class Model_Administrators extends ORM
     public function rules()
     {
         return array(
+            'family_name' => array(
+                array('not_empty'),
+                array('alpha', array(':value', true)),
+                array('min_length', array(':value', 2)),
+                array('max_length', array(':value', 50))
+            ),
            'first_name' => array(
-               array('not_empty'),
-               array('alpha', array(':value', true)),
-               array('min_length', array(':value', 2)),
-               array('max_length', array(':value', 50))
-           ),
-           'family_name' => array(
                array('not_empty'),
                array('alpha', array(':value', true)),
                array('min_length', array(':value', 2)),
@@ -38,8 +38,8 @@ class Model_Administrators extends ORM
     public function labels()
     {
         return array(
-            'first_name' => 'Имя',
-            'family_name' => 'Фамилия',
+            'first_name' => 'Поле "имя"',
+            'family_name' => 'Поле "фамилия"',
         );
     }
 

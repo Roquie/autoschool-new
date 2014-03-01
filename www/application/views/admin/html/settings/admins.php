@@ -76,19 +76,3 @@
     </div>
 
 </div>
-
-<!--модалка -->
-<div class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Удаление пользователя</h3>
-    </div>
-    <div class="modal-body">
-        <p>Вы действительно хотите удалить пользователя?</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" id="yes" class="btn btn-success" data-url="<?=URL::site('admin/settings/delAdmin/')?>">Да</a>
-        <a href="#" id="no" class="btn">Нет</a>
-    </div>
-</div>
-<!-- конец модалке -->

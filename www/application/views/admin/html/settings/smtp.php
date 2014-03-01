@@ -16,47 +16,32 @@
             <? if(isset($errors)) : ?>
                 <div class="alert alert-danger"><?=array_shift($errors)?></div>
             <? endif ?>
-
+            <script>
+                $(function() {
+                    $('#reset').on('click', function() {
+                        $('form').find('.input-block-level').each(function() {
+                            $(this).removeAttr('value');
+                        });
+                    });
+                });
+            </script>
             <div class="row" style="overflow-x: hidden">
                 <div class="span4">
                     <div class="well" style="height: 346px">
                         <div>
-                            <script type="text/javascript">
-                                $(function() {
-                                    $('body').on('click', '.check', function() {
-                                        var $this = $(this);
-                                        if (!$('.smtp').hasClass('_ch_off_smtp')) {
-                                            if( $this.find('input').prop('checked') ) {
-                                                $('._ch_data_smtp').find('input').each(function() {
-                                                    $(this).prop('disabled', false);
-                                                });
-                                            } else {
-                                                $('._ch_data_smtp').find('input').each(function() {
-                                                    $(this).prop('disabled', true);
-                                                });
-                                            }
-                                        }
-                                    });
-                                });
-                            </script>
                             <h5 class="header_block">Настройки SMTP</h5>
-                            <div style="margin-left: 20px; margin-bottom: 10px">
-                                <div class="check <?//=(!empty($smtp)) ? 'active _ch_off_smtp ' : null?>smtp" data-url="<?//=Route::url('admin.ajax', array('controller' => 'settings', 'action' => 'off_smtp'))?>" data-callback="smtp" data-params="csrf">
-                                    Использовать SMTP
-                                    <input type="checkbox" name="smtp" <?//=(!empty($smtp)) ? 'checked' : null?>/>
-                                </div>
-                            </div>
-                            <form class="_ch_data_smtp" style="margin-left: 20px"  action="<?//=Route::url('admin.ajax', array('controller' => 'settings', 'action' => 'smtp'))?>" method="post" data-callback="smtp">
+                            <form action="<?=Route::url('admin', array('controller' => 'settings', 'action' => 'index'))?>" method="post">
                                 <label for="server">Сервер:</label>
-                                <input name="server" id="server" type="text" placeholder="smtp.gmail.com" value="<?//=isset($smtp['server'])?$smtp['server']:null?>" <?//=(empty($smtp)) ? 'disabled' : null?>>
+                                <input name="server" id="server" class="input-block-level" type="text" placeholder="smtp.gmail.com" value="<?=isset($data['server'])?$data['server']:null?>">
                                 <label for="port">Порт:</label>
-                                <input name="port" id="port" type="text" placeholder="25" value="<?//=isset($smtp['port'])?$smtp['port']:null?>" <?//=(empty($smtp)) ? 'disabled' : null?>>
+                                <input name="port" id="port" type="text" class="input-block-level" placeholder="25" value="<?=isset($data['port'])?$data['port']:null?>">
                                 <label for="login">E-mail:</label>
-                                <input name="login" id="login" type="text" placeholder="example@gmail.com" value="<?//=isset($smtp['login'])?$smtp['login']:null?>" <?//=(empty($smtp)) ? 'disabled' : null?>>
+                                <input name="login" id="login" type="text" class="input-block-level" placeholder="example@gmail.com" value="<?=isset($data['login'])?$data['login']:null?>">
                                 <label for="password">Пароль:</label>
-                                <input name="password" id="password" type="password" placeholder="Пароль" value="<?//=isset($smtp['password'])?'*************':null?>" <?//=(empty($smtp)) ? 'disabled' : null?>><br>
-                                <input type="submit" class="btn btn-info pull-right" value="Готово" style="margin-right: 20px" <?//=(empty($smtp)) ? 'disabled' : null?>>
+                                <input name="password" id="password" type="password" class="input-block-level" placeholder="Пароль" value="<?=isset($data['password'])?'*************':null?>"><br>
                                 <input type="hidden" name="csrf" value="<?=Security::token()?>" class="csrf"/>
+                                <input class="btn btn-info pull-right" id="reset" type="reset" value="Очистить">
+                                <input type="submit" class="btn btn-success" value="Сохранить">
                             </form>
                         </div>
 
@@ -86,19 +71,3 @@
     </div>
 
 </div>
-
-<!--модалка -->
-<div class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Удаление пользователя</h3>
-    </div>
-    <div class="modal-body">
-        <p>Вы действительно хотите удалить пользователя?</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" id="yes" class="btn btn-success" data-url="<?=URL::site('admin/settings/delAdmin/')?>">Да</a>
-        <a href="#" id="no" class="btn">Нет</a>
-    </div>
-</div>
-<!-- конец модалке -->

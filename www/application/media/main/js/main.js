@@ -16,111 +16,6 @@ $(function() {
         }
     });
 
-    $('#sign_in').popupWin({
-        edgeOffset : 40,
-        delay      : 400,
-        width      : '200px'
-    });
-
-    $.fn.ajaxForm.setDefaults({
-        errorValidate : function() {
-            noty({
-                type : 'error',
-                message : 'Ошибки заполнения полей'
-            });
-        },
-        worked : function() {
-            noty({
-                type:'error',
-                title:'Ошибка',
-                message:'Идёт обработка данных...'
-            });
-        },
-        defaultCallback : function(response) {
-            if (response.status == 'error' || response.status == 'success') {
-                noty({
-                    type : response.status,
-                    message : response.msg
-                });
-            }
-        },
-        functions : {
-            sign_in : function(response) {
-                if (response.status === 'error') {
-                    noty({
-                        type : response.status,
-                        message : response.msg
-                    });
-                }
-                if (response.status === 'success') {
-                    window.location.href = response.msg;
-                }
-            },
-            forgot : function(response) {
-                if (response.status == 'error' || response.status == 'success') {
-                    noty({
-                        type : response.status,
-                        message : response.msg
-                    });
-                }
-                if (response.status == 'success') {
-                    $('#popup').find('form').toggle('slow');
-                }
-            },
-            contact_form : function(response) {
-                if (response.status == 'error') {
-                    noty({
-                        type : response.status,
-                        message : response.msg
-                    });
-                }
-
-                if (response.status == 'success') {
-                    var form = $('#send');
-                    $.post(
-                        form.attr('action'),
-                        form.serialize(),
-                        function (response) {
-                            if (response.status == 'error') {
-                                noty({
-                                    type : response.status,
-                                    message : response.msg
-                                });
-                            }
-                            if (response.status == 'success') {
-                                noty({
-                                    type : response.status,
-                                    message : response.msg
-                                });
-                            }
-                        },
-                        'json'
-                    );
-
-
-
-                }
-            }
-        },
-        errorCallback : function(that, request, status, error) {
-            if (request.status == '200') {
-                console.log('Исключение: ' + request.responseText);
-            } else {
-                console.log(request.status + ' ' + request.statusText);
-            }
-        }
-    });
-    /**
-     * вход/забыли пароль
-     */
-    $('._mains_link').ajaxForm();
-    $('._mains_form').ajaxForm();
-
-    $('._contacts').ajaxForm();
-    $('._upd_captcha').ajaxForm();
-
-    /*$('._view_doc_createtmpfile').ajaxForm();*/
-
     /**
      * Обновление новостей
      */
@@ -142,7 +37,5 @@ $(function() {
     });
 
     $("[rel='tooltip']").tooltip();
-
-    $('.placeholder').placeholder();
 
 });

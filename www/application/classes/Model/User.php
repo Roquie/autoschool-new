@@ -6,26 +6,32 @@ class Model_User extends Model_Auth_User
     protected $_table_name  = 'Users';
     protected $_primary_key = 'id';
 
-    /*protected $_table_columns = array(
+    protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'email' => array('data_type' => 'string', 'is_nullable' => false),
         'photo' => array('data_type' => 'string', 'is_nullable' => false),
         'password' => array('data_type' => 'string', 'is_nullable' => false),
-        'email' => array('data_type' => 'string', 'is_nullable' => false),
+        'logins' => array('data_type' => 'int', 'is_nullable' => false),
+        'last_login' => array('data_type' => 'timestamp', 'is_nullable' => false),
         'group_id' => array('data_type' => 'int', 'is_nullable' => false),
         'status' => array('data_type' => 'int', 'is_nullable' => false)
-    );*/
+    );
 
-    /*protected $_has_one = array(
-        'Statements' => array(
+
+    protected $_has_one = array(
+        'statement' => array(
             'model' => 'Statements',
             'foreign_key' => 'user_id',
         ),
-        'Contracts' => array(
+        'contract' => array(
             'model' => 'Contracts',
             'foreign_key' => 'user_id',
         ),
-
-    );*/
+        'admin' => array(
+            'model' => 'Administrators',
+            'foreign_key' => 'user_id',
+        ),
+    );
 
     public function rules()
     {

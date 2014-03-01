@@ -1,17 +1,11 @@
-<?=HTML::style('css/lk/lk.css')?>
-<?=HTML::style('css/chat.css')?>
-<?=HTML::script('js/lk/lk.js')?>
-<?=HTML::script('js/vendor/moment+langs.min.js')?>
-<?=HTML::style('css/vendor/bootstrap-editable.css')?>
-<?=HTML::script('js/vendor/bootstrap-editable.min.js')?>
-<?=HTML::style('css/lk/lk_statement.css')?>
-<?=HTML::style('css/vendor/select2.css')?>
-<?=HTML::script('js/vendor/select2.min.js')?>
-<?
+<?=HTML::style('profile/css/lk.css')?>
+<?=HTML::style('profile/css/chat.css')?>
+<?=HTML::style('profile/css/lk_statement.css')?>
+<?/*
     $reg = Session::instance()->get('after_register');
     if (!is_null($reg)) :
         Session::instance()->delete('after_register');
-?>
+*/?><!--
         <script>
             $(function() {
                 $(window).on('load', function() {
@@ -22,7 +16,7 @@
                 });
             });
         </script>
-<? endif; ?>
+--><?/* endif; */?>
 
 <div class="container" style="margin-top: 110px;">
 
@@ -44,7 +38,6 @@
                     <?=HTML::image($user['photo'], array('width' => '180px', 'height' => '180px'))?>
                 </div>
             </div>
-
             <div class="span12 back1">
                 <div class="row">
                     <div class="span9 pull-right">
@@ -61,7 +54,7 @@
                         </div>
                         <div class="row">
                             <div class="span6 settings">
-                                <i class="icon-envelope-alt"></i> <span id="userEmail"><?=$user['email']?></span>, <a href="<?=URL::site('lk/ajax/settings')?>" data-nav="true" data-noactive="true"><i class="icon-cog"></i> Настройки</a>
+                                <i class="icon-envelope-alt"></i> <span id="userEmail"><?=$user['email']?></span>, <a href="<?=URL::site('profile/settings')?>"><i class="icon-cog"></i> Настройки</a>
                             </div>
                         </div>
                     </div>
@@ -70,24 +63,21 @@
         </div>
 
         <div class="row">
-            <div class="span3 menu">
-                <ul class="nav nav-pills nav-stacked" id="left_menu">
-                    <li><a href="<?=URL::site('lk/ajax/messages')?>" data-nav="true"><i class="icon-comments"></i><span>Группа</span></a></li>
-                    <li><a href="<?=URL::site('lk/ajax/statement')?>" data-nav="true"><i class="icon-file"></i><span>Заявление</span></a></li>
-                    <li><a href="<?=URL::site('lk/ajax/contract')?>" data-nav="true"><i class="icon-file"></i><span>Договор</span></a></li>
-                    <li><a href="<?=URL::site('lk/ajax/download')?>" data-nav="true"><i class="icon-cloud-download"></i><span>Загрузки</span></a></li>
-                    <li><a href="<?=URL::site('lk/ajax/help')?>" data-nav="true">&nbsp;<i class="icon-info"></i><span>&nbsp;Помощь</span></a></li>
+            <div class="span3 menu" style="margin-top: 110px">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="<?=URL::site('profile')?>"><i class="icon-comments"></i>Группа</a></li>
+                    <li><a href="<?=URL::site('profile/statement')?>"><i class="icon-file"></i>Заявление</a></li>
+                    <li><a href="<?=URL::site('profile/contract')?>"><i class="icon-file"></i>Договор</a></li>
+                    <li><a href="<?=URL::site('profile/download')?>"><i class="icon-cloud-download"></i>Загрузки</a></li>
+                    <li><a href="<?=URL::site('profile/help')?>"><i style="padding-left: 5px" class="icon-info"></i>Помощь</a></li>
                 </ul>
             </div>
-
-            <div id="loader">
-                <div class="title">Загрузка данных... Пожалуйста, подождите</div>
-                <div class="loader"><i class="icon-refresh icon-spin icon-large load"></i></div>
-            </div>
-
-            <div class="span8" id="content">
+            <div class="span8">
+                asdasd
             </div>
         </div>
+
+
     </div>
 
 </div>

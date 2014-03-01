@@ -53,49 +53,57 @@ class Controller_Users extends Controller_Main_Base
             $s = file_get_contents(
                 'http://ulogin.ru/token.php?token=' . $this->request->post('token') . '&host=' . URL::base()
             );
-            $user = json_decode($s, true);
 
-            if (isset($user['verified_email']))
+            $user = $s ? json_decode($s, true) : array();
+            if (!empty($user) && !isset($user['error']))
             {
-
-                try
+                if (isset($user['verified_email']))
                 {
-                    $human = ORM::factory('User', array('email' => $user['email']));
 
-                    if ($human->loaded())
+                    try
                     {
-                        $roles = $human->roles->find_all();
+                        $human = ORM::factory('User', array('email' => $user['email']));
 
-                        foreach ($roles as $k => $v) {
-                            if ($v->name === 'user')
-                            {
-                                $a->force_login($user['email']);
-                                HTTP::redirect('/profile');
-                            }
-                            elseif ($v->name === 'admin')
-                            {
-                                $a->force_login($user['email']);
-                                HTTP::redirect('/admin');
+                        if ($human->loaded())
+                        {
+                            $roles = $human->roles->find_all();
+
+                            foreach ($roles as $k => $v) {
+                                if ($v->name === 'user')
+                                {
+                                    $a->force_login($user['email']);
+                                    HTTP::redirect('/profile');
+                                }
+                                elseif ($v->name === 'admin')
+                                {
+                                    $a->force_login($user['email']);
+                                    HTTP::redirect('/admin');
+                                }
+
                             }
 
                         }
+                        else
+                        {
+                            $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                        }
 
                     }
-                    else
+                    catch(Database_Exception $e)
                     {
-                        $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                        $errors = array('error_social_login', Kohana::message('users', 'error_social_login'));
                     }
-
                 }
-                catch(Database_Exception $e)
+                else
                 {
-                    $errors = array('error_social_login', Kohana::message('users', 'error_social_login'));
+                    $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
                 }
             }
             else
             {
-                $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
+                die('authentication ulogin error');
             }
+
         }
 
         $this->template->content = View::factory('main/login', compact('errors'));
@@ -161,7 +169,7 @@ class Controller_Users extends Controller_Main_Base
                     }
 
                     $mail_content = View::factory('tmpmail/profile/registr')
-                                        ->set('user', $post)
+                                        ->set('username', $post['imya'])
                                         ->set('login', $post['email'])
                                         ->set('pass', $newpass);
 
@@ -227,7 +235,7 @@ class Controller_Users extends Controller_Main_Base
                         ));
 
                     $mail_content = View::factory('tmpmail/profile/forgot')
-                        ->set('user', $post)
+                        ->set('username', $post['imya'])
                         ->set('login', $post['email'])
                         ->set('pass', $newpass);
 
@@ -270,62 +278,91 @@ class Controller_Users extends Controller_Main_Base
             $s = file_get_contents(
                 'http://ulogin.ru/token.php?token=' . $this->request->post('token') . '&host=' . URL::base()
             );
-            $user = json_decode($s, true);
+            $user = $s ? json_decode($s, true) : array();
 
             if ((empty($user['photo_big']) || $user['photo_big'] === 'https://ulogin.ru/img/photo_big.png') && !array_key_exists('error', $user))
                 $user['photo_big'] = 'img/photo.jpg';
 
-            $pass = Text::random();
+            $newpass = Text::random();
 
-            if (isset($user['verified_email']))
+            if (!empty($user) && !isset($user['error']))
             {
-                $data = array(
-                    'username' => $user['first_name'],
-                    'lastname' => $user['last_name'],
-                    'photo' => $user['photo_big'],
-                    'password' => $pass,
-                    'password_confirm' => $pass,
-                    'email' => $user['email']
-                );
-
-                try
+                if (isset($user['verified_email']))
                 {
-                    $users = ORM::factory('User');
-                    $users->create_user(
-                        $data,
-                        array(
-                            'photo',
-                            'password',
-                            'email',
-                        ));
-
-                    $role = array(1, 3);
-                    $users->add('roles', $role);
+                    $data = array(
+                        'photo' => $user['photo_big'],
+                        'password' => $newpass,
+                        'password_confirm' => $newpass,
+                        'email' => $user['email']
+                    );
 
                     try
                     {
-                        Email::factory('Регистрация в Автошколе МПТ', '<p>Ваш логин: '.$user['email'].'</p> <p>Ваш пароль : '. $pass.' </p>', 'text/html')
-                             ->to($user['email'])
-                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
-                             ->send();
-                    }
-                    catch(Swift_SwiftException $e)
-                    {
-                        die($e->getMessage());
-                    }
+                        $users = ORM::factory('User');
+                        $pk = $users->create_user(
+                            $data,
+                            array(
+                                 'photo',
+                                 'password',
+                                 'email',
+                            ))->pk();
 
-                    $a->force_login($data['email']);
-                    HTTP::redirect('/profile');
+                        try
+                        {
+                            DB::insert('Statements')
+                                ->columns(array('famil', 'imya', 'mob_tel', 'user_id'))
+                                ->values(array(
+                                      'famil' => $user['first_name'],
+                                      'imya' => $user['last_name'],
+                                      'mob_tel' => $user['phone'],
+                                      'user_id' => $pk
+                                ))->execute();
+                        }
+                        catch(Database_Exception $e)
+                        {
+                            $errors = $e->getMessage();
+                        }
+
+                        $role = array(1, 3);
+                        $users->add('roles', $role);
+
+                        $mail_content = View::factory('tmpmail/profile/registr')
+                                            ->set('username', $user['first_name'])
+                                            ->set('login', $user['email'])
+                                            ->set('pass', $newpass);
+
+                        $message = View::factory('tmpmail/template', compact('mail_content'));
+
+                        try
+                        {
+                            Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
+                                ->to($user['email'])
+                                ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                ->send();
+                        }
+                        catch(Swift_SwiftException $e)
+                        {
+                            die($e->getMessage());
+                        }
+
+                        $a->force_login($data['email']);
+                        HTTP::redirect('/profile');
+                    }
+                    catch(ORM_Validation_Exception $e)
+                    {
+                        $errors = $e->errors('validation');
+                    }
                 }
-                catch(ORM_Validation_Exception $e)
+                else
                 {
-                    $errors = $e->errors('validation');
+                    $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
                 }
             }
             else
             {
-                $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
+                die('authentication ulogin error');
             }
+
         }
 
         $this->template->content = View::factory('main/register', compact('errors'));

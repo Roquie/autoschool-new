@@ -17,7 +17,7 @@ class Controller_Admin_Base extends Controller_Template
         $a = Auth::instance();
         $admin = $a->get_user();
 
-        $info = ORM::factory('Administrators')->where('user_id', '=', $admin->id)->find();
+        $info = ORM::factory('User', $admin->id)->admin;
 
         $this->template->title = 'Администратор "МПТ Автошкола"';
         $this->template->navbar = View::factory('admin/navbar', compact('admin', 'info'));

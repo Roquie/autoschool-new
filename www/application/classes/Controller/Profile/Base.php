@@ -2,7 +2,7 @@
 
 class Controller_Profile_Base extends Controller_Template
 {
-    public $template = 'profile/layout';
+    public $template = 'main/layout';
 
 
     public function before()
@@ -15,10 +15,11 @@ class Controller_Profile_Base extends Controller_Template
         }
 
         $a = Auth::instance();
+        $user = ORM::factory('User', $a->get_user()->id);
 
         $mergered = array_merge(
             $a->get_user()->as_array(),
-            ORM::factory('Statements', $a->get_user()->id)->as_array()
+            $user->statement->as_array()
         );
 
         View::bind_global('user', $mergered);

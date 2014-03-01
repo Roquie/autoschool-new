@@ -6,8 +6,6 @@
     <meta name="description" content="<?=$title?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?=HTML::style('global/css/bstrap.html5b.fawesome.min.css')?>
-    <?=HTML::style('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css')?>
-    <?=HTML::style('main/css/datepicker.css')?>
     <?=HTML::style('main/css/validation.css')?>
     <?=HTML::style('global/css/pageslide.css')?>
     <?=HTML::style('global/css/twitter.css')?>

@@ -42,7 +42,7 @@
                     <h2 class="page_header">Регистрация через соц. сети</h2>
                     <div class="icons">
                             <script src="<?=URL::site('main/js/ulogin.js')?>"></script>
-                            <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=URL::site('/users/social')?>"></div>
+                            <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name,phone;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=URL::site('/users/social')?>"></div>
                     </div><br>
                     <div class="text">
                         <p>Вы можете авторизоваться у нас без регистрации и ввода пароля. То есть если у Вас уже есть логин на одном из этих сайтов, Вы можете войти к нам с помощью этого сайта.</p>

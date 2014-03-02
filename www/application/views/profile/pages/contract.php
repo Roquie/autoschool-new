@@ -9,10 +9,16 @@
 </div>
 <div class="span8" style="margin-top: 30px" >
     <?if(isset($errors)):?>
-        <div class="alert alert-danger"><?=array_shift($errors)?></div>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?=array_shift($errors)?>
+        </div>
     <?endif?>
     <?if(isset($success)):?>
-        <div class="alert alert-success"><?=$success?></div>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?=$success?>
+        </div>
     <?endif?>
     <form action="<?=Route::to('profile', 'profile#contract')?>" method="post" accept-charset="utf-8" novalidate>
         <div class="row">

@@ -10,10 +10,16 @@
 </div>
 <div class="span8" style="margin-top: 10px">
     <?if(isset($errors)):?>
-        <div class="alert alert-danger"><?=array_shift($errors)?></div>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?=array_shift($errors)?>
+        </div>
     <?endif?>
     <?if(isset($success)):?>
-        <div class="alert alert-success"><?=$success?></div>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?=$success?>
+        </div>
     <?endif?>
     <div class="row settingsContent">
         <div class="span4">

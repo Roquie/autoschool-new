@@ -3,10 +3,16 @@
     <div class="row">
         <div class="span10 offset1 wrap">
             <?if(isset($errors)):?>
-                <div class="alert alert-danger"><?=array_shift($errors)?></div>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=array_shift($errors)?>
+                </div>
             <?endif?>
             <?if(isset($success)):?>
-                <div class="alert alert-success"><?=$success?></div>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=$success?>
+                </div>
             <?endif?>
             <form class="form-horizontal" action="<?=Request::current()->url()?>" method="POST" accept-charset="utf-8" novalidate>
                 <fieldset>

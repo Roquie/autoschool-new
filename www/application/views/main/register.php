@@ -17,7 +17,10 @@
         <?=HTML::script('main/js/stylizationForm.js')?>
 
         <?if(isset($errors)):?>
-            <div class="alert alert-danger"><?=array_shift($errors)?></div>
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <?=array_shift($errors)?>
+            </div>
         <?endif?>
         <div class="well form-block">
             <div class="row-fluid">

@@ -7,7 +7,7 @@
 }
 
 /*
-  оформление таблицы для админов, с прокруткой
+  оформление таблицы для админов и загруженных файлов, с прокруткой
 */
 
 table {
@@ -22,6 +22,53 @@ table {
   thead > tr, tbody {
     display: inline-block;
   }
+}
+
+.table_files {
+  thead {
+    tr {
+      th:nth-child(1) {
+        width: 15px;
+        text-align: center;
+      }
+      th:nth-child(2) {
+        width: 100px;
+        text-align: center;
+      }
+      th:nth-child(3) {
+        width: 210px;
+        text-align: center;
+      }
+      th:nth-child(4) {
+        width: 200px;
+        text-align: center;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td:nth-child(1) {
+        width: 15px;
+        text-align: center;
+      }
+      td:nth-child(2) {
+        width: 110px;
+        text-align: center;
+      }
+      td:nth-child(3) {
+        width: 210px;
+        text-align: center;
+      }
+      td:nth-child(4) {
+        width: 200px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.table_admins {
 
   thead {
     tr {

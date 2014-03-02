@@ -110,8 +110,8 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     ))
                     ->save();
 
-                $mail_content = View::factory('tmpmail/profile/registr')
-                    ->set('user', $data)
+                $mail_content = View::factory('tmpmail/admin/add_adm')
+                    ->set('username', $data['first_name'])
                     ->set('login', $data['email'])
                     ->set('pass', $newpass);
 
@@ -160,7 +160,37 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
     public function action_upload()
     {
-        $this->template->content = View::factory('admin/html/settings/upload');
+        $csrf = $this->request->post('csrf');
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            var_export($_FILES);
+
+            $file_type_id = $this->request->post('type_file');
+
+            if (empty($file_type_id)) {
+                $errors = array('empty' => 'Выберите файл, который нужно заменить');
+            } else {
+                $validate = Validation::factory($_FILES)
+                    ->rule('files', 'Upload::valid')
+                    ->rule('files', 'Upload::not_empty')
+                    ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf')))
+                    ->rule('files', 'Upload::size', array(':value', '5M'));
+
+                if ($validate->check()) {
+                    $file_info = ORM::factory('Files')->where('id', '=', $file_type_id)->find();
+                    if ($file_info->filename === $_FILES['files']['name']) {
+                        Upload::save($_FILES['files'], $file_info->filename, APPPATH.$file_info->path, 0775);
+                    } else {
+                        $errors = array('not_equal' => 'Имя загружаемого файла не соответствует выбранному');
+                    }
+                } else {
+                    $errors = $validate->errors('upload');
+                }
+            }
+        }
+
+        $files = ORM::factory('Files')->find_all();
+        $this->template->content = View::factory('admin/html/settings/upload', compact('files', 'errors'));
     }
 
 }

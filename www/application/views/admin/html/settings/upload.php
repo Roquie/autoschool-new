@@ -14,77 +14,58 @@
             <!--вкладка Главная страница-->
 
             <? if(isset($errors)) : ?>
-                <div class="alert alert-danger"><?=array_shift($errors)?></div>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=array_shift($errors)?>
+                </div>
             <? endif ?>
             <div class="row" style="overflow-x: hidden">
             <div class="span8" >
                 <div class="well" style="height: 300px;">
                     <legend>Файлы сайта</legend>
-                    <table class="table">
+                    <script>
+                        $(function() {
+                            $("input:checkbox").on('click', function() {
+                                var $this = $(this);
+                                if ($(this).is(":checked")) {
+                                    var group = "input:checkbox[name='" + $(this).attr("name") + "']";
+                                    $(group).prop("checked", false);
+                                    $(this).prop("checked", true);
+                                } else {
+                                    $(this).prop("checked", false);
+                                }
+                                $('#type_file').val($this.val());
+                            });
+                            $('input[type="file"]').on('change', function () {
+                                $(this).closest('form').trigger('submit');
+                            });
+                        });
+                    </script>
+                    <table class="table table_files">
                         <thead>
                         <tr>
-                            <td style="width: 10px">
-                                <strong>#</strong>
-                            </td>
-                            <td style="padding-left: 40px;width: 20px">
-                                <strong>Выбрать</strong>
-                            </td>
-                            <td style="padding-left: 60px; width: 60px">
-                                <strong>Имя</strong>
-                            </td>
-                            <td style="padding-left: 150px; width: 60px">
-                                <strong>Описание</strong>
-                            </td>
+                            <th>#</th>
+                            <th>Выбрать</th>
+                            <th>Имя</th>
+                            <th>Описание</th>
                         </tr>
                         </thead>
 
                         <tbody>
 
-                        <!--            <?/*foreach ($upload_files as $file):*/?>
-                <tr>
-                    <td><?/*=$file->id*/?></td>
-
-                    <td style="padding-left: 45px;width: 20px">
-                        <input type="radio" value="<?/*=$file->id*/?>" id="rd_file" name="rd_file" />
-                    </td>
-                    <td>
-                        <?/*=$file->filename*/?>
-                    </td>
-                    <td>
-                        <?/*=$file->desc*/?>
-                    </td>
-                </tr>
-            --><?/*endforeach*/?>
-
-
+                        <?foreach ($files as $file):?>
+                            <tr>
+                                <td><?=$file->id?></td>
+                                <td><input type="checkbox" value="<?=$file->id?>" name="rd_file" /></td>
+                                <td><?=$file->filename?></td>
+                                <td><?=$file->desc?></td>
+                            </tr>
+                        <?endforeach?>
                         </tbody>
-
-
                     </table>
-
-
                 </div>
-
             </div>
             <div class="span4">
-                <script type="text/javascript">
-                    $(function(){
-                        $('body').on('click', '#rd_file', function(){
-                            $('#type_file').val(
-                                $('#rd_file:checked').val()
-                            );
-                        });
-                    });
-                </script>
-                <script>
-                    var FileAPI = {
-                        debug: true
-                        , staticPath: '<?=URL::site('js/FileAPI-dev/dist')?>'
-                    };
-                </script>
-                <script src="<?=URL::site('js/FileAPI-dev/dist/FileAPI.js')?>"></script>
-                <script src="<?=URL::site('js/FileAPI-dev/plugins/FileAPI.id3.js')?>"></script>
-                <script src="<?=URL::site('js/FileAPI-dev/plugins/FileAPI.exif.js')?>"></script>
                 <style>
                     .b-button {
                         display: inline-block;
@@ -121,105 +102,21 @@
                 </style>
                 <div class="well" style="height: 300px;">
                     <legend>Загрузить</legend>
-                    <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-left: 60px">
-                        <div class="browse">
-                            <a class="b-button__text btn btn-success" href="#" data-url="<?//=Route::url('admin.ajax', array('controller'=>'settings', 'action' =>'upload'))?>">Загрузить файл</a>
-                            <input name="files" class="b-button__input" type="file"/>
-                            <input type="hidden" id="type_file" name="type_file"/>
-                        </div>
-                        <div class="js-upload btn btn-success" style="display: none">
-                            <div class="progress-bar">
-                                <div class="js-progress bar"></div>
+                    <p style="text-align: center">Для загрузки файла выберите в таблице слева файл, который Вы хотите заменить, и загрузите новый.</p>
+                    <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-top: 40px; margin-left: 60px">
+                        <form action="<?=Route::url('admin', array('controller'=>'settings', 'action'=>'upload'))?>" method="post" enctype="multipart/form-data">
+                            <div class="browse">
+                            <? if (!isset($data)) : ?>
+                                <a class="b-button__text btn btn-success" href="#">Загрузить файл</a>
+                                <input name="files" class="b-button__input" type="file"/>
+                                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                                <input type="hidden" id="type_file" name="type_file"/>
+                            <? else : ?>
+                                <input type="submit" value="Загрузить"/>
+                            <? endif; ?>
                             </div>
-                            <span class="btn-txt">Загрузка (<span class="js-size"></span>)</span>
-                        </div>
+                        </form>
                     </div>
-
-                    <script>
-                        jQuery(function ($) {
-                            if( !(FileAPI.support.cors || FileAPI.support.flash) ) {
-                                $('.b-button').hide();
-                            }
-
-                            $('input[type="file"]').on('change', function (evt) {
-                                var files = FileAPI.getFiles(evt);
-                                onFiles(files, $('.b-button__text'));
-                                FileAPI.reset(evt.currentTarget);
-                            });
-
-                            var FU = {
-                                files: [],
-                                index: 0,
-                                active: false,
-                                url : '',
-                                add: function (file, url) {
-                                    FU.files.push(file);
-                                    if (FU.url == '') {
-                                        FU.url = url;
-                                    }
-                                },
-                                start: function () {
-                                    if( !FU.active && (FU.active = FU.files.length > FU.index) ) {
-                                        FU._upload(FU.files[FU.index]);
-                                    }
-                                },
-                                _upload: function (file) {
-                                    if( file ) {
-                                        file.xhr = FileAPI.upload({
-                                            url: FU.url,
-                                            files: {
-                                                file: file
-                                            },
-                                            data : {
-                                                type_file : $('#type_file').val(),
-                                                csrf : $('.csrf').val()
-                                            },
-                                            upload: function () {
-                                                $('.browse').hide();
-                                                $('.js-upload').css({ opacity: 0 }).show().animate({ opacity: 1 }, 100);
-                                            },
-                                            fileprogress: function (evt) {
-                                                $('.js-progress').css('width', evt.loaded/evt.total*100+'%');
-                                                $('.js-size').text((evt.loaded/evt.total*100).toFixed(2));
-                                            },
-                                            complete: function (err, xhr) {
-                                                var res = JSON.parse(xhr.responseText);
-                                                if (res.status == 'error' || res.status == 'success') {
-                                                    noty({
-                                                        type : res.status,
-                                                        message : res.msg
-                                                    });
-                                                }
-                                                $('.csrf').val(res.csrf);
-                                                $('.browse').show();
-                                                $('.js-upload').hide();
-                                                FU.index++;
-                                                FU.active = false;
-                                                FU.start();
-                                            }
-                                        });
-                                    }
-                                }
-                            };
-                            function onFiles(files, obj) {
-                                FileAPI.each(files, function (file) {
-                                    if( file.size >= 5*FileAPI.MB ){
-                                        noty({
-                                            type : 'error',
-                                            message : 'Максимальный размер 5Мб'
-                                        });
-                                    }
-                                    else if( file.size === void 0 ) {
-                                        $('.b-button').hide();
-                                    }
-                                    else {
-                                        FU.add(file, obj.data('url'));
-                                        FU.start();
-                                    }
-                                });
-                            }
-                        });
-                    </script>
                 </div>
             </div>
             </div>
@@ -227,19 +124,3 @@
     </div>
 
 </div>
-
-<!--модалка -->
-<div class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Удаление пользователя</h3>
-    </div>
-    <div class="modal-body">
-        <p>Вы действительно хотите удалить пользователя?</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" id="yes" class="btn btn-success" data-url="<?=URL::site('admin/settings/delAdmin/')?>">Да</a>
-        <a href="#" id="no" class="btn">Нет</a>
-    </div>
-</div>
-<!-- конец модалке -->

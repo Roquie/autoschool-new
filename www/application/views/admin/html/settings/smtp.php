@@ -14,7 +14,10 @@
             <!--вкладка Главная страница-->
 
             <? if(isset($errors)) : ?>
-                <div class="alert alert-danger"><?=array_shift($errors)?></div>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=array_shift($errors)?>
+                </div>
             <? endif ?>
             <script>
                 $(function() {

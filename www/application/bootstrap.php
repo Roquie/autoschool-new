@@ -138,7 +138,7 @@ Kohana::modules(array(
 
 Route::set('all_media', '<folder>/<file>',
     array(
-        'folder' => '(global|adm|profile|main|font|img)',
+        'folder' => '(global|adm|profile/css|profile/js|main|font|img)',
         'file' => '.+',
     ))
     ->defaults(array(
@@ -162,11 +162,11 @@ Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
         'directory' => 'Admin'
     ));
 
-Route::set('profile', 'profile(/<controller>(/<action>(/<id>)))')
+Route::set('profile', 'profile(/<action>(/<id>))')
     ->defaults(array(
+            'directory' => 'Profile',
             'controller' => 'Index',
-            'action'     => 'Index',
-            'directory' => 'Profile'
+            'action'     => 'Index'
     ));
 
 Route::set('users', 'users(/<action>(/<id>))')

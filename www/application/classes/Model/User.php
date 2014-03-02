@@ -31,6 +31,10 @@ class Model_User extends Model_Auth_User
             'model' => 'Administrators',
             'foreign_key' => 'user_id',
         ),
+        'msg' => array(
+            'model' => 'Messages',
+            'foreign_key' => 'user_id',
+        ),
     );
 
     public function rules()
@@ -60,7 +64,8 @@ class Model_User extends Model_Auth_User
             'id' => 'Номер пользователя',
             'email' => 'Почта',
             'status' => 'Статус',
-            'group_id' => 'id группы'
+            'group_id' => 'id группы',
+            'password' => 'Поле "Пароль" '
         );
     }
 

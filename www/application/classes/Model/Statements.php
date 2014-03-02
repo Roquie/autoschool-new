@@ -22,7 +22,6 @@ class Model_Statements extends ORM
 		'pasport_data_vyda4i' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
 		'mob_tel' => array('data_type' => 'string', 'is_nullable' => false),
-		'dom_tel' => array('data_type' => 'string', 'is_nullable' => false),
 		'mesto_raboty' => array('data_type' => 'string', 'is_nullable' => false),
 		'about' => array('data_type' => 'string', 'is_nullable' => false),
 		'nationality_id' => array('data_type' => 'int', 'is_nullable' => false),
@@ -30,11 +29,11 @@ class Model_Statements extends ORM
 	);
 
     protected $_belongs_to = array(
-        'Nationality' => array(
+        'national' => array(
             'model' => 'Nationality',
             'foreign_key' => 'nationality_id',
         ),
-        'Educations' => array(
+        'edu' => array(
             'model' => 'Educations',
             'foreign_key' => 'education_id',
         ),
@@ -65,11 +64,11 @@ class Model_Statements extends ORM
                 array('max_length', array(':value', 50)),
             ),
             'data_rojdeniya' => array(
-               // array('not_empty'),
+                array('not_empty'),
                 array('date')
             ),
             'mesto_rojdeniya' => array(
-               // array('not_empty'),
+                array('not_empty'),
               //  array('alpha_numeric', array(':value', true)),
              //   array('alpha', array(':value', true)),
             ),
@@ -84,32 +83,30 @@ class Model_Statements extends ORM
                // array('alpha', array(':value', true)),
             ),
             'pasport_seriya' => array(
-               // array('not_empty'),
+                array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
             'pasport_nomer' => array(
-              //  array('not_empty'),
+                array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
             'pasport_data_vyda4i' => array(
-               // array('not_empty'),
+                array('not_empty'),
                 array('date')
             ),
             'pasport_kem_vydan' => array(
-              //  array('not_empty'),
+                array('not_empty'),
                // array('alpha_space', array(':value')),
             ),
             'mob_tel' => array(
-              //  array('not_empty'),
-            ),
-            'dom_tel' => array(
+                array('not_empty'),
             ),
             'mesto_raboty' => array(
-              //  array('not_empty'),
+                array('not_empty'),
              //   array('alpha', array(':value', true)),
             ),
             'about' => array(
-               // array('not_empty'),
+                array('not_empty'),
                 //array('alpha', array(':value', true)), - иначе пробелы и знаки препинания не работают.
             ),
             'nationality_id' => array(
@@ -144,9 +141,8 @@ class Model_Statements extends ORM
             'pasport_data_vyda4i' => 'Поле "Дата выдачи паспорта"',
             'pasport_kem_vydan' => 'Поле "Кем выдан паспорт"',
             'mob_tel' => 'Поле "Мобильный тел."',
-            'dom_tel' => 'Поле "Домашний тел."',
             'mesto_raboty' => 'Поле "Место работы"',
-            'about' => 'Поле "О нас"',
+            'about' => 'Поле "Как вы узнали о нас"',
             'nationality_id' => 'id гражданства',
             'education_id' => 'id образования',
 

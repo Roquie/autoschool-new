@@ -111,18 +111,18 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     ->save();
 
                 $mail_content = View::factory('tmpmail/admin/add_adm')
-                    ->set('username', $data['first_name'])
-                    ->set('login', $data['email'])
-                    ->set('pass', $newpass);
+                                    ->set('username', $data['first_name'])
+                                    ->set('login', $data['email'])
+                                    ->set('pass', $newpass);
 
                 $message = View::factory('tmpmail/template', compact('mail_content'));
 
                 try
                 {
                     Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
-                        ->to($data['email'])
-                        ->from('auto@mpt.ru', 'Автошкола МПТ')
-                        ->send();
+                         ->to($data['email'])
+                         ->from('auto@mpt.ru', 'Автошкола МПТ')
+                         ->send();
                 }
                 catch(Swift_SwiftException $e)
                 {

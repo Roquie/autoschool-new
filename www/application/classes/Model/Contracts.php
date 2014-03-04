@@ -37,12 +37,14 @@ class Model_Contracts extends ORM
                 array('max_length', array(':value', 50)),
             ),
             'ot4estvo' => array(
-                array('Security::xss_clean', array(':value')),
                 array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
             ),
-
+            'phone' => array(
+                array('not_empty'),
+                array('phone', array(':value', 11)),
+            ),
             'adres_reg_po_pasporty' => array(
               //  array('alpha_numeric', array(':value', true)),
                // array('alpha', array(':value', true)),
@@ -50,18 +52,17 @@ class Model_Contracts extends ORM
 
             'pasport_seriya' => array(
                 array('not_empty'),
-                array('alpha_numeric', array(':value', true)),
+              //  array('alpha_numeric', array(':value', true)),
             ),
             'pasport_nomer' => array(
                 array('not_empty'),
-                array('alpha_numeric', array(':value', true)),
+               // array('alpha_numeric', array(':value', true)),
             ),
             'pasport_kem_vydan' => array(
                 array('not_empty'),
                // array('alpha_space', array(':value', true)),
             ),
-            'phone' => array(
-            ),
+
             'user_id' => array(
                 array('digit'),
             ),

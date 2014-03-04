@@ -14,14 +14,6 @@ class Model_Messages extends ORM
         'datetime' => array('data_type' => 'string', 'is_nullable' => false),
     );
 
-    protected $_belongs_to = array(
-        'user'  => array(
-            'model'       => 'Users',
-            'foreign_key' => 'user_id',
-        ),
-    );
-
-
     public function rules()
     {
         return array(
@@ -77,6 +69,7 @@ class Model_Messages extends ORM
                        ->limit($limit)
                        ->offset($start)
                        ->find_all();
+
         if ($messages->count() > 0)
             return $messages;
         else

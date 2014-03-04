@@ -7,7 +7,6 @@ class Controller_Users extends Controller_Main_Base
         $post = $this->request->post();
         $a = Auth::instance();
 
-
         if ($a->logged_in('user'))
         {
             HTTP::redirect('/profile');
@@ -224,7 +223,7 @@ class Controller_Users extends Controller_Main_Base
 
             try
             {
-                $users = ORM::factory('User')->where('email', '=', $data['email'])->find();
+                $users = ORM::factory('User', array('email' => $data['email']))->find();
                 if ($users->loaded())
                 {
                     $users->update_user(

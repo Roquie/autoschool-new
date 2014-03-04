@@ -16,8 +16,8 @@ class Model_Groups extends ORM
             'model' => 'News',
             'foreign_key' => 'group_id',
         ),
-        'group' => array(
-            'model' => 'Groups',
+        'user' => array(
+            'model' => 'User',
             'foreign_key' => 'group_id',
         ),
 

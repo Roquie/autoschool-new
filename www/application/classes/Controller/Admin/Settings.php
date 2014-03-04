@@ -18,9 +18,9 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             if (!empty($values)) {
                 $validate = Validation::factory(Arr::map('trim', $data));
                 $validate->labels(array(
-                    'server' => 'сервер',
-                    'port' => 'порт',
-                    'email' => 'e-mail'
+                    'server' => 'Поле "серве"',
+                    'port' => 'Поле "порт"',
+                    'email' => 'Поле "e-mail"'
                 ))
                     ->rule('server', 'not_empty')
                     ->rule('port', 'not_empty')
@@ -32,7 +32,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     Model::factory('Settings')->set('smtp', serialize($data));
                     HTTP::redirect(Request::initial()->uri());
                 } else {
-                    $errors = $validate->errors('adm/smtp');
+                    $errors = $validate->errors('validation');
                 }
             } else {
                 Model::factory('Settings')->set('smtp', 0);

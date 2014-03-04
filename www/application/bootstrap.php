@@ -155,6 +155,13 @@ Route::set('download', 'download(/<path>)',
         'action'     => 'download',
    ));
 
+Route::set('admin.other', 'admin/other(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'controller' => 'Index',
+        'action'     => 'Index',
+        'directory' => 'Admin'
+    ));
+
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
         'controller' => 'Index',

@@ -8,7 +8,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Данные<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?=URL::site('admin/data/groups')?>"> Группы</a></li>
-                        <li><a href="<?=URL::site('admin/data/national_and_edu')?>"> Гражданство и образование</a></li>
+                        <li><a href="<?=URL::site('admin/other/natandedu')?>"> Гражданство и образование</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="<?=URL::site('admin/teachers')?>">Преподаватели</a>

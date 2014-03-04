@@ -27,6 +27,8 @@ return array(
     'is_unique_email' => 'Такая почта уже есть',
     'unique' => 'Такой пользователь уже зарегистрирован', // @todo: говнокод validation/users.email.unique
     'is_unique_group' => 'Такая группа уже есть',
-    'check_group' => 'Группа не найдена'
+    'check_group' => 'Группа не найдена',
+    'nat_not_found' => 'Гражданство не найдено',
+    'edu_not_found' => 'Образование не найдено',
 
 );

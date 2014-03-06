@@ -45,7 +45,6 @@ class Controller_Admin_Settings extends Controller_Admin_Base
     public function action_administrators()
     {
         $admins = array();
-        $info = array();
         $data = $this->request->post();
         $tmp = $this->request->query('csrf');
         $csrf = empty($tmp) ? $this->request->post('csrf') : $tmp;
@@ -56,13 +55,17 @@ class Controller_Admin_Settings extends Controller_Admin_Base
          */
         if (Security::is_token($csrf) && !empty($id))
         {
-            $admin_id = $this->request->query();
+            $admin_id = $this->request->query('id');
 
-            $admin = ORM::factory('User', $admin_id['id']);
+            $admin = ORM::factory('User', $admin_id);
 
             if ($admin->loaded())
             {
+                ORM::factory('Administrators', array('user_id' => $admin_id))
+                    ->delete();
+
                 $admin->delete();
+
                 HTTP::redirect(Request::initial()->uri());
             }
             else

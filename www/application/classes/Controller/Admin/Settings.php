@@ -49,11 +49,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         $data = $this->request->post();
         $tmp = $this->request->query('csrf');
         $csrf = empty($tmp) ? $this->request->post('csrf') : $tmp;
+        $id = $this->request->query('id');
 
         /**
          * Delete admin
          */
-        if (Security::is_token($csrf) && $this->request->method() === Request::GET)
+        if (Security::is_token($csrf) && !empty($id))
         {
             $admin_id = $this->request->query();
 

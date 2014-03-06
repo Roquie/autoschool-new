@@ -34,6 +34,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
         {
             $post = $this->request->post();
             unset($post['csrf']);
+
             try
             {
                 ORM::factory('Nationality')
@@ -41,7 +42,6 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
                     ->create();
 
                 HTTP::redirect('/admin/other/natandedu');
-
             }
             catch (ORM_Validation_Exception  $e)
             {

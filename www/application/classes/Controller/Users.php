@@ -311,8 +311,8 @@ class Controller_Users extends Controller_Main_Base
                             DB::insert('Statements')
                                 ->columns(array('famil', 'imya', 'mob_tel', 'user_id'))
                                 ->values(array(
-                                      'famil' => $user['first_name'],
-                                      'imya' => $user['last_name'],
+                                      'famil' => $user['last_name'],
+                                      'imya' => $user['first_name'],
                                       'mob_tel' => $user['phone'],
                                       'user_id' => $pk
                                 ))->execute();

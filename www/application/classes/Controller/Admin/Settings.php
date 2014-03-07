@@ -45,23 +45,27 @@ class Controller_Admin_Settings extends Controller_Admin_Base
     public function action_administrators()
     {
         $admins = array();
-        $info = array();
         $data = $this->request->post();
         $tmp = $this->request->query('csrf');
         $csrf = empty($tmp) ? $this->request->post('csrf') : $tmp;
+        $id = $this->request->query('id');
 
         /**
          * Delete admin
          */
-        if (Security::is_token($csrf) && $this->request->method() === Request::GET)
+        if (Security::is_token($csrf) && !empty($id))
         {
-            $admin_id = $this->request->query();
+            $admin_id = $this->request->query('id');
 
-            $admin = ORM::factory('User', $admin_id['id']);
+            $admin = ORM::factory('User', $admin_id);
 
             if ($admin->loaded())
             {
+                ORM::factory('Administrators', array('user_id' => $admin_id))
+                    ->delete();
+
                 $admin->delete();
+
                 HTTP::redirect(Request::initial()->uri());
             }
             else
@@ -76,7 +80,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         {
             $data['photo'] = 'img/photo.jpg';
             $newpass = Text::random();
-            $pk = '';
+
             try
             {
                 $users = ORM::factory('User');
@@ -94,21 +98,14 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                             'email',
                         ))
                     ->pk();
-            }
-            catch(ORM_Validation_Exception $e)
-            {
-                $errors = $e->errors('validation');
-            }
 
-            try
-            {
                 ORM::factory('Administrators')
                     ->values(array(
                         'family_name' => $data['family_name'],
                         'first_name' => $data['first_name'],
                         'user_id' => $pk
                     ))
-                    ->save();
+                    ->create();
 
                 $mail_content = View::factory('tmpmail/admin/add_adm')
                                     ->set('username', $data['first_name'])
@@ -120,9 +117,9 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 try
                 {
                     Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
-                         ->to($data['email'])
-                         ->from('auto@mpt.ru', 'Автошкола МПТ')
-                         ->send();
+                        ->to($data['email'])
+                        ->from('auto@mpt.ru', 'Автошкола МПТ')
+                        ->send();
                 }
                 catch(Swift_SwiftException $e)
                 {
@@ -132,10 +129,11 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 $role = array(1, 2);
                 $users->add('roles', $role);
                 HTTP::redirect(Request::initial()->uri());
+
             }
             catch(ORM_Validation_Exception $e)
             {
-                $errors = $e->errors('adm/smtp');
+                $errors = $e->errors('validation');
             }
         }
 

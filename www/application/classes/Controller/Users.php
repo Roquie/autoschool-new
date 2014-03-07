@@ -23,6 +23,7 @@ class Controller_Users extends Controller_Main_Base
                 $status = $a->login($this->request->post('email'), $this->request->post('password'), (bool)$this->request->post('remember'));
 
                 if ($status)
+                {
                     if ($a->logged_in('user'))
                     {
                         HTTP::redirect('/profile');
@@ -31,8 +32,12 @@ class Controller_Users extends Controller_Main_Base
                     {
                         HTTP::redirect('/admin');
                     }
+                }
                 else
+                {
                     $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                }
+
             }
             catch (ORM_Validation_Exception $e)
             {
@@ -311,8 +316,8 @@ class Controller_Users extends Controller_Main_Base
                             DB::insert('Statements')
                                 ->columns(array('famil', 'imya', 'mob_tel', 'user_id'))
                                 ->values(array(
-                                      'famil' => $user['first_name'],
-                                      'imya' => $user['last_name'],
+                                      'famil' => $user['last_name'],
+                                      'imya' => $user['first_name'],
                                       'mob_tel' => $user['phone'],
                                       'user_id' => $pk
                                 ))->execute();

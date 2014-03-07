@@ -155,7 +155,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                                  array('password')
                              );
 
-                         $success = 'ok pass';
+                         $success = Kohana::message('profile', 'settings.ok_pass');
                     }
                     catch(ORM_Validation_Exception $e)
                     {
@@ -164,7 +164,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                     }
 
                 }
-                 elseif ($type === 'change_email')
+                elseif ($type === 'change_email')
                 {
                     try
                     {
@@ -176,7 +176,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                                 array('email')
                             );
 
-                        $success = 'ok email';
+                        $success = Kohana::message('profile', 'settings.ok_email');
                     }
                     catch(ORM_Validation_Exception $e)
                     {
@@ -184,12 +184,11 @@ class Controller_Profile_Index extends Controller_Profile_Base
                     }
                 }
             }
-             else
+            else
             {
-                $errors = array('пароли не совпадают');
+                $errors = array('err_pass' => Kohana::message('profile', 'settings.err_pass'));
             }
         }
-
 
         $this->_profile->content = View::factory('profile/pages/settings', compact('errors', 'success'));
     }

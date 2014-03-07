@@ -9,14 +9,14 @@ class Controller_Admin_Groups extends Controller_Admin_Base
         parent::before();
 
         $groups = Model::factory('Groups')->find_all(); // список всех групп
-        $this->_group = new View('admin/html/groups/template', compact('groups'));
+        $this->_group = new View('admin/groups/template', compact('groups'));
         $this->_group->content = null;
     }
 
     public function action_index()
     {
         $group = Model::factory('Groups')->find(); // информация по первой группе из базы
-        $this->_group->content = View::factory('admin/html/groups/group', compact('group'));
+        $this->_group->content = View::factory('admin/groups/group', compact('group'));
     }
 
     public function after()

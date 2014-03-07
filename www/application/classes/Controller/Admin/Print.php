@@ -7,7 +7,7 @@ class Controller_Admin_Print extends Controller_Admin_Base
 
     public function action_all()
     {
-        $this->template->content = View::factory('admin/html/print/all');
+        $this->template->content = View::factory('admin/print/all');
     }
 
     public function action_driver_card()

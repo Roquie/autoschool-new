@@ -3,7 +3,7 @@
 class Controller_Admin_Settings extends Controller_Admin_Base
 {
 
-    public function action_index()
+    public function action_smtp()
     {
         $data = Kohana::$config->load('settings.smtp');
         if (!empty($data))
@@ -39,7 +39,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 HTTP::redirect(Request::initial()->uri());
             }
         }
-        $this->template->content = View::factory('admin/html/settings/smtp', compact('data', 'errors'));
+        $this->template->content = View::factory('admin/settings/smtp', compact('data', 'errors'));
     }
 
     public function action_administrators()
@@ -70,7 +70,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             }
             else
             {
-                $errors = Kohana::message('users', 'admin_not_found');
+                $errors = array('error' => Kohana::message('users', 'admin_not_found'));
             }
         }
         /**
@@ -153,7 +153,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             }
         }
 
-        $this->template->content = View::factory('admin/html/settings/admins', compact('errors', 'data', 'admins'));
+        $this->template->content = View::factory('admin/settings/admins', compact('errors', 'data', 'admins'));
     }
 
     public function action_upload()
@@ -188,7 +188,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         }
 
         $files = ORM::factory('Files')->find_all();
-        $this->template->content = View::factory('admin/html/settings/upload', compact('files', 'errors'));
+        $this->template->content = View::factory('admin/settings/upload', compact('files', 'errors'));
     }
 
 }

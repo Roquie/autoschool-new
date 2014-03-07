@@ -8,7 +8,7 @@
         <ul class="nav nav-tabs">
             <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
             <li class="active"><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
-            <li><a href="<?=URL::site('admin/settings/')?>">Главная страница</a></li>
+            <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
         </ul>
         <div class="tab-content">
             <!--вкладка Главная страница-->
@@ -35,6 +35,9 @@
                                     $(this).prop("checked", false);
                                 }
                                 $('#type_file').val($this.val());
+                            });
+                            $('table').on('click', 'tr', function() {
+                               $(this).find('input:checkbox').trigger('click');
                             });
                             $('input[type="file"]').on('change', function () {
                                 $(this).closest('form').trigger('submit');

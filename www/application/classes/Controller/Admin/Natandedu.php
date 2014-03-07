@@ -14,7 +14,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
 
         $edu = ORM::factory('Educations')->find_all();
         $national = ORM::factory('Nationality')->find_all();
-        $this->_nat_and_edu = View::factory('admin/html/data/nat_and_ed', compact('edu', 'national'));
+        $this->_nat_and_edu = View::factory('admin/data/nat_and_ed', compact('edu', 'national'));
         $this->_nat_and_edu->errors = null;
     }
 
@@ -55,7 +55,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
      */
     public function action_delete_nat()
     {
-        $csrf = $this->request->query('csrf');
+        $csrf = pack('H*', $this->request->query('csrf'));
 
         if (Security::is_token($csrf) && $this->request->method() === Request::GET)
         {
@@ -70,7 +70,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             else
             {
-                $this->_nat_and_edu->errors = Kohana::message('validation', 'nat_not_found');
+                $this->_nat_and_edu->errors = array('error' => Kohana::message('validation', 'nat_not_found'));
             }
         }
     }
@@ -96,7 +96,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             catch (ORM_Validation_Exception  $e)
             {
-                $this->_nat_and_edu->errors = $e->errors('validation');
+                $this->_nat_and_edu->errors = array('error' => $e->errors('validation'));
             }
         }
     }
@@ -106,7 +106,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
      */
     public function action_delete_edu()
     {
-        $csrf = $this->request->query('csrf');
+        $csrf = pack('H*', $this->request->query('csrf'));
 
         if (Security::is_token($csrf) && $this->request->method() === Request::GET)
         {
@@ -121,7 +121,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             else
             {
-                $this->_nat_and_edu->errors = Kohana::message('validation', 'edu_not_found');
+                $this->_nat_and_edu->errors = array('error' => Kohana::message('validation', 'edu_not_found'));
             }
         }
     }

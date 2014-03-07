@@ -37,7 +37,7 @@
                         <tr id="<?=$v->id?>">
                             <td><?=++$i?></td>
                             <td><?=$v->grajdanstvo?></td>
-                            <td><a href="<?=URL::site('admin/other/natandedu/delete_nat/?id='.$v->id.'&csrf='.Security::token())?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
+                            <td><a href="<?=URL::site('admin/other/natandedu/delete_nat/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
                         </tr>
                     <?endforeach?>
 
@@ -67,7 +67,7 @@
                         <tr id="<?=$v->id?>">
                             <td><?=++$i?></td>
                             <td><?=$v->obrazovanie?></td>
-                            <td><a href="<?=URL::site('admin/other/natandedu/delete_edu/?id='.$v->id.'&csrf='.Security::token())?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
+                            <td><a href="<?=URL::site('admin/other/natandedu/delete_edu/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
                         </tr>
                     <?endforeach?>
 

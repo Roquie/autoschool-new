@@ -4,6 +4,7 @@ class Controller_Admin_Base extends Controller_Template
 {
     public $template = 'admin/layout';
 
+    // это before lolka
     public function before()
     {
         parent::before();

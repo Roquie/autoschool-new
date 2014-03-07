@@ -117,18 +117,20 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	   'super-cache'      => MODPATH.'super-cache',
-	   'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	   'auth'       => MODPATH.'auth',       // Basic authentication
-	   'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	   'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	   'email' => MODPATH.'email',
-	   'htmlpurifier' => MODPATH.'htmlpurifier',
-	   'captcha' => MODPATH.'captcha',
-	   'docxtemplate' => MODPATH.'docxtemplate',
-	   'transactional' => MODPATH.'transactional',
-	   'twitterapi' => MODPATH.'twitterapi',
+    'profilertoolbar' => MODPATH.'profilertoolbar',
+    'super-cache'      => MODPATH.'super-cache',
+    'cache'      => MODPATH.'cache',      // Caching with multiple backends
+    'auth'       => MODPATH.'auth',       // Basic authentication
+    'database'   => MODPATH.'database',   // Database access
+    // 'image'      => MODPATH.'image',      // Image manipulation
+    'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+    'email' => MODPATH.'email',
+    'htmlpurifier' => MODPATH.'htmlpurifier',
+    'captcha' => MODPATH.'captcha',
+    'docxtemplate' => MODPATH.'docxtemplate',
+    'transactional' => MODPATH.'transactional',
+    'twitterapi' => MODPATH.'twitterapi',
+
 	));
 
 /**
@@ -190,7 +192,6 @@ Route::set('main', '(<controller>(/<action>(/<id>)))')
 
 
 
-
-
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(null);
+

@@ -11,4 +11,5 @@ class Security extends Purifier_Security
     {
         return isset($token) ? Security::token() === $token : false;
     }
+
 }

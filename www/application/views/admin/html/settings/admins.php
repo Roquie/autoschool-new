@@ -64,7 +64,7 @@
                                     <td><?=$admin['info']['first_name']?></td>
                                     <td><?=$admin['email']?></td>
                                     <td>
-                                        <a class="badge badge-important" href="<?=Request::current()->url().'?id='.$admin['id'].'&csrf='.Security::token()?>"><i class="icon-remove"></i></a>
+                                        <a class="badge badge-important" href="<?=Request::current()->url().'?id='.$admin['id'].'&csrf='.bin2hex(Security::token())?>"><i class="icon-remove"></i></a>
                                     </td>
                                 </tr>
                             <? endforeach ?>

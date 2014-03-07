@@ -47,7 +47,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         $admins = array();
         $data = $this->request->post();
         $tmp = $this->request->query('csrf');
-        $csrf = empty($tmp) ? $this->request->post('csrf') : $tmp;
+        $csrf = empty($tmp) ? $this->request->post('csrf') : pack('H*', $tmp);
         $id = $this->request->query('id');
 
         /**

@@ -7,7 +7,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Данные<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?=URL::site('admin/data/groups')?>"> Группы</a></li>
+                        <li><a href="<?=URL::site('admin/other/groups')?>"> Группы</a></li>
                         <li><a href="<?=URL::site('admin/other/natandedu')?>"> Гражданство и образование</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">

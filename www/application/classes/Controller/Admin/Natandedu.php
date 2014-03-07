@@ -3,25 +3,25 @@
 class Controller_Admin_Natandedu extends Controller_Admin_Base
 {
 
+    protected $_nat_and_edu = null;
+
     /**
-     * Отображение страницы (чтоб не повторять код)
-     * @param null $errors
+     * Отображение страницы
      */
-    private function view($errors = null)
+    public function before()
     {
+        parent::before();
+
         $edu = ORM::factory('Educations')->find_all();
         $national = ORM::factory('Nationality')->find_all();
-        $this->template->content =
-            View::factory('admin/html/data/nat_and_ed', compact('edu', 'national', 'errors'));
+        $this->_nat_and_edu = View::factory('admin/html/data/nat_and_ed', compact('edu', 'national'));
+        $this->_nat_and_edu->errors = null;
     }
 
     /**
      * Главная страница
      */
-    public function action_index()
-    {
-        $this->view();
-    }
+    public function action_index() {}
 
     /**
      * Добавления гражданства
@@ -45,8 +45,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             catch (ORM_Validation_Exception  $e)
             {
-                $errors = $e->errors('validation');
-                $this->view($errors);
+                $this->_nat_and_edu->errors = $e->errors('validation');
             }
         }
     }
@@ -71,8 +70,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             else
             {
-                $errors = Kohana::message('validation', 'nat_not_found');
-                $this->view($errors);
+                $this->_nat_and_edu->errors = Kohana::message('validation', 'nat_not_found');
             }
         }
     }
@@ -98,8 +96,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             catch (ORM_Validation_Exception  $e)
             {
-                $errors = $e->errors('validation');
-                $this->view($errors);
+                $this->_nat_and_edu->errors = $e->errors('validation');
             }
         }
     }
@@ -124,10 +121,15 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             else
             {
-                $errors = Kohana::message('validation', 'edu_not_found');
-                $this->view($errors);
+                $this->_nat_and_edu->errors = Kohana::message('validation', 'edu_not_found');
             }
         }
+    }
+
+    public function after()
+    {
+        $this->template->content = $this->_nat_and_edu->render();
+        parent::after();
     }
 
 

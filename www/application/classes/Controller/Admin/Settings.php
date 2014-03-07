@@ -18,7 +18,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             if (!empty($values)) {
                 $validate = Validation::factory(Arr::map('trim', $data));
                 $validate->labels(array(
-                    'server' => 'Поле "серве"',
+                    'server' => 'Поле "сервер"',
                     'port' => 'Поле "порт"',
                     'email' => 'Поле "e-mail"'
                 ))

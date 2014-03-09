@@ -1,20 +1,41 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Users extends ORM
+class Model_User extends Model_Auth_User
 {
-	protected $_db = 'default';
+    protected $_db = 'default';
     protected $_table_name  = 'Users';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_group' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_instructor' => array('data_type' => 'int', 'is_nullable' => false),
-		'photo' => array('data_type' => 'string', 'is_nullable' => false),
-		'password' => array('data_type' => 'string', 'is_nullable' => false),
-		'email' => array('data_type' => 'string', 'is_nullable' => false),
-		'status' => array('data_type' => 'string', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'email' => array('data_type' => 'string', 'is_nullable' => false),
+        'photo' => array('data_type' => 'string', 'is_nullable' => false),
+        'password' => array('data_type' => 'string', 'is_nullable' => false),
+        'logins' => array('data_type' => 'int', 'is_nullable' => false),
+        'last_login' => array('data_type' => 'timestamp', 'is_nullable' => false),
+        'group_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'status' => array('data_type' => 'int', 'is_nullable' => false)
+    );
+
+
+    protected $_has_one = array(
+        'statement' => array(
+            'model' => 'Statements',
+            'foreign_key' => 'user_id',
+        ),
+        'contract' => array(
+            'model' => 'Contracts',
+            'foreign_key' => 'user_id',
+        ),
+        'admin' => array(
+            'model' => 'Administrators',
+            'foreign_key' => 'user_id',
+        ),
+        'msg' => array(
+            'model' => 'Messages',
+            'foreign_key' => 'user_id',
+        ),
+    );
 
     public function rules()
     {
@@ -114,4 +135,30 @@ class Model_Users extends ORM
     }
 
 
+    /**
+     * @todo: переделать правильно, т.к. при возникновении ошибки нифига не произойдет
+     *
+     * @param array $data
+     * @return bool|ORM
+     */
+    public function login(array $data)
+    {
+        try {
+            $result = ORM::factory('Users')
+                ->where('email', '=', $data['email'])
+                ->and_where('password', '=', $data['password'])
+                ->find();
+        } catch(ORM_Validation_Exception $e) {
+            return false;
+            //return $e->errors('');
+        }
+
+        return $result;
+    }
+
+
 }
+
+
+
+

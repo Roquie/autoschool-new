@@ -9,27 +9,12 @@ return array(
             'username'   => 'rootuser',
             'password'   => 'root',
             'persistent' => FALSE,
-            'database'   => 'mpt_auto',
+            'database'   => 'autoschool',
         ),
         'table_prefix' => '',
         'charset'      => 'utf8',
-        'profiling'    => FALSE,
+        'profiling'    => true,
 
     ),
 
-    /*
-         'default' => array(
-        'type'       => 'pdo',
-        'connection' => array(
-
-            'dsn'        => 'mysql:host=localhost;dbname=mpt',
-            'username'   => 'root',
-            'password'   => '',
-            'persistent' => FALSE,
-        ),
-        'table_prefix' => '',
-        'charset'      => 'utf8',
-        'profiling'    => FALSE,
-   )
-     */
 );

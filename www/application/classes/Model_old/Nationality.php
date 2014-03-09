@@ -8,15 +8,15 @@ class Model_Nationality extends ORM
 
     protected $_table_columns = array(
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'name' => array('data_type' => 'string', 'is_nullable' => false),
+		'grajdanstvo' => array('data_type' => 'string', 'is_nullable' => false),
 	);
-
 
     public function rules()
     {
         return array(
-            'name' => array(
+            'grajdanstvo' => array(
                 array('not_empty'),
+                //array('alpha', array(':value', true)), - иначе нельзя вводить пробел и тире
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
             ),
@@ -27,7 +27,7 @@ class Model_Nationality extends ORM
     public function labels()
     {
         return array(
-            'name' => 'Поле "Гражданство" ',
+            'grajdanstvo' => 'Гражданство',
         );
     }
 

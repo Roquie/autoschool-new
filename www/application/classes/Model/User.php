@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Users extends Model_Auth_User
+class Model_User extends Model_Auth_User
 {
 	protected $_db = 'default';
     protected $_table_name  = 'users';
@@ -25,6 +25,11 @@ class Model_Users extends Model_Auth_User
             'model' => 'Messages',
             'foreign_key' => 'user_id',
         ),
+        'listener' => array(
+            'model' => 'Listeners',
+            'foreign_key' => 'user_id',
+        ),
+
     );
 
     public function rules()

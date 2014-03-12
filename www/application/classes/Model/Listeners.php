@@ -21,7 +21,7 @@ class Model_Listeners extends ORM
 		'data_rojdeniya' => array('data_type' => 'string', 'is_nullable' => false),
 		'mesto_rojdeniya' => array('data_type' => 'string', 'is_nullable' => false),
 		'adres' => array('data_type' => 'string', 'is_nullable' => false),
-		'vrem_reg' => array('data_type' => 'string', 'is_nullable' => false),
+		'vrem_reg' => array('data_type' => 'int', 'is_nullable' => false),
 		'pasport_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_nomer' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),

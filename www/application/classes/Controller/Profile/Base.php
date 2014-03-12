@@ -19,7 +19,7 @@ class Controller_Profile_Base extends Controller_Template
 
         $mergered = array_merge(
             $a->get_user()->as_array(),
-            $user->statement->as_array()
+            $user->listener->as_array()
         );
 
         View::bind_global('user', $mergered);

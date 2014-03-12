@@ -16,15 +16,14 @@ class Controller_Profile_Index extends Controller_Profile_Base
     public function action_index()
 	{
         $a = Auth::instance();
-        $group = ORM::factory('Groups', $a->get_user()->group_id)
-                    ->find()
-                    ->as_array();
+        $group = 0;
 
-        $result = ORM::factory('Groups', $a->get_user()->group_id)->news->find_all();
+        //$result = ORM::factory('Groups', $a->get_user()->group_id)->news->find_all();
 
         $news = array();
 
-        if ($result->count() === 0)
+        //if ($result->count() === 0)
+        if (true)
         {
             $news[] = array(
                 'title' => 'Группа не определена администратором',

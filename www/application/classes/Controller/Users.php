@@ -136,6 +136,7 @@ class Controller_Users extends Controller_Main_Base
             $valid->rule('ot4estvo', 'min_length', array(':value', 2));
             $valid->rule('ot4estvo', 'max_length', array(':value', 50));
             $valid->rule('mob_tel', 'not_empty');
+            $valid->rule('mob_tel', 'phone', array(':value', 11));
 
             if ($valid->check())
             {
@@ -157,13 +158,13 @@ class Controller_Users extends Controller_Main_Base
 
                     try
                     {
-                        DB::insert('Statements')
-                            ->columns(array('famil', 'imya', 'ot4estvo', 'mob_tel', 'user_id'))
+                        DB::insert('Listeners')
+                            ->columns(array('famil', 'imya', 'ot4estvo', 'tel', 'user_id'))
                             ->values(array(
                                 'famil' => $post['famil'],
                                 'imya' => $post['imya'],
                                 'ot4estvo' => $post['ot4estvo'],
-                                'mob_tel' => $post['mob_tel'],
+                                'tel' => $post['mob_tel'],
                                 'user_id' => $pk
                             ))->execute();
                     }
@@ -313,12 +314,12 @@ class Controller_Users extends Controller_Main_Base
 
                         try
                         {
-                            DB::insert('Statements')
-                                ->columns(array('famil', 'imya', 'mob_tel', 'user_id'))
+                            DB::insert('listeners')
+                                ->columns(array('famil', 'imya', 'tel', 'user_id'))
                                 ->values(array(
                                       'famil' => $user['last_name'],
                                       'imya' => $user['first_name'],
-                                      'mob_tel' => $user['phone'],
+                                      'tel' => $user['phone'],
                                       'user_id' => $pk
                                 ))->execute();
                         }

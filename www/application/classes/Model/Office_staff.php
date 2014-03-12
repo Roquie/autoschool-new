@@ -2,15 +2,29 @@
 
 class Model_Office_staff extends ORM
 {
-	protected $_db = 'default';
-    protected $_table_name  = 'Office_staff';
+    protected $_db = 'default';
+    protected $_table_name  = 'office_staff';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_office' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_employee' => array('data_type' => 'int', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'office_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
+    );
+
+    public function rules()
+    {
+        return array(
+            'office_id' => array(
+                array('not_empty'),
+                array('digit')
+            ),
+            'staff_id' => array(
+                array('not_empty'),
+                array('digit')
+            )
+        );
+    }
 
     public function filters()
     {
@@ -21,5 +35,4 @@ class Model_Office_staff extends ORM
             )
         );
     }
-
 }

@@ -1,9 +1,9 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Office extends ORM
+class Model_Lessons extends ORM
 {
     protected $_db = 'default';
-    protected $_table_name  = 'office';
+    protected $_table_name  = 'lessons';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
@@ -11,13 +11,21 @@ class Model_Office extends ORM
         'name' => array('data_type' => 'string', 'is_nullable' => false),
     );
 
+    protected $_has_one = array(
+        'timelesson' => array(
+            'model' => 'Timelessons',
+            'foreign_key' => 'lesson_id',
+        ),
+    );
+
+
     public function rules()
     {
         return array(
             'name' => array(
                 array('not_empty'),
                 array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 90)),
+                array('max_length', array(':value', 600)),
             )
         );
     }

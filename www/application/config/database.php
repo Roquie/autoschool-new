@@ -9,7 +9,7 @@ return array(
             'username'   => 'rootuser',
             'password'   => 'root',
             'persistent' => FALSE,
-            'database'   => 'autoschool',
+            'database'   => 'mpt_auto',
         ),
         'table_prefix' => '',
         'charset'      => 'utf8',

@@ -98,7 +98,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => 'http://'.$_SERVER['HTTP_HOST'].'/',
 	'errors'  => true,
-	'profile' => false,
+	'profile' => true,
 	'caching' => false, // включать (3600) только на ПРОДАКШЕНЕ
     'index_file' => false,
 ));

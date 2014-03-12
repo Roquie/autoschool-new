@@ -2,15 +2,18 @@
 
 class Model_Administrators extends ORM
 {
-	protected $_db = 'default';
-    protected $_table_name  = 'Administrators';
+    protected $_db = 'default';
+    protected $_table_name  = 'administrators';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'email' => array('data_type' => 'string', 'is_nullable' => false),
-		'datetime' => array('data_type' => 'string', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'first_name' => array('data_type' => 'string', 'is_nullable' => false),
+        'family_name' => array('data_type' => 'string', 'is_nullable' => false),
+        'timestamp' => array('data_type' => 'string', 'is_nullable' => false),
+        'user_id' => array('data_type' => 'int', 'is_nullable' => false),
+    );
+
 
     public function rules()
     {
@@ -50,5 +53,4 @@ class Model_Administrators extends ORM
             )
         );
     }
-
 }

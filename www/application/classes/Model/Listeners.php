@@ -1,31 +1,37 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Statements extends ORM
+class Model_Listeners extends ORM
 {
 	protected $_db = 'default';
-    protected $_table_name  = 'Statements';
-   // protected $_primary_key = 'user_id';
-
+    protected $_table_name  = 'listeners';
+    protected $_primary_key = 'id';
 
     protected $_table_columns = array(
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
 		'user_id' => array('data_type' => 'int', 'is_nullable' => false),
-		'famil' => array('data_type' => 'string', 'is_nullable' => false),
+		'about' => array('data_type' => 'string', 'is_nullable' => false),
+		'nationality_id' => array('data_type' => 'int', 'is_nullable' => true),
+		'education_id' => array('data_type' => 'int', 'is_nullable' => true),
+		'group_id' => array('data_type' => 'int', 'is_nullable' => true),
+		'staff_id' => array('data_type' => 'int', 'is_nullable' => true),
+		'status' => array('data_type' => 'int', 'is_nullable' => false),
 		'imya' => array('data_type' => 'string', 'is_nullable' => false),
-		'ot4estvo' => array('data_type' => 'string', 'is_nullable' => false),
+		'famil' => array('data_type' => 'string', 'is_nullable' => false),
+		'otch' => array('data_type' => 'string', 'is_nullable' => false),
 		'data_rojdeniya' => array('data_type' => 'string', 'is_nullable' => false),
 		'mesto_rojdeniya' => array('data_type' => 'string', 'is_nullable' => false),
-		'adres_reg_po_pasporty' => array('data_type' => 'string', 'is_nullable' => false),
+		'adres' => array('data_type' => 'string', 'is_nullable' => false),
 		'vrem_reg' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_nomer' => array('data_type' => 'string', 'is_nullable' => false),
-		'pasport_data_vyda4i' => array('data_type' => 'string', 'is_nullable' => false),
+		'pasport_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
 		'pasport_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
-		'mob_tel' => array('data_type' => 'string', 'is_nullable' => false),
+		'tel' => array('data_type' => 'string', 'is_nullable' => false),
 		'mesto_raboty' => array('data_type' => 'string', 'is_nullable' => false),
-		'about' => array('data_type' => 'string', 'is_nullable' => false),
-		'nationality_id' => array('data_type' => 'int', 'is_nullable' => false),
-		'education_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'sex' => array('data_type' => 'int', 'is_nullable' => false),
+		'nomer_med' => array('data_type' => 'string', 'is_nullable' => false),
+		'seriya_med' => array('data_type' => 'string', 'is_nullable' => false),
+		'data_med' => array('data_type' => 'string', 'is_nullable' => false),
 	);
 
     protected $_belongs_to = array(
@@ -34,13 +40,29 @@ class Model_Statements extends ORM
             'foreign_key' => 'nationality_id',
         ),
         'edu' => array(
-            'model' => 'Educations',
+            'model' => 'Education',
             'foreign_key' => 'education_id',
         ),
-
-
+        'group' => array(
+            'model' => 'Group',
+            'foreign_key' => 'group_id',
+        ),
+        'user' => array(
+            'model' => 'User',
+            'foreign_key' => 'user_id',
+        ),
+        'staff' => array(
+            'model' => 'Staff',
+            'foreign_key' => 'staff_id',
+        ),
     );
 
+    protected $_has_one = array(
+        'indy' => array(
+            'model' => 'Individual',
+            'foreign_key' => 'listener_id',
+        ),
+    );
 
     public function rules()
     {
@@ -69,18 +91,18 @@ class Model_Statements extends ORM
             ),
             'mesto_rojdeniya' => array(
                 array('not_empty'),
-              //  array('alpha_numeric', array(':value', true)),
-             //   array('alpha', array(':value', true)),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
 
-            'adres_reg_po_pasporty' => array(
-              //  array('alpha_numeric', array(':value', true)),
-              //  array('alpha', array(':value', true)),
+            'adres' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
 
             'vrem_reg' => array(
-               // array('alpha_numeric', array(':value', true)),
-               // array('alpha', array(':value', true)),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
             'pasport_seriya' => array(
                 array('not_empty'),
@@ -96,14 +118,14 @@ class Model_Statements extends ORM
             ),
             'pasport_kem_vydan' => array(
                 array('not_empty'),
-               // array('alpha_space', array(':value')),
+                // array('alpha_space', array(':value')),
             ),
             'mob_tel' => array(
                 array('not_empty'),
             ),
             'mesto_raboty' => array(
                 array('not_empty'),
-             //   array('alpha', array(':value', true)),
+                //   array('alpha', array(':value', true)),
             ),
             'about' => array(
                 array('not_empty'),
@@ -120,34 +142,38 @@ class Model_Statements extends ORM
             'user_id' => array(
                 array('digit'),
             ),
+            'individual_id' => array(
+                array('digit'),
+            ),
+            'group_id' => array(
+                array('digit'),
+            ),
+            'staff_id' => array(
+                array('digit'),
+            ),
+            'status' => array(
+                array('not_empty'),
+                array('regex', array(':value', '/[0-3]/'))
+            ),
+            'sex' => array(
+                array('not_empty'),
 
+            ),
+            'nomer_med' => array(
+                array('not_empty'),
+
+            ),
+            'seriya_med' => array(
+                array('not_empty'),
+
+            ),
+            'data_med' => array(
+                array('not_empty'),
+                array('date'),
+            ),
         );
     }
 
-
-    public function labels()
-    {
-        return array(
-            'user_id' => 'id пользователя',
-            'famil' => 'Поле "Фамилия"',
-            'imya' => 'Поле "Имя"',
-            'ot4estvo' => 'Поле "Отчество"',
-            'data_rojdeniya' => 'Поле "Дата рождения"',
-            'mesto_rojdeniya' => 'Поле "Место рождения"',
-            'adres_reg_po_pasporty' => 'Поле "Адрес рег. по паспорту"',
-            'vrem_reg' => 'Поле "Временная регистрация"',
-            'pasport_seriya' => 'Поле "Серия паспорта"',
-            'pasport_nomer' => 'Поле "Номер паспорта"',
-            'pasport_data_vyda4i' => 'Поле "Дата выдачи паспорта"',
-            'pasport_kem_vydan' => 'Поле "Кем выдан паспорт"',
-            'mob_tel' => 'Поле "Мобильный тел."',
-            'mesto_raboty' => 'Поле "Место работы"',
-            'about' => 'Поле "Как вы узнали о нас"',
-            'nationality_id' => 'id гражданства',
-            'education_id' => 'id образования',
-
-        );
-    }
 
     public function filters()
     {
@@ -158,9 +184,4 @@ class Model_Statements extends ORM
             )
         );
     }
-
-
-
-
-
 }

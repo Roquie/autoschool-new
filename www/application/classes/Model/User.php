@@ -1,20 +1,31 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Users extends ORM
+class Model_Users extends Model_Auth_User
 {
 	protected $_db = 'default';
-    protected $_table_name  = 'Users';
+    protected $_table_name  = 'users';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_group' => array('data_type' => 'int', 'is_nullable' => false),
-		'id_instructor' => array('data_type' => 'int', 'is_nullable' => false),
+		'email' => array('data_type' => 'string', 'is_nullable' => false),
 		'photo' => array('data_type' => 'string', 'is_nullable' => false),
 		'password' => array('data_type' => 'string', 'is_nullable' => false),
-		'email' => array('data_type' => 'string', 'is_nullable' => false),
-		'status' => array('data_type' => 'string', 'is_nullable' => false),
+		'logins' => array('data_type' => 'int', 'is_nullable' => false),
+		'last_login' => array('data_type' => 'int', 'is_nullable' => true),
 	);
+
+
+    protected $_has_one = array(
+        'admin' => array(
+            'model' => 'Administrators',
+            'foreign_key' => 'user_id',
+        ),
+        'msg' => array(
+            'model' => 'Messages',
+            'foreign_key' => 'user_id',
+        ),
+    );
 
     public function rules()
     {
@@ -112,6 +123,4 @@ class Model_Users extends ORM
 
         return $arr;
     }
-
-
 }

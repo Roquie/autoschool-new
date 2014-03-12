@@ -1,38 +1,36 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Comissioners extends ORM
+class Model_Files extends ORM
 {
     protected $_db = 'default';
-    protected $_table_name  = 'comissioners';
+    protected $_table_name  = 'files';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
-        'famil' => array('data_type' => 'string', 'is_nullable' => false),
-        'imya' => array('data_type' => 'string', 'is_nullable' => false),
-        'otch' => array('data_type' => 'string', 'is_nullable' => false),
+        'filename' => array('data_type' => 'string', 'is_nullable' => false),
+        'desc' => array('data_type' => 'string', 'is_nullable' => false),
+        'path' => array('data_type' => 'string', 'is_nullable' => false),
     );
+
 
     public function rules()
     {
         return array(
-            'famil' => array(
+            'filename' => array(
                 array('not_empty'),
-                array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 50))
+                array('max_length', array(':value', 500))
             ),
-            'imya' => array(
+            'desc' => array(
                 array('not_empty'),
-                array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 50))
+                array('max_length', array(':value', 5000))
             ),
-            'otch' => array(
+            'path' => array(
                 array('not_empty'),
-                array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 50))
+                array('max_length', array(':value', 3000))
             )
         );
     }

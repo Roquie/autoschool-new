@@ -6,8 +6,8 @@ class Controller_Main_Index extends Controller_Main_Base
 
     public function action_index()
 	{
-        //генерация кода для моделей
-        Gmodeler::init();
+        //генерация кода для моделей. Не включать - затрет Users;
+        //Gmodeler::init();
 
         $captcha = Captcha::instance()->render();
 

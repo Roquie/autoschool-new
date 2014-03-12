@@ -6,10 +6,10 @@ class Model_Settings extends Model
     public function load()
     {
         return DB::select()
-                 ->from('Settings')
-                 ->as_object()
-                 ->execute()
-                 ->as_array('name', 'value');
+            ->from('Settings')
+            ->as_object()
+            ->execute()
+            ->as_array('name', 'value');
     }
 
 

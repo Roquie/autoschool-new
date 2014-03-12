@@ -2,16 +2,16 @@
 
 class Model_News extends ORM
 {
-	protected $_db = 'default';
-    protected $_table_name  = 'News';
+    protected $_db = 'default';
+    protected $_table_name  = 'news';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'title' => array('data_type' => 'string', 'is_nullable' => false),
-		'message' => array('data_type' => 'string', 'is_nullable' => false),
-		'group_id' => array('data_type' => 'int', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'title' => array('data_type' => 'string', 'is_nullable' => false),
+        'message' => array('data_type' => 'string', 'is_nullable' => false),
+        'group_id' => array('data_type' => 'int', 'is_nullable' => false),
+    );
 
     public function rules()
     {
@@ -35,8 +35,8 @@ class Model_News extends ORM
 
     public function check_group($id)
     {
-       // $admin = ORM::factory('Administrators')->where('email', '=', $email)->find();
-      //  return (bool)!$admin->email;
+        // $admin = ORM::factory('Administrators')->where('email', '=', $email)->find();
+        //  return (bool)!$admin->email;
         $result = ORM::factory('Groups')->where('id', '=', $id)->find();
         return (bool)$result->id;
     }

@@ -1,26 +1,32 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Office extends ORM
+class Model_Comissionersexam extends ORM
 {
     protected $_db = 'default';
-    protected $_table_name  = 'office';
+    protected $_table_name  = 'comissionersexam';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
-        'name' => array('data_type' => 'string', 'is_nullable' => false),
+        'comissioner_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'exam_id' => array('data_type' => 'int', 'is_nullable' => false),
     );
+
 
     public function rules()
     {
         return array(
-            'name' => array(
+            'comissioner_id' => array(
                 array('not_empty'),
-                array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 90)),
+                array('digit')
+            ),
+            'exam_id' => array(
+                array('not_empty'),
+                array('digit')
             )
         );
     }
+
 
     public function filters()
     {

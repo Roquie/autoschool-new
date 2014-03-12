@@ -1,35 +1,38 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Nationality extends ORM
+class Model_Staff_group extends ORM
 {
 	protected $_db = 'default';
-    protected $_table_name  = 'Nationality';
+    protected $_table_name  = 'staff_group';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'grajdanstvo' => array('data_type' => 'string', 'is_nullable' => false),
+		'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'group_id' => array('data_type' => 'int', 'is_nullable' => false),
 	);
+
+    protected $_belongs_to = array(
+        'group' => array(
+            'model' => 'Groups',
+            'foreign_key' => 'group_id',
+        )
+    );
 
     public function rules()
     {
         return array(
-            'grajdanstvo' => array(
+            'staff_id' => array(
                 array('not_empty'),
-                //array('alpha', array(':value', true)), - иначе нельзя вводить пробел и тире
-                array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 50)),
+                array('digit')
             ),
-
+            'group_id' => array(
+                array('not_empty'),
+                array('digit')
+            )
         );
     }
 
-    public function labels()
-    {
-        return array(
-            'grajdanstvo' => 'Гражданство',
-        );
-    }
 
     public function filters()
     {

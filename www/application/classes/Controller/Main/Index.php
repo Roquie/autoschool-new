@@ -5,15 +5,15 @@ class Controller_Main_Index extends Controller_Main_Base
 
 
     public function action_index()
-	{
+    {
         //генерация кода для моделей. Не включать - затрет Users;
         //Gmodeler::init();
 
         $captcha = Captcha::instance()->render();
 
-		$this->template->content = View::factory('main/index', compact('captcha'));
-	}
-	
+        $this->template->content = View::factory('main/index', compact('captcha'));
+    }
+
 
 
 

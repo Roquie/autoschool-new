@@ -33,7 +33,7 @@
                     <div class="well" style="height: 346px">
                         <div>
                             <h5 class="header_block">Настройки SMTP</h5>
-                            <form action="<?=Route::url('admin', array('controller' => 'settings', 'action' => 'index'))?>" method="post">
+                            <form action="<?=Route::url('admin', array('controller' => 'settings', 'action' => 'smtp'))?>" method="post">
                                 <label for="server">Сервер:</label>
                                 <input name="server" id="server" class="input-block-level" type="text" placeholder="smtp.gmail.com" value="<?=isset($data['server'])?$data['server']:null?>">
                                 <label for="port">Порт:</label>

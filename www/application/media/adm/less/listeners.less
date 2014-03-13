@@ -25,7 +25,10 @@
   .wrap {
     padding-left: 2px;
     overflow-x: auto;
-    height: 613px
+    height: 815px;
+    .loader {
+      text-align: center;
+    }
   }
 }
 
@@ -38,7 +41,7 @@
   }
 
   .well {
-    height: 650px;
+    height: 850px;
   }
 
 }
@@ -46,5 +49,26 @@
 .btn_actions {
   a.btn-success {
     margin-right: 5px;
+  }
+}
+table {
+  &.statement, &.contract {
+    tbody {
+      tr {
+        td {
+          &:nth-child(1) {
+            padding-top: 13px;
+          }
+          &:nth-child(2) {
+            input, select, .input-append {
+              margin-bottom: 0;
+            }
+            .input-append {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
   }
 }

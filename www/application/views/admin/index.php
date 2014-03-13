@@ -1,5 +1,6 @@
 <?=HTML::style('adm/css/listeners.css')?>
-
+<?=HTML::style('global/css/datepicker.css')?>
+<?=HTML::script('global/js/jquery.maskedinput.min.js')?>
 <div class="container">
     <div class="row">
         <div class="span4">
@@ -90,129 +91,220 @@
                         <!-- меняй класс active у кнопок + менять href'ы у кнопок редактирования и удаления (для того чтобы понять что удалять) statement_or_contract -->
                         <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                         <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
-                        <div class="btn-group">
-                            <a id="l_edit" href="#statement_or_contract" data-url="<?=URL::site('')?>" class="enb_dis btn btn-info" rel="tooltip" title="Режим редактирования"><i class="icon-pencil"></i></a>
-                            <a id="l_delete" href="#statement_or_contract" data-url="<?=URL::site('')?>" class="enb_dis btn btn-danger" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
-                        </div>
-
                     </div>
                 </div>
                 <div style="margin-top: 40px" class="tab-content">
                     <div class="tab-pane active" id="tab1">
 
-                        <table class="table table-striped statement">
-                            <tbody>
-                            <tr>
-                                <td>Фамилия</td>
-                                <td><a href="#" data-name="famil" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">dsfjgghfasdnnnqwe</a></td>
-                            </tr>
-                            <tr>
-                                <td>Имя</td>
-                                <td><a href="#" data-name="imya" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Hидрwewr</a></td>
-                            </tr>
-                            <tr>
-                                <td>Отчество</td>
-                                <td><a href="#" data-name="ot4estvo" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Сидорович</a></td>
-                            </tr>
-                            <tr>
-                                <td>Дата рождения</td>
-                                <td><a href="#" class="data_rojdeniya editable editable-click editable-disabled" data-name="data_rojdeniya" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="combodate" data-pk="" tabindex="-1">01.01.1974</a></td>
-                            </tr>
-                            <tr>
-                                <td>Гражданство</td>
-                                <td><a href="#" id="grajdanstvo" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-action="http://autoschool.ru/lk/ajax/getNat" data-type="select2" data-pk="1" data-name="nationality_id" data-value="1" class="editable editable-click editable-disabled" tabindex="-1">РФ</a></td>
-                            </tr>
-                            <tr>
-                                <td>Место рождения</td>
-                                <td><a href="#" data-name="mesto_rojdeniya" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">г. Москва, РФ</a></td>
-                            </tr>
-                            <tr>
-                                <td>Адрес регистрации по паспорту</td>
-                                <td><a href="#" data-name="adres_reg_po_pasporty" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">г. Москва, ул. Петросяна, д.13, к.9</a></td>
-                            </tr>
-                            <tr>
-                                <td>Временная регистрация</td>
-                                <td><a href="#" data-type="text" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-name="vrem_reg" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">г. Казань, ул. Матрёшкина, д.77</a></td>
-                            </tr>
-                            <tr>
-                                <td>Паспорт серия</td>
-                                <td><a href="#" data-name="pasport_seriya" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">2937</a></td>
-                            </tr>
-                            <tr>
-                                <td>Паспорт номер</td>
-                                <td><a href="#" data-name="pasport_nome" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">3453890</a></td>
-                            </tr>
-                            <tr>
-                                <td>Дата выдачи паспорта</td>
-                                <td><a href="#" class="pasport_data_vyda4i editable editable-click editable-disabled" data-name="pasport_data_vyda4i" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="combodate" data-pk="" tabindex="-1">20.01.1989</a></td>
-                            </tr>
-                            <tr>
-                                <td>Кем выдан паспорт</td>
-                                <td><a href="#" data-name="pasport_kem_vydan" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">ОВД Г.КАЗАНИ</a></td>
-                            </tr>
-                            <tr>
-                                <td>Мобильный телефон</td>
-                                <td><a href="#" data-name="mob_tel" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">+79091234567</a></td>
-                            </tr>
-                            <tr>
-                                <td>Домашний телефон</td>
-                                <td><a href="#" data-name="dom_tel" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">10238102487</a></td>
-                            </tr>
-                            <tr>
-                                <td>Образование</td>
-                                <td><a href="#" id="education" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-action="http://autoschool.ru/lk/ajax/getEdu" data-type="select2" data-pk="1" data-name="education_id" data-value="1" class="editable editable-click editable-disabled" tabindex="-1">Высшее</a></td>
-                            </tr>
-                            <tr>
-                                <td>Место работы</td>
-                                <td><a href="#" data-name="mesto_raboty" data-url="http://autoschool.ru/lk/ajax/changeStatement/21" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Гендиректор ООО АэроТрансКарго</a></td>
-                            </tr>
+                        <script>
+                            $(function() {
+                                var body = $('body');
 
-                            </tbody>
-                        </table>
+                                /*
+                                 * Настройки для календаря
+                                 * @type {{monthNames: Array, monthNamesShort: Array, dayNames: Array, dayNamesMin: Array}}
+                                 */
+                                $.datepicker.regional['ru'] = {
+                                    monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                                        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+                                    monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                                        'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+                                    dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+                                    dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
+                                };
+
+                                $.datepicker.setDefaults($.datepicker.regional['ru']);
+
+                                $('#data_rojdeniya, #pasport_data_vyda4i, #pasport_data_vyda4i_ind').datepicker({
+                                    maxDate: "+0D",
+                                    nextText: "&raquo;",
+                                    prevText: "&laquo;",
+                                    yearRange: "1950:<?=date('Y')?>",
+                                    dateFormat: 'dd.mm.yy',
+                                    changeMonth: true,
+                                    changeYear: true
+                                });
+
+                                // Отображение календаря при нажатии на иконку календаря
+                                body.on('click', '#calendar', function() {
+                                    $(this).closest('.input-append').find('input').datepicker( "show" );
+                                });
+
+                                $("#telephone, #telephone_ind").mask("8 (999) 999-99-99");
+                                $('#data_rojdeniya, #pasport_data_vyda4i').mask('99.99.9999');
+                            });
+                        </script>
+                        <form method="post" action="#">
+                            <table class="table table-striped statement">
+                                <tbody>
+                                <tr>
+                                    <td>Фамилия</td>
+                                    <td><input type="text" name="famil" value="Мельников" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Имя</td>
+                                    <td><input type="text" name="imya" value="Виктор" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Отчество</td>
+                                    <td><input type="text" name="otch" value="Игоревич" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Дата рождения</td>
+                                    <td>
+                                        <div class="input-append">
+                                            <input type="text" id="data_rojdeniya" name="data_rojdeniya" value="07.08.1994" style="width: 87.5%">
+                                            <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Место рождения</td>
+                                    <td><input type="text" name="mesto_rojdeniya" value="Москва" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Адрес регистрации по паспорту</td>
+                                    <td><input type="text" name="adres" value="ул. Одесская, д. 15, кв. 64" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Временная регистрация</td>
+                                    <td>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="vrem_reg">
+                                            имеется
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Гражданство</td>
+                                    <td>
+                                        <select name="nationality_id" class="input-block-level">
+                                            <option value="1">РФ</option>
+                                            <option value="2">РБ</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Образование</td>
+                                    <td>
+                                        <select name="education_id" class="input-block-level">
+                                            <option value="1">Высшее</option>
+                                            <option value="2">Среднее</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Паспорт серия</td>
+                                    <td><input type="text" name="pasport_seriya" value="4509" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Паспорт номер</td>
+                                    <td><input type="text" name="pasport_nomer" value="123456" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Дата выдачи паспорта</td>
+                                    <td>
+                                        <div class="input-append">
+                                            <input type="text" id="pasport_data_vyda4i" name="data_rojdeniya" value="08.08.2008" style="width: 87.5%">
+                                            <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Кем выдан паспорт</td>
+                                    <td><input type="text" name="pasport_kem_vydan" value="ОУФМС РОССИИ по р-ну" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Мобильный телефон</td>
+                                    <td><input type="text" name="tel" value="" id="telephone" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Место работы</td>
+                                    <td><input type="text" name="mesto_raboty" value="ООО ..." class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Пол</td>
+                                    <td>
+                                        <select name="sex" class="input-block-level">
+                                            <option value="0">Мужской</option>
+                                            <option value="1">Женский</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                            <input type="submit" value="Сохранить" class="btn btn-info btn-block" style="padding: 7px 12px; font-size: 16px"/>
+                        </form>
 
                     </div>
 
                     <div class="tab-pane" id="tab2">
 
-                        <table class="table table-striped contract">
+                        <form action="#" method="post">
+                            <table class="table table-striped contract">
 
-                            <tbody>
+                                <tbody>
 
-                            <tr>
-                                <td>Фамилия</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="famil" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Петрова</a></td>
-                            </tr>
-                            <tr>
-                                <td>Имя</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="imya" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Анастасия</a></td>
-                            </tr>
-                            <tr>
-                                <td>Отчество</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="ot4estvo" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Агафьевна</a></td>
-                            </tr>
-                            <tr>
-                                <td>Адрес регистрации по паспорту</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="adres_reg_po_pasporty" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">г. Москва, ул. Петросяна, д.13, к.9</a></td>
-                            </tr>
-                            <tr>
-                                <td>Паспорт серия</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_seriya" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">4382</a></td>
-                            </tr>
-                            <tr>
-                                <td>Паспорт номер</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_nome" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">20934820</a></td>
-                            </tr>
-                            <tr>
-                                <td>Кем выдан паспорт</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_kem_vydan" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">ОВД Г.КАЗАНИ 2</a></td>
-                            </tr>
-                            <tr>
-                                <td>Мобильный телефон</td>
-                                <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="phone" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">+79261195550</a></td>
-                            </tr>
+                                <tr>
+                                    <td>Фамилия</td>
+                                    <td><input type="text" name="famil" value="Мельников" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Имя</td>
+                                    <td><input type="text" name="imya" value="Виктор" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Отчество</td>
+                                    <td><input type="text" name="otch" value="Игоревич" class="input-block-level"/></td>
+                                </tr>
 
-                            </tbody>
-                        </table>
+                                <tr>
+                                    <td>Адрес регистрации по паспорту</td>
+                                    <td><input type="text" name="adres" value="ул. Одесская, д. 15, кв. 64" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Временная регистрация</td>
+                                    <td>
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="vrem_reg">
+                                            имеется
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Паспорт серия</td>
+                                    <td><input type="text" name="pasport_seriya" value="4509" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Паспорт номер</td>
+                                    <td><input type="text" name="pasport_nomer" value="123456" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Дата выдачи паспорта</td>
+                                    <td>
+                                        <div class="input-append">
+                                            <input type="text" id="pasport_data_vyda4i_ind" name="data_rojdeniya" value="08.08.2008" style="width: 87.5%">
+                                            <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Кем выдан паспорт</td>
+                                    <td><input type="text" name="pasport_kem_vydan" value="ОУФМС РОССИИ по р-ну" class="input-block-level"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Мобильный телефон</td>
+                                    <td><input type="text" name="tel" value="" id="telephone_ind" class="input-block-level"/></td>
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+                            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                            <input type="submit" value="Сохранить" class="btn btn-info btn-block" style="padding: 7px 12px; font-size: 16px"/>
+                        </form>
 
                     </div>
                 </div>

@@ -2,26 +2,14 @@
 
 class Model_Education extends ORM
 {
-    protected $_db = 'default';
-    protected $_table_name  = 'education';
+	protected $_db = 'default';
+    protected $_table_name  = 'Educations';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-        'id' => array('data_type' => 'int', 'is_nullable' => false),
-        'name' => array('data_type' => 'string', 'is_nullable' => false),
-    );
-
-
-    public function rules()
-    {
-        return array(
-            'name' => array(
-                array('not_empty'),
-                array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 50)),
-            )
-        );
-    }
+		'id' => array('data_type' => 'int', 'is_nullable' => false),
+		'name' => array('data_type' => 'string', 'is_nullable' => false),
+	);
 
     public function filters()
     {
@@ -32,4 +20,5 @@ class Model_Education extends ORM
             )
         );
     }
+
 }

@@ -15,9 +15,11 @@
 
     <?=HTML::style('http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css')?>
     <?=HTML::script('global/js/jquery.min.js')?>
+    <?=HTML::script('global/js/jquery-ui.min.js')?>
     <?=HTML::script('global/js/bootstrap.min.js')?>
     <?=HTML::script('global/js/popup.js')?>
     <?=HTML::script('adm/js/global.js')?>
+    <?=HTML::script('adm/js/ajaxSend.js')?>
 
     <!--[if IE]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

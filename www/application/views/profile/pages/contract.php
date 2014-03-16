@@ -29,8 +29,8 @@
                 <label for="imya">Имя</label>
                 <input type="text" class="input-medium" name="imya" id="imya" value="<?=$contract['imya']?>"/>
                 <br/>
-                <label for="ot4estvo">Отчество</label>
-                <input type="text" class="input-medium" name="ot4estvo" id="ot4estvo" value="<?=$contract['ot4estvo']?>"/>
+                <label for="otch">Отчество</label>
+                <input type="text" class="input-medium" name="otch" id="otch" value="<?=$contract['otch']?>"/>
                 <br/>
                 <label for="phone">Телефон</label>
                 <input type="tel" class="input-medium" name="phone" id="phone" value="<?=$contract['phone']?>"/>

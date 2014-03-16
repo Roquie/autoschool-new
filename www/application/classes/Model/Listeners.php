@@ -145,9 +145,6 @@ class Model_Listeners extends ORM
                 //  array('alpha_numeric', array(':value', true)),
                 //  array('alpha', array(':value', true)),
             ),
-            'document_id' => array(
-                array('digit')
-            ),
             'document_seriya' => array(
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),

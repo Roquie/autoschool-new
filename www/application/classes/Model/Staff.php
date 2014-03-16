@@ -11,9 +11,19 @@ class Model_Staff extends ORM
 		'imya' => array('data_type' => 'string', 'is_nullable' => false),
 		'famil' => array('data_type' => 'string', 'is_nullable' => false),
 		'otch' => array('data_type' => 'string', 'is_nullable' => false),
-		'adres' => array('data_type' => 'string', 'is_nullable' => false),
 		'tel' => array('data_type' => 'string', 'is_nullable' => false),
-		'data' => array('data_type' => 'string', 'is_nullable' => false),
+		'region' => array('data_type' => 'string', 'is_nullable' => false),
+		'street' => array('data_type' => 'string', 'is_nullable' => false),
+		'rion' => array('data_type' => 'string', 'is_nullable' => false),
+		'dom' => array('data_type' => 'string', 'is_nullable' => false),
+		'korpys' => array('data_type' => 'string', 'is_nullable' => false),
+		'kvartira' => array('data_type' => 'string', 'is_nullable' => false),
+		'nas_pynkt' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'document_seriya' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_nomer' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
 		'sex' => array('data_type' => 'int', 'is_nullable' => false),
 		'nomer_prav' => array('data_type' => 'string', 'is_nullable' => false),
 	);
@@ -54,11 +64,56 @@ class Model_Staff extends ORM
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50))
             ),
-            'adres' => array(
-                array('not_empty'),
-                array('min_length', array(':value', 2)),
-                array('max_length', array(':value', 1000))
+            'region' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
+            'street' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'rion' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'dom' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'korpys' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'kvartira' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'nas_pynkt' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'document_id' => array(
+                array('digit')
+            ),
+            'document_seriya' => array(
+                array('not_empty'),
+                array('alpha_numeric', array(':value', true)),
+            ),
+            'document_nomer' => array(
+                array('not_empty'),
+                array('alpha_numeric', array(':value', true)),
+            ),
+            'document_data_vydachi' => array(
+                array('not_empty'),
+                array('date')
+            ),
+            'document_kem_vydan' => array(
+                array('not_empty'),
+                // array('alpha_space', array(':value')),
+            ),
+
             'tel' => array(
                 array('not_empty'),
                 array('phone', array(':value', 11)),

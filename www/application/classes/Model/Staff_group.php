@@ -2,15 +2,15 @@
 
 class Model_Staff_group extends ORM
 {
-	protected $_db = 'default';
+    protected $_db = 'default';
     protected $_table_name  = 'staff_group';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
-		'group_id' => array('data_type' => 'int', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'group_id' => array('data_type' => 'int', 'is_nullable' => false),
+    );
 
     protected $_belongs_to = array(
         'group' => array(

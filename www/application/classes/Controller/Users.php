@@ -131,12 +131,12 @@ class Controller_Users extends Controller_Main_Base
             $valid->rule('imya', 'alpha', array(':value', true));
             $valid->rule('imya', 'min_length', array(':value', 2));
             $valid->rule('imya', 'max_length', array(':value', 50));
-            $valid->rule('ot4estvo', 'not_empty');
-            $valid->rule('ot4estvo', 'alpha', array(':value', true));
-            $valid->rule('ot4estvo', 'min_length', array(':value', 2));
-            $valid->rule('ot4estvo', 'max_length', array(':value', 50));
-            $valid->rule('mob_tel', 'not_empty');
-            $valid->rule('mob_tel', 'phone', array(':value', 11));
+            $valid->rule('otch', 'not_empty');
+            $valid->rule('otch', 'alpha', array(':value', true));
+            $valid->rule('otch', 'min_length', array(':value', 2));
+            $valid->rule('otch', 'max_length', array(':value', 50));
+            $valid->rule('tel', 'not_empty');
+            $valid->rule('tel', 'phone', array(':value', 11));
 
             if ($valid->check())
             {
@@ -158,13 +158,13 @@ class Controller_Users extends Controller_Main_Base
 
                     try
                     {
-                        DB::insert('Listeners')
-                            ->columns(array('famil', 'imya', 'ot4estvo', 'tel', 'user_id'))
+                        DB::insert('listeners')
+                            ->columns(array('famil', 'imya', 'otch', 'tel', 'user_id'))
                             ->values(array(
                                 'famil' => $post['famil'],
                                 'imya' => $post['imya'],
-                                'ot4estvo' => $post['ot4estvo'],
-                                'tel' => $post['mob_tel'],
+                                'otch' => $post['otch'],
+                                'tel' => $post['tel'],
                                 'user_id' => $pk
                             ))->execute();
                     }
@@ -229,7 +229,8 @@ class Controller_Users extends Controller_Main_Base
 
             try
             {
-                $users = ORM::factory('User', array('email' => $data['email']))->find();
+
+                $users = ORM::factory('User')->where('email', '=', $data['email'])->find();
                 if ($users->loaded())
                 {
                     $users->update_user(
@@ -240,7 +241,7 @@ class Controller_Users extends Controller_Main_Base
                         ));
 
                     $mail_content = View::factory('tmpmail/profile/forgot')
-                        ->set('username', $post['imya'])
+                        ->set('name', $users->listener->imya)
                         ->set('login', $post['email'])
                         ->set('pass', $newpass);
 

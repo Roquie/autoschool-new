@@ -31,10 +31,10 @@
                         <input type="text" id="famil" autofocus="autofocus" name="famil"  tabindex="1" value="<?=isset($post['famil']) ? $post['famil'] : null?>">
                         <label for="imya">Имя</label>
                         <input type="text" name="imya" id="imya" tabindex="2" value="<?=isset($post['imya']) ? $post['imya'] : null?>">
-                        <label for="ot4estvo">Отчество</label>
-                        <input type="text" name="ot4estvo" id="ot4estvo" tabindex="3" value="<?=isset($post['ot4estvo']) ? $post['ot4estvo'] : null?>">
-                        <label id="mob_tel">Мобильный телефон</label>
-                        <input type="text" id="mob_tel" name="mob_tel" placeholder="8 (926) 123-45-67" tabindex="4" value="<?=isset($post['mob_tel']) ? $post['mob_tel'] : null?>">
+                        <label for="otch">Отчество</label>
+                        <input type="text" name="otch" id="otch" tabindex="3" value="<?=isset($post['otch']) ? $post['otch'] : null?>">
+                        <label id="tel">Мобильный телефон</label>
+                        <input type="text" id="tel" name="tel" placeholder="8 (926) 123-45-67" tabindex="4" value="<?=isset($post['tel']) ? $post['tel'] : null?>">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" tabindex="5" value="<?=isset($post['email']) ? $post['email'] : null?>">
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>

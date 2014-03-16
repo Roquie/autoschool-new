@@ -97,54 +97,37 @@ class Model_Listeners extends ORM
                 array('max_length', array(':value', 50)),
             ),
             'otch' => array(
+                array('not_empty'),
                 array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
+            ),
+            'tel' => array(
+                array('not_empty'),
             ),
             'data_rojdeniya' => array(
                 array('not_empty'),
                 array('date')
             ),
-            'mesto_rojdeniya' => array(
+            'sex' => array(
                 array('not_empty'),
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
+
+            ),
+            'nationality_id' => array(
+                array('not_empty'),
+                array('digit'),
             ),
 
-            'region' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'street' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
+            'document_id' => array(
+                array('not_empty'),
+                array('digit'),
             ),
 
-            'rion' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'dom' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'korpys' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'kvartira' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'nas_pynkt' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
+            'document_data_vydachi' => array(
+                array('not_empty'),
+                array('date')
             ),
 
-            'vrem_reg' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
             'document_seriya' => array(
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
@@ -153,16 +136,62 @@ class Model_Listeners extends ORM
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
-            'document_data_vydachi' => array(
+
+            'mesto_rojdeniya' => array(
                 array('not_empty'),
-                array('date')
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
+
+            'region' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'street' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'rion' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'dom' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'korpys' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'kvartira' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'nas_pynkt' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'vrem_reg' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
             'document_kem_vydan' => array(
                 array('not_empty'),
                 // array('alpha_space', array(':value')),
             ),
-            'tel' => array(
+            'education_id' => array(
                 array('not_empty'),
+                array('digit'),
             ),
             'mesto_raboty' => array(
                 array('not_empty'),
@@ -171,14 +200,6 @@ class Model_Listeners extends ORM
             'about' => array(
                 array('not_empty'),
                 //array('alpha', array(':value', true)), - иначе пробелы и знаки препинания не работают.
-            ),
-            'nationality_id' => array(
-                array('not_empty'),
-                array('digit'),
-            ),
-            'education_id' => array(
-                array('not_empty'),
-                array('digit'),
             ),
             'user_id' => array(
                 array('digit'),
@@ -193,25 +214,47 @@ class Model_Listeners extends ORM
                 array('digit'),
             ),
             'status' => array(
-                array('not_empty'),
                 array('regex', array(':value', '/[0-3]/'))
             ),
-            'sex' => array(
-                array('not_empty'),
-
-            ),
             'nomer_med' => array(
-                array('not_empty'),
 
             ),
             'seriya_med' => array(
-                array('not_empty'),
 
             ),
             'data_med' => array(
-                array('not_empty'),
                 array('date'),
             ),
+        );
+    }
+
+    public function labels()
+    {
+        return array(
+            'data_rojdeniya' => 'Поле "Дата рождения" ',
+            'otch' => 'Поле "Отчество" ',
+            'imya' => 'Поле "Имя" ',
+            'famil' => 'Поле "Фамилия" ',
+            'tel' => 'Поле "Моб. тел." ',
+            'sex' => 'Поле "Пол" ',
+            'nationality_id' => 'Поле "Гражданство" ',
+            'education_id' => 'Поле "Образование" ',
+            'document_id' => 'Поле "Тип документа" ',
+            'document_data_vydachi' => 'Поле "Дата выдачи" ',
+            'document_seriya' => 'Поле "Серия документа" ',
+            'document_nomer' => 'Поле "Номер документа" ',
+            'mesto_rojdeniya' => 'Поле "Место рождения" ',
+            'region' => 'Поле "Регион" ',
+            'street' => 'Поле "Улица" ',
+            'rion' => 'Поле "Район" ',
+            'dom' => 'Поле "Дом" ',
+            'korpys' => 'Поле "Корпус" ',
+            'kvartira' => 'Поле "Квартира" ',
+            'nas_pynkt' => 'Поле "Населенный пункт" ',
+            'vrem_reg' => 'Поле "Временная регистрация" ',
+            'document_kem_vydan' => 'Поле "Кем выдан документ" ',
+            'mesto_raboty' => 'Поле "Место работы" ',
+            'about' => 'Поле "Как вы узнали о нас" ',
         );
     }
 

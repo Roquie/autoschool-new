@@ -41,8 +41,13 @@
                 <br/>
                 <label for="sex">Пол</label>
                 <select style="width: 165px" name="sex" id="sex">
-                    <option value="1">Мужской</option>
-                    <option value="0">Женский</option>
+                    <?if($statement['sex'] == 1):?>
+                        <option value="1">Мужской</option>
+                        <option value="0">Женский</option>
+                    <?else:?>
+                        <option value="0">Женский</option>
+                        <option value="1">Мужской</option>
+                    <?endif?>
                 </select>
                 <br/>
                 <label for="grajdanstvo">Гражданство</label>
@@ -129,7 +134,11 @@
                         <input type="text"  class="input-medium" name="nas_pynkt" id="nas_pynkt" value="<?=$statement['nas_pynkt']?>"/>
                     </div>
                     <div class="span2" style="margin-left: 0; width: 180px; margin-top: 20px">
-                        <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
+                        <?if($statement['vrem_reg'] == 1):?>
+                            <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg" checked/> У меня временная регистрация</label>
+                        <?else:?>
+                            <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
+                        <?endif?>
                     </div>
                 </div>
                 <label for="document_kem_vydan">Кем выдан документ</label>

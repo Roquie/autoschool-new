@@ -50,16 +50,25 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
+            if (isset($post['vrem_reg']))
+            {
+                $post['vrem_reg'] = (bool)$post['vrem_reg'];
+            }
+            else
+            {
+                $post['vrem_reg'] = 0;
+            }
+
             try
             {
                 if ($user->listener->status < 3)
                 {
                     $user->listener
-                        ->values($post)
-                        ->where('user_id', '=', $a->get_user()->id)
-                        ->update();
+                         ->values($post)
+                         ->where('user_id', '=', $a->get_user()->id)
+                         ->update();
 
-                    $success = 'update';
+                    $success = Kohana::message('profile', 'statement.update_ok');
                 }
             }
             catch(ORM_Validation_Exception $e)

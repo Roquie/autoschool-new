@@ -91,9 +91,9 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $post = $this->request->post();
         $user = ORM::factory('User', $a->get_user()->id);
 
-        $c = ORM::factory('Contracts', array('user_id' => $a->get_user()->id));
+        $c = ORM::factory('Individual', array('listener_id' => $a->get_user()->id));
 
-        $form_data = $user->contract->as_array();
+        $form_data = $user->indy->as_array();
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {

@@ -58,7 +58,11 @@ class Model_User extends Model_Auth_User
     public function filters()
     {
         return array(
-            true => array(
+            'email' => array(
+                array('trim'),
+                array('Security::xss_clean', array(':value')),
+            ),
+            'photo' => array(
                 array('trim'),
                 array('Security::xss_clean', array(':value')),
             ),

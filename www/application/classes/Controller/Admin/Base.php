@@ -8,11 +8,10 @@ class Controller_Admin_Base extends Controller_Template
     {
         parent::before();
 
-/*        if (!Auth::instance()->logged_in('admin'))
+        if (!Auth::instance()->logged_in('admin'))
         {
             throw new HTTP_Exception_404();
-        }*/
-
+        }
 
         $a = Auth::instance();
         $admin = $a->get_user();

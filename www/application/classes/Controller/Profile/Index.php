@@ -93,13 +93,13 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         $c = ORM::factory('Individual', array('listener_id' => $a->get_user()->id));
 
-        $form_data = $user->indy->as_array();
+        $form_data = $user->listener->indy->as_array();
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
             try
             {
-                if ($user->status < 3)
+                if ($user->listener->status < 3)
                 {
                     if ($c->loaded())
                     {
@@ -123,7 +123,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         $v = View::factory('profile/pages/contract', compact('errors', 'success'))
                  ->set('contract', $form_data)
-                 ->set('status', $user->status)
+                 ->set('status', $user->listener->status)
                  ->set('contract_exists', $c)
                  ->render();
 

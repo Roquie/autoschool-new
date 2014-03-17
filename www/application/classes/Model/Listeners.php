@@ -14,6 +14,7 @@ class Model_Listeners extends ORM
 		'education_id' => array('data_type' => 'int', 'is_nullable' => true),
 		'group_id' => array('data_type' => 'int', 'is_nullable' => true),
 		'staff_id' => array('data_type' => 'int', 'is_nullable' => true),
+		'is_individual' => array('data_type' => 'int', 'is_nullable' => true),
 		'status' => array('data_type' => 'int', 'is_nullable' => true),
 		'imya' => array('data_type' => 'string', 'is_nullable' => false),
 		'famil' => array('data_type' => 'string', 'is_nullable' => false),

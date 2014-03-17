@@ -3,7 +3,7 @@
 class Model_Education extends ORM
 {
 	protected $_db = 'default';
-    protected $_table_name  = 'Educations';
+    protected $_table_name  = 'education';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(

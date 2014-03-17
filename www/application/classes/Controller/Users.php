@@ -83,7 +83,9 @@ class Controller_Users extends Controller_Main_Base
                                     $a->force_login($user['email']);
                                     HTTP::redirect('/admin');
                                 }
+
                             }
+
                         }
                         else
                         {

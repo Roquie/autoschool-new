@@ -43,13 +43,6 @@ class Model_User extends Model_Auth_User
                 array('email'),
                 array(array($this, 'unique'), array('email', ':value')),
             ),
-            'status' => array(
-                array('digit'),
-                array('regex', array(':value', '/[0-3]/'))
-            ),
-            'group_id' => array(
-                array('digit'),
-            ),
         );
     }
 
@@ -58,8 +51,6 @@ class Model_User extends Model_Auth_User
         return array(
             'id' => 'Номер пользователя',
             'email' => 'Почта',
-            'status' => 'Статус',
-            'group_id' => 'id группы',
             'password' => 'Поле "Пароль" '
         );
     }
@@ -88,7 +79,7 @@ class Model_User extends Model_Auth_User
     {
         $no_approved ? $condition = '<' : $condition = '=';
 
-        $users = ORM::factory('Users')->where('status', $condition, 3)->find_all();
+        $users = ORM::factory('Listeners')->where('status', $condition, 3)->find_all();
         return $this->_filter_user_list($users);
     }
 
@@ -122,9 +113,9 @@ class Model_User extends Model_Auth_User
         $arr = array();
         foreach ($obj_orm_users as $value)
             $arr[$value->id] =
-                $value->Statements->famil . ' '.
-                UTF8::substr($value->Statements->imya,0, 1).'.' .
-                UTF8::substr($value->Statements->ot4estvo,0, 1).'.';
+                $value->famil . ' '.
+                UTF8::substr($value->imya,0, 1).'.' .
+                UTF8::substr($value->otch,0, 1).'.';
 
         return $arr;
     }

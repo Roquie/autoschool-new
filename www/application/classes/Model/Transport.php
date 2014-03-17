@@ -10,11 +10,6 @@ class Model_Transport extends ORM
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
 		'name' => array('data_type' => 'string', 'is_nullable' => false),
 		'reg_number' => array('data_type' => 'string', 'is_nullable' => false),
-		'vin' => array('data_type' => 'string', 'is_nullable' => false),
-		'ecology_class' => array('data_type' => 'string', 'is_nullable' => false),
-		'color' => array('data_type' => 'string', 'is_nullable' => false),
-		'max_weight' => array('data_type' => 'string', 'is_nullable' => false),
-		'type' => array('data_type' => 'string', 'is_nullable' => false),
 		'description' => array('data_type' => 'string', 'is_nullable' => false),
 		'doc_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'doc_nomer' => array('data_type' => 'string', 'is_nullable' => false),
@@ -33,6 +28,9 @@ class Model_Transport extends ORM
             'reg_number' => array(
                 array('not_empty'),
             ),
+            'doc_data_reg' => array(
+                array('date'),
+            ),
 
         );
     }
@@ -47,4 +45,5 @@ class Model_Transport extends ORM
             )
         );
     }
+
 }

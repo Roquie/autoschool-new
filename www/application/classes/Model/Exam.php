@@ -2,18 +2,20 @@
 
 class Model_Exam extends ORM
 {
-    protected $_db = 'default';
+	protected $_db = 'default';
     protected $_table_name  = 'exam';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-        'id' => array('data_type' => 'int', 'is_nullable' => false),
-        'group_id' => array('data_type' => 'int', 'is_nullable' => false),
-        'predsedatel' => array('data_type' => 'string', 'is_nullable' => false),
-        'sekretar' => array('data_type' => 'string', 'is_nullable' => false),
-        'number_protocol' => array('data_type' => 'string', 'is_nullable' => false),
-        'date_protocol' => array('data_type' => 'string', 'is_nullable' => false),
-    );
+		'id' => array('data_type' => 'int', 'is_nullable' => false),
+		'group_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'predsedatel' => array('data_type' => 'string', 'is_nullable' => false),
+		'sekretar' => array('data_type' => 'string', 'is_nullable' => false),
+		'number_protocol' => array('data_type' => 'string', 'is_nullable' => false),
+		'data_protocola' => array('data_type' => 'string', 'is_nullable' => false),
+		'deducted' => array('data_type' => 'int', 'is_nullable' => false),
+		'deducted_po_neysp' => array('data_type' => 'int', 'is_nullable' => false),
+	);
 
     public function rules()
     {
@@ -34,9 +36,15 @@ class Model_Exam extends ORM
             'number_protocol' => array(
                 array('not_empty')
             ),
-            'date_protocol' => array(
+            'data_protocola' => array(
                 array('not_empty'),
                 array('date'),
+            ),
+            'deducted' => array(
+                array('digit')
+            ),
+            'deducted_po_neysp' => array(
+                array('digit')
             ),
         );
     }

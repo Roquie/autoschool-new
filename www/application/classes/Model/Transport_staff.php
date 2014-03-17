@@ -2,15 +2,15 @@
 
 class Model_Transport_staff extends ORM
 {
-	protected $_db = 'default';
+    protected $_db = 'default';
     protected $_table_name  = 'transport_staff';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(
-		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'transport_id' => array('data_type' => 'int', 'is_nullable' => false),
-		'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
-	);
+        'id' => array('data_type' => 'int', 'is_nullable' => false),
+        'transport_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
+    );
 
     public function rules()
     {

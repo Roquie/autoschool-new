@@ -22,64 +22,128 @@
     <?endif?>
     <form action="<?=Route::to('profile', 'profile#statement')?>" method="post" accept-charset="utf-8" novalidate>
         <div class="row">
-            <div class="span3" style="line-height: 45px; width: 200px">
+            <div class="span3" style="line-height: 40px; width: 200px">
                 <label for="famil">Фамилия</label>
                 <input type="text" class="input-medium" name="famil" id="famil" value="<?=$statement['famil']?>"/>
                 <br/>
                 <label for="imya">Имя</label>
                 <input type="text" class="input-medium" name="imya" id="imya" value="<?=$statement['imya']?>"/>
                 <br/>
-                <label for="ot4estvo">Отчество</label>
-                <input type="text" class="input-medium" name="ot4estvo" id="ot4estvo" value="<?=$statement['ot4estvo']?>"/>
+                <label for="otch">Отчество</label>
+                <input type="text" class="input-medium" name="otch" id="otch" value="<?=$statement['otch']?>"/>
+                <br/>
+                <label for="tel">Моб. телефон</label>
+                <input type="text" class="input-medium" name="tel" id="tel" value="<?=$statement['tel']?>"/>
                 <br/>
                 <label for="data_rojdeniya">Дата рождения</label>
                 <input type="date" class="input-medium" name="data_rojdeniya" id="data_rojdeniya" value="<?=$statement['data_rojdeniya']?>"/>
 
+                <br/>
+                <label for="sex">Пол</label>
+                <select style="width: 165px" name="sex" id="sex">
+                    <?if($statement['sex'] == 1):?>
+                        <option value="1">Мужской</option>
+                        <option value="0">Женский</option>
+                    <?else:?>
+                        <option value="0">Женский</option>
+                        <option value="1">Мужской</option>
+                    <?endif?>
+                </select>
                 <br/>
                 <label for="grajdanstvo">Гражданство</label>
                 <select style="width: 165px" name="nationality_id" id="grajdanstvo">
                     <?if(!empty($national)):?>
                         <?foreach($national as $k => $v):?>
                             <?if($v->id == $statement['nationality_id']):?>
-                                <option value="<?=$v->id?>" selected><?=$v->grajdanstvo?></option>
+                                <option value="<?=$v->id?>" selected><?=$v->name?></option>
                             <?else:?>
-                                <option value="<?=$v->id?>"><?=$v->grajdanstvo?></option>
+                                <option value="<?=$v->id?>"><?=$v->name?></option>
                             <?endif?>
                         <?endforeach?>
                     <?endif?>
                 </select>
-
+                <label for="type_document">Тип документа</label>
+                <select style="width: 165px" name="document_id" id="type_document">
+                    <?if(!empty($type_doc)):?>
+                        <?foreach($type_doc as $k => $v):?>
+                            <?if($v->id == $statement['document_id']):?>
+                                <option value="<?=$v->id?>" selected><?=$v->name?></option>
+                            <?else:?>
+                                <option value="<?=$v->id?>"><?=$v->name?></option>
+                            <?endif?>
+                        <?endforeach?>
+                    <?endif?>
+                </select>
+                <br/>
+                <label for="document_data_vydachi">Дата выдачи</label>
+                <input type="date" class="input-medium" name="document_data_vydachi" id="document_data_vydachi" value="<?=$statement['document_data_vydachi']?>"/>
 
             </div>
             <div class="span5">
+                <div class="row">
+                    <div class="span3">
+                        <label for="document_seriya">Серия документа</label>
+                        <input type="text" class="input-medium" name="document_seriya" id="document_seriya" value="<?=$statement['document_seriya']?>"/>
+                    </div>
+                    <div class="span2">
+                        <label for="document_nomer">Номер документа</label>
+                        <input type="text" class="input-medium" name="document_nomer" id="document_nomer" value="<?=$statement['document_nomer']?>"/>
+                    </div>
+                </div>
                 <label for="mesto_rojdeniya">Место рождения</label>
                 <input type="text" style="width: 102%" name="mesto_rojdeniya" id="mesto_rojdeniya" value="<?=$statement['mesto_rojdeniya']?>"/>
                 <br/>
-                <label for="adres_reg_po_pasporty">Адрес регистрации по паспорту</label>
-                <input type="text" style="width: 102%" name="adres_reg_po_pasporty" id="adres_reg_po_pasporty" value="<?=$statement['adres_reg_po_pasporty']?>"/>
-                <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
+                <label>Адрес регистрации (Место жительства)</label>
                 <div class="row">
                     <div class="span3">
-                        <label for="pasport_seriya">Паспорт серия</label>
-                        <input type="text" class="input-medium" name="pasport_seriya" id="pasport_seriya" value="<?=$statement['pasport_seriya']?>"/>
+                        <label for="region">Регион</label>
+                        <input type="text" class="input-medium" name="region" id="region" value="<?=$statement['region']?>"/>
                     </div>
                     <div class="span2">
-                        <label for="pasport_nomer">Паспорт номер</label>
-                        <input type="text" class="input-medium" name="pasport_nomer" id="pasport_nomer" value="<?=$statement['pasport_nomer']?>"/>
+                        <label for="street">Улица</label>
+                        <input type="text" class="input-medium" name="street" id="street" value="<?=$statement['street']?>"/>
                     </div>
                 </div>
-                <label for="pasport_kem_vydan">Кем выдан паспорт</label>
-                <input type="text" style="width: 102%" name="pasport_kem_vydan" id="pasport_kem_vydan" value="<?=$statement['pasport_kem_vydan']?>"/>
                 <div class="row">
-                    <div class="span3">
-                        <label for="pasport_data_vyda4i">Дата выдачи</label>
-                        <input type="date" class="input-medium" name="pasport_data_vyda4i" id="pasport_data_vyda4i" value="<?=$statement['pasport_data_vyda4i']?>"/>
+                    <div class="span6">
+                        <div class="span2" style="margin-left:  0;">
+                            <label for="rion">Район</label>
+                            <input type="text" class="input-medium" name="rion" id="rion" value="<?=$statement['rion']?>"/>
+                        </div>
+                        <div style="display: table-cell; padding-left: 40px">
+                            <div class="span1">
+                                <label for="dom">Дом</label>
+                                <input type="text" style="width: 40px" name="dom" id="dom" value="<?=$statement['dom']?>"/>
+                            </div>
+                            <div class="span1">
+                                <label for="korpys">Корп.</label>
+                                <input type="text" style="width: 30px" name="korpys" id="korpys" value="<?=$statement['korpys']?>"/>
+                            </div>
+                            <div class="span1">
+                                <label for="kvartira">Кв.</label>
+                                <input type="text" style="width: 30px" name="kvartira" id="kvartira" value="<?=$statement['kvartira']?>"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="span2">
-                        <label for="mob_tel">Моб. телефон</label>
-                        <input type="text" class="input-medium" name="mob_tel" id="mob_tel" value="<?=$statement['mob_tel']?>"/>
+
+
+                </div>
+                <div class="row">
+                    <div class="span3" style="width: 200px">
+                        <label for="nas_pynkt">Насел. пункт</label>
+                        <input type="text"  class="input-medium" name="nas_pynkt" id="nas_pynkt" value="<?=$statement['nas_pynkt']?>"/>
+                    </div>
+                    <div class="span2" style="margin-left: 0; width: 180px; margin-top: 20px">
+                        <?if($statement['vrem_reg'] == 1):?>
+                            <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg" checked/> У меня временная регистрация</label>
+                        <?else:?>
+                            <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
+                        <?endif?>
                     </div>
                 </div>
+                <label for="document_kem_vydan">Кем выдан документ</label>
+                <input type="text" style="width: 102%" name="document_kem_vydan" id="document_kem_vydan" value="<?=$statement['document_kem_vydan']?>"/>
+
                 <div class="row">
                     <div class="span3">
                         <label for="education">Образование</label>
@@ -87,9 +151,9 @@
                             <?if(!empty($edu)):?>
                                 <?foreach($edu as $k => $v):?>
                                     <?if($v->id == $statement['education_id']):?>
-                                        <option value="<?=$v->id?>" selected><?=$v->obrazovanie?></option>
+                                        <option value="<?=$v->id?>" selected><?=$v->name?></option>
                                     <?else:?>
-                                        <option value="<?=$v->id?>"><?=$v->obrazovanie?></option>
+                                        <option value="<?=$v->id?>"><?=$v->name?></option>
                                     <?endif?>
                                 <?endforeach?>
                             <?endif?>
@@ -104,7 +168,7 @@
                 <input type="text" style="width: 102%" name="about" id="about" value="<?=$statement['about']?>"/>
                 <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                 <?if($status < 3):?>
-                    <input type="submit" class="btn btn-info span3" style="margin-top: 9px" value="Обновить данные"/>
+                    <input type="submit" class="btn btn-info span3" style="margin-top: 14px" value="Обновить данные"/>
                 <?endif?>
             </div>
         </div>

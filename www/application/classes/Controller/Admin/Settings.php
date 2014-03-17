@@ -161,27 +161,36 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         $csrf = $this->request->post('csrf');
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
-            var_export($_FILES);
+            //var_export($_FILES);
 
             $file_type_id = $this->request->post('type_file');
 
-            if (empty($file_type_id)) {
+            if (empty($file_type_id))
+            {
                 $errors = array('empty' => 'Выберите файл, который нужно заменить');
-            } else {
+            }
+            else
+            {
                 $validate = Validation::factory($_FILES)
                     ->rule('files', 'Upload::valid')
                     ->rule('files', 'Upload::not_empty')
                     ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf')))
                     ->rule('files', 'Upload::size', array(':value', '5M'));
 
-                if ($validate->check()) {
+                if ($validate->check())
+                {
                     $file_info = ORM::factory('Files')->where('id', '=', $file_type_id)->find();
-                    if ($file_info->filename === $_FILES['files']['name']) {
-                        Upload::save($_FILES['files'], $file_info->filename, APPPATH.$file_info->path, 0775);
-                    } else {
+                    if ($file_info->filename === $_FILES['files']['name'])
+                    {
+                        Upload::save($_FILES['files'], $file_info->filename, APPPATH.$file_info->path, 0444);
+                    }
+                    else
+                    {
                         $errors = array('not_equal' => 'Имя загружаемого файла не соответствует выбранному');
                     }
-                } else {
+                }
+                else
+                {
                     $errors = $validate->errors('upload');
                 }
             }

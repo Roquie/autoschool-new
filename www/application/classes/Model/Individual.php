@@ -12,12 +12,19 @@ class Model_Individual extends ORM
 		'imya' => array('data_type' => 'string', 'is_nullable' => false),
 		'famil' => array('data_type' => 'string', 'is_nullable' => false),
 		'otch' => array('data_type' => 'string', 'is_nullable' => false),
-		'adres' => array('data_type' => 'string', 'is_nullable' => false),
-		'pasport_seriya' => array('data_type' => 'string', 'is_nullable' => false),
-		'pasport_nomer' => array('data_type' => 'string', 'is_nullable' => false),
-		'pasport_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
-		'pasport_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
-		'vrem_reg' => array('data_type' => 'int', 'is_nullable' => false),
+		'region' => array('data_type' => 'string', 'is_nullable' => false),
+		'street' => array('data_type' => 'string', 'is_nullable' => false),
+		'rion' => array('data_type' => 'string', 'is_nullable' => false),
+		'dom' => array('data_type' => 'string', 'is_nullable' => false),
+		'korpys' => array('data_type' => 'string', 'is_nullable' => false),
+		'kvartira' => array('data_type' => 'string', 'is_nullable' => false),
+		'nas_pynkt' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'document_seriya' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_nomer' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
+		'vrem_reg' => array('data_type' => 'int', 'is_nullable' => true),
 		'tel' => array('data_type' => 'string', 'is_nullable' => false),
 	);
 
@@ -37,34 +44,62 @@ class Model_Individual extends ORM
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
             ),
-            'ot4estvo' => array(
+            'otch' => array(
                 array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
             ),
 
-            'adres' => array(
+            'region' => array(
                 //  array('alpha_numeric', array(':value', true)),
                 //  array('alpha', array(':value', true)),
+            ),
+            'street' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'rion' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'dom' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'korpys' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'kvartira' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'nas_pynkt' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'document_id' => array(
+                array('digit')
             ),
 
             'vrem_reg' => array(
                 //  array('alpha_numeric', array(':value', true)),
                 //  array('alpha', array(':value', true)),
             ),
-            'pasport_seriya' => array(
+            'document_seriya' => array(
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
-            'pasport_nomer' => array(
+            'document_nomer' => array(
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
-            'pasport_data_vyda4i' => array(
+            'document_data_vydachi' => array(
                 array('not_empty'),
                 array('date')
             ),
-            'pasport_kem_vydan' => array(
+            'document_kem_vydan' => array(
                 array('not_empty'),
                 // array('alpha_space', array(':value')),
             ),

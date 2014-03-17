@@ -44,21 +44,31 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $a = Auth::instance();
         $post = $this->request->post();
         $user = ORM::factory('User', $a->get_user()->id);
-        $edu = ORM::factory('Educations')->find_all();
+        $edu = ORM::factory('Education')->find_all();
         $national = ORM::factory('Nationality')->find_all();
+        $type_doc = ORM::factory('Documents')->find_all();
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
+            if (isset($post['vrem_reg']))
+            {
+                $post['vrem_reg'] = (bool)$post['vrem_reg'];
+            }
+            else
+            {
+                $post['vrem_reg'] = 0;
+            }
+
             try
             {
-                if ($user->status < 3)
+                if ($user->listener->status < 3)
                 {
-                    $user->statement
-                        ->values($post)
-                        ->where('user_id', '=', $a->get_user()->id)
-                        ->update();
+                    $user->listener
+                         ->values($post)
+                         ->where('user_id', '=', $a->get_user()->id)
+                         ->update();
 
-                    $success = 'update';
+                    $success = Kohana::message('profile', 'statement.update_ok');
                 }
             }
             catch(ORM_Validation_Exception $e)
@@ -67,9 +77,9 @@ class Controller_Profile_Index extends Controller_Profile_Base
             }
         }
 
-        $v = View::factory('profile/pages/statement', compact('errors', 'success', 'edu', 'national'))
-                 ->set('statement', $user->statement->as_array())
-                 ->set('status', $user->status)
+        $v = View::factory('profile/pages/statement', compact('errors', 'success', 'edu', 'national', 'type_doc'))
+                 ->set('statement', $user->listener->as_array())
+                 ->set('status', $user->listener->status)
                  ->render();
 
         $this->_profile->content = $v;

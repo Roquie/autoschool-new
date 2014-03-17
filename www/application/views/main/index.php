@@ -160,9 +160,6 @@
         staticPath: '<?=URL::site('js/FileAPI-dev/dist')?>'
     };
 </script>
-<script src="<?=URL::site('js/FileAPI-dev/dist/FileAPI.js')?>"></script>
-<script src="<?=URL::site('js/FileAPI-dev/plugins/FileAPI.id3.js')?>"></script>
-<script src="<?=URL::site('js/FileAPI-dev/plugins/FileAPI.exif.js')?>"></script>
 
 <section class="row contacts" target="contacts">
     <div class="container">
@@ -174,7 +171,53 @@
                     <abbr title="Телефон" style="margin-left: 10px">Тел. 2</abbr>: +7 (499) 317 04 09<br>
                     <p style="margin-top: 12px">Адрес: г. Москва, нахимовский проспект, 21</p>
                     <p>Напишите нам: </p>
-                    <?=View::factory('main/html/contact', compact('captcha'))?>
+                    <style>
+                        .b-button {
+                            display: inline-block;
+                            *display: inline;
+                            *zoom: 1;
+                            position: relative;
+                            overflow: hidden;
+                            cursor: pointer;
+                        }
+                        .b-button__input {
+                            cursor: pointer;
+                            opacity: 0;
+                            filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+                            top: 0px;
+                            right: -50px;
+                            font-size: 50px;
+                            position: absolute;
+                        }
+                    </style>
+                    <form id="send" action="<?=URL::site('mail/send')?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                        <input id="c_name" name="name" type="text" class="span2 in-name" data-placement="top" data-req="true" placeholder="Имя">
+                        <input id="c_email" name="email" type="text" class="input-large" data-placement="top" data-req="true" placeholder="Email адрес">
+    <span style="position: relative">
+        <textarea id="c_msg" name="message" class="span5" rows="5" data-req="true" placeholder="Сообщение"></textarea>
+    </span>
+                        <div class="row">
+                            <div class="span2">
+                                <?=$captcha?><br><input type="text" name="captcha" style="margin-top: 5px;width: 117px" placeholder="проверка" data-req="true"/>
+                            </div>
+                            <div class="span2 file_upload" style="display: none; margin-bottom: 4px;">
+                                <div class="input-append">
+                                    <div style="width: 170px" class="uneditable-input">
+                                        <i class="icon-file"></i>
+                                        <span class="text"></span>
+                                    </div>
+                                    <a href="#" class="btn clearFile"><i class="icon-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-left: 101px">
+                                <a class="b-button__text btn" href="#" data-url="<?=URL::site('main/mail/upload')?>">Загрузить файл</a>
+                                <input name="files" class="b-button__input" type="file"/>
+                                <input type="hidden" name="file_name" id="file_name"/>
+                            </div>
+                            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                            <input type="submit" style="margin-bottom: 4px; margin-left: 101px; width: 140px" class="btn btn-primary span2 btn_send" value="Отправить"/>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="span6">

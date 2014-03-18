@@ -81,13 +81,13 @@
             </div>
             <div class="span5">
                 <div class="row">
-                    <div class="span3">
+                    <div class="span3" style="width: 180px">
                         <label for="document_seriya">Серия документа</label>
                         <input type="text" class="input-medium" name="document_seriya" id="document_seriya" value="<?=$statement['document_seriya']?>"/>
                     </div>
                     <div class="span2">
                         <label for="document_nomer">Номер документа</label>
-                        <input type="text" class="input-medium" name="document_nomer" id="document_nomer" value="<?=$statement['document_nomer']?>"/>
+                        <input type="text" style="width: 188px" class="input-medium" name="document_nomer" id="document_nomer" value="<?=$statement['document_nomer']?>"/>
                     </div>
                 </div>
                 <label for="mesto_rojdeniya">Место рождения</label>
@@ -95,13 +95,13 @@
                 <br/>
                 <label>Адрес регистрации (Место жительства)</label>
                 <div class="row">
-                    <div class="span3">
+                    <div class="span3" style="width: 180px">
                         <label for="region">Регион</label>
                         <input type="text" class="input-medium" name="region" id="region" value="<?=$statement['region']?>"/>
                     </div>
                     <div class="span2">
                         <label for="street">Улица</label>
-                        <input type="text" class="input-medium" name="street" id="street" value="<?=$statement['street']?>"/>
+                        <input type="text" style="width: 190px" class="input-medium" name="street" id="street" value="<?=$statement['street']?>"/>
                     </div>
                 </div>
                 <div class="row">
@@ -145,7 +145,7 @@
                 <input type="text" style="width: 102%" name="document_kem_vydan" id="document_kem_vydan" value="<?=$statement['document_kem_vydan']?>"/>
 
                 <div class="row">
-                    <div class="span3">
+                    <div class="span3" style="width: 180px">
                         <label for="education">Образование</label>
                         <select style="width: 165px" name="education_id" id="education">
                             <?if(!empty($edu)):?>
@@ -161,7 +161,7 @@
                     </div>
                     <div class="span2">
                         <label for="mesto_raboty">Место работы</label>
-                        <input type="text" class="input-medium" name="mesto_raboty" id="mesto_raboty" value="<?=$statement['mesto_raboty']?>"/>
+                        <input type="text" style="width: 187px" class="input-medium" name="mesto_raboty" id="mesto_raboty" value="<?=$statement['mesto_raboty']?>"/>
                     </div>
                 </div>
                 <label for="about">Как вы узнали о нас</label>

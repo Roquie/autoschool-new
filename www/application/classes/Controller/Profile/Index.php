@@ -85,11 +85,50 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $this->_profile->content = $v;
     }
 
+    public function action_contract_check()
+    {
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            $id = Auth::instance()->get_user()->id;
+            if (isset($post['customer']))
+            {
+                try
+                {
+                    DB::update('listeners')->set(array('is_individual' => 1))->where('user_id', '=', $id)->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    die($e->getMessage());
+                }
+                HTTP::redirect('/profile/contract');
+            }
+            else
+            {
+                try
+                {
+                    DB::update('listeners')->set(array('is_individual' => 0))->where('user_id', '=', $id)->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    die($e->getMessage());
+                }
+                HTTP::redirect('/profile/contract');
+            }
+        }
+        else
+        {
+            HTTP::redirect('/profile/contract');
+        }
+    }
+
     public function action_contract()
     {
         $a = Auth::instance();
         $post = $this->request->post();
         $user = ORM::factory('User', $a->get_user()->id);
+        $type_doc = ORM::factory('Documents')->find_all();
 
         $c = ORM::factory('Individual', array('listener_id' => $a->get_user()->id));
 
@@ -97,6 +136,15 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
+            if (isset($post['vrem_reg']))
+            {
+                $post['vrem_reg'] = (bool)$post['vrem_reg'];
+            }
+            else
+            {
+                $post['vrem_reg'] = 0;
+            }
+
             try
             {
                 if ($user->listener->status < 3)
@@ -108,7 +156,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                     }
                     else
                     {
-                        $post['user_id'] = $a->get_user()->id;
+                        $post['listener_id'] = $a->get_user()->id;
                         $form_data = array_merge($form_data, $post);
                         $c->values($post)->create();
                         $success = 'create';
@@ -121,7 +169,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
             }
         }
 
-        $v = View::factory('profile/pages/contract', compact('errors', 'success'))
+        $v = View::factory('profile/pages/contract', compact('errors', 'success', 'type_doc'))
                  ->set('contract', $form_data)
                  ->set('status', $user->listener->status)
                  ->set('contract_exists', $c)

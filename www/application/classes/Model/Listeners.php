@@ -105,6 +105,7 @@ class Model_Listeners extends ORM
             ),
             'tel' => array(
                 array('not_empty'),
+                array('phone', array(':value', 11)),
             ),
             'data_rojdeniya' => array(
                 array('not_empty'),

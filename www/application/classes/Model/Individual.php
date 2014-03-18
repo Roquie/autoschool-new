@@ -45,47 +45,23 @@ class Model_Individual extends ORM
                 array('max_length', array(':value', 50)),
             ),
             'otch' => array(
+                array('not_empty'),
                 array('alpha', array(':value', true)),
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50)),
             ),
 
-            'region' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'street' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-
-            'rion' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'dom' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'korpys' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'kvartira' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
-            ),
-            'nas_pynkt' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
+            'tel' => array(
+                array('not_empty'),
+                array('phone', array(':value', 11)),
             ),
             'document_id' => array(
+                array('not_empty'),
                 array('digit')
             ),
-
-            'vrem_reg' => array(
-                //  array('alpha_numeric', array(':value', true)),
-                //  array('alpha', array(':value', true)),
+            'document_data_vydachi' => array(
+                array('not_empty'),
+                array('date')
             ),
             'document_seriya' => array(
                 array('not_empty'),
@@ -95,20 +71,77 @@ class Model_Individual extends ORM
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
-            'document_data_vydachi' => array(
+            'region' => array(
                 array('not_empty'),
-                array('date')
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'street' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'rion' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'dom' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'korpys' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'kvartira' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+            'nas_pynkt' => array(
+                array('not_empty'),
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
+            'vrem_reg' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
             ),
             'document_kem_vydan' => array(
                 array('not_empty'),
                 // array('alpha_space', array(':value')),
             ),
-            'tel' => array(
-                array('not_empty'),
-            ),
             'listener_id' => array(
+                array('not_empty'),
                 array('digit'),
             ),
+        );
+    }
+
+    public function labels()
+    {
+        return array(
+            'otch' => 'Поле "Отчество" ',
+            'imya' => 'Поле "Имя" ',
+            'famil' => 'Поле "Фамилия" ',
+            'tel' => 'Поле "Моб. тел." ',
+            'document_id' => 'Поле "Тип документа" ',
+            'document_data_vydachi' => 'Поле "Дата выдачи" ',
+            'document_seriya' => 'Поле "Серия документа" ',
+            'document_nomer' => 'Поле "Номер документа" ',
+            'region' => 'Поле "Регион" ',
+            'street' => 'Поле "Улица" ',
+            'rion' => 'Поле "Район" ',
+            'dom' => 'Поле "Дом" ',
+            'korpys' => 'Поле "Корпус" ',
+            'kvartira' => 'Поле "Квартира" ',
+            'nas_pynkt' => 'Поле "Населенный пункт" ',
+            'vrem_reg' => 'Поле "Временная регистрация" ',
+            'document_kem_vydan' => 'Поле "Кем выдан документ" ',
         );
     }
 

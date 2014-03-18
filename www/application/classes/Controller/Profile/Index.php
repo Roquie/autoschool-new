@@ -152,14 +152,14 @@ class Controller_Profile_Index extends Controller_Profile_Base
                     if ($c->loaded())
                     {
                         $c->values($post)->where('user_id', '=', $a->get_user()->id)->update();
-                        $success = 'update';
+                        $success = Kohana::message('profile', 'contract.update');
                     }
                     else
                     {
                         $post['listener_id'] = $a->get_user()->id;
                         $form_data = array_merge($form_data, $post);
                         $c->values($post)->create();
-                        $success = 'create';
+                        $success = Kohana::message('profile', 'contract.create');
                     }
                 }
             }

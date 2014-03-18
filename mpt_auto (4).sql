@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 16 2014 г., 16:40
+-- Время создания: Мар 19 2014 г., 00:51
 -- Версия сервера: 5.1.67-community-log
 -- Версия PHP: 5.4.11
 
@@ -34,14 +34,7 @@ CREATE TABLE IF NOT EXISTS `administrators` (
   `user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Дамп данных таблицы `administrators`
---
-
-INSERT INTO `administrators` (`id`, `first_name`, `family_name`, `timestamp`, `user_id`) VALUES
-(1, 'Максим', 'Иванов', '2014-03-16 12:40:05', 4);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -230,12 +223,19 @@ CREATE TABLE IF NOT EXISTS `individual` (
   `document_nomer` varchar(255) NOT NULL,
   `document_kem_vydan` text NOT NULL,
   `document_data_vydachi` date NOT NULL,
-  `vrem_reg` int(10) unsigned DEFAULT '0',
+  `vrem_reg` tinyint(1) unsigned DEFAULT '0',
   `tel` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `listener_id` (`listener_id`),
   KEY `document_id` (`document_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `individual`
+--
+
+INSERT INTO `individual` (`id`, `listener_id`, `imya`, `famil`, `otch`, `region`, `street`, `rion`, `dom`, `korpys`, `kvartira`, `nas_pynkt`, `document_id`, `document_seriya`, `document_nomer`, `document_kem_vydan`, `document_data_vydachi`, `vrem_reg`, `tel`) VALUES
+(3, 10, 'asd', 'aSD', 'adsaaa', 'asd', 'asd', 'asd', 'asd', '', 'asd', 'asd', 1, 'aasd', 'sad112', 'asdasaaa', '2014-03-12', 1, '12312312311');
 
 -- --------------------------------------------------------
 
@@ -263,7 +263,8 @@ CREATE TABLE IF NOT EXISTS `listeners` (
   `education_id` int(10) unsigned DEFAULT NULL,
   `group_id` int(10) unsigned DEFAULT NULL,
   `staff_id` int(10) unsigned DEFAULT NULL,
-  `status` int(10) unsigned DEFAULT NULL,
+  `is_individual` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `status` int(10) unsigned DEFAULT '0',
   `imya` varchar(255) NOT NULL,
   `famil` varchar(255) NOT NULL,
   `otch` varchar(255) NOT NULL,
@@ -303,15 +304,15 @@ CREATE TABLE IF NOT EXISTS `listeners` (
   KEY `group_id` (`group_id`),
   KEY `staff_id` (`staff_id`),
   KEY `document_id` (`document_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Дамп данных таблицы `listeners`
 --
 
-INSERT INTO `listeners` (`id`, `user_id`, `about`, `nationality_id`, `education_id`, `group_id`, `staff_id`, `status`, `imya`, `famil`, `otch`, `data_rojdeniya`, `mesto_rojdeniya`, `region`, `street`, `rion`, `dom`, `korpys`, `kvartira`, `nas_pynkt`, `vrem_reg`, `document_id`, `document_seriya`, `document_nomer`, `document_data_vydachi`, `document_kem_vydan`, `tel`, `mesto_raboty`, `sex`, `date_contract`, `number_contract`, `nomer_med`, `seriya_med`, `data_med`, `kem_vydana_med`, `certificate_seriya`, `certificate_nomer`, `mark_to`, `mark_pdd`, `mark_drive`) VALUES
-(1, 1, 'Реклама', 1, 1, NULL, NULL, NULL, 'Иван', 'Зайцев', 'Петрович', '2014-03-11', 'йцувфвфывфывфывы', 'Москва', 'Одесская', 'Нагатинский', '14', '1', '123', 'Москва', 0, 1, '13123', '123123123', '2012-03-20', 'шахом', '+7(926)123-12-33', 'ООО Google, inc', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 4, NULL, NULL, NULL, NULL, NULL, NULL, 'asdasd', 'asd', 'asdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, '13123123123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `listeners` (`id`, `user_id`, `about`, `nationality_id`, `education_id`, `group_id`, `staff_id`, `is_individual`, `status`, `imya`, `famil`, `otch`, `data_rojdeniya`, `mesto_rojdeniya`, `region`, `street`, `rion`, `dom`, `korpys`, `kvartira`, `nas_pynkt`, `vrem_reg`, `document_id`, `document_seriya`, `document_nomer`, `document_data_vydachi`, `document_kem_vydan`, `tel`, `mesto_raboty`, `sex`, `date_contract`, `number_contract`, `nomer_med`, `seriya_med`, `data_med`, `kem_vydana_med`, `certificate_seriya`, `certificate_nomer`, `mark_to`, `mark_pdd`, `mark_drive`) VALUES
+(10, 10, 'oooo', 1, 1, NULL, NULL, 0, 0, 'Иван', 'Зайцев', 'asdas', '2014-03-13', 'asda', 'asd', 'asdas', 'adasd', '21', '12', '12', '1qw', 1, 1, 'eq21', '12w', '2014-03-21', 'qweq', '+7(926)123-12-33', 'qwe', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 11, NULL, NULL, NULL, NULL, NULL, 0, 0, 'Roquie', 'Petrov', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, '+1(231)311-2311', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -432,10 +433,10 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 --
 
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
-(1, 1),
-(4, 1),
-(4, 2),
-(1, 3);
+(10, 1),
+(11, 1),
+(10, 3),
+(11, 3);
 
 -- --------------------------------------------------------
 
@@ -569,15 +570,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 --
 -- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `photo`, `password`, `logins`, `last_login`) VALUES
-(1, 'roquie@list.ru', 'http://avt.appsmail.ru/list/roquie/_avatarbig', '9ce7e5eceba5ecf50f28122ff0d6693b16395872b1779ce74948bacbd7c85eca', 0, 1394971725),
-(4, 'roquie0@gmail.com', 'img/photo.jpg', '52b0349785232521b41503354a388d2c35758aaa5070b93912f554dc191ce057', 0, 1394973560);
+(10, 'roquie@list.ru', 'http://avt.appsmail.ru/list/roquie/_avatarbig', '2f5c785cbb27a085ece378133f35d9358d8b2c5f8360a39f59205b39ede8902a', 2, 1395171987),
+(11, 'roquie0@gmail.com', 'https://lh5.googleusercontent.com/-8tZI2QQx310/AAAAAAAAAAI/AAAAAAAALk4/PHtvJOM_iDo/photo.jpg', '6a5ab4e40a91a0bfc527032348c7a511ca58b7a3ed98ad50f4134177964efaa3', 1, 1395087188);
 
 -- --------------------------------------------------------
 
@@ -596,7 +597,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

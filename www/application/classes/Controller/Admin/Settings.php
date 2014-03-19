@@ -3,6 +3,35 @@
 class Controller_Admin_Settings extends Controller_Admin_Base
 {
 
+    public function action_index()
+    {
+        $data = Kohana::$config->load('settings.telephone');
+        if (!empty($data))
+            $data = unserialize($data);
+
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            switch ($this->request->post('type'))
+            {
+                case 'tel' :
+                    $errors = array('error' => 'Tel');
+                    break;
+
+                case 'email' :
+                    $errors = array('error' => 'Email');
+                    break;
+
+                case 'general' :
+                    $errors = array('error' => 'general');
+                    break;
+            }
+        }
+
+        $this->template->content = View::factory('admin/settings/index', compact('data', 'errors'));
+    }
+
     public function action_smtp()
     {
         $data = Kohana::$config->load('settings.smtp');
@@ -143,12 +172,21 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             $roles = $v->roles->find_all();
             foreach($roles as $role) {
                 if ($role->name === 'admin') {
-                    $info = ORM::factory('Administrators')->where('user_id', '=', $v->id)->find()->as_array();
-                    $admins[] = array(
-                        'id' => $v->id,
-                        'email' => $v->email,
-                        'info' => $info
-                    );
+
+                    $info = ORM::factory('Administrators')
+                        ->where('user_id', '=', $v->id)
+                        ->where('is_root', '=', 0)
+                        ->find()
+                        ->as_array();
+
+                    $info = array_filter($info);
+
+                    if (!empty($info))
+                        $admins[] = array(
+                            'id' => $v->id,
+                            'email' => $v->email,
+                            'info' => $info
+                        );
                 }
             }
         }

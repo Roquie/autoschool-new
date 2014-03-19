@@ -6,6 +6,7 @@
 
     <div class="tabbable">
         <ul class="nav nav-tabs">
+            <li><a href="<?=URL::site('admin/settings/')?>">Главная страница</a></li>
             <li class="active"><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
             <li><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
             <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
@@ -47,6 +48,9 @@
                 <div class="span8">
                     <div class="well well-large listAdmins">
                         <legend>Список администраторов</legend>
+                        <? if (count($admins) == 0) : ?>
+                            <div class="text-center not-found">Администраторы отсутствуют.</div>
+                        <? else : ?>
                         <table id="table_admins" class="table table_admins">
                             <thead>
                             <tr>
@@ -71,6 +75,7 @@
 
                             </tbody>
                         </table>
+                        <? endif; ?>
 
                     </div>
                 </div>

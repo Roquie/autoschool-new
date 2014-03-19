@@ -28,8 +28,7 @@ class Model_User extends Model_Auth_User
         'listener' => array(
             'model' => 'Listeners',
             'foreign_key' => 'user_id',
-        ),
-
+        )
     );
 
     public function rules()
@@ -80,6 +79,7 @@ class Model_User extends Model_Auth_User
         $no_approved ? $condition = '<' : $condition = '=';
 
         $users = ORM::factory('Listeners')->where('status', $condition, 3)->find_all();
+
         return $this->_filter_user_list($users);
     }
 

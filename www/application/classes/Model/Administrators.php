@@ -12,6 +12,7 @@ class Model_Administrators extends ORM
         'family_name' => array('data_type' => 'string', 'is_nullable' => false),
         'timestamp' => array('data_type' => 'string', 'is_nullable' => false),
         'user_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'is_root' => array('data_type' => 'int', 'is_nullable' => false)
     );
 
 
@@ -32,7 +33,7 @@ class Model_Administrators extends ORM
             ),
             'user_id' => array(
                 array('digit')
-            )
+            ),
         );
     }
 

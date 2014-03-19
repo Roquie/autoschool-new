@@ -47,6 +47,7 @@ class Model_Listeners extends ORM
 		'mark_to' => array('data_type' => 'string', 'is_nullable' => true),
 		'mark_pdd' => array('data_type' => 'string', 'is_nullable' => true),
 		'mark_drive' => array('data_type' => 'string', 'is_nullable' => true),
+        'is_individual' => array('data_type' => 'int', 'is_nullable' => true),
 	);
 
 
@@ -165,7 +166,7 @@ class Model_Listeners extends ORM
                 //  array('alpha', array(':value', true)),
             ),
             'korpys' => array(
-                array('not_empty'),
+                //array('not_empty'),
                 //  array('alpha_numeric', array(':value', true)),
                 //  array('alpha', array(':value', true)),
             ),

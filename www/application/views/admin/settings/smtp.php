@@ -1,4 +1,5 @@
 <?=HTML::style('adm/css/settings.css')?>
+<?=HTML::script('adm/js/settings.js')?>
 
 <div class="container">
 
@@ -6,6 +7,7 @@
 
     <div class="tabbable">
         <ul class="nav nav-tabs">
+            <li><a href="<?=URL::site('admin/settings/')?>">Главная страница</a></li>
             <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
             <li><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
             <li class="active"><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
@@ -19,15 +21,6 @@
                     <?=array_shift($errors)?>
                 </div>
             <? endif ?>
-            <script>
-                $(function() {
-                    $('#reset').on('click', function() {
-                        $('form').find('.input-block-level').each(function() {
-                            $(this).removeAttr('value');
-                        });
-                    });
-                });
-            </script>
             <div class="row" style="overflow-x: hidden">
                 <div class="span4">
                     <div class="well" style="height: 346px">

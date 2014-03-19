@@ -250,6 +250,39 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $this->_profile->content = View::factory('profile/pages/settings', compact('errors', 'success'));
     }
 
+    public function action_view_doc()
+    {
+        $type = $this->request->param('id');
+
+        switch($type)
+        {
+            case 'contract':
+                $this->ajax_data(
+                    array(
+                         'file' => $this->_create_contract(),
+                         'url' => URL::site('viewdoc/temp_view'),
+                    )
+                );
+            break;
+            case 'statement':
+                $this->ajax_data(
+                    array(
+                         'file' => $this->_create_statement(),
+                         'url' => URL::site('viewdoc/temp_view'),
+                    )
+                );
+            break;
+            case 'ticket':
+                $this->ajax_data(
+                    array(
+                         'file' => $this->_create_ticket(),
+                         'url' => URL::site('viewdoc/temp_view'),
+                    )
+                );
+            break;
+        }
+    }
+
     public function action_download()
     {
         $this->_profile->content = View::factory('profile/pages/downloads', compact('errors', 'success'));

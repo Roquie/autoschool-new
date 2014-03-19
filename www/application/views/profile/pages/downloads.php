@@ -23,7 +23,7 @@
                         <h2>Заявление</h2>
                         <div class="buttons_gr">
                             <a class="btn btn-info" href="<?=URL::site('profile/download_statement')?>">Скачать</a>
-                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('lk/ajax/create_tmp_file/statement')?>" data-toggle="modal">Просмотр</a>
+                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('profile/view_doc/statement')?>" data-toggle="modal">Просмотр</a>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <h2>Договор</h2>
                         <div class="buttons_gr">
                             <a class="btn btn-info" href="<?=URL::site('profile/download_contract')?>">Скачать</a>
-                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('lk/ajax/create_tmp_file/contract')?>" data-toggle="modal">Просмотр</a>
+                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('profile/view_doc/contract')?>" data-toggle="modal">Просмотр</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <h2>Квитанция</h2>
                         <div class="buttons_gr">
                             <a class="btn btn-info" href="<?=URL::site('profile/download_ticket')?>">Скачать</a>
-                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('lk/ajax/create_tmp_file/ticket')?>" data-toggle="modal">Просмотр</a>
+                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('profile/view_doc/ticket')?>" data-toggle="modal">Просмотр</a>
                         </div>
                     </div>
                 </div>

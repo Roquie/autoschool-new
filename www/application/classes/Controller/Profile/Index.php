@@ -321,36 +321,44 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
     protected function _create_statement()
     {
-        $statement = ORM::factory('User', Auth::instance()->get_user()->id)
-            ->statement;
+        $listener = ORM::factory('User', Auth::instance()->get_user()->id)
+                        ->listener;
 
+        $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
         $document = new TemplateDocx(APPPATH.'templates/zayavlenie/template.docx');
 
         $document->setValueArray(
             array(
-                 'Fam' => $statement->famil,
-                 'Name' => $statement->imya,
-                 'Otchestvo' => $statement->ot4estvo,
-                 'DateBirth' => $statement->data_rojdeniya,
-                 'Nationality' => $statement->national->grajdanstvo,
-                 'PlaceBirth' => $statement->mesto_rojdeniya,
-                 'AdresRegPoPasporty' => $statement->adres_reg_po_pasporty,
-                 'VremReg' => $statement->vrem_reg,
-                 'Seriya' => $statement->pasport_seriya,
-                 'Nomer' => $statement->pasport_nomer,
-                 'Vidacha' => $statement->pasport_data_vyda4i,
-                 'PasportKemVydan' => $statement->pasport_kem_vydan,
-                 'MobTel' => $statement->mob_tel,
-                 'Obrazovanie' => $statement->edu->obrazovanie,
-                 'MestoRaboty' => $statement->mesto_raboty,
-                 'About' => $statement->about,
+                 'Fam' => $listener->famil,
+                 'Name' => $listener->imya,
+                 'Otchestvo' => $listener->otch,
+                 'DateBirth' => $listener->data_rojdeniya,
+                 'Nationality' => $listener->national->name,
+                 'PlaceBirth' => $listener->mesto_rojdeniya,
+                 'AdresRegPoPasporty' =>
+                     'регион: '.$listener->region.
+                     ' насел. пункт: '.$listener->nas_pynkt.
+                     ', район: '.$listener->rion.
+                     ', ул. '.$listener->street.
+                     ', д. '.$listener->dom.
+                     $korpys
+                     .' кв. '.$listener->kvartira,
+                 'VremReg' => $listener->vrem_reg ? 'Да' : 'Нет',
+                 'Seriya' => $listener->document_seriya,
+                 'Nomer' => $listener->document_nomer,
+                 'Vidacha' => $listener->document_data_vydachi,
+                 'PasportKemVydan' => $listener->document_kem_vydan,
+                 'MobTel' => $listener->tel,
+                 'Obrazovanie' => $listener->edu->name,
+                 'MestoRaboty' => $listener->mesto_raboty,
+                 'About' => $listener->about,
             )
         );
 
         $file = 'temp/'.
-            Text::translit($statement->famil).'_'.
-            Text::translit(UTF8::substr($statement->imya,0, 1)).'_'.
-            Text::translit(UTF8::substr($statement->ot4estvo,0, 1)).'_'.
+            Text::translit($listener->famil).'_'.
+            Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+            Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
             'zayavlenie_'.date('d_m_Y_H_i_s').'.docx';
 
         $document->save(APPPATH.'download/'.$file);

@@ -3,7 +3,7 @@
 class Model_Documents extends ORM
 {
 	protected $_db = 'default';
-    protected $_table_name  = 'Documents';
+    protected $_table_name  = 'documents';
     protected $_primary_key = 'id';
 
     protected $_table_columns = array(

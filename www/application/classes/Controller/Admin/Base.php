@@ -8,25 +8,15 @@ class Controller_Admin_Base extends Controller_Template
     {
         parent::before();
 
-/*        if (!Auth::instance()->logged_in('admin'))
+        if (!Auth::instance()->logged_in('admin'))
         {
             throw new HTTP_Exception_404();
-        }*/
+        }
 
+        $a = Auth::instance();
+        $admin = $a->get_user();
 
-        //$a = Auth::instance();
-        //$admin = $a->get_user();
-
-        //$info = ORM::factory('User', $admin->id)->admin;
-
-        $info = (object) array(
-            'first_name' => 'Виктор',
-            'family_name' => 'Мельников',
-        );
-        $admin = (object) array(
-            'photo' => 'https://lh5.googleusercontent.com/-sUhzn4o5Wc4/AAAAAAAAAAI/AAAAAAAAFuI/3UlHj3ZH2NA/photo.jpg',
-            'email' => 'vik.melnikov@gmail.com'
-        );
+        $info = ORM::factory('User', $admin->id)->admin;
 
         $this->template->title = 'Администратор "МПТ Автошкола"';
         $this->template->navbar = View::factory('admin/navbar', compact('admin', 'info'));

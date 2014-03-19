@@ -284,34 +284,93 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
     protected function _create_contract()
     {
-        $statement = ORM::factory('User', Auth::instance()->get_user()->id)->statement;
-        $contract = ORM::factory('User', Auth::instance()->get_user()->id)->contract;
+        $listener = ORM::factory('User', Auth::instance()->get_user()->id)->listener;
+        $indy = ORM::factory('User', Auth::instance()->get_user()->id)->listener->indy;
+
+        $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
 
         $obj = new TemplateDocx(APPPATH.'templates/contract/dogovor.docx');
 
-        $obj->setValueArray(
-            array(
-                 'Customer' => $contract->famil.' '.$contract->imya.' '.$contract->ot4estvo,
-                 'CSeriya' => $contract->pasport_seriya,
-                 'CNomer' => $contract->pasport_nomer,
-                 'CVidan' => $contract->pasport_kem_vydan,
-                 'CAddress' => $contract->adres_reg_po_pasporty,
-                 'CPhone' => $contract->phone,
+        if (!$listener->is_individual)
+        {
+            $obj->setValueArray(
+                array(
+                     'Customer' => $indy->famil.' '.$indy->imya.' '.$indy->otch,
+                     'CSeriya' => $indy->document_seriya,
+                     'CNomer' => $indy->document_nomer,
+                     'CVidan' => $indy->document_kem_vydan,
+                     'CAddress' =>
+                         'регион: '.$indy->region.
+                         ' насел. пункт: '.$indy->nas_pynkt.
+                         ', район: '.$indy->rion.
+                         ', ул. '.$indy->street.
+                         ', д. '.$indy->dom.
+                         $korpys
+                         .' кв. '.$indy->kvartira,
+                     'CPhone' => $indy->tel,
 
-                 'Listener' => $statement->famil.' '.$statement->imya.' '.$statement->ot4estvo,
-                 'LSeriya' => $statement->pasport_seriya,
-                 'LNomer' => $statement->pasport_nomer,
-                 'LVidan' => $statement->pasport_kem_vydan,
-                 'LAddress' => $statement->adres_reg_po_pasporty,
-                 'LPhone' => $statement->mob_tel,
-            )
-        );
+                     'Listener' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
+                     'LSeriya' => $listener->document_seriya,
+                     'LNomer' => $listener->document_nomer,
+                     'LVidan' => $listener->document_kem_vydan,
+                     'LAddress' =>
+                         'регион: '.$listener->region.
+                         ' насел. пункт: '.$listener->nas_pynkt.
+                         ', район: '.$listener->rion.
+                         ', ул. '.$listener->street.
+                         ', д. '.$listener->dom.
+                         $korpys
+                         .' кв. '.$listener->kvartira,
+                     'LPhone' => $listener->tel,
+                )
+            );
 
-        $file = 'temp/'.
-            Text::translit($contract->famil).'_'.
-            Text::translit(UTF8::substr($contract->imya,0, 1)).'_'.
-            Text::translit(UTF8::substr($contract->ot4estvo,0, 1)).'_'.
-            'dogovor_'.date('d_m_Y_H_i_s').'.docx';
+            $file = 'temp/'.
+                Text::translit($indy->famil).'_'.
+                Text::translit(UTF8::substr($indy->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($indy->otch, 0, 1)).'_'.
+                'dogovor_'.date('d_m_Y_H_i_s').'.docx';
+        }
+        else
+        {
+            $obj->setValueArray(
+                array(
+                     'Customer' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
+                     'CSeriya' => $listener->document_seriya,
+                     'CNomer' => $listener->document_nomer,
+                     'CVidan' => $listener->document_kem_vydan,
+                     'CAddress' =>
+                         'регион: '.$listener->region.
+                         ' насел. пункт: '.$listener->nas_pynkt.
+                         ', район: '.$listener->rion.
+                         ', ул. '.$listener->street.
+                         ', д. '.$listener->dom.
+                         $korpys
+                         .' кв. '.$listener->kvartira,
+                     'CPhone' => $listener->tel,
+
+                     'Listener' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
+                     'LSeriya' => $listener->document_seriya,
+                     'LNomer' => $listener->document_nomer,
+                     'LVidan' => $listener->document_kem_vydan,
+                     'LAddress' =>
+                         'регион: '.$listener->region.
+                         ' насел. пункт: '.$listener->nas_pynkt.
+                         ', район: '.$listener->rion.
+                         ', ул. '.$listener->street.
+                         ', д. '.$listener->dom.
+                         $korpys
+                         .' кв. '.$listener->kvartira,
+                     'LPhone' => $listener->tel,
+                )
+            );
+
+            $file = 'temp/'.
+                Text::translit($listener->famil).'_'.
+                Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
+                'dogovor_'.date('d_m_Y_H_i_s').'.docx';
+        }
 
         $obj->save(APPPATH.'download/'.$file);
         unset($document);

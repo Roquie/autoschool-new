@@ -349,6 +349,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                  'Vidacha' => $listener->document_data_vydachi,
                  'PasportKemVydan' => $listener->document_kem_vydan,
                  'MobTel' => $listener->tel,
+                 'Email' => Auth::instance()->get_user()->email,
                  'Obrazovanie' => $listener->edu->name,
                  'MestoRaboty' => $listener->mesto_raboty,
                  'About' => $listener->about,

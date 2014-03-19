@@ -429,20 +429,21 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
     protected function _create_ticket()
     {
-        $contract = ORM::factory('User', Auth::instance()->get_user()->id)->contract;
+        $indy = ORM::factory('User', Auth::instance()->get_user()->id)->listener->indy;
+        $listener = ORM::factory('User', Auth::instance()->get_user()->id)->listener;
 
         $obj = new TemplateDocx(APPPATH.'templates/ticket/ticket.docx');
 
-        $famil = UTF8::ucfirst(UTF8::strtolower($contract->famil));
-        $imya = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($contract->imya, 0, 1).'. '));
-        $ot4estvo = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($contract->ot4estvo, 0, 1).'.'));
+        $famil = UTF8::ucfirst(UTF8::strtolower($listener->famil));
+        $imya = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->imya, 0, 1).'. '));
+        $ot4estvo = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->otch, 0, 1).'.'));
 
         $obj->setValue('Customer', $famil.' '.$imya.' '.$ot4estvo);
 
         $file = 'temp/'.
-            Text::translit($contract->famil).'_'.
-            Text::translit(UTF8::substr($contract->imya, 0, 1)).'_'.
-            Text::translit(UTF8::substr($contract->ot4estvo, 0, 1)).'_'.
+            Text::translit($listener->famil).'_'.
+            Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+            Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
             'kvitanciya_'.date('d_m_Y_H_i_s').'.docx';
 
         $obj->save(APPPATH.'download/'.$file);

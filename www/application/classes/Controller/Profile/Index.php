@@ -8,6 +8,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
     {
         parent::before();
 
+
         $this->_profile = new View('profile/template');
         $this->_profile->group = 0; // заглушка
         $this->_profile->content = null;

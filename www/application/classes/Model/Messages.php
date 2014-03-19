@@ -41,4 +41,27 @@ class Model_Messages extends ORM
             )
         );
     }
+
+    /**
+     * получение сообщений для конкретного пользователя
+     * @param $user_id
+     * @param int $offset
+     * @param int $limit
+     * @return bool|Database_Result
+     */
+    public function getMessage($user_id, $offset = 1, $limit = 10)
+    {
+        $start = ($offset - 1) * $limit;
+
+        $messages = ORM::factory('Messages')
+            ->where('user_id', '=', $user_id)
+            ->order_by('id', 'DESC')
+            ->limit($limit)
+            ->offset($start)
+            ->find_all();
+        if ($messages->count() > 0)
+            return $messages;
+        else
+            return false;
+    }
 }

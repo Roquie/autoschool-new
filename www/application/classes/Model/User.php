@@ -89,8 +89,10 @@ class Model_User extends Model_Auth_User
 
     public function by_group_id($group_id)
     {
-        $result = ORM::factory('Users')
+        $result = ORM::factory('User')
+            ->listener
             ->where('group_id', '=', $group_id)
+            ->where('status', '=', 3)
             ->find_all();
 
         if ($result->count() === 0)
@@ -108,7 +110,7 @@ class Model_User extends Model_Auth_User
      */
     public function users_without_group()
     {
-        $users = ORM::factory('Users')->where('group_id', '=', 0)->find_all();
+        $users = ORM::factory('User')->where('group_id', '=', 0)->find_all();
         return $this->_filter_user_list($users);
     }
 

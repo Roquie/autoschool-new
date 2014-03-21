@@ -6,53 +6,65 @@
         <div class="span4">
             <h1><small>Новости для групп</small></h1>
         </div>
-
     </div>
 
     <div class="row">
         <div class="span3 l_select_group">
-            <div class="well">
-                <h5 class="header_block">Номер группы</h5>
-                <label for="">Выберите:</label>
-                <input type="hidden" value="<?=Security::token()?>"/>
-                <select name="select2" id="select2" data-url="<?=Request::$current->url().'/users_by_group'?>">
-                    <option value="0" selected="selected">Все ...</option>
-                    <?foreach($list_groups as $item):?>
-                        <option value="<?=$item->id?>"><?=$item->name?></option>
-                    <?endforeach?>
-                </select>
-            </div>
-        </div>
-        <div class="span9 l_sort">
-            <div class="well" style="height: 100px">
-                <h5 class="header_block">Оповестить слушателей группы 01-14</h5>
-                <form action="#" method="post" accept-charset="utf-8" novalidate>
-                    <div class="row">
-                        <div class="span1">
-                            <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2)" src="<?=URL::site('img/admin/admin_avatar.png')?>" alt="admin_logo"/>
-                        </div>
-                        <input type="hidden" name="user_id" id="user_id"/>
-                        <textarea name="msg" id="admin_msg" style="height: 44px; width: 483px; resize: none" placeholder="Введите сообщение"></textarea>
-                        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                        <input style="margin-top: 12px" type="submit" class="btn" name="submit"/>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span3 l_fio">
-            <div class="well">
-                <h5 class="header_block">Слушатели</h5>
-                <div class="wrap" id="listeners">
-                    <?=View::factory('admin/html/listeners', compact('list_users'))?>
+            <div class="well" style="height: 760px">
+                <h5 class="header_block">Список групп</h5>
+                <div style="overflow-y: auto">
+                    <?=View::factory('admin/html/groups', compact('list_groups'))?>
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            $(function() {
+                $('#add_news').on('submit', function(e) {
+                    e.preventDefault();
+
+                    $.post(
+                        $(this).closest('form').attr('action'),
+                        $(this).serialize(),
+                        function(response)
+                        {
+                            if (response.status == 'success')
+                            {
+                                $('#success_msg').find('p').html(response.msg);
+                                $('#success_msg').show();
+                            }
+                            if (response.status == 'error')
+                            {
+                                $('#error_msg').find('p').html(response.msg);
+                                $('#error_msg').show();
+                            }
+                        },
+                        'json'
+                    );
+                });
+            });
+        </script>
         <div class="span9 l_info">
-            <div class="well">
-                фвфыв
+            <div id="error_msg" class="alert alert-danger" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p></p>
+            </div>
+            <div id="success_msg" class="alert alert-success" style="display: none">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p></p>
+            </div>
+            <div class="well" style="height: 130px">
+                <h5 class="header_block">Оповестить слушателей группы 01-14</h5>
+                <form id="add_news" action="<?=Route::to('admin', 'news#create')?>" method="post" accept-charset="utf-8" novalidate>
+                    <input type="text" name="title" id="title" placeholder="Заголовок новости"/>
+                    <textarea name="msg" id="admin_msg" style="height: 44px; width: 483px; resize: none" placeholder="Введите новость..."></textarea>
+                    <input type="hidden" name="group_id" id="group_id"/>
+                    <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                    <input type="submit" style="margin: 12px 0  0 40px" class="btn btn-success" name="submit"/>
+                </form>
+            </div>
+            <div class="well" style="height: 600px">
+
 
             </div>
         </div>

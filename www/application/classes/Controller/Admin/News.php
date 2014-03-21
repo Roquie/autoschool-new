@@ -15,6 +15,16 @@ class Controller_Admin_News extends Controller_Admin_Base
             View::factory('admin/messages/news', compact('list_users', 'list_groups'));
     }
 
+    public function action_create()
+    {
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            $this->ajax_msg('OK. Добавлено');
+        }
+    }
+
 
 
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Мар 21 2014 г., 17:41
+-- Время создания: Мар 21 2014 г., 18:06
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.4.4
 
@@ -56,7 +56,15 @@ CREATE TABLE `category` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `category`
+--
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'A'),
+(2, 'B');
 
 -- --------------------------------------------------------
 
@@ -207,7 +215,14 @@ CREATE TABLE `groups` (
   `data_end` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Дамп данных таблицы `groups`
+--
+
+INSERT INTO `groups` (`id`, `name`, `category_id`, `data_start`, `data_end`) VALUES
+(1, '01-14', 1, '2014-03-01', '2014-05-01');
 
 -- --------------------------------------------------------
 
@@ -314,7 +329,7 @@ CREATE TABLE `listeners` (
 --
 
 INSERT INTO `listeners` (`id`, `user_id`, `about`, `nationality_id`, `education_id`, `group_id`, `staff_id`, `status`, `imya`, `famil`, `otch`, `data_rojdeniya`, `mesto_rojdeniya`, `region`, `street`, `rion`, `dom`, `korpys`, `kvartira`, `nas_pynkt`, `vrem_reg`, `document_id`, `document_seriya`, `document_nomer`, `document_data_vydachi`, `document_kem_vydan`, `tel`, `mesto_raboty`, `sex`, `date_contract`, `number_contract`, `nomer_med`, `seriya_med`, `data_med`, `kem_vydana_med`, `certificate_seriya`, `certificate_nomer`, `mark_to`, `mark_pdd`, `mark_drive`, `is_individual`) VALUES
-(1, 1, 'Реклама', 1, 1, NULL, NULL, 3, 'Иван', 'Зайцев', 'Петрович', '2014-03-11', 'йцувфвфывфывфывы', 'Москва', 'Одесская', 'Нагатинский', '14', '1', '123', 'Москва', 0, 1, '13123', '123123123', '2012-03-20', 'шахом', '+7(926)123-12-33', 'ООО Google, inc', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(1, 1, 'Реклама', 1, 1, 1, NULL, 3, 'Иван', 'Зайцев', 'Петрович', '2014-03-11', 'йцувфвфывфывфывы', 'Москва', 'Одесская', 'Нагатинский', '14', '1', '123', 'Москва', 0, 1, '13123', '123123123', '2012-03-20', 'шахом', '+7(926)123-12-33', 'ООО Google, inc', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (4, 4, NULL, NULL, NULL, NULL, NULL, 0, 'asdasd', 'asd', 'asdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, '13123123123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (7, 8, 'студент МПТ', 1, 2, NULL, NULL, 0, 'ололошка', 'ололошка', 'ололошевич', '1991-11-05', 'Лохляндия', 'лошковский', 'лралывра', 'фыовлфылво', '25', '8', '98', 'лыловфлыв', 0, 1, '4513', '983765', '2005-12-11', 'лфыовыфвдлдыва', '89271960386', 'лыфовло', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 

@@ -157,6 +157,15 @@ Route::set('download', 'download(/<path>)',
         'action'     => 'download',
    ));
 
+Route::set('viewdoc', 'viewdoc(/<path>)',
+    array(
+         'path' => '.+'
+    ))
+    ->defaults(array(
+        'controller' => 'Viewdoc',
+        'action'     => 'temp_view',
+   ));
+
 Route::set('admin.other', 'admin/other(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
         'controller' => 'Index',

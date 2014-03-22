@@ -6,7 +6,7 @@ class Model_Settings extends Model
     public function load()
     {
         return DB::select()
-            ->from('Settings')
+            ->from('settings')
             ->as_object()
             ->execute()
             ->as_array('name', 'value');
@@ -16,7 +16,7 @@ class Model_Settings extends Model
     public function add($name, $value)
     {
         try {
-            $results = DB::insert('Settings',
+            $results = DB::insert('settings',
                 array('name', 'value'))
                 ->values(array($name, $value))
                 ->execute();
@@ -37,7 +37,7 @@ class Model_Settings extends Model
                 'value' => $value,
             );
 
-            $result = DB::update('Settings')
+            $result = DB::update('settings')
                 ->set($data)
                 ->where('name', '=', $name)
                 ->execute();
@@ -54,7 +54,7 @@ class Model_Settings extends Model
     public function get($name)
     {
         $results = DB::select()
-            ->from('Settings')
+            ->from('settings')
             ->where('name', '=', $name)
             ->as_object()
             ->execute();

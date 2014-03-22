@@ -4,7 +4,7 @@
     <title><?=$title?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="<?=$title?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?=HTML::style('global/css/bstrap.html5b.fawesome.min.css')?>
     <?=HTML::style('main/css/validation.css')?>
     <?=HTML::style('global/css/pageslide.css')?>

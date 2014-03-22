@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="ru" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="ru" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="ru" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="ru" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <title><?=$title?></title>
@@ -22,7 +18,7 @@
     <?=HTML::script('adm/js/ajaxSend.js')?>
 
     <!--[if IE]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="/global/js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>

@@ -12,7 +12,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
     {
         parent::before();
 
-        $edu = ORM::factory('Educations')->find_all();
+        $edu = ORM::factory('Education')->find_all();
         $national = ORM::factory('Nationality')->find_all();
         $this->_nat_and_edu = View::factory('admin/data/nat_and_ed', compact('edu', 'national'));
         $this->_nat_and_edu->errors = null;
@@ -88,7 +88,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             unset($post['csrf']);
             try
             {
-                ORM::factory('Educations')
+                ORM::factory('Education')
                     ->values($post)
                     ->create();
 
@@ -96,7 +96,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
             }
             catch (ORM_Validation_Exception  $e)
             {
-                $this->_nat_and_edu->errors = array('error' => $e->errors('validation'));
+                $this->_nat_and_edu->errors = $e->errors('validation');
             }
         }
     }
@@ -112,7 +112,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
         {
             $id = $this->request->query('id');
 
-            $nat = ORM::factory('Educations', $id);
+            $nat = ORM::factory('Education', $id);
 
             if ($nat->loaded())
             {
@@ -128,6 +128,7 @@ class Controller_Admin_Natandedu extends Controller_Admin_Base
 
     public function after()
     {
+        //echo 'asd';
         $this->template->content = $this->_nat_and_edu->render();
         parent::after();
     }

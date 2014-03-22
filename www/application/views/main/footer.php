@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="container">
-        <p class="text-block3">Разработано Ivanov M.V. &amp; Melnikov V.I. для Автошколы МПТ РГТЭУ</p>
+        <p class="text-block3">Разработано Ivanov M.V. &amp; Melnikov V.I. для Автошколы МПТ РГТЭУ лалки мы!!!</p>
         <p class="text-block3">© 2013 - <?=date('Y')?>. All rights reserved, BSD License.</p>
         <ul>
             <li><a href="<?=URL::site('#price')?>" id="ajax">Цены</a></li>

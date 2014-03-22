@@ -1,76 +1,5 @@
 <?=HTML::style('adm/css/listeners.css')?>
-
-<script>
-    $(function() {
-        $("input:checkbox").click(function() {
-
-            var block = $('#messages');
-
-            if ($(this).is(":checked")) {
-                var group = "input:checkbox[name='" + $(this).attr("name") + "']";
-                $(group).prop("checked", false);
-                $(this).prop("checked", true);
-            } else {
-                $(this).prop("checked", false);
-            }
-
-            $('#user_id').val($(this).val());
-
-            block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
-
-            $.post(
-                block.data('url'),
-                {
-                    csrf : block.prev('input').val(),
-                    user_id : $(this).val()
-                },
-                function(response)
-                {
-                    if (response.status == 'success')
-                    {
-                        block.html(response.data);
-                    }
-                    if (response.status == 'error')
-                    {
-
-                    }
-                    $this.prev('input').val(response.csrf);
-                },
-                'json'
-            );
-        });
-
-        $('#select2').on('change', function() {
-
-            var $this = $(this),
-                block = $('#listeners');
-
-            block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
-
-            $.post(
-                $this.data('url'),
-                {
-                    csrf : $this.prev('input').val(),
-                    group_id : $this.val()
-                },
-                function(response)
-                {
-                    if (response.status == 'success')
-                    {
-                        block.html(response.data);
-                    }
-                    if (response.status == 'error')
-                    {
-
-                    }
-                    $this.prev('input').val(response.csrf);
-                },
-                'json'
-            );
-
-        });
-    });
-</script>
+<?=HTML::script('adm/js/listener.js')?>
 
 <div class="container">
 
@@ -124,7 +53,7 @@
         </div>
         <div class="span9 l_info">
             <input type="hidden" value="<?=Security::token()?>"/>
-            <div class="well" id="messages" data-url="<?=Request::$current->url().'/get_messages'?>">
+            <div class="well" id="data" data-url="<?=Request::$current->url().'/get_messages'?>">
                 <h5 class="header_block">Переписка с Петров Г.А.</h5>
                 <div class="row" style="margin-bottom: 10px">
                     <div class="span1">

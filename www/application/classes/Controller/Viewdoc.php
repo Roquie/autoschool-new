@@ -7,7 +7,7 @@ class Controller_Viewdoc extends Controller
         $path = $this->request->param('path');
 
         $this->response->send_file(
-            APPPATH.'output_blanks/'.$path,
+            APPPATH.'download/'.$path,
             null,
             array('delete' => true)
         );

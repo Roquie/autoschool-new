@@ -92,6 +92,7 @@
             $.post(
                 $(this).data('url'),
                 function(response){
+                    alert(response.data.url+"/"+response.data.file);
                     $('#docs_viewer').attr('src', "http://view.officeapps.live.com/op/view.aspx?src="+response.data.url+"/"+response.data.file);
                 },
                 'json'

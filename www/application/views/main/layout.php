@@ -28,7 +28,6 @@
     <![endif]-->
 </head>
 <body>
-<?php ProfilerToolbar::render(true); ?>
 <?=$navbar.PHP_EOL?>
 <div id="wrap">
     <?=$content.PHP_EOL?>

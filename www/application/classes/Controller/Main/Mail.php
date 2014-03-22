@@ -26,7 +26,7 @@ class Controller_Main_Mail extends Controller_Main_Base
             if ($valid->check())
             {
                 $message = View::factory('tmpmail/template', array(
-                'content' => View::factory('tmpmail/main/contacts',
+                'mail_content' => View::factory('tmpmail/main/contacts',
                         array(
                                'message' => $post['message'],
                                'name' => $post['name'],

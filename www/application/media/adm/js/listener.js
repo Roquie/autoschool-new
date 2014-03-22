@@ -26,6 +26,11 @@ $(function() {
                 $(this).val('');
         });
 
+        f_statement.find('input,select').each(function() {
+            if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                $(this).val('');
+        });
+
         $.post(
             listeners.data('url'),
             {

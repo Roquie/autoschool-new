@@ -42,7 +42,7 @@
 
         <div class="span9">
 
-            <div class="well">
+            <div class="well l_data">
 
 
                 <h5 class="header_block pull-left">Данные по слушателю <strong></strong></h5>
@@ -321,7 +321,7 @@
                     </div>
 
                     <div class="tab-pane" id="tab2">
-                        таб 2
+
                     </div>
 
                 </div>

@@ -5,11 +5,11 @@ return array(
     (
         'type'       => 'MySQL',
         'connection' => array(
-            'hostname'   => 'localhost',
-            'username'   => 'rootuser',
-            'password'   => 'root',
+            'hostname'   => 'pegas.beget.ru',
+            'username'   => 'melnik5g_rqmpt',
+            'password'   => '123qweasdzxc123',
             'persistent' => FALSE,
-            'database'   => 'mpt_auto',
+            'database'   => 'melnik5g_rqmpt',
         ),
         'table_prefix' => '',
         'charset'      => 'utf8',

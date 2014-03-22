@@ -8,7 +8,7 @@
                 </a>
                 <div class="text">
                     <div class="phone">
-                        <span>+7 (925) ЫЫЫЫЫЫЫЫЫЫ 800 10 24</span>
+                        <span>+7 (925) 800 10 24</span>
                         <span>+7 (499) 317 04 09</span><br>
                     </div>
                         <span class="email">

@@ -10,7 +10,8 @@ $(function() {
             $(group).prop("checked", false);
             $(this).prop("checked", true);
         } else {
-            $(this).prop("checked", false);
+            $(this).prop("checked", true);
+            return;
         }
         $('#type_file').val($this.val());
     });

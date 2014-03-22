@@ -261,7 +261,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                 $this->ajax_data(
                     array(
                          'file' => $this->_create_contract(),
-                         'url' => URL::site('viewdoc/temp_view'),
+                         'url' => URL::site('viewdoc'),
                     )
                 );
             break;
@@ -269,7 +269,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                 $this->ajax_data(
                     array(
                          'file' => $this->_create_statement(),
-                         'url' => URL::site('viewdoc/temp_view'),
+                         'url' => URL::site('viewdoc'),
                     )
                 );
             break;
@@ -277,7 +277,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                 $this->ajax_data(
                     array(
                          'file' => $this->_create_ticket(),
-                         'url' => URL::site('viewdoc/temp_view'),
+                         'url' => URL::site('viewdoc'),
                     )
                 );
             break;

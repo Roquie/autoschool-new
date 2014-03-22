@@ -69,6 +69,7 @@ I18n::lang('ru-RU');
 Cookie::$salt = 'rИVИ5Є"6♀И!╧21◘54є618╪1636☺►☺6♣1Л165☺☺t☺☺65☺65♦6529◘4е☺3213☻1╧♦65♦♦♦♥1♥1♥1adas^&*(+|l/';
 Cookie::$expiration = Date::MONTH;
 
+
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
@@ -98,7 +99,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 Kohana::init(array(
 	'base_url'   => 'http://'.$_SERVER['HTTP_HOST'].'/',
 	'errors'  => true,
-	'profile' => true,
+	'profile' => false,
 	'caching' => false, // включать (3600) только на ПРОДАКШЕНЕ
     'index_file' => false,
 ));
@@ -131,6 +132,13 @@ Kohana::modules(array(
     'twitterapi' => MODPATH.'twitterapi',
 
 	));
+
+
+if (URL::base() == 'http://autoschool-new.ru/')
+{
+    Database::$default = 'localhost';
+}
+
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-//test
+
 return array(
     'default' => array
     (

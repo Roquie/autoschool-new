@@ -35,6 +35,11 @@
                 f_contract.trigger('reset');
             }
         });
+
+        $('#save_to_db').on('click', function()
+        {
+            window.location = $(this).data('url');
+        });
     });
 </script>
 <?if(Session::instance()->get('st_createdocs')):?>
@@ -143,7 +148,7 @@
         <input type="submit" style="margin-top: 0;" id="generateContract" class="btn btn-success pull-right" name="ok" value="&dArr; Скачать договор &dArr;"/>
     </div>
     <div class="span3">
-        <input type="button" style="margin-top: 0" class="btn btn-info" id="send" value="Сохранить в базе &raquo;" data-url="<?=URL::site('admin/listeners/g_add')?>">
+        <input type="button" style="margin-top: 0" class="btn btn-info" id="save_to_db" value="Сохранить в базе &raquo;" data-url="<?=URL::site('admin/createdocs/save_to_db')?>">
     </div>
 </div>
 </form>

@@ -33,11 +33,13 @@
                 <input type="text" class="input-medium" name="otch" id="otch" value="<?=$statement['otch']?>"/>
                 <br/>
                 <label for="tel">Моб. телефон</label>
-                <input type="text" class="input-medium" name="tel" id="tel" value="<?=$statement['tel']?>"/>
+                <input type="text" class="input-medium telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" value="<?=$statement['tel']?>"/>
                 <br/>
                 <label for="data_rojdeniya">Дата рождения</label>
-                <input type="date" class="input-medium" name="data_rojdeniya" id="data_rojdeniya" value="<?=$statement['data_rojdeniya']?>"/>
-
+                <div class="input-append">
+                    <input type="text" style="width: 123px" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" value="<?=$statement['data_rojdeniya']?>">
+                    <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                </div>
                 <br/>
                 <label for="sex">Пол</label>
                 <select style="width: 165px" name="sex" id="sex">
@@ -76,7 +78,10 @@
                 </select>
                 <br/>
                 <label for="document_data_vydachi">Дата выдачи</label>
-                <input type="date" class="input-medium" name="document_data_vydachi" id="document_data_vydachi" value="<?=$statement['document_data_vydachi']?>"/>
+                <div class="input-append">
+                    <input type="text" style="width: 123px" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" value="<?=$statement['document_data_vydachi']?>">
+                    <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                </div>
 
             </div>
             <div class="span5">

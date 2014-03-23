@@ -42,7 +42,7 @@
                     <input type="text" class="input-medium" name="otch" id="otch" value="<?=$contract['otch']?>"/>
                     <br/>
                     <label for="tel">Телефон</label>
-                    <input type="tel" class="input-medium" name="tel" id="tel" value="<?=$contract['tel']?>" placeholder="8 (909) 123-45-67"/>
+                    <input type="tel" class="input-medium telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" value="<?=$contract['tel']?>" />
                     <br/>
                 </div>
                 <div class="span5">
@@ -63,7 +63,10 @@
                         </div>
                         <div class="span2">
                             <label for="document_data_vydachi">Дата выдачи</label>
-                            <input type="date" style="width: 190px" class="input-medium" name="document_data_vydachi" id="document_data_vydachi" value="<?=$contract['document_data_vydachi']?>"/>
+                            <div class="input-append">
+                                <input type="text" style="width: 163px" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" value="<?=$contract['document_data_vydachi']?>">
+                                <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

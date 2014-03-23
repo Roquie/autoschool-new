@@ -78,8 +78,12 @@ class Controller_Profile_Index extends Controller_Profile_Base
             }
         }
 
+        $statement = $user->listener->as_array();
+        $statement['data_rojdeniya'] =  date('d.m.Y', strtotime($statement['data_rojdeniya']));
+        $statement['document_data_vydachi'] =  date('d.m.Y', strtotime($statement['document_data_vydachi']));
+
         $v = View::factory('profile/pages/statement', compact('errors', 'success', 'edu', 'national', 'type_doc'))
-                 ->set('statement', $user->listener->as_array())
+                 ->set('statement', $statement)
                  ->set('status', $user->listener->status)
                  ->render();
 
@@ -169,6 +173,8 @@ class Controller_Profile_Index extends Controller_Profile_Base
                 $errors = $e->errors('validation');
             }
         }
+
+        $form_data['document_data_vydachi'] =  date('d.m.Y', strtotime($form_data['document_data_vydachi']));
 
         $v = View::factory('profile/pages/contract', compact('errors', 'success', 'type_doc'))
                  ->set('contract', $form_data)

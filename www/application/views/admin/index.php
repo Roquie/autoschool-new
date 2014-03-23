@@ -23,7 +23,7 @@
             <div class="well l_select_group">
                 <h5 class="header_block">Номер группы</h5>
                 <label for="">Выберите:</label>
-                <select name="select2" id="selected2" data-url="<?=Request::$current->url().'/users_by_group'?>">
+                <select name="select2" id="selected2" data-url="<?=URL::site('admin/users_by_group')?>">
                     <option value="0" selected="selected">Все ...</option>
                     <?foreach($list_groups as $item):?>
                         <option value="<?=$item->id?>"><?=$item->name?></option>

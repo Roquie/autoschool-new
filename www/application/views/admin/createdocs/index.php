@@ -40,11 +40,13 @@
                     <input type="text" class="input-medium" name="otch" id="otch" />
                     <br/>
                     <label for="tel">Моб. телефон</label>
-                    <input type="text" class="input-medium" name="tel" id="tel" />
+                    <input type="text" class="input-medium telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" />
                     <br/>
                     <label for="data_rojdeniya">Дата рождения</label>
-                    <input type="date" class="input-medium" name="data_rojdeniya" id="data_rojdeniya" />
-
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 385px" value="<?=date('d.m.Y')?>">
+                        <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
                     <br/>
                     <label for="sex">Пол</label>
                     <select style="width: 100%" name="sex" id="sex">
@@ -70,18 +72,21 @@
                     </select>
                     <br/>
                     <label for="document_data_vydachi">Дата выдачи</label>
-                    <input type="date" class="input-medium" name="document_data_vydachi" id="document_data_vydachi" />
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 385px" value="<?=date('d.m.Y')?>">
+                        <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
 
                 </div>
                 <div class="span5" style="width: 425px">
                     <div class="row">
-                        <div class="span3" style="width: 180px">
+                        <div class="span3" style="width: 207px">
                             <label for="document_seriya">Серия документа</label>
                             <input type="text" class="input-medium" name="document_seriya" id="document_seriya" />
                         </div>
                         <div class="span2">
                             <label for="document_nomer">Номер документа</label>
-                            <input type="text" style="width: 188px" class="input-medium" name="document_nomer" id="document_nomer" />
+                            <input type="text" style="width: 207px" class="input-medium" name="document_nomer" id="document_nomer" />
                         </div>
                     </div>
                     <label for="mesto_rojdeniya">Место рождения</label>
@@ -89,55 +94,51 @@
                     <br/>
 
                     <div class="row">
-                        <div class="span3" style="width: 180px">
+                        <div class="span3" style="width: 207px">
                             <label for="region">Регион</label>
                             <input type="text" class="input-medium" name="region" id="region" />
                         </div>
                         <div class="span2">
                             <label for="street">Улица</label>
-                            <input type="text" style="width: 190px" class="input-medium" name="street" id="street" />
+                            <input type="text" style="width: 207px" class="input-medium" name="street" id="street" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="span6">
-                            <div class="span2" style="margin-left:  0;">
+                            <div class="span2" style="margin-left: 0; width: 207px">
                                 <label for="rion">Район</label>
                                 <input type="text" class="input-medium" name="rion" id="rion" />
                             </div>
-                            <div style="display: table-cell; padding-left: 40px">
-                                <div class="span1">
-                                    <label for="dom">Дом</label>
-                                    <input type="text" style="width: 40px" name="dom" id="dom" />
-                                </div>
-                                <div class="span1">
-                                    <label for="korpys">Корп.</label>
-                                    <input type="text" style="width: 30px" name="korpys" id="korpys" />
-                                </div>
-                                <div class="span1">
-                                    <label for="kvartira">Кв.</label>
-                                    <input type="text" style="width: 30px" name="kvartira" id="kvartira" />
-                                </div>
+                            <div class="span1">
+                                <label for="dom">Дом</label>
+                                <input type="text" style="width: 40px" name="dom" id="dom" />
+                            </div>
+                            <div class="span1">
+                                <label for="korpys">Корп.</label>
+                                <input type="text" style="width: 30px" name="korpys" id="korpys" />
+                            </div>
+                            <div class="span1">
+                                <label for="kvartira">Кв.</label>
+                                <input type="text" style="width: 47px" name="kvartira" id="kvartira" />
                             </div>
                         </div>
-
-
                     </div>
                     <div class="row">
-                        <div class="span3" style="width: 200px">
+                        <div class="span3" style="width: 207px">
                             <label for="nas_pynkt">Насел. пункт</label>
                             <input type="text"  class="input-medium" name="nas_pynkt" id="nas_pynkt" />
                         </div>
-                        <div class="span2" style="margin-left: 40px; width: 180px; margin-top: 20px">
-                            <label for="vrem_reg"><input style="width: 16px; margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
+                        <div class="span2" style="margin-left: 20px; width: 180px; margin-top: 20px">
+                            <label for="vrem_reg"><input style="width: 16px; margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У слушателя временная регистрация</label>
                         </div>
                     </div>
                     <label for="document_kem_vydan">Кем выдан документ</label>
                     <input type="text" style="width: 102%" name="document_kem_vydan" id="document_kem_vydan" />
 
                     <div class="row">
-                        <div class="span3" style="width: 180px">
+                        <div class="span3" style="width: 207px">
                             <label for="education">Образование</label>
-                            <select style="width: 165px" name="education_id" id="education">
+                            <select style="width: 207px" name="education_id" id="education">
                                 <?if(!empty($edu)):?>
                                     <?foreach($edu as $k => $v):?>
                                         <option value="<?=$v->id?>"><?=$v->name?></option>
@@ -147,7 +148,7 @@
                         </div>
                         <div class="span2">
                             <label for="mesto_raboty">Место работы</label>
-                            <input type="text" style="width: 187px" class="input-medium" name="mesto_raboty" id="mesto_raboty" />
+                            <input type="text" style="width: 207px" class="input-medium" name="mesto_raboty" id="mesto_raboty" />
                         </div>
                     </div>
                     <label for="about">Как вы узнали о нас</label>
@@ -158,8 +159,8 @@
                 </div>
             </div>
                 <div class="line"></div>
-                <button id="next" class="btn btn-info pull-right" style="margin-top: 14px; width: 160px;">Далее</button>
-                <input type="submit" class="btn btn-success pull-right" style="margin-top: 14px; width: 160px; margin-right: 20px" value="Скачать заявление"/>
+                <button id="next" class="btn btn-info pull-right" style="margin-top: 14px; width: 160px;">Далее &raquo;</button>
+                <input type="submit" class="btn btn-success pull-right" style="margin-top: 14px; width: 180px; margin-right: 20px" value="&dArr; Скачать заявление &dArr;"/>
 
         </form>
     </div>

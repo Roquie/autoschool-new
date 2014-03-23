@@ -32,7 +32,7 @@
             }
             else
             {
-
+                f_contract.trigger('reset');
             }
         });
     });

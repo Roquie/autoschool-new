@@ -134,26 +134,12 @@ Kohana::modules(array(
 	));
 
 
-if (URL::base() == 'http://autoschool-new.ru/')
-{
-    Database::$default = 'localhost';
-}
-
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
 
-Route::set('all_media', '<folder>/<file>',
-    array(
-        'folder' => '(global|adm|profile/css|profile/js|main|font|img)',
-        'file' => '.+',
-    ))
-    ->defaults(array(
-        'controller' => 'Media',
-        'action'     => 'load'
-    ));
 
 Route::set('download', 'download(/<path>)',
     array(
@@ -180,7 +166,7 @@ Route::set('admin.other', 'admin/other(/<controller>(/<action>(/<id>)))')
         'directory' => 'Admin'
     ));
 
-Route::set('admin.createdocs', 'admin/createdocs(/<controller>(/<action>(/<id>)))')
+Route::set('admin.createdocs', 'admin/createdocs(/<action>(/<id>))')
     ->defaults(array(
         'directory' => 'admin/createdocs',
         'controller' => 'Index',

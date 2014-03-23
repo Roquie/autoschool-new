@@ -47,7 +47,7 @@ $(function() {
                 }
                 if (response.status == 'error')
                 {
-
+                    //wtf
                 }
                 listeners.prev('input').val(response.csrf);
                 listeners.find('.loader').remove();

@@ -8,21 +8,38 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
     {
         parent::before();
 
-
         $this->_createdocs = new View('admin/createdocs/template');
         $this->_createdocs->content = null;
+    }
+
+    public function action_contract_check()
+    {
+        $s = Session::instance();
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && Request::initial()->is_ajax())
+        {
+            if ($s->get('st_createdocs'))
+            {
+                $this->ajax_data(
+                    $s->get('st_createdocs')
+                );
+            }
+        }
     }
 
     public function action_next()
     {
         $post = $this->request->post();
+        $s = Session::instance();
+
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            Session::instance()->set('st_createdocs', $post);
+            $s->set('st_createdocs', $post);
+
             HTTP::redirect('admin/createdocs/contract');
         }
     }
-
 
     public function action_contract()
     {
@@ -30,17 +47,72 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $post = (object)$this->request->post();
 
         $s = Session::instance();
-        if ($s->get('st_createdocs'))
-        {
-
-        }
+        $listener = (object)$s->get('st_createdocs');
 
         if (Security::is_token($post->csrf) && $this->request->method() === Request::POST)
         {
-            echo '<pre>';
-            print_r($post);
-            echo '</pre>';
-            exit;
+
+            $korpys = isset($post->korpys) ? 'к. '.$post->korpys : null;
+
+            $customer_vrem_reg =
+                isset($post->vrem_reg)
+                    ? ' - (временная)'
+                    : null;
+
+            $listener_vrem_reg =
+                isset($listener->vrem_reg)
+                    ? ' - (временная)'
+                    : null;
+
+            $obj = new TemplateDocx(APPPATH.'templates/contract/dogovor.docx');
+
+            $obj->setValueArray(
+                array(
+                     'Customer' => $post->famil.' '.$post->imya.' '.$post->otch,
+                     'CSeriya' => $post->document_seriya,
+                     'CNomer' => $post->document_nomer,
+                     'CVidan' => $post->document_kem_vydan,
+                     'CAddress' =>
+                         'регион: '.$post->region.
+                         ' насел. пункт: '.$post->nas_pynkt.
+                         ', район: '.$post->rion.
+                         ', ул. '.$post->street.
+                         ', д. '.$post->dom.
+                         $korpys
+                         .' кв. '.$post->kvartira
+                         .$customer_vrem_reg,
+                     'CPhone' => $post->tel,
+
+                     'Listener' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
+                     'LSeriya' => $listener->document_seriya,
+                     'LNomer' => $listener->document_nomer,
+                     'LVidan' => $listener->document_kem_vydan,
+                     'LAddress' =>
+                         'регион: '.$listener->region.
+                         ' насел. пункт: '.$listener->nas_pynkt.
+                         ', район: '.$listener->rion.
+                         ', ул. '.$listener->street.
+                         ', д. '.$listener->dom.
+                         $korpys
+                         .' кв. '.$listener->kvartira
+                         .$listener_vrem_reg,
+                     'LPhone' => $listener->tel,
+                )
+            );
+
+            $file = 'temp/'.
+                Text::translit($post->famil).'_'.
+                Text::translit(UTF8::substr($post->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($post->otch, 0, 1)).'_'.
+                'dogovor_'.date('d_m_Y_H_i_s').'.docx';
+
+
+            $obj->save(APPPATH.'download/'.$file);
+            unset($document);
+
+            $this->response->send_file(
+                APPPATH.'download/'.$file, null, array('delete' => true)
+            );
         }
 
         $this->_createdocs->content =
@@ -53,6 +125,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $nat = new Model_Nationality();
         $doc = new Model_Documents();
         $edu = new Model_Education();
+        $s = Session::instance();
 
         $post = (object)$this->request->post();
 

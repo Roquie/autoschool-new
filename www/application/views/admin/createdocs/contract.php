@@ -3,15 +3,50 @@
     <li class="active"><a href="<?=URL::site('admin/createdocs/contract')?>">Договор</a></li>
 </ul>
 
+<script type="text/javascript">
+    $(function(){
+        $('#is_individual').on('click', function()
+        {
+            var f_contract = $('#f_contract');
+            if($(this).is(':checked'))
+            {
+                $.post(
+                    $(this).closest('form').attr('action'),
+                    $('#contract_check').serialize(),
+                    function(response)
+                    {
+                        if (response.status == 'success')
+                        {
+                            $.each(response.data, function(key, value)
+                            {
+                                if (response.data.vrem_reg)
+                                {
+                                    f_contract.find('[name="'+key+'"]').prop('checked', true);
+                                }
+                                f_contract.find('[name="'+key+'"]').val(value);
+                            });
+                        }
+                    },
+                    'json'
+                );
+            }
+            else
+            {
 
-<label for="is_individual">
-    <!-- я хз как написать иначе-->
-    <input type="checkbox" style="width: 16px; margin-bottom: 5px" name="is_individual" id="is_individual" />
-    Заказчик, тот, кто писал заявление
-</label>
-<div class="line"></div>
+            }
+        });
+    });
+</script>
+<?if(Session::instance()->get('st_createdocs')):?>
+    <form action="<?=Route::to('admin.createdocs', 'index#contract_check')?>" method="post" id="contract_check">
+        <label for="is_individual"><input type="checkbox" style="width: 16px; margin-bottom: 5px" name="is_individual" id="is_individual" /> Заказчик, тот, кто писал заявление</label>
+        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+    </form>
 
-<form action="<?=Route::to('admin.createdocs', 'index#contract')?>" method="post" accept-charset="utf-8" novalidate>
+    <div class="line"></div>
+<?endif?>
+
+<form id="f_contract" action="<?=Route::to('admin.createdocs', 'index#contract')?>" method="post" accept-charset="utf-8" novalidate>
     <div class="row">
         <div class="span5" style="width: 425px">
             <label for="famil">Фамилия</label>

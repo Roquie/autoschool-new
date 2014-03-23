@@ -44,7 +44,7 @@
                 <div class="span6 social">
                     <h2 class="page_header">Регистрация через соц. сети</h2>
                     <div class="icons">
-                            <script src="<?=URL::site('main/js/ulogin.js')?>"></script>
+                            <script src="<?=URL::site('public/main/js/ulogin.js')?>"></script>
                             <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name,phone;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=URL::site('/users/social')?>"></div>
                     </div><br>
                     <div class="text">

@@ -75,7 +75,7 @@
                     <a href="#" id="user_name"><span class="login"><i class="icon-bolt"></i> <?=$info->first_name.'&nbsp;'.$info->family_name?></span><strong class="caret" style="margin-left: 5px;margin-top: 8px; border-top: 4px solid #ffffff;"></strong></a>
                     <div id="popup" class="hide">
                         <div class="pull-left">
-                            <?if($admin->photo == 'img/photo.jpg' || $admin->photo == 'img/admin/admin_avatar.png'):?>
+                            <?if($admin->photo == 'public/img/photo.jpg' || $admin->photo == 'public/img/admin/admin_avatar.png'):?>
                                 <img class="img-login" style="width: 95px; height: 95px" src="<?=URL::site($admin->photo)?>"/>
                             <?else:?>
                                 <img class="img-login" style="width: 95px; height: 95px" src="<?=$admin->photo?>"/>

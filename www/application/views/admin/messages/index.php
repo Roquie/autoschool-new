@@ -30,7 +30,7 @@
                     <form action="#" method="post" accept-charset="utf-8" novalidate>
                        <div class="row">
                            <div class="span1">
-                               <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2)" src="<?=URL::site('img/admin/admin_avatar.png')?>" alt="admin_logo"/>
+                               <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2)" src="<?=URL::site('public/img/admin/admin_avatar.png')?>" alt="admin_logo"/>
                            </div>
                            <input type="hidden" name="user_id" id="user_id"/>
                            <textarea name="msg" id="admin_msg" style="height: 44px; width: 483px; resize: none" placeholder="Введите сообщение"></textarea>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="row" style="margin-bottom: 10px">
                     <div class="span1">
-                        <img style="border-radius: 3px; box-shadow: 0 1px 1px rgba(0,0,0,0.2); height: 60px;" src="<?=URL::site('img/admin/admin_avatar.png')?>" alt="img_admin"/>
+                        <img style="border-radius: 3px; box-shadow: 0 1px 1px rgba(0,0,0,0.2); height: 60px;" src="<?=URL::site('public/img/admin/admin_avatar.png')?>" alt="img_admin"/>
                     </div>
                     <div class="span6" style="background-color: #ffffff; border-radius: 3px; box-shadow: 0 0 1px rgba(0,0,0,0.2); height: 50px; padding: 5px">
                         <?=Text::limit_chars('2asd ad adka; ajdaajkahk adhakj akhdah kahdkjah kah dkjahdakjh akjdhajh dakjdhakjdhak hakjhd akh akjhdkaj hkajhdakjhd akhdkaj ahdkajhjkahdajkhdakjh akjh dajhdakhdakjhdakj hakhd akjh dkajdhakjdh akjdhakjdh akjhd akjh dkajshajkshdakjhdak jhkjadhakjhdakjdh', 125)?>

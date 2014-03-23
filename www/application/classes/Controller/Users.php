@@ -287,7 +287,7 @@ class Controller_Users extends Controller_Main_Base
             $user = $s ? json_decode($s, true) : array();
 
             if ((empty($user['photo_big']) || $user['photo_big'] === 'https://ulogin.ru/img/photo_big.png') && !array_key_exists('error', $user))
-                $user['photo_big'] = 'img/photo.jpg';
+                $user['photo_big'] = 'public/img/photo.jpg';
 
             $newpass = Text::random();
 

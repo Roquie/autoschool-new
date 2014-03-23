@@ -7,7 +7,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Водительская карточка</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/driving_card.png')?>" width="170px" height="180px" alt="Водительская карточка"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/driving_card.png')?>" width="170px" height="180px" alt="Водительская карточка"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">
@@ -21,7 +21,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Заявление в ГИБДД</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">
@@ -35,7 +35,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Письмо в МРЭО ГИБДД</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">
@@ -51,7 +51,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Экзаменационный протокол</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/ekzamen.png')?>" width="170px" height="180px" alt="Экзаменационный протокол"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/ekzamen.png')?>" width="170px" height="180px" alt="Экзаменационный протокол"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">
@@ -65,7 +65,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Список слушателей группы (образ.)</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/list_group_edu.png')?>" width="170px" height="180px" alt="Список слушателей группы (образ.)"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/list_group_edu.png')?>" width="170px" height="180px" alt="Список слушателей группы (образ.)"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">
@@ -79,7 +79,7 @@
             <div class="span4">
                 <div class="doc_print">
                     <h5>Список слушателей группы (мед.)</h5>
-                    <a href="#"><img src="<?=URL::site('adm/img/print/list_group_md.png')?>" width="170px" height="180px" alt="Список слушателей группы (мед.)"/></a>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/list_group_md.png')?>" width="170px" height="180px" alt="Список слушателей группы (мед.)"/></a>
 
                     <div class="btn-group-wrap">
                         <div class="btn-group">

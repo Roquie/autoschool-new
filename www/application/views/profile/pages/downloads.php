@@ -17,7 +17,7 @@
                 <div class="row">
 
                     <div class="span1">
-                        <img src="<?=URL::site('img/profile/w.png')?>" alt="word"/>
+                        <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
                     </div>
                     <div class="span3 pull-left">
                         <h2>Заявление</h2>
@@ -32,7 +32,7 @@
             <div class="dwn_block">
                 <div class="row">
                     <div class="span1">
-                        <img src="<?=URL::site('img/profile/w.png')?>" alt="word"/>
+                        <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
                     </div>
                     <div class="span3 pull-left">
                         <h2>Договор</h2>
@@ -47,7 +47,7 @@
             <div class="dwn_block">
                 <div class="row">
                     <div class="span1">
-                        <img src="<?=URL::site('img/profile/w.png')?>" alt="word"/>
+                        <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
                     </div>
                     <div class="span3 pull-left">
                         <h2>Квитанция</h2>
@@ -64,7 +64,7 @@
             <div class="dwn_block">
                 <div class="row">
                     <div class="span1">
-                        <img style="height: 60px; padding-left: 18px" src="<?=URL::site('img/profile/z.png')?>" alt="zip"/>
+                        <img style="height: 60px; padding-left: 18px" src="<?=URL::site('public/img/profile/z.png')?>" alt="zip"/>
                     </div>
                     <div class="span3 pull-left">
                         <h2>Скачать все архивом</h2>

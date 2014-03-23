@@ -36,7 +36,7 @@
                         </div>
                         <div class="span5">
                             <legend>Вход через соц. сети</legend>
-                            <script src="<?=URL::site('main/js/ulogin.js')?>"></script>
+                            <script src="<?=URL::site('public/main/js/ulogin.js')?>"></script>
                             <div id="uLogin" data-ulogin="display=panel;fields=email,first_name,last_name;optional=photo_big;providers=vkontakte,odnoklassniki,mailru,facebook,google,twitter;hidden=;redirect_uri=<?=Route::to('users', 'users#social_login')?>"></div>
                         </div>
                     </div>

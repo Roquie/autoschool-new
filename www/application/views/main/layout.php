@@ -24,7 +24,7 @@
 
 
     <!--[if IE]>
-        <script src="/global/js/html5shiv.js"></script>
+        <script src="public//global/js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>

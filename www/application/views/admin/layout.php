@@ -15,10 +15,10 @@
     <?=HTML::script('global/js/bootstrap.min.js')?>
     <?=HTML::script('global/js/popup.js')?>
     <?=HTML::script('adm/js/global.js')?>
-    <?=HTML::script('adm/js/ajaxSend.js')?>
+    <?=HTML::script('global/js/ajaxSend.js')?>
 
     <!--[if IE]>
-    <script src="/global/js/html5shiv.js"></script>
+    <script src="public/global/js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>

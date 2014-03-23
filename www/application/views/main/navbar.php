@@ -4,7 +4,7 @@
 
             <ul class="nav">
                 <a href="<?=URL::site()?>">
-                    <img src="<?=URL::site('img/main/logo.png')?>" alt="Автошкола МПТ"/>
+                    <img src="<?=URL::site('public/img/main/logo.png')?>" alt="Автошкола МПТ"/>
                 </a>
                 <div class="text">
                     <div class="phone">

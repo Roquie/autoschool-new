@@ -13,12 +13,39 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $this->_createdocs->content = null;
     }
 
+    public function action_next()
+    {
+        $post = $this->request->post();
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            Session::instance()->set('st_createdocs', $post);
+            HTTP::redirect('admin/createdocs/contract');
+        }
+    }
+
 
     public function action_contract()
     {
+        $doc = new Model_Documents();
+        $post = (object)$this->request->post();
+
+        $s = Session::instance();
+        if ($s->get('st_createdocs'))
+        {
+
+        }
+
+        if (Security::is_token($post->csrf) && $this->request->method() === Request::POST)
+        {
+            echo '<pre>';
+            print_r($post);
+            echo '</pre>';
+            exit;
+        }
 
         $this->_createdocs->content =
-            View::factory('admin/createdocs/contract', compact('Nationality', 'Educations'));
+            View::factory('admin/createdocs/contract')
+                ->set('type_doc', $doc->find_all());
     }
 
     public function action_index()

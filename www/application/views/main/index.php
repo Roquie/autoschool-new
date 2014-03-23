@@ -7,8 +7,8 @@
             <div class="span7">
                 <div class="text">
                 </div>
-                <img src="<?=URL::site('img/main/car.jpeg')?>" alt="KIA SPECTRA"/>
-                <img src="<?=URL::site('img/main/znaki.png')?>" alt="Дорожные знаки"/>
+                <img src="<?=URL::site('public/img/main/car.jpeg')?>" alt="KIA SPECTRA"/>
+                <img src="<?=URL::site('public/img/main/znaki.png')?>" alt="Дорожные знаки"/>
             </div>
             <div class="span5">
                 <h2>Мы предлагаем пройти курс обучения вождению мотоцикла, автомобиля по программам профессиональной подготовки 11442 и 11451.</h2>
@@ -34,25 +34,25 @@
         <div class="row">
             <div class="span3">
                 <div class="grid">
-                    <img src="<?=URL::site('img/main/clock.png')?>" alt="Часики" />
+                    <img src="<?=URL::site('public/img/main/clock.png')?>" alt="Часики" />
                     Объемы часов по рабочей программе соответствуют стандарту и составляют <b>106</b> часов теории и <b>50</b> часов практики.
                 </div>
             </div>
             <div class="span3">
                 <div class="grid">
-                    <img src="<?=URL::site('img/main/list.png')?>" alt="Лист с баксом" />
+                    <img src="<?=URL::site('public/img/main/list.png')?>" alt="Лист с баксом" />
                     После прохождения обучения по данной учебной программе <b>сдача экзамена</b> в ГИБДД не составит для Вас проблем.
                 </div>
             </div>
             <div class="span3">
                 <div class="grid">
-                    <img src="<?=URL::site('img/main/steering_wheel.png')?>" alt="Руль"/>
+                    <img src="<?=URL::site('public/img/main/steering_wheel.png')?>" alt="Руль"/>
                     Наш опыт работы более <b>10 лет</b> и мы выработали свою специфику работы с каждым слушателем.
                 </div>
             </div>
             <div class="span3">
                 <div class="grid">
-                    <img src="<?=URL::site('img/main/brain.png')?>" alt="Вопрос в мозгу"/>
+                    <img src="<?=URL::site('public/img/main/brain.png')?>" alt="Вопрос в мозгу"/>
                     Остались вопросы? У нас есть недорогие <b>дополнительные занятия</b> помимо базовых практических часов.
                 </div>
             </div>
@@ -68,9 +68,9 @@
                 <h1>Теория, класс автошколы</h1>
                 <div class="flexslider">
                     <ul class="slides">
-                        <li><img src="<?=URL::site('img/main/auditory/2.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/auditory/3.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/auditory/4.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/auditory/2.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/auditory/3.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/auditory/4.jpg')?>" /></li>
                     </ul>
                 </div>
                 <p>Автошкола имеет собственное помещение, санузлы, Wi-Fi.</p>
@@ -106,16 +106,16 @@
             <div class="span6">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li><img src="<?=URL::site('img/main/practice/5.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/6.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/7.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/8.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/9.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/10.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/11.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/19.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/20.jpg')?>" /></li>
-                        <li><img src="<?=URL::site('img/main/practice/21.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/5.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/6.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/7.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/8.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/9.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/10.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/11.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/19.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/20.jpg')?>" /></li>
+                        <li><img src="<?=URL::site('public/img/main/practice/21.jpg')?>" /></li>
                     </ul>
                 </div>
             </div>

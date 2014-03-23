@@ -27,6 +27,10 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $national = ORM::factory('Nationality')->find_all();
         $type_doc = ORM::factory('Documents')->find_all();
 
+
+
+
+
         $this->_createdocs->content =
             View::factory('admin/createdocs/index', compact('national', 'type_doc', 'edu'));
 	}
@@ -37,3 +41,15 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         parent::after();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

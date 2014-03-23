@@ -42,9 +42,12 @@
                     <label for="tel">Моб. телефон</label>
                     <input type="text" class="input-medium telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" />
                     <br/>
+                    <label for="email">Email</label>
+                    <input type="email" class="input-medium" name="email" id="email" placeholder="example@gmail.com" />
+                    <br/>
                     <label for="data_rojdeniya">Дата рождения</label>
                     <div class="input-append">
-                        <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 385px" value="<?=date('d.m.Y')?>">
+                        <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 385px" >
                         <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
                     </div>
                     <br/>
@@ -62,8 +65,17 @@
                             <?endforeach?>
                         <?endif?>
                     </select>
+                    <br/>
+                    <label for="document_data_vydachi">Дата выдачи</label>
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 385px" >
+                        <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
+
+                </div>
+                <div class="span5" style="width: 425px">
                     <label for="type_document">Тип документа</label>
-                    <select style="width: 100%" name="document_id" id="type_document">
+                    <select style="width: 447px" name="document_id" id="type_document">
                         <?if(!empty($type_doc)):?>
                             <?foreach($type_doc as $k => $v):?>
                                 <option value="<?=$v->id?>"><?=$v->name?></option>
@@ -71,14 +83,6 @@
                         <?endif?>
                     </select>
                     <br/>
-                    <label for="document_data_vydachi">Дата выдачи</label>
-                    <div class="input-append">
-                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 385px" value="<?=date('d.m.Y')?>">
-                        <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
-                    </div>
-
-                </div>
-                <div class="span5" style="width: 425px">
                     <div class="row">
                         <div class="span3" style="width: 207px">
                             <label for="document_seriya">Серия документа</label>

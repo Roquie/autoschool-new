@@ -168,7 +168,7 @@ Route::set('admin.other', 'admin/other(/<controller>(/<action>(/<id>)))')
 
 Route::set('admin.createdocs', 'admin/createdocs(/<action>(/<id>))')
     ->defaults(array(
-        'directory' => 'admin/createdocs',
+        'directory' => 'Admin/Createdocs',
         'controller' => 'Index',
         'action'     => 'Index',
    ));

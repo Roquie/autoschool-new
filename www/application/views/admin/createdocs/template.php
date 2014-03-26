@@ -7,9 +7,10 @@
 
     <!--css-->
     <?=HTML::style('global/css/stylizationForm.css')?>
-    <?=HTML::style('global/css/datepicker.css')?>
+
     <?=HTML::style('main/css/statement.css')?>
     <?=HTML::style('main/css/chosen.css')?>
+
 
     <div class="well well-small form-block">
         <?=$content?>

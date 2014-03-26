@@ -12,12 +12,13 @@ class Controller_Admin_Messages extends Controller_Admin_Base
             'Index'
         );
 
-        if (!in_array($this->request->action(), $no_ajax)) {
-            $this->post = $this->request->post();
-            //@todo раскоменить когда полностью будет работать
-            //if (Kohana::$environment === Kohana::PRODUCTION)
-                if (!Request::initial()->is_ajax())
-                    throw new HTTP_Exception_404();
+        if (!in_array($this->request->action(), $no_ajax))
+        {
+            $post = $this->request->post();
+            $this->auto_render = false;
+
+            if (!Request::initial()->is_ajax() && !Security::is_token($post['csrf']))
+                throw new HTTP_Exception_404();
         }
 
     }
@@ -26,33 +27,36 @@ class Controller_Admin_Messages extends Controller_Admin_Base
     {
         $list_users = Model::factory('User')->get_user_list(false);
         $list_groups = Model::factory('Groups')->find_all();
+
         $this->template->content = View::factory('admin/messages/index', compact('list_users', 'list_groups'));
     }
 
     public function action_users_by_group()
     {
-        $this->auto_render = false;
-        $csrf = $this->post['csrf'];
-        if ($this->request->method() === Request::POST && Security::is_token($csrf))
-        {
-            $list_users = ((int)$this->post['group_id'] === 0) ? Model::factory('User')->get_user_list(false) : Model::factory('User')->by_group_id($this->post['group_id']);
-            $this->ajax_data(
-                View::factory('admin/html/listeners', compact('list_users'))->render()
-            );
-        }
+        $post = $this->request->post();
+        $u = new Model_User();
+
+        $list_users =
+            ($post['group_id'] == 0)
+            ? $u->get_user_list(false)
+            : $u->by_group_id($post['group_id']);
+
+        $this->ajax_data(
+            View::factory('admin/html/listeners', compact('list_users'))->render()
+        );
     }
 
     public function action_get_messages()
     {
-        $this->auto_render = false;
-        $csrf = $this->post['csrf'];
-        if ($this->request->method() === Request::POST && Security::is_token($csrf))
-        {
+        $post = $this->request->post();
+        $m = new Model_Messages();
 
-            $this->ajax_data(
-                View::factory('admin/html/listeners', compact('list_users'))->render()
-            );
-        }
+        $messages = $m->getMessage($post['user_id']);
+
+        $this->ajax_data(
+            View::factory('admin/html/listeners', compact('messages'))->render()
+        );
+
     }
 
 

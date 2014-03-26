@@ -1,8 +1,12 @@
 $(function() {
 
-    var body = $('body');
+    var body = $('body'),
+        is_change_group = false;
 
-    $("input:checkbox").on('click', function() {
+    /**
+     *  Загрузка данных слушателя
+     */
+    $('#listeners').on('click', 'input:checkbox', function() {
 
         if ($(this).is(":checked")) {
             var group = "input:checkbox[name='" + $(this).attr("name") + "']";
@@ -13,36 +17,63 @@ $(function() {
             return;
         }
 
-        $('#user_id').val($(this).val())
+        $('#user_id').val($(this).val());
 
         var f_statement = $('#statement'),
-            listeners = $('#listeners');
+            f_contract = $('#contract'),
+            listeners = $('#listeners'),
+            $this = $(this),
+            field;
 
-        listeners.find('.loader').remove();
-        $(this).parent().append('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
-
-        f_statement.find('input,select').each(function() {
-            if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
-                $(this).val('');
-        });
-
-        f_statement.find('input,select').each(function() {
-            if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
-                $(this).val('');
-        });
-
-        $.post(
-            listeners.data('url'),
-            {
+        $.ajax({
+            type : 'POST',
+            url  : listeners.data('url'),
+            data : {
                 csrf : listeners.prev('input').val(),
-                user_id : $(this).val()
+                user_id : $this.val()
             },
-            function(response)
-            {
+            dataType : 'json',
+            beforeSend : function() {
+                listeners.find('.loader').remove();
+                $this.parent().append('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
+
+                f_statement.find('input,select').each(function() {
+                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                        if ($(this).attr('type') == 'checkbox')
+                            $(this).prop("checked", false);
+                        else
+                            $(this).val('');
+                });
+
+                f_contract.find('input,select').each(function() {
+                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                        if ($(this).attr('type') == 'checkbox')
+                            $(this).prop("checked", false);
+                        else
+                            $(this).val('');
+                });
+
+                is_change_group = false;
+            },
+            success : function(response) {
                 if (response.status == 'success')
                 {
                     $.each(response.data.listener, function(key, value) {
-                        f_statement.find('[name="'+key+'"]').val(value);
+                        field = f_statement.find('[name="'+key+'"]');
+                        if (field.attr('type') == 'checkbox') {
+                            (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
+                        } else {
+                            field.val(value);
+                        }
+                    });
+
+                    $.each(response.data.contract, function(key, value) {
+                        field = f_contract.find('[name="'+key+'"]');
+                        if (field.attr('type') == 'checkbox') {
+                            (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
+                        } else {
+                            field.val(value);
+                        }
                     });
                 }
                 if (response.status == 'error')
@@ -52,8 +83,14 @@ $(function() {
                 listeners.prev('input').val(response.csrf);
                 listeners.find('.loader').remove();
             },
-            'json'
-        );
+            error : function(request) {
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            }
+        });
 
     });
 
@@ -90,70 +127,122 @@ $(function() {
             $(this).closest('.input-append').find('input').datepicker( "show" );
         })
         .on('click', '.btns > a', function() {
+            var data = $('.l_data'),
+                listeners = $('.l_fio');
             $('.btns').find('a').removeClass('active');
             $(this).addClass('active');
+            if ($(this).attr('href') == '#tab2') {
+                data.css({'height' : '744px'});
+                listeners.css({'height' : '584px'});
+            } else {
+                data.css({'height' : '1444px'});
+                listeners.css({'height' : '1284px'});
+            }
         });
 
     $(".telephone").mask("8 (999) 999-99-99");
 
-/*
     $('#select2').on('change', function() {
 
         var $this = $(this),
-            block = $('#listeners');
+            block = $('#listeners'),
+            f_statement = $('#statement'),
+            f_contract = $('#statement');
 
-        block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
-
-        $.post(
-            $this.data('url'),
-            {
-                csrf : $this.prev('input').val(),
+        $.ajax({
+            type : 'POST',
+            url  : $this.data('url'),
+            data : {
+                csrf : block.prev('input').val(),
                 group_id : $this.val()
             },
-            function(response)
-            {
+            dataType : 'json',
+            beforeSend : function() {
+                block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
+
+                f_statement.find('input,select').each(function() {
+                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                        $(this).val('');
+                });
+
+                f_contract.find('input,select').each(function() {
+                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                        $(this).val('');
+                });
+            },
+            success : function(response){
                 if (response.status == 'success')
                 {
                     block.html(response.data);
+                    $('#listeners').find('input:checkbox').first().trigger('click');
                 }
                 if (response.status == 'error')
                 {
 
                 }
-                $this.prev('input').val(response.csrf);
+                block.prev('input').val(response.csrf);
             },
-            'json'
-        );
+            error : function(request) {
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            }
+        });
 
     });
 
-    $('#select3').on('change', function() {
-
-        var $this = $(this),
-            block = $('#listeners');
-
-        block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
-
-        $.post(
-            $this.data('url'),
-            {
-                csrf : $this.prev('input').val(),
-                group_id : $this.val()
+    $('#statement').on('submit', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        $.ajax({
+            type : 'POST',
+            url  : $this.attr('action'),
+            data : $this.serialize(),
+            dataType : 'json',
+            beforeSend : function() {
+                $('.alert').remove();
             },
-            function(response)
-            {
-                if (response.status == 'success')
+            success : function(response){
+                if (response.status == 'success' || response.status == 'error')
                 {
-                    block.html(response.data);
+                    //$('.alert').addClass('alert-'+response.status).removeClass('hide').find('span').text(response.msg);
+                    message($('.container'), response.msg, response.status);
                 }
-                if (response.status == 'error')
-                {
-
+                if (is_change_group) {
+                    $('#select2').trigger('change');
                 }
-                $this.prev('input').val(response.csrf);
             },
-            'json'
-        );
+            error : function(request) {
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            }
+        });
+    });
 
-    });*/
+    $('#group_id').on('change', function() {
+        is_change_group = true;
+    });
+
+    function message(block, msg, type) {
+        var html = '<div class="alert alert-' + type + '">' +
+            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<span>' + msg + '</span>' +
+            '</div>';
+
+        block.prepend(html);
+
+        $('html, body').animate({scrollTop:0}, 'slow');
+
+        setTimeout(function() {
+            $('.alert').animate({opacity:0}, 'slow', function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
+
 });

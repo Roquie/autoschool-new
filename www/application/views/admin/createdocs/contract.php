@@ -36,9 +36,18 @@
             }
         });
 
-        $('#save_to_db').on('click', function()
+        $('#generateContract').on('click', function()
         {
-            window.location = $(this).data('url');
+            alert($('#f_contract').data('createContract'));
+            $.post(
+                $(this).data('createContract'),
+                $('#f_contract').serialize(),
+                function(response)
+                {
+
+                },
+                'json'
+            );
         });
     });
 </script>
@@ -51,7 +60,7 @@
     <div class="line"></div>
 <?endif?>
 
-<form id="f_contract" action="<?=Route::to('admin.createdocs', 'index#contract')?>" method="post" accept-charset="utf-8" novalidate>
+<form id="f_contract" action="<?=Route::to('admin.createdocs', 'index#save_to_db')?>"  data-createContract="<?=Route::to('admin.createdocs', 'index#contract')?>" method="post" accept-charset="utf-8" novalidate>
     <div class="row">
         <div class="span5" style="width: 425px">
             <label for="famil">Фамилия</label>
@@ -145,7 +154,7 @@
 <div class="line"></div>
 <div class="row pull-right">
     <div class="span3">
-        <input type="submit" style="margin-top: 0;" id="generateContract" class="btn btn-success pull-right" name="ok" value="&dArr; Скачать договор &dArr;"/>
+        <input type="button" style="margin-top: 0;" id="generateContract" class="btn btn-success pull-right" name="ok" value="&dArr; Скачать договор &dArr;"/>
     </div>
     <div class="span3">
         <input type="button" style="margin-top: 0" class="btn btn-info" id="save_to_db" value="Сохранить в базе &raquo;" data-url="<?=URL::site('admin/createdocs/save_to_db')?>">

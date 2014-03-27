@@ -96,51 +96,7 @@ $(function() {
 
     $('#listeners').find('input:checkbox').first().trigger('click');
 
-    /*
-     * Настройки для календаря
-     * @type {{monthNames: Array, monthNamesShort: Array, dayNames: Array, dayNamesMin: Array}}
-     */
-    $.datepicker.regional['ru'] = {
-        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
-            'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-        dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-    };
 
-    $.datepicker.setDefaults($.datepicker.regional['ru']);
-
-    $('.datepicker').datepicker({
-        maxDate: "+0D",
-        nextText: "&raquo;",
-        prevText: "&laquo;",
-        yearRange: "1950:<?=date('Y')?>",
-        dateFormat: 'dd.mm.yy',
-        changeMonth: true,
-        changeYear: true
-    }).mask('99.99.9999');
-
-    // Отображение календаря при нажатии на иконку календаря
-    body
-        .on('click', '#calendar', function() {
-            $(this).closest('.input-append').find('input').datepicker( "show" );
-        })
-        .on('click', '.btns > a', function() {
-            var data = $('.l_data'),
-                listeners = $('.l_fio');
-            $('.btns').find('a').removeClass('active');
-            $(this).addClass('active');
-            if ($(this).attr('href') == '#tab2') {
-                data.css({'height' : '744px'});
-                listeners.css({'height' : '584px'});
-            } else {
-                data.css({'height' : '1444px'});
-                listeners.css({'height' : '1284px'});
-            }
-        });
-
-    $(".telephone").mask("8 (999) 999-99-99");
 
     $('#select2').on('change', function() {
 

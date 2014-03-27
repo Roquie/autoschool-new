@@ -15,9 +15,9 @@
     <?=HTML::script('global/js/jquery-ui.min.js')?>
     <?=HTML::script('global/js/bootstrap.min.js')?>
     <?=HTML::script('global/js/popup.js')?>
-    <?=HTML::script('adm/js/global.js')?>
     <?=HTML::script('global/js/ajaxSend.js')?>
     <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
+    <?=HTML::script('adm/js/global.js')?>
 
     <script type="text/javascript">
         $(function() {

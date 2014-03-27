@@ -12,6 +12,112 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $this->_createdocs->content = null;
     }
 
+    public function action_save_to_db()
+    {
+        $a = Auth::instance();
+        $s = Session::instance();
+        $post = $this->request->post();
+        $session_data = $s->get('st_createdocs');
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            $data = array_merge($session_data, $post);
+
+            $newpass = Text::random();
+
+            $valid = new Validation(Arr::map('trim', $post));
+            $valid->rule('famil', 'not_empty');
+            $valid->rule('famil', 'alpha', array(':value', true));
+            $valid->rule('famil', 'min_length', array(':value', 2));
+            $valid->rule('famil', 'max_length', array(':value', 50));
+            $valid->rule('imya', 'not_empty');
+            $valid->rule('imya', 'alpha', array(':value', true));
+            $valid->rule('imya', 'min_length', array(':value', 2));
+            $valid->rule('imya', 'max_length', array(':value', 50));
+            $valid->rule('otch', 'not_empty');
+            $valid->rule('otch', 'alpha', array(':value', true));
+            $valid->rule('otch', 'min_length', array(':value', 2));
+            $valid->rule('otch', 'max_length', array(':value', 50));
+            $valid->rule('tel', 'not_empty');
+            $valid->rule('tel', 'phone', array(':value', 11));
+
+            if ($valid->check())
+            {
+                try
+                {
+                    $users = ORM::factory('User');
+                    $pk = $users
+                        ->create_user(
+                            array(
+                                 'password' => $newpass,
+                                 'password_confirm' => $newpass,
+                                 'email' => $post['email']
+                            ),
+                            array(
+                                 'password',
+                                 'email',
+                            ))
+                        ->pk();
+
+                    try
+                    {
+                        DB::insert('listeners')
+                            ->columns(array('famil', 'imya', 'otch', 'tel', 'user_id'))
+                            ->values(array(
+                                          'famil' => $post['famil'],
+                                          'imya' => $post['imya'],
+                                          'otch' => $post['otch'],
+                                          'tel' => $post['tel'],
+                                          'user_id' => $pk
+                                     ))->execute();
+                    }
+                    catch(Database_Exception $e)
+                    {
+                        $errors = $e->getMessage();
+                    }
+
+                    $mail_content = View::factory('tmpmail/profile/registr')
+                        ->set('username', $post['imya'])
+                        ->set('login', $post['email'])
+                        ->set('pass', $newpass);
+
+                    $message = View::factory('tmpmail/template', compact('mail_content'));
+
+                    try
+                    {
+                        Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
+                            ->to($post['email'])
+                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                            ->send();
+                    }
+                    catch(Swift_SwiftException $e)
+                    {
+                        die($e->getMessage());
+                    }
+
+                    $role = array(1, 3);
+                    $users->add('roles', $role);
+
+                    $success = 'Пользователь добавлен';
+                    $s->delete('st_createdocs');
+                }
+                catch(ORM_Validation_Exception $e)
+                {
+                    $errors = $e->errors('validation');
+                }
+            }
+            else
+            {
+                $errors = $valid->errors('register');
+            }
+
+        }
+
+        $this->_createdocs->content =
+            View::factory('admin/createdocs/reg', compact('session_data', 'errors', 'success'));
+
+    }
+
     public function action_contract_check()
     {
         $s = Session::instance();

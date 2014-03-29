@@ -79,7 +79,7 @@ class Model_Listeners extends ORM
         'indy' => array(
             'model' => 'Individual',
             'foreign_key' => 'listener_id',
-        ),
+        )
     );
 
     public function rules()

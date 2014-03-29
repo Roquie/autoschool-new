@@ -6,12 +6,13 @@ class Model_News extends ORM
     protected $_table_name  = 'news';
     protected $_primary_key = 'id';
 
-    protected $_table_columns = array(
+   /* protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
         'title' => array('data_type' => 'string', 'is_nullable' => false),
         'message' => array('data_type' => 'string', 'is_nullable' => false),
+        'timestamp ' => array('data_type' => 'string', 'is_nullable' => false),
         'group_id' => array('data_type' => 'int', 'is_nullable' => false),
-    );
+    );*/
 
     public function rules()
     {
@@ -24,7 +25,7 @@ class Model_News extends ORM
             'message' => array(
                 array('not_empty'),
                 array('min_length', array(':value', 5)),
-                array('max_length', array(':value', 3000)),
+                array('max_length', array(':value', 300)),
             ),
             'group_id' => array(
                 array('digit'),

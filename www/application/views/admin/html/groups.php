@@ -1,6 +1,6 @@
 <?foreach($list_groups as $key => $value):?>
     <label class="checkbox">
-        <input type="checkbox" class="radio" style="margin-top: 1px" value="<?=$value->id?>" name="group_name"/>
+        <input type="checkbox" value="<?=$value->id?>" name="group_name"/>
         <span class="pull-left"><?=$value->name?></span>
     </label>
 <?endforeach?>

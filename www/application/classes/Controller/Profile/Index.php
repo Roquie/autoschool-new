@@ -98,7 +98,10 @@ class Controller_Profile_Index extends Controller_Profile_Base
             {
                 try
                 {
-                    DB::update('listeners')->set(array('is_individual' => 1))->where('user_id', '=', $id)->execute();
+                    DB::update('listeners')
+                      ->set(array('is_individual' => 0))
+                      ->where('user_id', '=', $id)
+                      ->execute();
                 }
                 catch(Database_Exception $e)
                 {
@@ -110,13 +113,17 @@ class Controller_Profile_Index extends Controller_Profile_Base
             {
                 try
                 {
-                    DB::update('listeners')->set(array('is_individual' => 0))->where('user_id', '=', $id)->execute();
+                    DB::update('listeners')
+                      ->set(array('is_individual' => 1))
+                      ->where('user_id', '=', $id)
+                      ->execute();
                 }
                 catch(Database_Exception $e)
                 {
                     die($e->getMessage());
                 }
                 HTTP::redirect('/profile/contract');
+
             }
         }
         else
@@ -328,7 +335,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         $obj = new TemplateDocx(APPPATH.'templates/contract/dogovor.docx');
 
-        if (!$listener->is_individual)
+        if ($listener->is_individual)
         {
             $obj->setValueArray(
                 array(

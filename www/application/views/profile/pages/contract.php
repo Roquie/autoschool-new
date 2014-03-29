@@ -9,7 +9,7 @@
 </div>
 <div class="span8" style="margin-top: 30px" >
     <form action="<?=Route::to('profile', 'profile#contract_check')?>" method="post" name="contract_check">
-        <?if(Auth::instance()->get_user()->listener->is_individual):?>
+        <?if(Auth::instance()->get_user()->listener->is_individual == 0):?>
             <label for="customer"><input onclick="document.contract_check.submit()" style="margin-bottom: 5px" type="checkbox" name="customer" id="customer" checked/> Заказчиком буду я</label>
         <?else:?>
             <label for="customer"><input onclick="document.contract_check.submit()" style="margin-bottom: 5px" type="checkbox" name="customer" id="customer"/> Заказчиком буду я</label>
@@ -28,7 +28,7 @@
             <?=$success?>
         </div>
     <?endif?>
-    <?if(!Auth::instance()->get_user()->listener->is_individual):?>
+    <?if(Auth::instance()->get_user()->listener->is_individual):?>
         <form action="<?=Route::to('profile', 'profile#contract')?>" method="post" accept-charset="utf-8" novalidate>
             <div class="row">
                 <div class="span3">

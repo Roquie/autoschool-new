@@ -23,7 +23,10 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
 
         $file = json_decode($response)->file;
 
-        HTTP::redirect($this->_convert_url.urlencode(URL::site('viewdoc/'.$file)).'&type=printpdf');
+        $this->response->body(
+            Request::factory($this->_convert_url.urlencode(URL::site('viewdoc/'.$file)).'&type=printpdf')
+                   ->execute()
+        );
     }
 
     public function action_contract()

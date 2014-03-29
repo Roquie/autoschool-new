@@ -45,7 +45,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_ticket()
     {
-        $id = $this->_s->get('checked_user');
+        $id = Session::instance()->get('checked_user');
 
         if (!empty($id))
         {
@@ -78,7 +78,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_contract()
     {
-        $id = $this->_s->get('checked_user');
+        $id = Session::instance()->get('checked_user');
 
         if (!empty($id))
         {
@@ -198,7 +198,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_statement()
     {
-        $id = $this->_s->get('checked_user');
+        $id = Session::instance()->get('checked_user');
         
         if (!empty($id))
         {

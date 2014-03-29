@@ -7,8 +7,8 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
     public function action_statement()
     {
         $file = Request::factory('admin/files/download/create_statement')->execute();
-
-        HTTP::redirect($this->_convert_url.urlencode(URL::site($file)).'&type=printpdf');
+        die($file);
+        //HTTP::redirect($this->_convert_url.urlencode(URL::site($file)).'&type=printpdf');
         //<?=urlencode(URL::site('/test2.docx')) &type=printpdf
     }
 

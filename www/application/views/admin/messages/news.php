@@ -108,7 +108,6 @@
                             if (response.status == 'success')
                             {
                                 list_news.prepend(response.data);
-                                //list_news.append('<div id="thisnews"><legend>Тема: '+response.data.title+' </legend><p>'+response.data.message+'</p><hr style="border: 1px solid #e5e5e5"/></div>');
                                 list_news.find('#empty_news').remove();
                                 add_news.trigger('reset');
 

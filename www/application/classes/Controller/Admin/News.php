@@ -72,6 +72,7 @@ class Controller_Admin_News extends Controller_Admin_Base
                             $mail_content = View::factory('tmpmail/admin/add_news')
                                 ->set('username', $value['imya'])
                                 ->set('group', $value['name'])
+                                ->set('news_title', $post['title'])
                                 ->set('news_text', $post['message']);
 
                             $message = View::factory('tmpmail/template', compact('mail_content'));

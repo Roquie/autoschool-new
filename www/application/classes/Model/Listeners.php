@@ -62,7 +62,7 @@ class Model_Listeners extends ORM
             'foreign_key' => 'education_id',
         ),
         'group' => array(
-            'model' => 'Group',
+            'model' => 'Groups',
             'foreign_key' => 'group_id',
         ),
         'user' => array(

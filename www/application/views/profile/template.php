@@ -34,7 +34,7 @@
                             <div class="span8">
                                 <h1 class="group pull-right"
                                     title="Группа">
-                                    <?= ($group === 0) ? '' : $group['name']?>
+                                    <?=$group?>
                                 </h1>
                             </div>
                         </div>

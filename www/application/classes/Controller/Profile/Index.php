@@ -3,39 +3,36 @@
 class Controller_Profile_Index extends Controller_Profile_Base
 {
     protected $_profile = null;
+    protected $_group = null;
 
     public function before()
     {
         parent::before();
 
-
         $this->_profile = new View('profile/template');
-        $this->_profile->group = 0; // заглушка
         $this->_profile->content = null;
+
+        $id = Auth::instance()->get_user()->id;
+
+        $this->_group = ORM::factory('User', $id)->listener->group;
+
+        if ($this->_group->loaded())
+        {
+            $this->_profile->group = 'Группа #: '.$this->_group->name;
+        }
+        else
+        {
+            $this->_profile->group = null;
+        }
     }
 
     public function action_index()
 	{
-        $a = Auth::instance();
-        $group = 0;
+        $news = ORM::factory('News')
+                   ->where('group_id', '=', $this->_group->id)
+                   ->order_by('id', 'desc')
+                   ->find_all();
 
-        //$result = ORM::factory('Groups', $a->get_user()->group_id)->news->find_all();
-
-        $news = array();
-
-        //if ($result->count() === 0)
-        if (true)
-        {
-            $news[] = array(
-                'title' => 'Группа не определена администратором',
-                'message' => 'Сообщения не найдены.',
-            );
-        }
-        else
-        {
-            foreach ($result as $v)
-                $news[] = $v->as_array();
-        }
 
         $this->_profile->content = View::factory('profile/pages/messages', compact('news'));
 	}

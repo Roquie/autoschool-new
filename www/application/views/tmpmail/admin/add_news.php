@@ -6,8 +6,10 @@
                                     <h2 style="color: #222222; font-family: 'Open Sans', sans-serif; text-align: left; line-height: 1.3; word-break: break-all; word-wrap: break-word; margin: 0; padding: 0;" align="left">Здравствуйте, <?=UTF8::ucfirst($username)?>!</h2>
                                     <p class="lead" style="color: #222222; font-family: 'Open Sans', sans-serif; font-weight: normal; text-align: justify; line-height: 19px; font-size: 16px; margin: 0; padding: 20px 0 10px;" align="justify">
                                         <p>В вашей группе <b><?=$group?></b> появилась новость:</p>
-                                        <p><?=$news_text?></p>
-
+                                        <hr/>
+                                            <h2><?=$news_title?></h2>
+                                            <p><?=$news_text?></p>
+                                        <hr/>
                                         <p>Посмотреть ее можно в профиле:</p>
                                         <a href="<?=URL::site('/profile')?>"><?=URL::site('/profile')?></a>
                                         <br><br>

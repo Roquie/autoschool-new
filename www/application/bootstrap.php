@@ -173,6 +173,13 @@ Route::set('admin.createdocs', 'admin/createdocs(/<action>(/<id>))')
         'action'     => 'Index',
    ));
 
+Route::set('admin.files', 'admin/files(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'directory' => 'Admin/Files',
+        'controller' => 'Index',
+        'action'     => 'Index',
+   ));
+
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
         'controller' => 'Index',

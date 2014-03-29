@@ -23,16 +23,16 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-tasks"></i> Печать<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-tasks"></i> Файлы<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?=URL::site('admin/print/all')?>"> Список всех файлов</a></li>
+                        <li><a href="<?=URL::site('admin/files')?>"> Список всех файлов</a></li>
                         <li class="divider"></li>
-                        <li><a href="<?=URL::site('admin/print/driver_card')?>"> Водительская карточка</a></li>
-                        <li><a href="<?=URL::site('admin/print/statement_in_gibdd')?>"> Заявление в ГИБДД</a></li>
-                        <li><a href="<?=URL::site('admin/print/mail_in_mreo_gibdd')?>"> Письмо в МРЭО ГИБДД</a></li>
-                        <li><a href="<?=URL::site('admin/print/exam_protocol')?>"> Экзаменационный протокол</a></li>
-                        <li><a href="<?=URL::site('admin/print/listeners_group')?>"> Список слушателей группы (образ. и место раб.)</a></li>
-                        <li><a href="<?=URL::site('admin/print/listeners_md')?>"> Список слушателей группы (медсправка)</a></li>
+                        <li><a href="<?=URL::site('admin/files/driver_card')?>"> Водительская карточка</a></li>
+                        <li><a href="<?=URL::site('admin/files/statement_in_gibdd')?>"> Заявление в ГИБДД</a></li>
+                        <li><a href="<?=URL::site('admin/files/mail_in_mreo_gibdd')?>"> Письмо в МРЭО ГИБДД</a></li>
+                        <li><a href="<?=URL::site('admin/files/exam_protocol')?>"> Экзаменационный протокол</a></li>
+                        <li><a href="<?=URL::site('admin/files/listeners_group')?>"> Список слушателей группы (образ. и место раб.)</a></li>
+                        <li><a href="<?=URL::site('admin/files/listeners_md')?>"> Список слушателей группы (медсправка)</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Пустые бланки</a>
@@ -69,7 +69,7 @@
                 }
             </style>
             <ul class="nav pull-right">
-                <li class="selected_listener"><span>Выбран слушатель:</span> <p>Петров Г.А.</p></li>
+                <li class="selected_listener"><span>Выбран слушатель:</span> <p><?=$checked_user?></p></li>
                 <li class="divider-vertical"></li>
                 <li style="position: relative">
                     <a href="#" id="user_name"><span class="login"><i class="icon-bolt"></i> <?=$info->first_name.'&nbsp;'.$info->family_name?></span><strong class="caret" style="margin-left: 5px;margin-top: 8px; border-top: 4px solid #ffffff;"></strong></a>

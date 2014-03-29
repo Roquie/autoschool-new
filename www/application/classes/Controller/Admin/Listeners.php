@@ -21,11 +21,15 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
     {
         $this->auto_render = false;
         $csrf = $this->request->post('csrf');
+
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $id = $this->request->post('user_id');
 
             $result = ORM::factory('Listeners', $id);
+
+            Session::instance()->set('checked_user', $result->user_id);
+
             $data['listener'] = $result->as_array();
             if ($data['listener']['is_individual'] == 1)
                 $data['contract'] = $result->indy->find()->as_array();

@@ -5,12 +5,22 @@ class Text extends Kohana_Text
     /**
      * хэшируем, хэшируем ИБ гарантируем
      * @param $pass
-     *
+     * @depricated
      * @return string
      */
     public static function hash($pass)
     {
         return hash_hmac('gost', $pass, 'bugaga-vlomaite-menya-polnostiu=▲♠');
+    }
+
+    /**
+     * return Фамилия И.О.
+     */
+    public static function format_name($last_name, $first_name, $daddy_name)
+    {
+        return UTF8::ucfirst(UTF8::strtolower($last_name)).' '.
+        UTF8::ucfirst(UTF8::strtolower(UTF8::substr($first_name, 0, 1).'. ')).' '.
+        UTF8::ucfirst(UTF8::strtolower(UTF8::substr($daddy_name, 0, 1).'.'));
     }
 
     public static function translit($str)

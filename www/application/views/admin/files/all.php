@@ -1,8 +1,49 @@
 <?=HTML::style('adm/css/print.css')?>
 
 <div class="container">
-    <h1><small>Список всех файлов для печати</small></h1>
+    <h1><small>Список всех файлов</small></h1>
     <div class="backgr">
+        <div class="row">
+            <div class="span4">
+                <div class="doc_print">
+                    <h5>Заявление (о поступлении)</h5>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/driving_card.png')?>" width="170px" height="180px" alt="Водительская карточка"/></a>
+                    <div class="btn-group-wrap">
+                        <div class="btn-group">
+                            <a href="<?=URL::site('/print/pdf')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="doc_print">
+                    <h5>Договор</h5>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
+                    <div class="btn-group-wrap">
+                        <div class="btn-group">
+                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="<?=URL::site('admin/files/download/contract')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="doc_print">
+                    <h5>Квитанция</h5>
+                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
+                    <div class="btn-group-wrap">
+                        <div class="btn-group">
+                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="<?=URL::site('admin/files/download/ticket')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="span4">
                 <div class="doc_print">

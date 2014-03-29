@@ -34,6 +34,48 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         );
     }
 
+    public function action_ticket()
+    {
+        $file = $this->action_create_ticket();
+
+        $this->response->send_file(
+            APPPATH.'download/'.$file, null, array('delete' => true)
+        );
+    }
+
+    public function action_create_ticket()
+    {
+        $id = $this->_s->get('checked_user');
+
+        if (!empty($id))
+        {
+            $user = new Model_User($id);
+
+/*            $indy = $user->listener->indy;*/
+            $listener = $user->listener;
+
+            $obj = new TemplateDocx(APPPATH.'templates/ticket/ticket.docx');
+
+            $famil = UTF8::ucfirst(UTF8::strtolower($listener->famil));
+            $imya = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->imya, 0, 1).'. '));
+            $ot4estvo = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->otch, 0, 1).'.'));
+
+            $obj->setValue('Customer', $famil.' '.$imya.' '.$ot4estvo);
+
+            $file = 'temp/'.
+                Text::translit($listener->famil).'_'.
+                Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
+                'kvitanciya_'.date('d_m_Y_H_i_s').'.docx';
+
+            $obj->save(APPPATH.'download/'.$file);
+            unset($document);
+
+            return $file;
+        }
+
+    }
+
     public function action_create_contract()
     {
         $id = $this->_s->get('checked_user');

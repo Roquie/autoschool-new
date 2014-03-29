@@ -25,7 +25,7 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
 
         $this->response->body(
             Request::factory($this->_convert_url.urlencode(URL::site('viewdoc/'.$file)).'&type=printpdf')
-                   ->execute()
+                   ->method(Request::GET)->execute()
         );
     }
 

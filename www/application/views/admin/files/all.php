@@ -10,7 +10,7 @@
                     <a href="#"><img src="<?=URL::site('public/adm/img/print/driving_card.png')?>" width="170px" height="180px" alt="Водительская карточка"/></a>
                     <div class="btn-group-wrap">
                         <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="http://am3-word-view.officeapps.live.com/wv/WordViewer/request.pdf?WOPIsrc=http%3A%2F%2Fam3-15-view-wopi%2Ewopi%2Elive%2Enet%3A808%2Foh%2Fwopi%2Ffiles%2F%40%2FwFileId%3FwFileId%3D<?=urlencode(URL::site('/test2.docx'))?>&type=printpdf" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                             <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
                             <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
                         </div>

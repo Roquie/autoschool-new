@@ -18,7 +18,10 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_statement()
     {
-        $file = $this->action_create_statement();
+        $response = Request::factory('admin/files/download/create_statement')
+            ->execute();
+
+        $file = json_decode($response)->file;
 
         $this->response->send_file(
             APPPATH.'download/'.$file, null, array('delete' => true)
@@ -198,6 +201,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_statement()
     {
+        $this->auto_render = false;
+
         $id = Session::instance()->get('checked_user');
         
         if (!empty($id))
@@ -252,7 +257,9 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $document->save(APPPATH.'download/'.$file);
             unset($document);
 
-            return $file;
+            $this->response->body(
+                json_encode(array('file' => $file))
+            );
         }
         
     }

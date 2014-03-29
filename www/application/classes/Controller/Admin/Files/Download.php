@@ -3,17 +3,25 @@
 
 class Controller_Admin_Files_Download extends Controller_Admin_Base
 {
-    /**
-     * session instance
-     * @var null
-     */
-    protected $_s = null;
-    
+
     public function before()
     {
         parent::before();
-        
-        $this->_s = Session::instance();
+
+        $this->auto_render = false;
+
+        $internal = array(
+            'create_statement',
+            'create_contract',
+            'create_ticket',
+        );
+
+        if (in_array($this->request->action(), $internal))
+        {
+            if(Request::initial() === Request::current())
+                throw new HTTP_Exception_404();
+        }
+
     }
 
     public function action_statement()
@@ -30,7 +38,10 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_contract()
     {
-        $file = $this->action_create_contract();
+        $response = Request::factory('admin/files/download/create_contract')
+            ->execute();
+
+        $file = json_decode($response)->file;
 
         $this->response->send_file(
             APPPATH.'download/'.$file, null, array('delete' => true)
@@ -39,7 +50,10 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_ticket()
     {
-        $file = $this->action_create_ticket();
+        $response = Request::factory('admin/files/download/create_ticket')
+            ->execute();
+
+        $file = json_decode($response)->file;
 
         $this->response->send_file(
             APPPATH.'download/'.$file, null, array('delete' => true)
@@ -74,7 +88,9 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->save(APPPATH.'download/'.$file);
             unset($document);
 
-            return $file;
+            $this->response->body(
+                json_encode(array('file' => $file))
+            );
         }
 
     }
@@ -195,7 +211,9 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->save(APPPATH.'download/'.$file);
             unset($document);
 
-            return $file;
+            $this->response->body(
+                json_encode(array('file' => $file))
+            );
         }
     }
 

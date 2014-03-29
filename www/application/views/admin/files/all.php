@@ -23,7 +23,7 @@
                     <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
                     <div class="btn-group-wrap">
                         <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="<?=URL::site('admin/files/print/contract')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                             <a href="<?=URL::site('admin/files/download/contract')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
                             <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
                         </div>
@@ -36,7 +36,7 @@
                     <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
                     <div class="btn-group-wrap">
                         <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                            <a href="<?=URL::site('admin/files/print/ticket')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                             <a href="<?=URL::site('admin/files/download/ticket')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
                             <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
                         </div>

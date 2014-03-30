@@ -2,30 +2,24 @@
 
 class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
 {
-    protected $_createdocs = null;
-
-    public function before()
-    {
-        parent::before();
-
-        $this->_createdocs = new View('admin/createdocs/template');
-        $this->_createdocs->content = null;
-    }
 
     public function action_save_to_db()
     {
-        $a = Auth::instance();
-        $s = Session::instance();
-        $post = $this->request->post();
-        $session_data = $s->get('st_createdocs');
+        $this->auto_render = false;
 
-        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        $listener = $this->request->post('statement');
+        $indy  = $this->request->post('contract');
+
+        if (Security::is_token($listener['csrf']) && $this->request->method() === Request::POST)
         {
-            $data = array_merge($session_data, $post);
-
             $newpass = Text::random();
 
-            $valid = new Validation(Arr::map('trim', $post));
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $listener)
+                )
+            );
             $valid->rule('famil', 'not_empty');
             $valid->rule('famil', 'alpha', array(':value', true));
             $valid->rule('famil', 'min_length', array(':value', 2));
@@ -43,6 +37,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
 
             if ($valid->check())
             {
+                $email = $listener['email'];
                 try
                 {
                     $users = ORM::factory('User');
@@ -51,7 +46,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                             array(
                                  'password' => $newpass,
                                  'password_confirm' => $newpass,
-                                 'email' => $post['email']
+                                 'email' => $email
                             ),
                             array(
                                  'password',
@@ -59,101 +54,96 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                             ))
                         ->pk();
 
+                    unset($listener['email'], $listener['csrf']);
+
+                    $columns = array_keys($listener);
+                    $columns[] = 'user_id';
+
+                    $listener['user_id'] = $pk;
+
                     try
                     {
-                        DB::insert('listeners')
-                            ->columns(array('famil', 'imya', 'otch', 'tel', 'user_id'))
-                            ->values(array(
-                                          'famil' => $post['famil'],
-                                          'imya' => $post['imya'],
-                                          'otch' => $post['otch'],
-                                          'tel' => $post['tel'],
-                                          'user_id' => $pk
-                                     ))->execute();
+                        $query = DB::insert('listeners')
+                                   ->columns($columns)
+                                   ->values($listener)
+                                   ->execute();
                     }
                     catch(Database_Exception $e)
                     {
-                        $errors = $e->getMessage();
+                        $this->ajax_msg($e->getMessage(), 'error');
                     }
 
+                    if ($listener['is_individual'] == 1)
+                    {
+                        unset($indy['csrf']);
+
+                        $columns = array_keys($indy);
+                        $columns[] = 'listener_id';
+
+                        $indy['listener_id'] = $query[0];
+
+                        try
+                        {
+                            DB::insert('individual')
+                                ->columns($columns)
+                                ->values($indy)
+                                ->execute();
+                        }
+                        catch(Database_Exception $e)
+                        {
+                            $this->ajax_msg($e->getMessage(), 'error');
+                        }
+                    }
+
+
                     $mail_content = View::factory('tmpmail/profile/registr')
-                        ->set('username', $post['imya'])
-                        ->set('login', $post['email'])
-                        ->set('pass', $newpass);
+                                        ->set('username', $listener['imya'])
+                                        ->set('login', $email)
+                                        ->set('pass', $newpass);
 
                     $message = View::factory('tmpmail/template', compact('mail_content'));
 
                     try
                     {
-                        Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
-                            ->to($post['email'])
-                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
-                            ->send();
+                        Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
+                             ->to($email)
+                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                             ->send();
                     }
                     catch(Swift_SwiftException $e)
                     {
-                        die($e->getMessage());
+                        $this->ajax_msg($e->getMessage(), 'error');
                     }
 
                     $role = array(1, 3);
                     $users->add('roles', $role);
 
-                    $success = 'Пользователь добавлен';
-                    $s->delete('st_createdocs');
+                    $this->ajax_msg('Пользователь добавлен');
                 }
                 catch(ORM_Validation_Exception $e)
                 {
                     $errors = $e->errors('validation');
+                    $this->ajax_msg(array_shift($errors), 'error');
                 }
             }
             else
             {
                 $errors = $valid->errors('register');
+                $this->ajax_msg(array_shift($errors), 'error');
             }
 
         }
-
-        $this->_createdocs->content =
-            View::factory('admin/createdocs/reg', compact('session_data', 'errors', 'success'));
-
     }
 
-    public function action_contract_check()
-    {
-        $s = Session::instance();
-        $post = $this->request->post();
-
-        if (Security::is_token($post['csrf']) && Request::initial()->is_ajax())
-        {
-            if ($s->get('st_createdocs'))
-            {
-                $this->ajax_data(
-                    $s->get('st_createdocs')
-                );
-            }
-        }
-    }
-
-    public function action_next()
-    {
-        $post = $this->request->post();
-        $s = Session::instance();
-
-        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
-        {
-            $s->set('st_createdocs', $post);
-
-            HTTP::redirect('admin/createdocs/contract');
-        }
-    }
 
     public function action_contract()
     {
-        $doc = new Model_Documents();
-        $post = (object)$this->request->post();
+        $this->auto_render = false;
 
-        $s = Session::instance();
-        $listener = (object)$s->get('st_createdocs');
+        $doc = new Model_Documents();
+        $post = (object)$this->request->post('contract');
+
+        $listener = (object)$this->request->post('statement');
 
         if (Security::is_token($post->csrf) && $this->request->method() === Request::POST)
         {
@@ -216,14 +206,10 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
             $obj->save(APPPATH.'download/'.$file);
             unset($document);
 
-            $this->response->send_file(
-                APPPATH.'download/'.$file, null, array('delete' => true)
+            $this->ajax_data(
+                array('file' => URL::site('viewdoc/'.$file))
             );
         }
-
-        $this->_createdocs->content =
-            View::factory('admin/createdocs/contract')
-                ->set('type_doc', $doc->find_all());
     }
 
     public function action_index()
@@ -233,7 +219,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $edu = new Model_Education();
         $s = Session::instance();
 
-        $post = (object)$this->request->post();
+        $post = (object)$this->request->post('statement');
 
         if (Security::is_token($post->csrf) && $this->request->method() === Request::POST)
         {
@@ -294,18 +280,13 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
             );
         }
 
-        $this->_createdocs->content =
+        $this->template->content =
             View::factory('admin/createdocs/index')
                 ->set('edu', $edu->find_all())
                 ->set('national', $nat->find_all())
                 ->set('type_doc', $doc->find_all());
 	}
 
-    public function after()
-    {
-        $this->template->content = $this->_createdocs->render();
-        parent::after();
-    }
 }
 
 

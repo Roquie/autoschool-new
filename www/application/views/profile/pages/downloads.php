@@ -1,5 +1,5 @@
 <?=HTML::style('profile/css/downloads.css')?>
-<?=HTML::style('profile/css/view_doc.css')?>
+<?=HTML::style('global/css/view_doc.css')?>
 
 <div class="span3 menu" style="margin-top: 110px">
     <ul class="nav nav-pills nav-stacked">

@@ -10,9 +10,9 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
         $this->auto_render = false;
 
         $access = array(
-            'Statement',
-            'Contract',
-            'Ticket',
+            'statement',
+            'contract',
+            'ticket',
         );
 
         if ($this->request->is_ajax() && in_array($this->request->action(), $access))

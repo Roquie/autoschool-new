@@ -22,7 +22,7 @@ class Model_Staff extends ORM
 		'document_id' => array('data_type' => 'int', 'is_nullable' => false),
 		'document_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_nomer' => array('data_type' => 'string', 'is_nullable' => false),
-		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => true),
 		'document_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
 		'sex' => array('data_type' => 'int', 'is_nullable' => false),
 		'nomer_prav' => array('data_type' => 'string', 'is_nullable' => false),

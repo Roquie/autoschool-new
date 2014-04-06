@@ -12,7 +12,7 @@ class Model_Exam extends ORM
 		'predsedatel' => array('data_type' => 'string', 'is_nullable' => false),
 		'sekretar' => array('data_type' => 'string', 'is_nullable' => false),
 		'number_protocol' => array('data_type' => 'string', 'is_nullable' => false),
-		'data_protocola' => array('data_type' => 'string', 'is_nullable' => false),
+		'data_protocola' => array('data_type' => 'string', 'is_nullable' => true), // кирилл попросил сделать null иначе у них не читает делфи эти поля.
 		'deducted' => array('data_type' => 'int', 'is_nullable' => false),
 		'deducted_po_neysp' => array('data_type' => 'int', 'is_nullable' => false),
 	);

@@ -23,7 +23,7 @@ class Model_Individual extends ORM
 		'document_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_nomer' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_kem_vydan' => array('data_type' => 'string', 'is_nullable' => false),
-		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => false),
+		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => true),
 		'vrem_reg' => array('data_type' => 'int', 'is_nullable' => true),
 		'tel' => array('data_type' => 'string', 'is_nullable' => false),
 	);

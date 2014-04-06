@@ -61,6 +61,10 @@ class Controller_Profile_Index extends Controller_Profile_Base
             {
                 if ($user->listener->status < 3)
                 {
+
+                    $post['data_rojdeniya'] =  Text::getDateUpdate($post['data_rojdeniya']);
+                    $post['document_data_vydachi'] = Text::getDateUpdate($post['document_data_vydachi']);
+
                     $user->listener
                          ->values($post)
                          ->where('user_id', '=', $a->get_user()->id)
@@ -76,8 +80,8 @@ class Controller_Profile_Index extends Controller_Profile_Base
         }
 
         $statement = $user->listener->as_array();
-        $statement['data_rojdeniya'] =  date('d.m.Y', strtotime($statement['data_rojdeniya']));
-        $statement['document_data_vydachi'] =  date('d.m.Y', strtotime($statement['document_data_vydachi']));
+        $statement['data_rojdeniya'] =  Text::check_date($statement['data_rojdeniya']);
+        $statement['document_data_vydachi'] =  Text::check_date($statement['document_data_vydachi']);
 
         $v = View::factory('profile/pages/statement', compact('errors', 'success', 'edu', 'national', 'type_doc'))
                  ->set('statement', $statement)
@@ -158,6 +162,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
             {
                 if ($user->listener->status < 3)
                 {
+                    $post['document_data_vydachi'] =  Text::getDateUpdate($form_data['document_data_vydachi']);
                     if ($c->loaded())
                     {
                         $c->values($post)->where('user_id', '=', $a->get_user()->id)->update();
@@ -178,7 +183,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
             }
         }
 
-        $form_data['document_data_vydachi'] =  date('d.m.Y', strtotime($form_data['document_data_vydachi']));
+        $form_data['document_data_vydachi'] =  Text::check_date($form_data['document_data_vydachi']);
 
         $v = View::factory('profile/pages/contract', compact('errors', 'success', 'type_doc'))
                  ->set('contract', $form_data)

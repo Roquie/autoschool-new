@@ -1,7 +1,6 @@
 $(function() {
 
-    var body = $('body'),
-        is_change_group = false;
+    var body = $('body');
 
     /**
      *  Загрузка данных слушателя
@@ -53,20 +52,24 @@ $(function() {
                             $(this).val('');
                 });
 
-                is_change_group = false;
             },
             success : function(response) {
                 if (response.status == 'success')
                 {
                     $.each(response.data.listener, function(key, value) {
                         field = f_statement.find('[name="'+key+'"]');
+                        if (key == 'is_individual') {
+                            $('#is_individual').val(value);
+                        }
+                        if (key == 'id') {
+                            $('#listener_id').val(value);
+                        }
                         if (field.attr('type') == 'checkbox') {
                             (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
                         } else {
                             field.val(value);
                         }
                     });
-
                     $.each(response.data.contract, function(key, value) {
                         field = f_contract.find('[name="'+key+'"]');
                         if (field.attr('type') == 'checkbox') {
@@ -75,10 +78,10 @@ $(function() {
                             field.val(value);
                         }
                     });
+                    $('.selected_listener').find('p').text($this.next('span').text());
                 }
                 if (response.status == 'error')
                 {
-
                 }
                 listeners.prev('input').val(response.csrf);
                 listeners.find('.loader').remove();
@@ -127,14 +130,19 @@ $(function() {
                 });
             },
             success : function(response){
+                block.html('');
                 if (response.status == 'success')
                 {
-                    block.html(response.data);
-                    $('#listeners').find('input:checkbox').first().trigger('click');
+                    if (response.data == '') {
+                        block.html('<div class="text-center">Слушателей нет</div>');
+                    } else {
+                        block.html(response.data);
+                        $('#listeners').find('input:checkbox').first().trigger('click');
+                    }
                 }
                 if (response.status == 'error')
                 {
-
+                    message($('.container'), response.msg, response.status);
                 }
                 block.prev('input').val(response.csrf);
             },
@@ -149,9 +157,13 @@ $(function() {
 
     });
 
-    $('#statement').on('submit', function(e) {
+    $('#statement, #contract').on('submit', function(e) {
         e.preventDefault();
-        var $this = $(this);
+        var $this = $(this),
+            btn = $this.find('#button');
+
+        btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>');
+
         $.ajax({
             type : 'POST',
             url  : $this.attr('action'),
@@ -160,15 +172,13 @@ $(function() {
             beforeSend : function() {
                 $('.alert').remove();
             },
-            success : function(response){
+            success : function(response) {
                 if (response.status == 'success' || response.status == 'error')
                 {
-                    //$('.alert').addClass('alert-'+response.status).removeClass('hide').find('span').text(response.msg);
                     message($('.container'), response.msg, response.status);
                 }
-                if (is_change_group) {
-                    $('#select2').trigger('change');
-                }
+                $('#select2').trigger('change');
+                btn.find('i').remove();
             },
             error : function(request) {
                 if (request.status == '200') {
@@ -176,12 +186,9 @@ $(function() {
                 } else {
                     console.log(request.status + ' ' + request.statusText);
                 }
+                btn.find('i').remove();
             }
         });
-    });
-
-    $('#group_id').on('change', function() {
-        is_change_group = true;
     });
 
     function message(block, msg, type) {

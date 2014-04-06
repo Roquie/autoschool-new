@@ -291,30 +291,33 @@
                                     <br>
                                     <div class="row">
                                         <div class="span4">
-                                            <label>Устройство и ТО</label>
-                                            <select name="mark_to" class="span4">
+                                            <label for="mark_to">Устройство и ТО</label>
+                                            <select name="mark_to" id="mark_tos" class="span4">
                                                 <option> --- </option>
-                                                <option>Отлично</option>
-                                                <option>Хорошо</option>
-                                                <option>Удовлетворительно</option>
+                                                <option value="5">Отлично</option>
+                                                <option value="4">Хорошо</option>
+                                                <option value="3">Удовлетворительно</option>
+                                                <option value="2">Неудовлетворительно</option>
                                             </select>
                                         </div>
                                         <div class="span4">
-                                            <label for="">ПДД</label>
-                                            <select name="" id="" class="span4">
+                                            <label for="mark_pdd">ПДД</label>
+                                            <select name="mark_pdd" id="mark_pdd" class="span4">
                                                 <option> --- </option>
-                                                <option>Отлично</option>
-                                                <option>Хорошо</option>
-                                                <option>Удовлетворительно</option>
+                                                <option value="5">Отлично</option>
+                                                <option value="4">Хорошо</option>
+                                                <option value="3">Удовлетворительно</option>
+                                                <option value="2">Неудовлетворительно</option>
                                             </select>
                                         </div>
                                         <div class="span4">
-                                            <label for="">Практическое вождение</label>
-                                            <select name="" id="" class="span4">
+                                            <label for="mark_drive">Практическое вождение</label>
+                                            <select name="mark_drive" id="mark_drive" class="span4">
                                                 <option> --- </option>
-                                                <option>Отлично</option>
-                                                <option>Хорошо</option>
-                                                <option>Удовлетворительно</option>
+                                                <option value="5">Отлично</option>
+                                                <option value="4">Хорошо</option>
+                                                <option value="3">Удовлетворительно</option>
+                                                <option value="2">Неудовлетворительно</option>
                                             </select>
                                         </div>
                                     </div>
@@ -323,14 +326,16 @@
 
                             <input type="hidden" name="user_id"/>
                             <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                            <input type="submit" class="btn btn-block btn-info" value="Сохранить"/>
+                            <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
+                                Сохранить
+                            </button>
 
                         </form>
                     </div>
 
                     <!-- Данные заказчика -->
                     <div class="tab-pane" id="tab2">
-                        <form action="" method="post" id="contract" style="margin-bottom: 0">
+                        <form action="<?=URL::site('admin/listeners/update_ind')?>" method="post" id="contract" style="margin-bottom: 0">
                             <legend>Анкетные данные</legend>
                             <div class="row">
                                 <div class="span4">
@@ -445,8 +450,12 @@
                                 </div>
                             </div>
 
+                            <input type="hidden" name="listener_id" id="listener_id"/>
+                            <input type="hidden" name="is_individual" id="is_individual"/>
                             <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                            <input type="submit" class="btn btn-block btn-info" value="Сохранить" style="margin-top: 20px"/>
+                            <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
+                                Сохранить
+                            </button>
                         </form>
                     </div>
 

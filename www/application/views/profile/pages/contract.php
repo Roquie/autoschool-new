@@ -135,7 +135,7 @@
 
                     <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                     <?if($status < 3):?>
-                        <?if(!$contract_exists->loaded()):?>
+                        <?if(!$contract_exists):?>
                             <input type="submit" class="btn btn-success span3" style="margin-top: 25px" value="Добавить"/>
                         <?else:?>
                             <input type="submit" class="btn btn-info span3" style="margin-top: 25px" value="Обновить данные"/>

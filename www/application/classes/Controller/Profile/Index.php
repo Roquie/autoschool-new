@@ -143,7 +143,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $user = ORM::factory('User', $a->get_user()->id);
         $type_doc = ORM::factory('Documents')->find_all();
 
-        $c = ORM::factory('Individual', array('listener_id' => $a->get_user()->id));
+        $c = ORM::factory('Individual')->where('listener_id', '=', $user->listener->id)->find();
 
         $form_data = $user->listener->indy->as_array();
 
@@ -188,7 +188,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $v = View::factory('profile/pages/contract', compact('errors', 'success', 'type_doc'))
                  ->set('contract', $form_data)
                  ->set('status', $user->listener->status)
-                 ->set('contract_exists', $c)
+                 ->set('contract_exists', $c->loaded())
                  ->render();
 
         $this->_profile->content = $v;

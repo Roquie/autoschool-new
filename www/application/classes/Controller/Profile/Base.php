@@ -17,15 +17,16 @@ class Controller_Profile_Base extends Controller_Template
         $a = Auth::instance();
         $user = ORM::factory('User', $a->get_user()->id);
 
-        $mergered = array_merge(
+        $mergered = array_merge
+        (
             $a->get_user()->as_array(),
             $user->listener->as_array()
         );
 
         View::bind_global('user', $mergered);
 
-        $this->template->title = 'profile index';
-        $this->template->description = 'profile';
+        $this->template->title = 'Профиль. Автошкола МПТ.';
+        $this->template->description = 'Офигенное описание, это же профиль в Автошколе МПТ!!!!';
         $this->template->navbar = View::factory('main/navbar');
         $this->template->content = null;
         $this->template->footer = View::factory('main/footer');

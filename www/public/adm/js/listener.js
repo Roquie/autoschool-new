@@ -177,7 +177,9 @@ $(function() {
                 {
                     message($('.container'), response.msg, response.status);
                 }
-                $('#select2').trigger('change');
+                if (response.status == 'success') {
+                    $('#select2').trigger('change');
+                }
                 btn.find('i').remove();
             },
             error : function(request) {

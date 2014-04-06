@@ -75,6 +75,7 @@ $(function() {
                             field.val(value);
                         }
                     });
+                    $('.selected_listener').find('p').text($this.next('span').text());
                 }
                 if (response.status == 'error')
                 {

@@ -42,4 +42,24 @@ class Text extends Kohana_Text
         );
         return strtr($str, $tr);
     }
+
+    /**
+     * Проверка даты полученной из бд
+     * @param $date
+     * @return bool|null|string
+     */
+    public static function check_date($date)
+    {
+        return (empty($date) || $date == '0000-00-00') ? null : date('d.m.Y', strtotime($date));
+    }
+
+    /**
+     * Преобразование даты для вставки в бд
+     * @param $date
+     * @return bool|string
+     */
+    public static function getDateUpdate($date)
+    {
+        return date('Y-m-d', strtotime($date));
+    }
 }

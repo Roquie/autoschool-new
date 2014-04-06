@@ -31,14 +31,17 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
             Session::instance()->set('checked_user', $result->user_id);
 
             $data['listener'] = $result->as_array();
-            if ($data['listener']['is_individual'] == 1)
-                $data['contract'] = $result->indy->find()->as_array();
+            if ((int)$data['listener']['is_individual'] == 1)
+                $data['contract'] = $result->indy->as_array();
             else
                 $data['contract'] = $data['listener'];
-            $data['listener']['data_rojdeniya'] = (is_null($data['listener']['data_rojdeniya'])) ? null : date('d.m.Y', strtotime($data['listener']['data_rojdeniya']));
-            $data['listener']['document_data_vydachi'] = (is_null($data['listener']['document_data_vydachi'])) ? null : date('d.m.Y', strtotime($data['listener']['document_data_vydachi']));
-            $data['listener']['date_contract'] = (is_null($data['listener']['date_contract'])) ? null : date('d.m.Y', strtotime($data['listener']['date_contract']));
-            $data['listener']['data_med'] = (is_null($data['listener']['data_med'])) ? null : date('d.m.Y', strtotime($data['listener']['data_med']));
+
+            $data['listener']['data_rojdeniya'] = Text::check_date($data['listener']['data_rojdeniya']);
+            $data['listener']['document_data_vydachi'] = Text::check_date($data['listener']['document_data_vydachi']);
+            $data['listener']['date_contract'] = Text::check_date($data['listener']['date_contract']);
+            $data['listener']['data_med'] = Text::check_date($data['listener']['data_med']);
+
+            $data['contract']['document_data_vydachi'] = Text::check_date($data['contract']['document_data_vydachi']);
             $this->ajax_data($data);
         }
     }
@@ -64,21 +67,132 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $post = $this->request->post();
-            unset($post['csrf']);
+            $id = $post['user_id'];
 
-/*            try
+            unset($post['csrf'], $post['user_id']);
+
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $post)
+                )
+            );
+            $valid->rule('famil', 'not_empty');
+            $valid->rule('famil', 'alpha', array(':value', true));
+            $valid->rule('famil', 'min_length', array(':value', 2));
+            $valid->rule('famil', 'max_length', array(':value', 50));
+            $valid->rule('imya', 'not_empty');
+            $valid->rule('imya', 'alpha', array(':value', true));
+            $valid->rule('imya', 'min_length', array(':value', 2));
+            $valid->rule('imya', 'max_length', array(':value', 50));
+            $valid->rule('otch', 'not_empty');
+            $valid->rule('otch', 'alpha', array(':value', true));
+            $valid->rule('otch', 'min_length', array(':value', 2));
+            $valid->rule('otch', 'max_length', array(':value', 50));
+            $valid->rule('tel', 'not_empty');
+            $valid->rule('tel', 'phone', array(':value', 11));
+
+            $post['data_rojdeniya'] =  Text::getDateUpdate($post['data_rojdeniya']);
+            $post['document_data_vydachi'] = Text::getDateUpdate($post['document_data_vydachi']);
+            $post['date_contract'] = Text::getDateUpdate($post['date_contract']);
+            $post['data_med'] = Text::getDateUpdate($post['data_med']);
+
+            if ($valid->check())
             {
-                ORM::factory('Nationality')
-                    ->values($post)
-                    ->create();
+                try
+                {
+                    DB::update('listeners')
+                        ->set($post)
+                        ->where('user_id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
 
-                HTTP::redirect('/admin/other/natandedu');
+                $this->ajax_msg('Данные успешно сохранены');
             }
-            catch (ORM_Validation_Exception  $e)
+            else
             {
-                $this->_nat_and_edu->errors = $e->errors('validation');
-            }*/
-            $this->ajax_msg('Сохранение данных пока не доступно');
+                $errors = $valid->errors('register');
+                $this->ajax_msg(array_shift($errors), 'error');
+            }
+
+        }
+    }
+
+    public function action_update_ind()
+    {
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+            $id = $post['listener_id'];
+            $is_ind = $post['is_individual'];
+
+            unset($post['csrf'], $post['listener_id'], $post['is_individual']);
+
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $post)
+                )
+            );
+            $valid->rule('famil', 'not_empty');
+            $valid->rule('famil', 'alpha', array(':value', true));
+            $valid->rule('famil', 'min_length', array(':value', 2));
+            $valid->rule('famil', 'max_length', array(':value', 50));
+            $valid->rule('imya', 'not_empty');
+            $valid->rule('imya', 'alpha', array(':value', true));
+            $valid->rule('imya', 'min_length', array(':value', 2));
+            $valid->rule('imya', 'max_length', array(':value', 50));
+            $valid->rule('otch', 'not_empty');
+            $valid->rule('otch', 'alpha', array(':value', true));
+            $valid->rule('otch', 'min_length', array(':value', 2));
+            $valid->rule('otch', 'max_length', array(':value', 50));
+            $valid->rule('tel', 'not_empty');
+            $valid->rule('tel', 'phone', array(':value', 11));
+
+            $post['document_data_vydachi'] = Text::getDateUpdate($post['document_data_vydachi']);
+
+            if ($valid->check())
+            {
+                if ((int)$is_ind == 1) {
+                    try
+                    {
+                        DB::update('individual')
+                            ->set($post)
+                            ->where('listener_id', '=', $id)
+                            ->execute();
+                    }
+                    catch(Database_Exception $e)
+                    {
+                        $this->ajax_msg($e->getMessage(), 'error');
+                    }
+                } else {
+                    try
+                    {
+                        DB::update('listeners')
+                            ->set($post)
+                            ->where('id', '=', $id)
+                            ->execute();
+                    }
+                    catch(Database_Exception $e)
+                    {
+                        $this->ajax_msg($e->getMessage(), 'error');
+                    }
+                }
+
+                $this->ajax_msg('Данные успешно сохранены');
+            }
+            else
+            {
+                $errors = $valid->errors('register');
+                $this->ajax_msg(array_shift($errors), 'error');
+            }
+
         }
     }
 

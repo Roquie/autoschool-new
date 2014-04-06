@@ -165,7 +165,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
                     }
                     else
                     {
-                        $post['listener_id'] = $a->get_user()->id;
+                        $post['listener_id'] = $user->listener->id;
                         $form_data = array_merge($form_data, $post);
                         $c->values($post)->create();
                         $success = Kohana::message('profile', 'contract.create');

@@ -161,9 +161,9 @@ Route::set('viewdoc', 'viewdoc(/<path>)',
 
 Route::set('admin.other', 'admin/other(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
-        'controller' => 'Index',
-        'action'     => 'Index',
-        'directory' => 'Admin'
+        'directory' => 'Admin/Other',
+        'controller' => 'Base',
+        'action'     => 'Index'
     ));
 
 Route::set('admin.createdocs', 'admin/createdocs(/<action>(/<id>))')

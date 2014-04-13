@@ -7,9 +7,6 @@
     <div class="span7">
         <h1><small>Неутвержденные слушатели</small></h1>
     </div>
-    <div class="span5 btn_actions">
-        <!-- btn's maybe create ...-->
-    </div>
 </div>
 
 <div class="row">

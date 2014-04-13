@@ -1,5 +1,6 @@
 <?=HTML::style('adm/css/listeners.css')?>
 <?=HTML::style('global/css/datepicker.css')?>
+<?=HTML::script('adm/js/index.js')?>
 <?=HTML::script('adm/js/listener.js')?>
 <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
 

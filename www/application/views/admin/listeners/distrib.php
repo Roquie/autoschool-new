@@ -1,17 +1,6 @@
 <?=HTML::style('adm/css/distrib.css')?>
-<script>
-    $(function() {
-        $("input:checkbox").click(function() {
-            if ($(this).is(":checked")) {
-                var group = "input:checkbox[name='" + $(this).attr("name") + "']";
-                $(group).prop("checked", false);
-                $(this).prop("checked", true);
-            } else {
-                $(this).prop("checked", false);
-            }
-        });
-    });
-</script>
+<?=HTML::script('adm/js/distrib.js')?>
+<?=HTML::script('adm/js/listener.js')?>
 
 <div class="container">
 <div class="row">
@@ -24,13 +13,17 @@
 </div>
 
 <div class="row">
+
     <div class="span3 d_fio">
         <div class="well">
             <h5 class="header_block">Фамилия И.О.</h5>
-            <div class="wrap">
-                <?=View::factory('admin/html/listeners', compact('list_users'))?>
+            <div class="wrap listeners">
+                <input type="hidden" id="user_id"/>
+                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
+                    <?=View::factory('admin/html/listeners', compact('list_users'))?>
+                </div>
             </div>
-
         </div>
     </div>
     <div class="span9">
@@ -40,228 +33,319 @@
                 <!-- status 0 -->
                 <!--<div class="bar bar-danger" style="width: 2%;"></div>-->
                 <!--остальное так-->
-                <div class="bar" style="width: 63%;"></div>
+                <div class="bar" style="width: 1%;"></div>
             </div>
-            <a href="#" class="btn"><i class="icon-ok"></i> Информация верна</a>
-            <a href="#" class="btn" style="margin-left: 50px"> <i class="icon-ok"></i> Все документы сданы</a>
-            <a href="#" class="btn pull-right"><i class="icon-remove"></i> Зачислен(а) в автошколу</a>
-
-
+            <a href="#" class="btn" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="33%">Информация верна</a>
+            <a href="#" class="btn" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="66%" style="margin-left: 50px">Все документы сданы</a>
+            <a href="#" class="btn pull-right" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="99%">Зачислен(а) в автошколу</a>
         </div>
-        <div class="well d_info">
+        <div class="well d_info data">
             <div class="header-wrap">
                 <h5 class="header_block pull-left">Информация</h5>
                 <div class="btns pull-right">
-                    <!-- меняй класс active у кнопок + менять href'ы у кнопок редактирования и удаления (для того чтобы понять что удалять) statement_or_contract -->
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
                     <div class="btn-group">
-                        <a id="l_edit" href="#statement_or_contract" data-url="<?=URL::site('')?>" class="enb_dis btn btn-info" rel="tooltip" title="Режим редактирования"><i class="icon-pencil"></i></a>
-                        <a id="l_delete" href="#statement_or_contract" data-url="<?=URL::site('')?>" class="enb_dis btn btn-danger" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
+                        <a id="l_edit" href="#statement_or_contract" class="enb_dis btn btn-info" rel="tooltip" title="Режим редактирования"><i class="icon-pencil"></i></a>
+                        <a id="l_delete" href="#statement_or_contract" class="enb_dis btn btn-danger" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
                     </div>
-
                 </div>
             </div>
             <div class="tab-content">
-                <div class="tab-pane active" id="tab1" style="overflow: hidden">
-                    <form action="<?=Route::to('admin', 'listeners#distrib')?>" method="post" accept-charset="utf-8" novalidate>
-                        <div class="row">
-                            <div class="span3" style="line-height: 40px;">
-                                <label for="famil">Фамилия</label>
-                                <input type="text" class="input-medium" name="famil" id="famil" value="<?//=$statement['famil']?>"/>
-                                <br/>
-                                <label for="imya">Имя</label>
-                                <input type="text" class="input-medium" name="imya" id="imya" value="<?//=$statement['imya']?>"/>
-                                <br/>
-                                <label for="otch">Отчество</label>
-                                <input type="text" class="input-medium" name="otch" id="otch" value="<?//=$statement['otch']?>"/>
-                                <br/>
-                                <label for="tel">Моб. телефон</label>
-                                <input type="text" class="input-medium" name="tel" id="tel" value="<?//=$statement['tel']?>"/>
-                                <br/>
-                                <label for="data_rojdeniya">Дата рождения</label>
-                                <input type="date" class="input-medium" name="data_rojdeniya" id="data_rojdeniya" value="<?//=$statement['data_rojdeniya']?>"/>
+                <div class="tab-pane active" id="tab1">
+                    <form action="<?=URL::site('admin/listeners/update_user')?>" method="post" id="statement" style="margin-bottom: 0">
 
-                                <br/>
-                                <label for="sex">Пол</label>
-                                <select style="width: 165px" name="sex" id="sex">
-                                    <?//if($statement['sex'] == 1):?>
-                                        <option value="1">Мужской</option>
-                                        <option value="0">Женский</option>
-                                    <?//else:?>
-                                        <option value="0">Женский</option>
-                                        <option value="1">Мужской</option>
-                                    <?//endif?>
-                                </select>
-                                <br/>
-                                <label for="grajdanstvo">Гражданство</label>
-                                <select style="width: 165px" name="nationality_id" id="grajdanstvo">
-                                    <?//if(!empty($national)):?>
-                                        <?//foreach($national as $k => $v):?>
-                                            <?//if($v->id == $statement['nationality_id']):?>
-                                                <option value="<?//=$v->id?>" selected><?//=$v->name?></option>
-                                            <?//else:?>
-                                                <option value="<?//=$v->id?>"><?//=$v->name?></option>
-                                            <?//endif?>
-                                        <?//endforeach?>
-                                    <?//endif?>
-                                </select>
-                                <label for="type_document">Тип документа</label>
-                                <select style="width: 165px" name="document_id" id="type_document">
-                                    <?//if(!empty($type_doc)):?>
-                                        <?//foreach($type_doc as $k => $v):?>
-                                            <?//if($v->id == $statement['document_id']):?>
-                                                <option value="<?//=$v->id?>" selected><?//=$v->name?></option>
-                                            <?//else:?>
-                                                <option value="<?//=$v->id?>"><?//=$v->name?></option>
-                                            <?//endif?>
-                                        <?//endforeach?>
-                                    <?//endif?>
-                                </select>
-                                <br/>
-                                <label for="document_data_vydachi">Дата выдачи</label>
-                                <input type="date" class="input-medium" name="document_data_vydachi" id="document_data_vydachi" value="<?//=$statement['document_data_vydachi']?>"/>
+                    <legend>Анкетные данные</legend>
+                    <div class="row">
+                        <div class="span4">
+                            <div class="row">
+                                <div class="span4">
+                                    <label for="famil">Фамилия</label>
+                                    <input type="text" class="span4" name="famil" id="famil"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="imya">Имя</label>
+                                    <input type="text" class="span4" name="imya" id="imya"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="otch">Отчество</label>
+                                    <input type="text" class="span4" name="otch" id="otch"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="tel">Телефон</label>
+                                    <input type="text" class="span4 telephone" name="tel" id="tel"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="mesto_raboty">Место работы</label>
+                                    <input type="text" class="span4" name="mesto_raboty" id="mesto_raboty"/>
+                                </div>
                             </div>
-
-                                <div class="span5" style="margin-right: 0; padding-right: 0; ">
-                                    <div class="row">
-                                        <div class="span3">
-                                            <label for="document_seriya">Серия документа</label>
-                                            <input type="text" class="input-medium" name="document_seriya" id="document_seriya" value="<?//=$statement['document_seriya']?>"/>
-                                        </div>
-                                        <div class="span2">
-                                            <label for="document_nomer">Номер документа</label>
-                                            <input type="text" class="input-medium" name="document_nomer" id="document_nomer" value="<?//=$statement['document_nomer']?>"/>
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="span4 pull-right">
+                            <div class="row">
+                                <div class="span4">
                                     <label for="mesto_rojdeniya">Место рождения</label>
-                                    <input type="text" style="width: 102%" name="mesto_rojdeniya" id="mesto_rojdeniya" value="<?//=$statement['mesto_rojdeniya']?>"/>
-                                    <br/>
-                                    <label>Адрес регистрации (Место жительства)</label>
+                                    <input type="text" class="span4" name="mesto_rojdeniya" id="mesto_rojdeniya"/>
+                                </div>
+                                <div class="span4">
+                                    <label>Гражданство</label>
+                                    <select name="nationality_id" class="span4">
+                                        <option> --- </option>
+                                        <?foreach($national as $item):?>
+                                            <option value="<?=$item->id?>"><?=$item->name?></option>
+                                        <?endforeach?>
+                                    </select>
+                                </div>
+                                <div class="span4">
+                                    <label>Образование</label>
+                                    <select name="education_id" class="span4">
+                                        <option> --- </option>
+                                        <?foreach($edu as $item):?>
+                                            <option value="<?=$item->id?>"><?=$item->name?></option>
+                                        <?endforeach?>
+                                    </select>
+                                </div>
+                                <div class="span4">
                                     <div class="row">
-                                        <div class="span3">
-                                            <label for="region">Регион</label>
-                                            <input type="text" class="input-medium" name="region" id="region" value="<?//=$statement['region']?>"/>
+                                        <div class="span2">
+                                            <label for="data_rojdeniya">Дата рождения</label>
+                                            <div class="input-append">
+                                                <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
+                                                <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                                            </div>
                                         </div>
                                         <div class="span2">
-                                            <label for="street">Улица</label>
-                                            <input type="text" class="input-medium" name="street" id="street" value="<?//=$statement['street']?>"/>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="span6">
-                                            <div class="span2" style="margin-left:  0;">
-                                                <label for="rion">Район</label>
-                                                <input type="text" class="input-medium" name="rion" id="rion" value="<?//=$statement['rion']?>"/>
-                                            </div>
-                                            <div style="display: table-cell; padding-left: 40px">
-                                                <div class="span1">
-                                                    <label for="dom">Дом</label>
-                                                    <input type="text" style="width: 40px" name="dom" id="dom" value="<?//=$statement['dom']?>"/>
-                                                </div>
-                                                <div class="span1">
-                                                    <label for="korpys">Корп.</label>
-                                                    <input type="text" style="width: 30px" name="korpys" id="korpys" value="<?//=$statement['korpys']?>"/>
-                                                </div>
-                                                <div class="span1">
-                                                    <label for="kvartira">Кв.</label>
-                                                    <input type="text" style="width: 30px" name="kvartira" id="kvartira" value="<?//=$statement['kvartira']?>"/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="span3" style="width: 200px">
-                                            <label for="nas_pynkt">Насел. пункт</label>
-                                            <input type="text"  class="input-medium" name="nas_pynkt" id="nas_pynkt" value="<?//=$statement['nas_pynkt']?>"/>
-                                        </div>
-                                        <div class="span2" style="margin-left: 0; width: 180px; margin-top: 20px">
-                                            <?//if($statement['vrem_reg'] == 1):?>
-                                                <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg" checked/> У меня временная регистрация</label>
-                                            <?//else:?>
-                                                <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
-                                            <?//endif?>
-                                        </div>
-                                    </div>
-                                    <label for="document_kem_vydan">Кем выдан документ</label>
-                                    <input type="text" style="width: 102%" name="document_kem_vydan" id="document_kem_vydan" value="<?//=$statement['document_kem_vydan']?>"/>
-
-                                    <div class="row">
-                                        <div class="span3">
-                                            <label for="education">Образование</label>
-                                            <select style="width: 165px" name="education_id" id="education">
-                                                <?//if(!empty($edu)):?>
-                                                    <?//foreach($edu as $k => $v):?>
-                                                        <?//if($v->id == $statement['education_id']):?>
-                                                            <option value="<?//=$v->id?>" selected><?//=$v->name?></option>
-                                                        <?//else:?>
-                                                            <option value="<?//=$v->id?>"><?//=$v->name?></option>
-                                                        <?//endif?>
-                                                    <?//endforeach?>
-                                                <?//endif?>
+                                            <label>Пол</label>
+                                            <select name="sex" class="span2">
+                                                <option> --- </option>
+                                                <option value="1">Мужской</option>
+                                                <option value="0">Женский</option>
                                             </select>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <legend>Место жительства</legend>
+                    <div class="row">
+                        <div class="span4">
+                            <div class="row">
+                                <div class="span4">
+                                    <label for="region">Регион</label>
+                                    <input type="text" class="span4" name="region" id="region"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="rion">Район</label>
+                                    <input type="text" class="span4" name="rion" id="rion"/>
+                                </div>
+                                <div class="span4">
+                                    <label for="nas_pynkt">Населенный пункт</label>
+                                    <input type="text" class="span4" name="nas_pynkt" id="nas_pynkt"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4 pull-right">
+                            <div class="row">
+                                <div class="span4">
+                                    <label for="street">Улица</label>
+                                    <input type="text" class="span4" name="street" id="street"/>
+                                </div>
+                                <div class="span4">
+                                    <div class="row">
+                                        <div class="span1">
+                                            <label for="dom">Дом</label>
+                                            <input type="text" class="span1" name="dom" id="dom"/>
+                                        </div>
+                                        <div class="span1">
+                                            <label for="korpys">Корпус</label>
+                                            <input type="text" class="span1" name="korpys" id="korpys"/>
+                                        </div>
                                         <div class="span2">
-                                            <label for="mesto_raboty">Место работы</label>
-                                            <input type="text" class="input-medium" name="mesto_raboty" id="mesto_raboty" value="<?//=$statement['mesto_raboty']?>"/>
+                                            <label for="kvartira">Квартира</label>
+                                            <input type="text" class="span2" name="kvartira" id="kvartira"/>
                                         </div>
                                     </div>
-                                    <label for="about">Как вы узнали о нас</label>
-                                    <input type="text" style="width: 102%" name="about" id="about" value="<?//=$statement['about']?>"/>
-                                    <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                                    <?//if($status < 3):?>
-                                        <input type="submit" class="btn btn-info span3" style="margin-top: 14px" value="Обновить данные"/>
-                                    <?//endif?>
                                 </div>
-
+                                <div class="span4" style="margin-top: 30px">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="vrem_reg">
+                                        У меня временная регистрация
+                                    </label>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <legend>Удостоверение личности</legend>
+                    <div class="row">
+                        <div class="span4">
+                            <label>Тип</label>
+                            <select name="document_id" class="span4">
+                                <option> --- </option>
+                                <?foreach($type_doc as $item):?>
+                                    <option value="<?=$item->id?>"><?=$item->name?></option>
+                                <?endforeach?>
+                            </select>
+                        </div>
+                        <div class="pull-right">
+                            <div class="span2">
+                                <label for="document_seriya">Серия</label>
+                                <input type="text" class="span2" name="document_seriya" id="document_seriya"/>
+                            </div>
+                            <div class="span2">
+                                <label for="document_nomer">Номер</label>
+                                <input type="text" class="span2" name="document_nomer" id="document_nomer"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span6">
+                            <label for="document_kem_vydan">Выдано</label>
+                            <input type="text" class="span6" name="document_kem_vydan" id="document_kem_vydan"/>
+                        </div>
+                        <div class="span2 pull-right">
+                            <label for="document_data_vydachi">Дата</label>
+                            <div class="input-append">
+                                <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="user_id"/>
+                    <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                    <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
+                        Сохранить
+                    </button>
 
                     </form>
                 </div>
 
                 <div class="tab-pane" id="tab2">
 
-                    <table class="table table-striped contract">
+                    <form action="<?=URL::site('admin/listeners/update_ind')?>" method="post" id="contract" style="margin-bottom: 0">
+                        <legend>Анкетные данные</legend>
+                        <div class="row">
+                            <div class="span4">
+                                <div class="row">
+                                    <div class="span4">
+                                        <label for="famil">Фамилия</label>
+                                        <input type="text" class="span4" name="famil" id="famil"/>
+                                    </div>
+                                    <div class="span4">
+                                        <label for="otch">Отчество</label>
+                                        <input type="text" class="span4" name="otch" id="otch"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4 pull-right">
+                                <div class="row">
+                                    <div class="span4">
+                                        <label for="imya">Имя</label>
+                                        <input type="text" class="span4" name="imya" id="imya"/>
+                                    </div>
+                                    <div class="span4">
+                                        <label for="tel">Телефон</label>
+                                        <input type="text" class="span4 telephone" name="tel" id="tel"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <tbody>
+                        <legend>Место жительства</legend>
+                        <div class="row">
+                            <div class="span4">
+                                <div class="row">
+                                    <div class="span4">
+                                        <label for="region">Регион</label>
+                                        <input type="text" class="span4" name="region" id="region"/>
+                                    </div>
+                                    <div class="span4">
+                                        <label for="rion">Район</label>
+                                        <input type="text" class="span4" name="rion" id="rion"/>
+                                    </div>
+                                    <div class="span4">
+                                        <label for="nas_pynkt">Населенный пункт</label>
+                                        <input type="text" class="span4" name="nas_pynkt" id="nas_pynkt"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4 pull-right">
+                                <div class="row">
+                                    <div class="span4">
+                                        <label for="street">Улица</label>
+                                        <input type="text" class="span4" name="street" id="street"/>
+                                    </div>
+                                    <div class="span4">
+                                        <div class="row">
+                                            <div class="span1">
+                                                <label for="dom">Дом</label>
+                                                <input type="text" class="span1" name="dom" id="dom"/>
+                                            </div>
+                                            <div class="span1">
+                                                <label for="korpys">Корпус</label>
+                                                <input type="text" class="span1" name="korpys" id="korpys"/>
+                                            </div>
+                                            <div class="span2">
+                                                <label for="kvartira">Квартира</label>
+                                                <input type="text" class="span2" name="kvartira" id="kvartira"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4" style="margin-top: 30px">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="vrem_reg">
+                                            У меня временная регистрация
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <tr>
-                            <td>Фамилия</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="famil" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Петрова</a></td>
-                        </tr>
-                        <tr>
-                            <td>Имя</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="imya" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Анастасия</a></td>
-                        </tr>
-                        <tr>
-                            <td>Отчество</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" -name="ot4estvo" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">Агафьевна</a></td>
-                        </tr>
-                        <tr>
-                            <td>Адрес регистрации по паспорту</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="adres_reg_po_pasporty" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">г. Москва, ул. Петросяна, д.13, к.9</a></td>
-                        </tr>
-                        <tr>
-                            <td>Паспорт серия</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_seriya" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">4382</a></td>
-                        </tr>
-                        <tr>
-                            <td>Паспорт номер</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_nome" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">20934820</a></td>
-                        </tr>
-                        <tr>
-                            <td>Кем выдан паспорт</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="pasport_kem_vydan" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">ОВД Г.КАЗАНИ 2</a></td>
-                        </tr>
-                        <tr>
-                            <td>Мобильный телефон</td>
-                            <td><a href="#" data-url="http://autoschool.ru/lk/ajax/changeContract/21" data-name="phone" data-type="text" data-pk="" class="editable editable-click editable-disabled" tabindex="-1">+79261195550</a></td>
-                        </tr>
+                        <legend>Удостоверение личности</legend>
+                        <div class="row">
+                            <div class="span4">
+                                <label>Тип</label>
+                                <select name="document_id" class="span4">
+                                    <option> --- </option>
+                                    <?foreach($type_doc as $item):?>
+                                        <option value="<?=$item->id?>"><?=$item->name?></option>
+                                    <?endforeach?>
+                                </select>
+                            </div>
+                            <div class="pull-right">
+                                <div class="span2">
+                                    <label for="document_seriya">Серия</label>
+                                    <input type="text" class="span2" name="document_seriya" id="document_seriya"/>
+                                </div>
+                                <div class="span2">
+                                    <label for="document_nomer">Номер</label>
+                                    <input type="text" class="span2" name="document_nomer" id="document_nomer"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span6">
+                                <label for="document_kem_vydan">Выдано</label>
+                                <input type="text" class="span6" name="document_kem_vydan" id="document_kem_vydan"/>
+                            </div>
+                            <div class="span2 pull-right">
+                                <label for="document_data_vydachi">Дата</label>
+                                <div class="input-append">
+                                    <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                    <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
 
-                        </tbody>
-                    </table>
+                        <input type="hidden" name="listener_id" id="listener_id"/>
+                        <input type="hidden" name="is_individual" id="is_individual"/>
+                        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                        <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
+                            Сохранить
+                        </button>
+                    </form>
 
                 </div>
             </div>

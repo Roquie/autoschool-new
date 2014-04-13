@@ -54,37 +54,7 @@ $(function() {
 
             },
             success : function(response) {
-                if (response.status == 'success')
-                {
-                    $.each(response.data.listener, function(key, value) {
-                        field = f_statement.find('[name="'+key+'"]');
-                        if (key == 'is_individual') {
-                            $('#is_individual').val(value);
-                        }
-                        if (key == 'id') {
-                            $('#listener_id').val(value);
-                        }
-                        if (field.attr('type') == 'checkbox') {
-                            (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
-                        } else {
-                            field.val(value);
-                        }
-                    });
-                    $.each(response.data.contract, function(key, value) {
-                        field = f_contract.find('[name="'+key+'"]');
-                        if (field.attr('type') == 'checkbox') {
-                            (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
-                        } else {
-                            field.val(value);
-                        }
-                    });
-                    $('.selected_listener').find('p').text($this.next('span').text());
-                }
-                if (response.status == 'error')
-                {
-                }
-                listeners.prev('input').val(response.csrf);
-                listeners.find('.loader').remove();
+                fn_callback(response, $this, f_statement, f_contract, listeners);
             },
             error : function(request) {
                 if (request.status == '200') {

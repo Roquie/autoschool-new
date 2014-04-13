@@ -196,4 +196,43 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
         }
     }
 
+    public function action_change_status()
+    {
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+            $id = $post['user_id'];
+
+            unset($post['csrf'], $post['user_id']);
+
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $post)
+                )
+            );
+
+            $valid->rule('status', 'not_empty');
+            $valid->rule('status', 'digit');
+
+            if ($valid->check()) {
+                try
+                {
+                    DB::update('listeners')
+                        ->set($post)
+                        ->where('id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
+
+                $this->ajax_msg('Данные успешно сохранены');
+            }
+        }
+    }
+
 }

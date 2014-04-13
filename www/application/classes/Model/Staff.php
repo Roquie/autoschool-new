@@ -20,6 +20,7 @@ class Model_Staff extends ORM
 		'kvartira' => array('data_type' => 'string', 'is_nullable' => false),
 		'nas_pynkt' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'vrem_reg' => array('data_type' => 'int', 'is_nullable' => false),
 		'document_seriya' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_nomer' => array('data_type' => 'string', 'is_nullable' => false),
 		'document_data_vydachi' => array('data_type' => 'string', 'is_nullable' => true),
@@ -43,6 +44,14 @@ class Model_Staff extends ORM
         ),
     );
 
+    protected $_has_many = array(
+        'office' => array(
+            'model' => 'Office',
+            'through' => 'office_staff'
+        ),
+
+    );
+
     public function rules()
     {
         return array(
@@ -64,6 +73,21 @@ class Model_Staff extends ORM
                 array('min_length', array(':value', 2)),
                 array('max_length', array(':value', 50))
             ),
+
+            'tel' => array(
+                array('not_empty'),
+                array('phone', array(':value', 11)),
+            ),
+
+            'sex' => array(
+                array('not_empty'),
+            ),
+
+            'nomer_prav' => array(
+                array('not_empty'),
+
+            ),
+
             'region' => array(
                 //  array('alpha_numeric', array(':value', true)),
                 //  array('alpha', array(':value', true)),
@@ -94,7 +118,13 @@ class Model_Staff extends ORM
                 //  array('alpha', array(':value', true)),
             ),
 
+            'vrem_reg' => array(
+                //  array('alpha_numeric', array(':value', true)),
+                //  array('alpha', array(':value', true)),
+            ),
+
             'document_id' => array(
+                array('not_empty'),
                 array('digit')
             ),
             'document_seriya' => array(
@@ -105,31 +135,41 @@ class Model_Staff extends ORM
                 array('not_empty'),
                 array('alpha_numeric', array(':value', true)),
             ),
-            'document_data_vydachi' => array(
-                array('not_empty'),
-                array('date')
-            ),
             'document_kem_vydan' => array(
                 array('not_empty'),
                 // array('alpha_space', array(':value')),
             ),
+            'document_data_vydachi' => array(
+                array('not_empty'),
+                array('date')
+            ),
 
-            'tel' => array(
-                array('not_empty'),
-                array('phone', array(':value', 11)),
-            ),
-            'data' => array(
-                array('not_empty'),
-                array('date'),
-            ),
-            'sex' => array(
-                array('not_empty'),
 
-            ),
-            'nomer_prav' => array(
-                array('not_empty'),
+        );
+    }
 
-            ),
+    public function labels()
+    {
+        return array(
+            'otch' => 'Поле "Отчество" ',
+            'imya' => 'Поле "Имя" ',
+            'famil' => 'Поле "Фамилия" ',
+            'tel' => 'Поле "Моб. тел." ',
+            'sex' => 'Поле "Пол" ',
+            'document_id' => 'Поле "Тип документа" ',
+            'document_data_vydachi' => 'Поле "Дата выдачи" ',
+            'document_seriya' => 'Поле "Серия документа" ',
+            'document_nomer' => 'Поле "Номер документа" ',
+            'region' => 'Поле "Регион" ',
+            'street' => 'Поле "Улица" ',
+            'rion' => 'Поле "Район" ',
+            'dom' => 'Поле "Дом" ',
+            'korpys' => 'Поле "Корпус" ',
+            'kvartira' => 'Поле "Квартира" ',
+            'nas_pynkt' => 'Поле "Населенный пункт" ',
+            'vrem_reg' => 'Поле "Временная регистрация" ',
+            'document_kem_vydan' => 'Поле "Кем выдан документ" ',
+            'nomer_prav' => 'Поле "Номер прав" ',
         );
     }
 

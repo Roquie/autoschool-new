@@ -10,16 +10,17 @@
                         <li><a href="<?=URL::site('admin/other/groups')?>"> Группы</a></li>
                         <li><a href="<?=URL::site('admin/other')?>"> Вспомогательная информация</a></li>
                         <li class="divider"></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="<?=URL::site('admin/teachers')?>">Преподаватели</a>
+                        <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники</a></li>
+                        <!--<li class="dropdown-submenu">
+                            <a tabindex="-1" href="<?/*=URL::site('admin/staff')*/?>">Сотрудники</a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?=URL::site('admin/teachers')?>"> Общий список</a></li>
-                                <li><a href="<?=URL::site('admin/teachers#pdd')?>"> Преподаватели ПДД</a></li>
-                                <li><a href="<?=URL::site('admin/teachers#tu_and_to')?>"> Преподаватели ТУ и ТО</a></li>
-                                <li><a href="<?=URL::site('admin/teachers#opmt')?>"> Преподаватели ОПМТ</a></li>
-                                <li><a href="<?=URL::site('admin/teachers#driver_instructor')?>"> Водители - инструкторы</a></li>
+                                <li><a href="<?/*=URL::site('admin/teachers')*/?>"> Общий список</a></li>
+                                <li><a href="<?/*=URL::site('admin/teachers#pdd')*/?>"> Преподаватели ПДД</a></li>
+                                <li><a href="<?/*=URL::site('admin/teachers#tu_and_to')*/?>"> Преподаватели ТУ и ТО</a></li>
+                                <li><a href="<?/*=URL::site('admin/teachers#opmt')*/?>"> Преподаватели ОПМТ</a></li>
+                                <li><a href="<?/*=URL::site('admin/teachers#driver_instructor')*/?>"> Водители - инструкторы</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                 </li>
                 <li class="dropdown">

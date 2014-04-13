@@ -29,6 +29,7 @@ $(function() {
         })
         .on('click', '.click', function(e) {
             e.preventDefault();
+
             var btn = $('.click').index(this),
                 status = $('.d_status').find('a'),
                 progress = $('.bar'),
@@ -45,7 +46,9 @@ $(function() {
                     status : $this.data('status')
                 },
                 dataType : 'json',
-                beforeSend : function() {},
+                beforeSend : function() {
+                    status.addClass('disabled').removeClass('click');
+                },
                 success : function(response) {
                     if (response.status == 'success') {
                         status.find('i').remove();
@@ -78,14 +81,17 @@ $(function() {
                                 break;
                             case 2 :
                                 if (increase) {
-                                    status.removeClass('disabled').addClass('click');
                                     progress.animate({ width: $this.data('width') }, 0);
                                     $this.prepend(ok).data('increase', false);
-                                    status.first().prepend(ok).data('increase', false);
-                                    status.last().data('increase', true);
+                                    listeners.find('label[id="'+$('#listener_id').val()+'"]').remove();
+                                    listeners.find('input:checkbox').first().trigger('click');
                                 }
                                 break;
                         }
+                    }
+
+                    if (response.status == 'success' || response.status == 'error') {
+                        message($('.container'), response.msg, response.status);
                     }
                 },
                 error : function(request) {
@@ -97,6 +103,63 @@ $(function() {
                 }
             });
 
+        })
+        .on('click', '.enb_dis', function(e) {
+            e.preventDefault();
+
+            var listeners = $('#listeners'),
+                $this = $(this),
+                f_statement = $('#statement'),
+                f_contract = $('#contract');
+
+            $.ajax({
+                type : 'POST',
+                url  : $this.data('url'),
+                data : {
+                    csrf : listeners.prev('input').val(),
+                    user_id : $('#del_id').val()
+                },
+                dataType : 'json',
+                beforeSend : function() {},
+                success : function(response) {
+                    if (response.status == 'success') {
+                        listeners.find('label[id="'+$('#listener_id').val()+'"]').remove();
+                        if (listeners.find('label').length == 0) {
+                            f_statement.find('input,select').each(function() {
+                                if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                                    if ($(this).attr('type') == 'checkbox')
+                                        $(this).prop("checked", false);
+                                    else
+                                        $(this).val('');
+                            });
+
+                            f_contract.find('input,select').each(function() {
+                                if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                                    if ($(this).attr('type') == 'checkbox')
+                                        $(this).prop("checked", false);
+                                    else
+                                        $(this).val('');
+                            });
+                            listeners.html('<div class="text-center">Слушателей нет</div>');
+                            $('.bar').animate({ width: '0%' }, 0);
+                            $('.d_status').find('a').addClass('disabled').find('i').remove();
+                        }
+                        else
+                            listeners.find('input:checkbox').first().trigger('click');
+                    }
+
+                    if (response.status == 'success' || response.status == 'error') {
+                        message($('.container'), response.msg, response.status);
+                    }
+                },
+                error : function(request) {
+                    if (request.status == '200') {
+                        console.log('Исключение: ' + request.responseText);
+                    } else {
+                        console.log(request.status + ' ' + request.statusText);
+                    }
+                }
+            });
         });
 
 });

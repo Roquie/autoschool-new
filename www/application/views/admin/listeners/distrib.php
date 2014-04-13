@@ -33,11 +33,11 @@
                 <!-- status 0 -->
                 <!--<div class="bar bar-danger" style="width: 2%;"></div>-->
                 <!--остальное так-->
-                <div class="bar" style="width: 1%;"></div>
+                <div class="bar" style="width: 0%;"></div>
             </div>
-            <a href="#" class="btn" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="33%">Информация верна</a>
-            <a href="#" class="btn" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="66%" style="margin-left: 50px">Все документы сданы</a>
-            <a href="#" class="btn pull-right" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="99%">Зачислен(а) в автошколу</a>
+            <a href="#" class="btn disabled" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="33%">Информация верна</a>
+            <a href="#" class="btn disabled" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="66%" style="margin-left: 50px">Все документы сданы</a>
+            <a href="#" class="btn disabled pull-right" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="100%">Зачислен(а) в автошколу</a>
         </div>
         <div class="well d_info data">
             <div class="header-wrap">
@@ -46,8 +46,7 @@
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
                     <div class="btn-group">
-                        <a id="l_edit" href="#statement_or_contract" class="enb_dis btn btn-info" rel="tooltip" title="Режим редактирования"><i class="icon-pencil"></i></a>
-                        <a id="l_delete" href="#statement_or_contract" class="enb_dis btn btn-danger" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
+                        <a id="l_delete" href="#" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
                     </div>
                 </div>
             </div>
@@ -213,7 +212,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="user_id"/>
+                    <input type="hidden" name="user_id" id="del_id"/>
                     <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                     <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
                         Сохранить

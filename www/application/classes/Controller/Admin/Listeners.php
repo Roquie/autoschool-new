@@ -94,8 +94,10 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
 
             $post['data_rojdeniya'] =  Text::getDateUpdate($post['data_rojdeniya']);
             $post['document_data_vydachi'] = Text::getDateUpdate($post['document_data_vydachi']);
-            $post['date_contract'] = Text::getDateUpdate($post['date_contract']);
-            $post['data_med'] = Text::getDateUpdate($post['data_med']);
+            if (isset($post['date_contract']))
+                $post['date_contract'] = Text::getDateUpdate($post['date_contract']);
+            if (isset($post['data_med']))
+                $post['data_med'] = Text::getDateUpdate($post['data_med']);
 
             if ($valid->check())
             {
@@ -214,10 +216,12 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
                 )
             );
 
+            $valid->label('status', 'Поле статус');
             $valid->rule('status', 'not_empty');
             $valid->rule('status', 'digit');
 
-            if ($valid->check()) {
+            if ($valid->check())
+            {
                 try
                 {
                     DB::update('listeners')
@@ -230,7 +234,55 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
                     $this->ajax_msg($e->getMessage(), 'error');
                 }
 
-                $this->ajax_msg('Данные успешно сохранены');
+                $this->ajax_msg('Статус изменен');
+            }
+            else
+            {
+                $errors = $valid->errors('register');
+                $this->ajax_msg(array_shift($errors), 'error');
+            }
+        }
+    }
+
+    public function action_delete()
+    {
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+            $id = $post['user_id'];
+
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $post)
+                )
+            );
+
+            $valid->label('user_id', 'Поле слушатель');
+            $valid->rule('user_id', 'not_empty');
+            $valid->rule('user_id', 'digit');
+
+            if ($valid->check())
+            {
+                try
+                {
+                    DB::delete('users')
+                        ->where('id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
+
+                $this->ajax_msg('Слушатель удален');
+            }
+            else
+            {
+                $errors = $valid->errors('register');
+                $this->ajax_msg(array_shift($errors), 'error');
             }
         }
     }

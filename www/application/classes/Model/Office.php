@@ -11,6 +11,14 @@ class Model_Office extends ORM
         'name' => array('data_type' => 'string', 'is_nullable' => false),
     );
 
+    protected $_has_many = array(
+        'staff' => array(
+            'model' => 'Staff',
+            'through' => 'office_staff'
+        ),
+
+    );
+
     public function rules()
     {
         return array(

@@ -180,6 +180,13 @@ Route::set('admin.files', 'admin/files(/<controller>(/<action>(/<id>)))')
         'action'     => 'Index',
    ));
 
+Route::set('apiv1', 'api(/<controller>(/<action>(/<id>)))')
+    ->defaults(array(
+        'directory' => 'Api',
+        'controller' => 'V1',
+    ));
+
+
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
     ->defaults(array(
         'controller' => 'Index',

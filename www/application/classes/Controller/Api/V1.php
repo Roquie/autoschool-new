@@ -8,7 +8,7 @@ class Controller_Api_V1 extends Controller
     {
         $post = $this->request->post();
 
-        $this->ajax_msg($post);
+        $this->ajax_msg(!$post?:'');
     }
 
 

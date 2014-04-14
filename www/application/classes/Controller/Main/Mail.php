@@ -36,19 +36,19 @@ class Controller_Main_Mail extends Controller_Main_Base
 
                 $path = APPPATH.'uploads/';
 
-                if (!empty($_FILES['files']['name']))
+                if (!empty($_FILES['file']['name']))
                 {
 
                     $valid = new Validation($_FILES);
-                    $valid->rule('files', 'Upload::valid')
-                          ->rule('files', 'Upload::not_empty')
-                          ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf', 'jpg', 'jpeg,', 'png', 'gif', 'tiff', 'psd', 'txt', 'rtf', 'zip', 'rar', '7z', 'pages')))
-                          ->rule('files', 'Upload::size', array(':value', '5M'));
+                    $valid->rule('file', 'Upload::valid')
+                          ->rule('file', 'Upload::not_empty')
+                          ->rule('file', 'Upload::type', array(':value', array('docx','doc', 'pdf', 'jpg', 'jpeg,', 'png', 'gif', 'tiff', 'psd', 'txt', 'rtf', 'zip', 'rar', '7z', 'pages')))
+                          ->rule('file', 'Upload::size', array(':value', '5M'));
 
                     if ($valid->check())
                     {
-                        $status = Upload::save($_FILES['files'], $_FILES['files']['name'], APPPATH.'uploads/', 0444);
-                        $file_name = $_FILES['files']['name'];
+                        $status = Upload::save($_FILES['files'], $_FILES['file']['name'], APPPATH.'uploads/', 0444);
+                        $file_name = $_FILES['file']['name'];
 
                         if ($status)
                         {

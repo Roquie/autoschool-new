@@ -8,7 +8,13 @@ class Controller_Api_V1 extends Controller
     {
         $post = $this->request->post();
 
-        $this->ajax_msg(!$post?:'');
+        $this->response->body(
+            var_export(
+                $post
+                    ? $post
+                    : 'post is empty'
+            )
+        );
     }
 
 

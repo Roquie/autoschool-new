@@ -85,8 +85,20 @@ class Controller_Admin_Staff extends Controller_Admin_Base
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
             $staff = new Model_Staff($post['staff_id']);
+            $position = $staff->office->find_all();
 
             $data = $staff->as_array();
+
+            if ($position->count() > 0)
+            {
+                foreach ($position as $k =>$v)
+                {
+                    $office_staff_id = $v->id;
+                }
+
+                //$data['office_staff_id'] = $office_staff_id;
+            }
+
             $data['document_data_vydachi'] = Text::check_date($data['document_data_vydachi']);
 
             $this->ajax_data($data);
@@ -106,11 +118,16 @@ class Controller_Admin_Staff extends Controller_Admin_Base
             {
                 $post['vrem_reg'] = 1;
             }
+            else
+            {
+                $post['vrem_reg'] = 0;
+            }
 
             try
             {
                 $staff = new Model_Staff( (int)$post['update_staff_id'] );
                 unset($post['csrf'], $post['update_staff_id']);
+
                 $staff->values($post);
                 $staff->update();
 
@@ -138,6 +155,11 @@ class Controller_Admin_Staff extends Controller_Admin_Base
             {
                 $post['vrem_reg'] = 1;
             }
+            else
+            {
+                $post['vrem_reg'] = 0;
+            }
+
             unset($post['csrf'], $post['update_staff_id']);
             try
             {

@@ -17,11 +17,11 @@ $(function() {
             $('.btns').find('a').removeClass('active');
             $(this).addClass('active');
             if ($(this).attr('href') == '#tab2') {
-                data.css({'height' : '724px'});
-                listeners.css({'height' : '848px'});
+                data.css({'height' : '764px'});
+                listeners.css({'height' : '924px'});
             } else {
                 data.css({'height' : '924px'});
-                listeners.css({'height' : '1049px'});
+                listeners.css({'height' : '1084px'});
             }
         })
         .on('click', '.d_status > a', function(e) {

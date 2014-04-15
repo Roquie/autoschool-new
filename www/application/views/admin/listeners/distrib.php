@@ -12,15 +12,13 @@
 <div class="row">
 
     <div class="span3 d_fio">
-        <div class="well">
+        <div class="well listeners">
             <h5 class="header_block">Фамилия И.О.</h5>
-            <div class="wrap listeners">
                 <input type="hidden" id="user_id"/>
                 <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                 <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
                     <?=View::factory('admin/html/listeners', compact('list_users'))?>
                 </div>
-            </div>
         </div>
     </div>
     <div class="span9">
@@ -36,7 +34,7 @@
             <a href="#" class="btn disabled" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="66%" style="margin-left: 50px">Все документы сданы</a>
             <a href="#" class="btn disabled pull-right" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="100%">Зачислен(а) в автошколу</a>
         </div>
-        <div class="well d_info data">
+        <div class="well data">
             <div class="header-wrap">
                 <h5 class="header_block pull-left">Информация</h5>
                 <div class="btns pull-right">

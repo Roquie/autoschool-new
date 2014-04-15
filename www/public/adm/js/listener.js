@@ -66,8 +66,9 @@ $(function() {
 
     });
 
-    if ($('#listeners').find('label').length == 0)
+    if ($('#listeners').find('label').length == 0) {
         $('#listeners').html('<div class="text-center">Слушателей нет</div>');
+    }
     else
         $('#listeners').find('input:checkbox').first().trigger('click');
 
@@ -134,8 +135,6 @@ $(function() {
         var $this = $(this),
             btn = $this.find('#button');
 
-        btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>');
-
         $.ajax({
             type : 'POST',
             url  : $this.attr('action'),
@@ -143,6 +142,7 @@ $(function() {
             dataType : 'json',
             beforeSend : function() {
                 $('.alert').remove();
+                wait(btn);
             },
             success : function(response) {
                 if (response.status == 'success' || response.status == 'error')
@@ -152,7 +152,7 @@ $(function() {
                 if (response.status == 'success') {
                     $('#select2').trigger('change');
                 }
-                btn.find('i').remove();
+                after_wait(btn);
             },
             error : function(request) {
                 if (request.status == '200') {
@@ -160,7 +160,7 @@ $(function() {
                 } else {
                     console.log(request.status + ' ' + request.statusText);
                 }
-                btn.find('i').remove();
+                after_wait(btn);
             }
         });
     });

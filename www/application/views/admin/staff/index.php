@@ -364,24 +364,6 @@
 
 
         list_staff.find('input:checkbox').first().trigger('click');
-        function message(block, msg, type) {
-            var html =  '<div class="alert alert-' + type + '">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<span>' + msg + '</span>' +
-                '</div>';
-
-            block.prepend(html);
-
-            $('html, body').animate({scrollTop:0}, 'slow');
-
-            setTimeout(function() {
-                $('.alert').animate({opacity:0}, 'slow', function() {
-                    $(this).remove();
-                });
-            }, 3000);
-        }
-
-
     });
 </script>
 
@@ -409,7 +391,7 @@
                     <?endforeach?>
                 </select>
             </div>
-            <div class="well l_fio" style="height: 569px;">
+            <div class="well l_fio" style="height: 630px;">
                 <h5 class="header_block">Фамилия И.О.</h5>
                 <input type="hidden" id="staff_id"/>
                 <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
@@ -426,7 +408,7 @@
 
         <!-- правая часть -->
         <div class="span9">
-            <div class="well l_data" style="height: 730px">
+            <div class="well l_data" style="height: 792px">
                 <h5 class="header_block pull-left">Данные по сотруднику <strong></strong></h5>
 
                 <!-- Данные сотрудника -->
@@ -448,6 +430,15 @@
                                         <option> --- </option>
                                         <option value="1">Мужской</option>
                                         <option value="0">Женский</option>
+                                    </select>
+                                </div>
+                                <div class="span4">
+                                    <label>Должность</label>
+                                    <select name="office_staff_id" class="span4">
+                                        <option> --- </option>
+                                        <?foreach($positions as $item):?>
+                                            <option value="<?=$item->id?>"><?=$item->name?></option>
+                                        <?endforeach?>
                                     </select>
                                 </div>
                             </div>

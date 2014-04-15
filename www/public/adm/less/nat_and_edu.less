@@ -1,8 +1,18 @@
+@cells_and_header: 440px;
+
+.awesome_text
+{
+  margin-top: 17px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .well {
-  height: 408px;
+  height: 300px; //
 }
 table tbody {
-  height: 191px;
+  height: 220px;
   overflow: auto;
 }
 table thead > tr,
@@ -13,7 +23,7 @@ table thead tr th:nth-child(1) {
   width: 20px;
 }
 table thead tr th:nth-child(2) {
-  width: 280px;
+  width: @cells_and_header;
   text-align: center;
 }
 table thead tr th:nth-child(3) {
@@ -24,7 +34,7 @@ table tbody tr td:nth-child(1) {
   width: 20px;
 }
 table tbody tr td:nth-child(2) {
-  width: 280px;
+  width: @cells_and_header;
   text-align: center;
 }
 table tbody tr td:nth-child(3) {

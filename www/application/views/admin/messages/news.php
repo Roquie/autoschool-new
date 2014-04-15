@@ -179,26 +179,6 @@
 
                groups.find('input:checkbox').first().trigger('click');
 
-                //@todo: перенести это чадо в global.js, чтобы юзать во всей админке
-                function message(block, msg, type)
-                {
-                    var html =  '<div class="alert alert-' + type + '">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<span>' + msg + '</span>' +
-                        '</div>';
-
-                    block.prepend(html);
-
-                    $('html, body').animate({scrollTop:0}, 'slow');
-
-                    setTimeout(function() {
-                        $('.alert').animate({opacity:0}, 'slow', function() {
-                            $(this).remove();
-                        });
-                    }, 3000);
-                }
-
-
             });
         </script>
         <div class="span9 l_info">

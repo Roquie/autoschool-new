@@ -32,6 +32,10 @@ function message(block, msg, type)
     }, 3000);
 }
 
+function un_message() {
+    $('.alert').remove();
+}
+
 function wait(btn)
 {
     btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>').prop('disabled', true);

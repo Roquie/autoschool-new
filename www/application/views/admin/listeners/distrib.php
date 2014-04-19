@@ -14,11 +14,12 @@
     <div class="span3 d_fio">
         <div class="well listeners">
             <h5 class="header_block">Фамилия И.О.</h5>
-                <input type="hidden" id="user_id"/>
-                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
-                    <?=View::factory('admin/html/listeners', compact('list_users'))?>
-                </div>
+            <input type="hidden" id="user_id"/>
+            <input type="hidden" name="distrib" class="distrib"/>
+            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+            <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
+                <?=View::factory('admin/html/listeners', compact('list_users'))?>
+            </div>
         </div>
     </div>
     <div class="span9">
@@ -218,6 +219,15 @@
 
                 <div class="tab-pane" id="tab2">
 
+                    <form action="<?=URL::site('admin/listeners/contract_check')?>" method="post">
+                        <label class="checkbox">
+                            <input type="checkbox" name="customer" id="is_individual">
+                            Заказчиком буду я
+                        </label>
+                        <input type="hidden" name="user_id" class="user_id"/>
+                        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                    </form>
+
                     <form action="<?=URL::site('admin/listeners/update_ind')?>" method="post" id="contract" style="margin-bottom: 0">
                         <legend>Анкетные данные</legend>
                         <div class="row">
@@ -334,7 +344,7 @@
                         </div>
 
                         <input type="hidden" name="listener_id" id="listener_id"/>
-                        <input type="hidden" name="is_individual" id="is_individual"/>
+                        <input type="hidden" name="is_individual" class="is_individual"/>
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                         <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
                             Сохранить

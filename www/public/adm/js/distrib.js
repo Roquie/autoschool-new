@@ -27,6 +27,7 @@ $(function() {
         .on('click', '.d_status > a', function(e) {
             e.preventDefault();
         })
+        //изменение статуса
         .on('click', '.click', function(e) {
             e.preventDefault();
 
@@ -47,6 +48,7 @@ $(function() {
                 },
                 dataType : 'json',
                 beforeSend : function() {
+                    un_message();
                     status.addClass('disabled').removeClass('click');
                 },
                 success : function(response) {
@@ -104,6 +106,7 @@ $(function() {
             });
 
         })
+        //удаление слушателя
         .on('click', '.enb_dis', function(e) {
             e.preventDefault();
 
@@ -120,7 +123,9 @@ $(function() {
                     user_id : $('#del_id').val()
                 },
                 dataType : 'json',
-                beforeSend : function() {},
+                beforeSend : function() {
+                    un_message();
+                },
                 success : function(response) {
                     if (response.status == 'success') {
                         listeners.find('label[id="'+$('#listener_id').val()+'"]').remove();
@@ -160,6 +165,29 @@ $(function() {
                     }
                 }
             });
+        })
+        //галочка кто будет заказчиком
+        .on('click', '#is_individual', function() {
+            var $this = $(this),
+                form = $this.parent().parent();
+
+            $('.is_individual').val($this.is(':checked') ? 0 : 1);
+
+            un_message();
+
+            $.post(
+                form.attr('action'),
+                form.serialize(),
+                function(response) {
+                    if (response.status == 'success' || response.status == 'error')
+                    {
+                        message($('.container'), response.msg, response.status);
+                    }
+                    if (response.status == 'success')
+                        $('#listeners').find('input:checkbox:checked').prop('checked', false).trigger('click');
+                },
+                'json'
+            );
         });
 
 });
@@ -169,7 +197,8 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
     {
 
         var status = $('.d_status').find('a'),
-            progress = $('.bar');
+            progress = $('.bar'),
+            field = '';
 
         status.find('i').remove();
         status.removeClass('disabled').data('increase', false);
@@ -202,25 +231,37 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
         $.each(response.data.listener, function(key, value) {
             field = f_statement.find('[name="'+key+'"]');
             if (key == 'is_individual') {
-                $('#is_individual').val(value);
+                $('.is_individual').val(value);
+                if (value == 0) {
+                    $('#is_individual').prop('checked', true);
+                    f_contract.hide();
+                } else {
+                    $('#is_individual').prop('checked', false);
+                    f_contract.show();
+                }
             }
             if (key == 'id') {
                 $('#listener_id').val(value);
             }
             if (field.attr('type') == 'checkbox') {
-                (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
+                (value == 0) ? field.prop("checked", false) : field.prop("checked", true);
             } else {
                 field.val(value);
             }
         });
+
+        $('.user_id').val($('#del_id').val());
+
         $.each(response.data.contract, function(key, value) {
             field = f_contract.find('[name="'+key+'"]');
-            if (field.attr('type') == 'checkbox') {
-                (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
-            } else {
-                field.val(value);
-            }
+            if (field.attr('type') != 'hidden')
+                if (field.attr('type') == 'checkbox') {
+                    (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
+                } else {
+                    field.val(value);
+                }
         });
+
     }
     if (response.status == 'error')
     {

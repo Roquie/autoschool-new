@@ -50,7 +50,7 @@ class Text extends Kohana_Text
      */
     public static function check_date($date)
     {
-        return (empty($date) || $date == '0000-00-00') ? null : date('d.m.Y', strtotime($date));
+        return (empty($date) || $date == '0000-00-00' || $date == '1970-01-01') ? null : date('d.m.Y', strtotime($date));
     }
 
     /**

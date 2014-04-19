@@ -17,6 +17,47 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
                 ->render();
     }
 
+    public function action_contract_check()
+    {
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            $id = $post['user_id'];
+            if (isset($post['customer']))
+            {
+                try
+                {
+                    DB::update('listeners')
+                        ->set(array('is_individual' => 0))
+                        ->where('user_id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
+                $this->ajax_msg('Вы являетесь заказчиком');
+            }
+            else
+            {
+                try
+                {
+                    DB::update('listeners')
+                        ->set(array('is_individual' => 1))
+                        ->where('user_id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
+                $this->ajax_msg('Заказчик изменен');
+
+            }
+        }
+    }
+
     public function action_getUser()
     {
         $this->auto_render = false;
@@ -28,20 +69,24 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
 
             $result = ORM::factory('Listeners', $id);
 
-            Session::instance()->set('checked_user', $result->user_id);
+            if ($this->request->post('distrib') == '0')
+            {
+                Session::instance()->set('checked_user', $result->user_id);
+            }
+
+            $data['contract'] = array();
 
             $data['listener'] = $result->as_array();
-            if ((int)$data['listener']['is_individual'] == 1)
+            if ((int)$data['listener']['is_individual'] == 1) {
                 $data['contract'] = $result->indy->as_array();
-            else
-                $data['contract'] = $data['listener'];
+                $data['contract']['document_data_vydachi'] = Text::check_date($data['contract']['document_data_vydachi']);
+            }
 
             $data['listener']['data_rojdeniya'] = Text::check_date($data['listener']['data_rojdeniya']);
             $data['listener']['document_data_vydachi'] = Text::check_date($data['listener']['document_data_vydachi']);
             $data['listener']['date_contract'] = Text::check_date($data['listener']['date_contract']);
             $data['listener']['data_med'] = Text::check_date($data['listener']['data_med']);
 
-            $data['contract']['document_data_vydachi'] = Text::check_date($data['contract']['document_data_vydachi']);
             $this->ajax_data($data);
         }
     }
@@ -131,10 +176,11 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $post = $this->request->post();
+
             $id = $post['listener_id'];
             $is_ind = $post['is_individual'];
 
-            unset($post['csrf'], $post['listener_id'], $post['is_individual']);
+            unset($post['csrf'], $post['is_individual']);
 
             $valid = new Validation(
                 Arr::map(
@@ -161,7 +207,20 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
 
             if ($valid->check())
             {
-                if ((int)$is_ind == 1) {
+                try
+                {
+                    $res = DB::select()
+                        ->from('individual')
+                        ->where('listener_id', '=', $id)
+                        ->execute();
+                }
+                catch(Database_Exception $e)
+                {
+                    $this->ajax_msg($e->getMessage(), 'error');
+                }
+
+                if (count($res) > 0)
+                {
                     try
                     {
                         DB::update('individual')
@@ -173,12 +232,14 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
                     {
                         $this->ajax_msg($e->getMessage(), 'error');
                     }
-                } else {
+                 }
+                else
+                {
                     try
                     {
-                        DB::update('listeners')
-                            ->set($post)
-                            ->where('id', '=', $id)
+                        DB::insert('individual')
+                            ->columns(array_keys($post))
+                            ->values($post)
                             ->execute();
                     }
                     catch(Database_Exception $e)

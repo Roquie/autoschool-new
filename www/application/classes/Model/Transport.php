@@ -15,6 +15,7 @@ class Model_Transport extends ORM
 		'doc_nomer' => array('data_type' => 'string', 'is_nullable' => false),
 		'doc_data_reg' => array('data_type' => 'string', 'is_nullable' => false),
 		'doc_place_reg' => array('data_type' => 'string', 'is_nullable' => false),
+        'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
 	);
 
     public function rules()

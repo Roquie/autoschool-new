@@ -28,10 +28,10 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
         $.each(response.data.listener, function(key, value) {
             field = f_statement.find('[name="'+key+'"]');
             if (key == 'is_individual') {
-                $('#is_individual').val(value);
+                $('.is_individual').val(value);
             }
             if (key == 'id') {
-                $('#listener_id').val(value);
+                $('.listener_id').val(value);
             }
             if (field.attr('type') == 'checkbox') {
                 (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
@@ -42,7 +42,7 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
         $.each(response.data.contract, function(key, value) {
             field = f_contract.find('[name="'+key+'"]');
             if (field.attr('type') == 'checkbox') {
-                (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
+                (value == 0) ? field.prop("checked", false) : field.prop("checked", true);
             } else {
                 field.val(value);
             }

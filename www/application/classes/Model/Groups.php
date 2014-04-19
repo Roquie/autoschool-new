@@ -12,6 +12,9 @@ class Model_Groups extends ORM
         'category_id' => array('data_type' => 'int', 'is_nullable' => false),
         'data_start' => array('data_type' => 'string', 'is_nullable' => true),
         'data_end' => array('data_type' => 'string', 'is_nullable' => true),
+        'pdd_teacher' => array('data_type' => 'int', 'is_nullable' => true),
+        'tyto_teacher' => array('data_type' => 'int', 'is_nullable' => true),
+        'med_teacher' => array('data_type' => 'int', 'is_nullable' => true),
     );
 
     protected $_belongs_to = array(

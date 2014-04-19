@@ -119,7 +119,8 @@ $(function() {
                         block.html('<div class="text-center">Слушателей нет</div>');
                     } else {
                         block.html(response.data);
-                        if (active_checkbox.length == 0)
+                        //FIX Javascript “Cannot read property 'length' of undefined” when checking a variable's length
+                        if (active_checkbox)
                             $('#listeners').find('input:checkbox').first().trigger('click');
                         else
                             $('#listeners').find('input:checkbox[value="'+active_checkbox+'"]').trigger('click');

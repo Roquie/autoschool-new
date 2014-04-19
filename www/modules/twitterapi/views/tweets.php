@@ -4,7 +4,7 @@
         <div id="transparent">
             <img src="<?=$tweets[0]->user->profile_image_url?>" />
             <span class="name">
-                <a href="//twitter.com/<?=$tweets[0]->user->screen_name?>" rel="nofollow" target="_blank">
+                <a href="//twitter.com/<?=$tweets[0]->user->screen_name?>" title="Открыть наш твиттер" rel="tooltip" target="_blank">
                     @<?=$tweets[0]->user->screen_name?>
                 </a>
             </span>
@@ -28,7 +28,7 @@
                     elseif($date < 86400) $date_text = floor($date/3600)." ч назад";
                     elseif($date > 86400 && $date < 172800) $date_text = "вчера";
                     elseif($date >= 172800 && $date < 432000) $date_text = floor($date/86400)." дня назад";
-                    elseif($date < 31536000) $date_text = floor($date/86400) . " дней назад";
+                    elseif($date < 31536000) $date_text = date('d.m.Y', strtotime($item->created_at));
                     else $date_text = "больше года назад";
                 }
         ?>
@@ -50,11 +50,12 @@
         </div>
     </div>
 </div>
+<?=HTML::script('global/js/jquery.slimscroll.min.js')?>
 <script>
     $(function() {
         var navbarH = $('.navbar').outerHeight(),
             footerH = $('#footer').outerHeight();
-        $('#text').css({height : $('#pageslide-slide-wrap').height()-$('#text').position().top - navbarH - 5});
+        $('#text').css({height : $('#pageslide-slide-wrap').height() - $('#text').position().top - navbarH - 5});
         $('#text').slimScroll({
             height : $('#text').height()
         });

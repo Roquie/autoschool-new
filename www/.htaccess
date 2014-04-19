@@ -21,8 +21,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Rewrite all other URLs to index.php/URL
 RewriteRule .* index.php/$0 [PT]
 
-
 ##
+
 
 # Apache Server Configs v2.3.0 | MIT License
 # https://github.com/h5bp/server-configs-apache

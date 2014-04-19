@@ -30,12 +30,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                         $setting->set('tel1', $post['telephone_1']);
                         $setting->set('tel2', $post['telephone_2']);
 
-                        $data = $post;
+                        $data = array_merge($post, $data);
                         $success = 'Номер(а) изменены.';
                     }
                     else
                     {
-                        $data = $post;
+                        $data = array_merge($post, $data);
                         $error = 'Введите оба телефона правильно';
                     }
 
@@ -46,12 +46,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     if (Valid::email($post['email']))
                     {
                         $setting->set('email', $post['email']);
-                        $data = $post;
+                        $data = array_merge($post, $data);
                         $success = 'Email изменен.';
                     }
                     else
                     {
-                        $data = $post;
+                        $data = array_merge($post, $data);
                         $error = 'Введите email правильно';
                     }
 
@@ -62,7 +62,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     $setting->set('title', $post['title']);
                     $setting->set('address', $post['address']);
 
-                    $data = $post;
+                    $data = array_merge($post, $data);
                     $success = 'Основные данные изменены.';
 
                 break;

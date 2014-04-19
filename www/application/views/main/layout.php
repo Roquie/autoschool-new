@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="<?=$title?>">
 
-    <script src="public/global/js/headjs.min.js"></script>
+    <script src="<?=URL::site('public/global/js/headjs.min.js')?>"></script>
     <script type="text/javascript">
         head.load("<?=implode('","', $styles)?>");
     </script>

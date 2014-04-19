@@ -5,6 +5,17 @@ abstract class Controller extends Kohana_Controller
     public $_transactional = true;
 
 
+    public function before()
+    {
+        parent::before();
+
+        View::set_global(
+            'settings',
+            new Model_Settings()
+        );
+
+    }
+
     /**
      * отправляет json ответ с данными, кот. в массиве data
      * example {"status":"success","data":{"asd":"111ss"},"msg":{"title":"lol","msg":"blya"},"csrf":"8muBJ04\/PrJ50kUtcXxcIYH\/dE5Q5lD1xpuPX\/Dgh4c="}

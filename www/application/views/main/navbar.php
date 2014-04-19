@@ -8,11 +8,11 @@
                 </a>
                 <div class="text">
                     <div class="phone">
-                        <span>+7 (925) 800 10 24</span>
-                        <span>+7 (499) 317 04 09</span><br>
+                        <span><?=$settings->get('tel1')?></span>
+                        <span><?=$settings->get('tel2')?></span><br>
                     </div>
                         <span class="email">
-                            <?=HTML::mailto('&#97;&#117;&#116;&#111;&#64;&#109;&#112;&#116;&#46;&#114;&#117;?subject=Вопрос по Автошколе МПТ', '&#97;&#117;&#116;&#111;&#64;&#109;&#112;&#116;&#46;&#114;&#117;', array('target' => '_blank'))?>
+                            <?=HTML::mailto('&#97;&#117;&#116;&#111;&#64;&#109;&#112;&#116;&#46;&#114;&#117;?subject=Вопрос по Автошколе МПТ', $settings->get('email'), array('target' => '_blank'))?>
                         </span>
                 </div>
             </ul>

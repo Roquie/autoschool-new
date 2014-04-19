@@ -213,7 +213,7 @@
                 </div>
             </div>
             <div class="span6" id="google_map">
-                <img style="cursor: pointer" rel="tooltip" title="Кликните для подгрузки &laquo;живой&raquo; карты ;)" height="100%" width="100%" src="<?=URL::site('public/img/main/map.png')?>" alt="google maps"/>
+                <img style="cursor: pointer" rel="tooltip" title="Кликните для подгрузки &laquo;живой&raquo; карты ;)" src="<?=URL::site('public/img/main/map.png')?>" alt="google maps"/>
             </div>
         </div>
     </div>

@@ -1,8 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // Catch-all route for Captcha classes to run
-Route::set('captcha', 'captcha(/<group>)')
+Route::set('captcha', 'captcha.png')
+    ->defaults(array(
+        'controller' => 'captcha',
+        'action' => 'index',
+        'group' => NULL));
+
+/*Route::set('captcha', 'captcha(/<group>)')
 	->defaults(array(
 		'controller' => 'captcha',
 		'action' => 'index',
-		'group' => NULL));
+		'group' => NULL));*/

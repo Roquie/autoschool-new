@@ -27,10 +27,10 @@ class Controller_Captcha extends Controller {
 	 */
 	public function action_index()
 	{
-		// Output the Captcha challenge resource (no html)
-		// Pull the config group name from the URL
-		$group = $this->request->param('group', 'default');
-		Captcha::instance($group)->render(FALSE);
+
+
+        $this->response->body(Captcha::instance()->render(FALSE));
+
 	}
 	
 	public function after()

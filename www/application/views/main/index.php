@@ -1,4 +1,3 @@
-<?=HTML::style('main/css/flexslider.css')?>
 <?=HTML::script('main/js/jquery.flexslider-min.js')?>
 <?=HTML::script('main/js/index.js')?>
 <section class="row main">
@@ -191,7 +190,7 @@
                     </span>
                         <div class="row">
                             <div class="span2">
-                                <?=$captcha?><br><input type="text" name="captcha" style="margin-top: 5px;width: 117px" placeholder="проверка" data-req="true"/>
+                                <img src="<?=URL::site('captcha.png')?>" alt=""/><br><input type="text" name="captcha" style="margin-top: 5px;width: 117px" placeholder="проверка" data-req="true"/>
                             </div>
                             <div class="span2 file_upload" style="display: none; margin-bottom: 4px;">
                                 <div class="input-append">

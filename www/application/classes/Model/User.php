@@ -120,7 +120,7 @@ class Model_User extends Model_Auth_User
         foreach ($obj_orm_users as $value)
             $arr[$value->id] =
                 $value->famil . ' '.
-                UTF8::substr($value->imya,0, 1).'.' .
+                UTF8::substr($value->imya,0, 1).'. ' .
                 UTF8::substr($value->otch,0, 1).'.';
 
         return $arr;

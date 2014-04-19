@@ -21,14 +21,21 @@ $(function() {
         var f_statement = $('#statement'),
             f_contract = $('#contract'),
             listeners = $('#listeners'),
-            $this = $(this);
+            $this = $(this),
+            is_distrib = 0;
+
+        if ($('.distrib').length == 0)
+            is_distrib = 0;
+        else
+            is_distrib = 1;
 
         $.ajax({
             type : 'POST',
             url  : listeners.data('url'),
             data : {
                 csrf : listeners.prev('input').val(),
-                user_id : $this.val()
+                user_id : $this.val(),
+                distrib : is_distrib
             },
             dataType : 'json',
             beforeSend : function() {
@@ -66,8 +73,9 @@ $(function() {
 
     });
 
-    if ($('#listeners').find('label').length == 0)
+    if ($('#listeners').find('label').length == 0) {
         $('#listeners').html('<div class="text-center">Слушателей нет</div>');
+    }
     else
         $('#listeners').find('input:checkbox').first().trigger('click');
 
@@ -78,7 +86,8 @@ $(function() {
         var $this = $(this),
             block = $('#listeners'),
             f_statement = $('#statement'),
-            f_contract = $('#statement');
+            f_contract = $('#contract'),
+            active_checkbox = $('#listeners').find('input:checkbox:checked').val();
 
         $.ajax({
             type : 'POST',
@@ -89,6 +98,7 @@ $(function() {
             },
             dataType : 'json',
             beforeSend : function() {
+                un_message();
                 block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
 
                 f_statement.find('input,select').each(function() {
@@ -109,7 +119,10 @@ $(function() {
                         block.html('<div class="text-center">Слушателей нет</div>');
                     } else {
                         block.html(response.data);
-                        $('#listeners').find('input:checkbox').first().trigger('click');
+                        if (active_checkbox.length == 0)
+                            $('#listeners').find('input:checkbox').first().trigger('click');
+                        else
+                            $('#listeners').find('input:checkbox[value="'+active_checkbox+'"]').trigger('click');
                     }
                 }
                 if (response.status == 'error')
@@ -134,15 +147,14 @@ $(function() {
         var $this = $(this),
             btn = $this.find('#button');
 
-        btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>');
-
         $.ajax({
             type : 'POST',
             url  : $this.attr('action'),
             data : $this.serialize(),
             dataType : 'json',
             beforeSend : function() {
-                $('.alert').remove();
+                un_message();
+                wait(btn);
             },
             success : function(response) {
                 if (response.status == 'success' || response.status == 'error')
@@ -150,9 +162,12 @@ $(function() {
                     message($('.container'), response.msg, response.status);
                 }
                 if (response.status == 'success') {
-                    $('#select2').trigger('change');
+                    if ($('.distrib').length == 0)
+                        $('#select2').trigger('change');
+                    else
+                        $('#listeners').find('input:checkbox:checked').prop('checked', false).trigger('click');
                 }
-                btn.find('i').remove();
+                after_wait(btn);
             },
             error : function(request) {
                 if (request.status == '200') {
@@ -160,7 +175,7 @@ $(function() {
                 } else {
                     console.log(request.status + ' ' + request.statusText);
                 }
-                btn.find('i').remove();
+                after_wait(btn);
             }
         });
     });

@@ -12,14 +12,13 @@
 <div class="row">
 
     <div class="span3 d_fio">
-        <div class="well">
+        <div class="well listeners">
             <h5 class="header_block">Фамилия И.О.</h5>
-            <div class="wrap listeners">
-                <input type="hidden" id="user_id"/>
-                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
-                    <?=View::factory('admin/html/listeners', compact('list_users'))?>
-                </div>
+            <input type="hidden" id="user_id"/>
+            <input type="hidden" name="distrib" class="distrib"/>
+            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+            <div class="wrap" id="listeners" data-url="<?=URL::site('admin/listeners/getUser')?>">
+                <?=View::factory('admin/html/listeners', compact('list_users'))?>
             </div>
         </div>
     </div>
@@ -36,7 +35,7 @@
             <a href="#" class="btn disabled" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="66%" style="margin-left: 50px">Все документы сданы</a>
             <a href="#" class="btn disabled pull-right" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="100%">Зачислен(а) в автошколу</a>
         </div>
-        <div class="well d_info data">
+        <div class="well data">
             <div class="header-wrap">
                 <h5 class="header_block pull-left">Информация</h5>
                 <div class="btns pull-right">
@@ -220,6 +219,15 @@
 
                 <div class="tab-pane" id="tab2">
 
+                    <form action="<?=URL::site('admin/listeners/contract_check')?>" method="post">
+                        <label class="checkbox">
+                            <input type="checkbox" name="customer" id="is_individual">
+                            Заказчиком буду я
+                        </label>
+                        <input type="hidden" name="user_id" class="user_id"/>
+                        <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                    </form>
+
                     <form action="<?=URL::site('admin/listeners/update_ind')?>" method="post" id="contract" style="margin-bottom: 0">
                         <legend>Анкетные данные</legend>
                         <div class="row">
@@ -336,7 +344,7 @@
                         </div>
 
                         <input type="hidden" name="listener_id" id="listener_id"/>
-                        <input type="hidden" name="is_individual" id="is_individual"/>
+                        <input type="hidden" name="is_individual" class="is_individual"/>
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                         <button type="submit" class="btn btn-block btn-info" id="button" style="margin-top: 20px">
                             Сохранить

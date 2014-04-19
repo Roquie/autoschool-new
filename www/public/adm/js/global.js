@@ -14,7 +14,8 @@ $(function() {
 
 });
 
-function message(block, msg, type) {
+function message(block, msg, type)
+{
     var html =  '<div class="alert alert-' + type + '">' +
         '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
         '<span>' + msg + '</span>' +
@@ -29,4 +30,18 @@ function message(block, msg, type) {
             $(this).remove();
         });
     }, 3000);
+}
+
+function un_message() {
+    $('.alert').remove();
+}
+
+function wait(btn)
+{
+    btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>').prop('disabled', true);
+}
+
+function after_wait(btn)
+{
+    btn.prop('disabled', false).find('i').remove();
 }

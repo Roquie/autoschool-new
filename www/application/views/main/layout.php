@@ -11,16 +11,6 @@
     </script>
 
     <?=HTML::script('global/js/jquery.min.js')?>
-    <?=HTML::script('global/js/jquery-ui.min.js')?>
-    <?=HTML::script('global/js/bootstrap.min.js')?>
-    <?=HTML::script('main/js/stylizationForm.js')?>
-    <?=HTML::script('global/js/placeholder.js')?>
-    <?=HTML::script('global/js/notification.js')?>
-    <?=HTML::script('main/js/jquery.pageslide.js')?>
-    <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
-    <?=HTML::script('global/js/general_fns.js')?>
-    <?=HTML::script('main/js/main.js')?>
-    <?=HTML::script('global/js/global.js')?>
 
     <!--[if IE]>
         <script async src="public/global/js/html5shiv.js"></script>
@@ -34,5 +24,17 @@
 </div>
 <?=$footer.PHP_EOL?>
 
+
+
+<?=HTML::script('global/js/jquery-ui.min.js')?>
+<?=HTML::script('global/js/bootstrap.min.js')?>
+<?=HTML::script('main/js/stylizationForm.js')?>
+<?=HTML::script('global/js/placeholder.js')?>
+<?//=HTML::script('global/js/notification.js')?>
+<?=HTML::script('main/js/jquery.pageslide.js')?>
+<?=HTML::script('global/js/jquery.maskedinput.min.js')?>
+<?=HTML::script('global/js/general_fns.js')?>
+<?=HTML::script('main/js/main.js')?>
+<?=HTML::script('global/js/global.js')?>
 </body>
 </html>

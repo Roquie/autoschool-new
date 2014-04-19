@@ -213,8 +213,8 @@
                     </form>
                 </div>
             </div>
-            <div class="span6">
-                <iframe src="https://mapsengine.google.com/map/embed?mid=zKAGAuy1eND8.kCKg1x6jjPxk" width="100%" height="330" frameborder="0"></iframe>
+            <div class="span6" id="google_map">
+                <img style="cursor: pointer" rel="tooltip" title="Кликните для подгрузки &laquo;живой&raquo; карты ;)" height="100%" width="100%" src="<?=URL::site('public/img/main/map.png')?>" alt="google maps"/>
             </div>
         </div>
     </div>

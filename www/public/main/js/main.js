@@ -36,6 +36,18 @@ $(function() {
         $(this).closest('#popup').find('form').toggle();
     });
 
-    $("[rel='tooltip']").tooltip();
+    /**
+     * увеличил скорость загрузки главной, петем замены карты на картинку.
+     * при клике на картинку, подгружается реальная/живая карта гугла.
+     * @type {string}
+     */
+    var mapframe = '<iframe src="https://mapsengine.google.com/map/embed?mid=zKAGAuy1eND8.kCKg1x6jjPxk" width="100%" height="330" frameborder="0"></iframe>',
+        wrap = $('#google_map');
+
+    $(wrap).on('click', function()
+    {
+        wrap.html('');
+        wrap.html(mapframe);
+    });
 
 });

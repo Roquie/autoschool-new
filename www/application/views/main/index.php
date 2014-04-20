@@ -1,4 +1,3 @@
-<?=HTML::style('main/css/flexslider.css')?>
 <?=HTML::script('main/js/jquery.flexslider-min.js')?>
 <?=HTML::script('main/js/index.js')?>
 <section class="row main">
@@ -154,22 +153,15 @@
     </div>
 </section>
 
-<script>
-    var FileAPI = {
-        debug: true,
-        staticPath: '<?=URL::site('js/FileAPI-dev/dist')?>'
-    };
-</script>
-
 <section class="row contacts" target="contacts">
     <div class="container">
         <div class="row">
             <div class="span6">
                 <h1>Контакты</h1>
                 <div class="">
-                    <abbr title="Телефон">Тел. 1</abbr>: +7 (925) 800 10 24,
-                    <abbr title="Телефон" style="margin-left: 10px">Тел. 2</abbr>: +7 (499) 317 04 09<br>
-                    <p style="margin-top: 12px">Адрес: г. Москва, нахимовский проспект, 21</p>
+                    <abbr title="Телефон">Тел. 1</abbr>: <?=$settings->get('tel1')?>,
+                    <abbr title="Телефон" style="margin-left: 10px">Тел. 2</abbr>: <?=$settings->get('tel2')?><br>
+                    <p style="margin-top: 12px">Адрес: <?=$settings->get('address')?></p>
                     <p>Напишите нам: </p>
                     <style>
                         .b-button {
@@ -193,12 +185,12 @@
                     <form id="send" action="<?=URL::site('mail/send')?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                         <input id="c_name" name="name" type="text" class="span2 in-name" data-placement="top" data-req="true" placeholder="Имя">
                         <input id="c_email" name="email" type="text" class="input-large" data-placement="top" data-req="true" placeholder="Email адрес">
-    <span style="position: relative">
-        <textarea id="c_msg" name="message" class="span5" rows="5" data-req="true" placeholder="Сообщение"></textarea>
-    </span>
+                    <span style="position: relative">
+                        <textarea id="c_msg" name="message" class="span5" rows="5" data-req="true" placeholder="Сообщение"></textarea>
+                    </span>
                         <div class="row">
                             <div class="span2">
-                                <?=$captcha?><br><input type="text" name="captcha" style="margin-top: 5px;width: 117px" placeholder="проверка" data-req="true"/>
+                                <img src="<?=URL::site('captcha.png')?>" alt=""/><br><input type="text" name="captcha" style="margin-top: 5px;width: 117px" placeholder="проверка" data-req="true"/>
                             </div>
                             <div class="span2 file_upload" style="display: none; margin-bottom: 4px;">
                                 <div class="input-append">
@@ -209,7 +201,7 @@
                                     <a href="#" class="btn clearFile"><i class="icon-trash"></i></a>
                                 </div>
                             </div>
-                            <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-left: 101px">
+                            <div class="b-button" style="margin-bottom: 10px; margin-left: 101px">
                                 <a class="b-button__text btn" href="#" data-url="<?=URL::site('main/mail/upload')?>">Загрузить файл</a>
                                 <input name="files" class="b-button__input" type="file"/>
                                 <input type="hidden" name="file_name" id="file_name"/>
@@ -220,8 +212,8 @@
                     </form>
                 </div>
             </div>
-            <div class="span6">
-                <iframe src="https://mapsengine.google.com/map/embed?mid=zKAGAuy1eND8.kCKg1x6jjPxk" width="100%" height="330" frameborder="0"></iframe>
+            <div class="span6" id="google_map">
+                <img style="cursor: pointer" rel="tooltip" title="Кликните для подгрузки &laquo;живой&raquo; карты ;)" src="<?=URL::site('public/img/main/map.png')?>" alt="google maps"/>
             </div>
         </div>
     </div>

@@ -5,31 +5,72 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
     public function action_index()
     {
-        $data = Kohana::$config->load('settings.telephone');
-        if (!empty($data))
-            $data = unserialize($data);
+        $setting = new Model_Settings();
 
-        $csrf = $this->request->post('csrf');
+        $data = array(
+            'telephone_1' => $setting->get('tel1'),
+            'telephone_2' => $setting->get('tel2'),
+            'email' => $setting->get('email'),
+            'title' => $setting->get('title'),
+            'address' => $setting->get('address'),
+        );
 
-        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            switch ($this->request->post('type'))
+            $post = array_map('Security::xss_clean', $post);
+
+            switch ($post['type'])
             {
                 case 'tel' :
-                    $errors = array('error' => 'Tel');
-                    break;
+
+                    if (Valid::phone($post['telephone_1'], 11) && Valid::phone($post['telephone_2'], 11))
+                    {
+                        $setting->set('tel1', $post['telephone_1']);
+                        $setting->set('tel2', $post['telephone_2']);
+
+                        $data = array_merge($data, $post);
+                        $success = 'Номер(а) изменены.';
+                    }
+                    else
+                    {
+                        $data = array_merge($data, $post);
+                        $error = 'Введите оба телефона правильно';
+                    }
+
+                break;
 
                 case 'email' :
-                    $errors = array('error' => 'Email');
-                    break;
+
+                    if (Valid::email($post['email']))
+                    {
+                        $setting->set('email', $post['email']);
+
+                        $data = array_merge($data, $post);
+                        $success = 'Email изменен.';
+                    }
+                    else
+                    {
+                        $data = array_merge($data, $post);
+                        $error = 'Введите email правильно';
+                    }
+
+                break;
 
                 case 'general' :
-                    $errors = array('error' => 'general');
-                    break;
+
+                    $setting->set('title', $post['title']);
+                    $setting->set('address', $post['address']);
+
+                    $data = array_merge($data, $post);
+                    $success = 'Основные данные изменены.';
+
+                break;
             }
         }
 
-        $this->template->content = View::factory('admin/settings/index', compact('data', 'errors'));
+        $this->template->content = View::factory('admin/settings/index', compact('data', 'error', 'success'));
     }
 
     public function action_smtp()
@@ -44,7 +85,8 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             $data= $this->request->post();
             unset($data['csrf']);
             $values = array_filter($data);
-            if (!empty($values)) {
+            if (!empty($values))
+            {
                 $validate = Validation::factory(Arr::map('trim', $data));
                 $validate->labels(array(
                     'server' => 'Поле "сервер"',
@@ -57,10 +99,14 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     ->rule('port', 'min_length', array(':value', 1))
                     ->rule('port', 'max_length', array(':value', 65536))
                     ->rule('email', 'email');
-                if ($validate->check()) {
+
+                if ($validate->check())
+                {
                     Model::factory('Settings')->set('smtp', serialize($data));
                     HTTP::redirect(Request::initial()->uri());
-                } else {
+                }
+                else
+                {
                     $errors = $validate->errors('validation');
                 }
             } else {

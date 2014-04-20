@@ -5,28 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="<?=$title?>">
 
-    <?=HTML::style('global/css/bstrap.html5b.fawesome.min.css')?>
-    <?=HTML::style('main/css/validation.css')?>
-    <?=HTML::style('global/css/pageslide.css')?>
-    <?=HTML::style('global/css/twitter.css')?>
-    <?=HTML::style('global/css/datepicker.css')?>
-    <?=HTML::style('main/css/main.css')?>
+    <script src="<?=URL::site('public/global/js/headjs.min.js')?>"></script>
+    <script type="text/javascript">
+        head.load("<?=implode('","', $styles)?>");
+    </script>
 
     <?=HTML::script('global/js/jquery.min.js')?>
-    <?=HTML::script('global/js/jquery-ui.min.js')?>
-    <?=HTML::script('global/js/bootstrap.min.js')?>
-    <?=HTML::script('main/js/stylizationForm.js')?>
-    <?=HTML::script('global/js/placeholder.js')?>
-    <?=HTML::script('global/js/notification.js')?>
-    <?=HTML::script('main/js/jquery.pageslide.js')?>
-    <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
-    <?=HTML::script('global/js/general_fns.js')?>
-    <?=HTML::script('main/js/main.js')?>
-    <?=HTML::script('global/js/global.js')?>
-
 
     <!--[if IE]>
-        <script src="public/global/js/html5shiv.js"></script>
+        <script async src="public/global/js/html5shiv.js"></script>
     <![endif]-->
 </head>
 <body>
@@ -37,5 +24,17 @@
 </div>
 <?=$footer.PHP_EOL?>
 
+
+
+<?=HTML::script('global/js/jquery-ui.min.js')?>
+<?=HTML::script('global/js/bootstrap.min.js')?>
+<?=HTML::script('main/js/stylizationForm.js')?>
+<?=HTML::script('global/js/placeholder.js')?>
+<?//=HTML::script('global/js/notification.js')?>
+<?=HTML::script('main/js/jquery.pageslide.js')?>
+<?=HTML::script('global/js/jquery.maskedinput.min.js')?>
+<?=HTML::script('global/js/general_fns.js')?>
+<?=HTML::script('main/js/main.js')?>
+<?=HTML::script('global/js/global.js')?>
 </body>
 </html>

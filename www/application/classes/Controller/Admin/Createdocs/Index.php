@@ -128,7 +128,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
             }
             else
             {
-                $errors = $valid->errors('register');
+                $errors = $valid->errors('register_admin');
                 $this->ajax_msg(array_shift($errors), 'error');
             }
 

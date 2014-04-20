@@ -9,7 +9,7 @@ $(function() {
         });
     });
 
-    $("#telephone_1, #telephone_2").mask("+7 (999) 999 99 99");
+    //$("#telephone_1, #telephone_2").mask("8 (999) 999 99 99");
 
 
 });

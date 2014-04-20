@@ -16,6 +16,7 @@ class HTML extends Kohana_HTML
             $file = URL::site('public/'.$file, $protocol, $index);
 
         $attributes['src'] = $file;
+        $attributes['defer'] = '';
         return '<script'.HTML::attributes($attributes).'></script>';
     }
 

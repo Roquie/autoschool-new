@@ -2,6 +2,21 @@
 RewriteEngine On
 
 
+##
+<IfModule mod_headers.c>
+    Header unset ETag
+    # clickjacking off
+    Header set X-Frame-Options: "sameorigin"
+    # MIME-sniffing
+    Header set X-Content-Type-Options: "nosniff"
+    # ...
+    Header set X-XSS-Protection: "1; mode=block"
+    Header set X-WebKit-CSP: "default-src 'self'"
+    Header set X-Permitted-Cross-Domain-Policies: "master-only"
+    Header set strict-transport-security: "max-age=31536000; includeSubDomains"
+</IfModule>
+
+
 # Installation directory
 RewriteBase /
 
@@ -21,19 +36,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Rewrite all other URLs to index.php/URL
 RewriteRule .* index.php/$0 [PT]
 
-##
-<IfModule mod_headers.c>
-    Header unset ETag
-    # clickjacking off
-    Header set X-Frame-Options: "sameorigin"
-    # MIME-sniffing
-    Header set X-Content-Type-Options: "nosniff"
-    # ...
-    Header set X-XSS-Protection: "1; mode=block"
-    Header set X-WebKit-CSP: "default-src 'self'"
-    Header set X-Permitted-Cross-Domain-Policies: "master-only"
-    Header set strict-transport-security: "max-age=31536000; includeSubDomains"
-</IfModule>
 
 
 # Apache Server Configs v2.3.0 | MIT License

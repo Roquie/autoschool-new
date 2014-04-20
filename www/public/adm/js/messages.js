@@ -1,6 +1,4 @@
-/**
- * Created by mac on 19.04.14.
- */
+
 $(function() {
 
     $('#select2').on('change', function() {

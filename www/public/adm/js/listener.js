@@ -39,25 +39,29 @@ $(function() {
             },
             dataType : 'json',
             beforeSend : function() {
-                listeners.find('.loader').remove();
-                $this.parent().append('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
+                if (typeof fn_before == 'function')
+                    fn_before();
+                else
+                {
+                    listeners.find('.loader').remove();
+                    $this.parent().append('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
 
-                f_statement.find('input,select').each(function() {
-                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
-                        if ($(this).attr('type') == 'checkbox')
-                            $(this).prop("checked", false);
-                        else
-                            $(this).val('');
-                });
+                    f_statement.find('input,select').each(function() {
+                        if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                            if ($(this).attr('type') == 'checkbox')
+                                $(this).prop("checked", false);
+                            else
+                                $(this).val('');
+                    });
 
-                f_contract.find('input,select').each(function() {
-                    if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
-                        if ($(this).attr('type') == 'checkbox')
-                            $(this).prop("checked", false);
-                        else
-                            $(this).val('');
-                });
-
+                    f_contract.find('input,select').each(function() {
+                        if ($(this).attr('type') != 'submit' && $(this).attr('type') != 'hidden')
+                            if ($(this).attr('type') == 'checkbox')
+                                $(this).prop("checked", false);
+                            else
+                                $(this).val('');
+                    });
+                }
             },
             success : function(response) {
                 fn_callback(response, $this, f_statement, f_contract, listeners);
@@ -87,7 +91,8 @@ $(function() {
             block = $('#listeners'),
             f_statement = $('#statement'),
             f_contract = $('#contract'),
-            active_checkbox = $('#listeners').find('input:checkbox:checked').val();
+            active_checkbox = $('#listeners').find('input:checkbox:checked').val(),
+            checkbox = null;
 
         $.ajax({
             type : 'POST',
@@ -98,7 +103,7 @@ $(function() {
             },
             dataType : 'json',
             beforeSend : function() {
-                un_message();
+                //un_message();
                 block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
 
                 f_statement.find('input,select').each(function() {
@@ -119,11 +124,11 @@ $(function() {
                         block.html('<div class="text-center">Слушателей нет</div>');
                     } else {
                         block.html(response.data);
-                        //FIX Javascript “Cannot read property 'length' of undefined” when checking a variable's length
-                        if (active_checkbox)
+                        checkbox = $('#listeners').find('input:checkbox[value="'+active_checkbox+'"]');
+                        if (checkbox.length == 0)
                             $('#listeners').find('input:checkbox').first().trigger('click');
                         else
-                            $('#listeners').find('input:checkbox[value="'+active_checkbox+'"]').trigger('click');
+                        checkbox.trigger('click');
                     }
                 }
                 if (response.status == 'error')

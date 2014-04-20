@@ -173,9 +173,33 @@ $(function() {
 
             $('.is_individual').val($this.is(':checked') ? 0 : 1);
 
-            un_message();
+            $.ajax({
+                type : 'POST',
+                url  : form.attr('action'),
+                data : form.serialize(),
+                dataType : 'json',
+                beforeSend : function() {
+                    un_message();
+                },
+                success : function(response) {
+                    if (response.status == 'success' || response.status == 'error')
+                    {
+                        message($('.container'), response.msg, response.status);
+                    }
+                    if (response.status == 'success')
+                        $('#listeners').find('input:checkbox:checked').prop('checked', false).trigger('click');
+                },
+                error : function(request) {
+                    if (request.status == '200') {
+                        console.log('Исключение: ' + request.responseText);
+                    } else {
+                        console.log(request.status + ' ' + request.statusText);
+                    }
+                }
 
-            $.post(
+            });
+
+/*            $.post(
                 form.attr('action'),
                 form.serialize(),
                 function(response) {
@@ -187,7 +211,7 @@ $(function() {
                         $('#listeners').find('input:checkbox:checked').prop('checked', false).trigger('click');
                 },
                 'json'
-            );
+            );*/
         });
 
 });

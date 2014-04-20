@@ -48,7 +48,6 @@ class Model_Listeners extends ORM
 		'mark_to' => array('data_type' => 'string', 'is_nullable' => true),
 		'mark_pdd' => array('data_type' => 'string', 'is_nullable' => true),
 		'mark_drive' => array('data_type' => 'string', 'is_nullable' => true),
-        'is_individual' => array('data_type' => 'int', 'is_nullable' => true),
 	);
 
 
@@ -79,6 +78,13 @@ class Model_Listeners extends ORM
         'indy' => array(
             'model' => 'Individual',
             'foreign_key' => 'listener_id',
+        ),
+    );
+
+    protected $_has_many = array(
+        'msg' => array(
+            'model' => 'Messages',
+            'foreign_key' => 'listener_id'
         )
     );
 

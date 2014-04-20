@@ -48,14 +48,23 @@ class Controller_Admin_Messages extends Controller_Admin_Base
 
     public function action_get_messages()
     {
-        $post = $this->request->post();
-        $m = new Model_Messages();
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
 
-        $messages = $m->getMessage($post['user_id']);
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $id = $this->request->post('user_id');
 
-        $this->ajax_data(
-            View::factory('admin/html/listeners', compact('messages'))->render()
-        );
+            $listener = ORM::factory('Listeners', $id);
+
+            $messages = $listener->msg->find_all();
+
+            $admin_avatar = Kohana::$config->load('settings.admin_avatar');
+
+            $this->ajax_data(
+                View::factory('admin/html/message', compact('messages', 'listener' ,'admin_avatar'))->render()
+            );
+        }
 
     }
 

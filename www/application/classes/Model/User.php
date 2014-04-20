@@ -21,10 +21,6 @@ class Model_User extends Model_Auth_User
             'model' => 'Administrators',
             'foreign_key' => 'user_id',
         ),
-        'msg' => array(
-            'model' => 'Messages',
-            'foreign_key' => 'user_id',
-        ),
         'listener' => array(
             'model' => 'Listeners',
             'foreign_key' => 'user_id',

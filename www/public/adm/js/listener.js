@@ -103,7 +103,7 @@ $(function() {
             },
             dataType : 'json',
             beforeSend : function() {
-                un_message();
+                //un_message();
                 block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
 
                 f_statement.find('input,select').each(function() {

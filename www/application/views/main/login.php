@@ -16,13 +16,13 @@
                             <div class="control-group">
                                 <label class="control-label"  for="username">Email</label>
                                 <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large">
+                                    <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large" autocomplete="off">
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label" for="password">Пароль</label>
                                 <div class="controls">
-                                    <input type="password" id="password" name="password" placeholder="************" class="input-large">
+                                    <input type="password" id="password" name="password" placeholder="************" class="input-large" autocomplete="off">
                                 </div>
                             </div>
                             <div class="control-group">

@@ -116,13 +116,20 @@ class Controller_Users extends Controller_Main_Base
     public function action_register()
     {
         $a = Auth::instance();
-        $post = $this->request->post();
 
-        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        $csrf = $this->request->post('csrf');
+
+        //fix xss
+        $post = Arr::map('Security::xss_clean',
+            Arr::map('trim', $this->request->post())
+        );
+
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $newpass = Text::random();
 
-            $valid = new Validation(Arr::map('trim', $post));
+            $valid = new Validation($post);
             $valid->rule('famil', 'not_empty');
             $valid->rule('famil', 'alpha', array(':value', true));
             $valid->rule('famil', 'min_length', array(':value', 2));

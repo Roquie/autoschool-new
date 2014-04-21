@@ -20,7 +20,7 @@
                     <div class="control-group">
                         <label class="control-label"  for="username">Email</label>
                         <div class="controls">
-                            <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large">
+                            <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large" autocomplete="off">
                             <p class="help-block forgot-info" style="margin-top: 0; font-size: 8pt">новый пароль вышлем вам на почту</p>
                         </div>
                     </div>

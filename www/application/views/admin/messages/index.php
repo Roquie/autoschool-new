@@ -29,16 +29,17 @@
         <div class="span9 l_sort">
             <div class="well">
                 <h5 class="header_block">Отправить сообщение слушателю</h5>
-                <form class="form-horizontal" action="#" method="post" accept-charset="utf-8" novalidate>
+                <form class="form-horizontal" action="<?=URL::site('admin/messages/add_message')?>" id="send" method="post" accept-charset="utf-8" novalidate>
                     <div class="row">
                         <div class="span1">
                            <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2); height: 60px; width: 60px" class="img-circle" src="<?=URL::site('public/img/admin/admin_avatar.png')?>" alt="admin_logo"/>
                         </div>
                         <div class="span7">
-                            <textarea name="msg" id="admin_msg" style="height: 65px; resize: none" class="input-block-level" placeholder="Введите сообщение"></textarea>
-                            <input type="hidden" name="user_id" id="user_id"/>
+                            <textarea name="message" id="admin_msg" style="height: 65px; resize: none" class="input-block-level" placeholder="Введите сообщение"></textarea>
+                            <input type="hidden" name="listener_id" class="user_id"/>
                             <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                            <input style="margin-top: 12px" type="submit" class="btn btn-success" name="submit"/>
+                            <button type="submit" style="margin-top: 12px" class="btn btn-success">Отправить</button>
+                            <!--<input style="margin-top: 12px" type="submit" class="btn btn-success" name="submit"/>-->
                         </div>
                     </div>
                 </form>

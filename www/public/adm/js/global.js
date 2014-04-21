@@ -38,7 +38,7 @@ function un_message() {
 
 function wait(btn)
 {
-    btn.html(btn.text() + '&nbsp;<i class="icon-refresh icon-spin"></i>').prop('disabled', true);
+    btn.html('<i class="icon-refresh icon-spin"></i> ' + btn.text()).prop('disabled', true);
 }
 
 function after_wait(btn)

@@ -278,4 +278,17 @@ class Model_Listeners extends ORM
         );
     }
 
+    public function getMessage($offset = 1, $limit = 10)
+    {
+        $start = ($offset - 1) * $limit;
+
+        $messages = $this->msg
+            ->order_by('id', 'DESC')
+            ->limit($limit)
+            ->offset($start)
+            ->find_all();
+
+        return $messages;
+    }
+
 }

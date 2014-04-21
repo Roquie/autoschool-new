@@ -57,12 +57,46 @@ class Controller_Admin_Messages extends Controller_Admin_Base
 
             $listener = ORM::factory('Listeners', $id);
 
-            $messages = $listener->msg->find_all();
+            $messages = $listener->getMessage();
 
             $admin_avatar = Kohana::$config->load('settings.admin_avatar');
 
             $this->ajax_data(
-                View::factory('admin/html/message', compact('messages', 'listener' ,'admin_avatar'))->render()
+                View::factory('admin/html/messages', compact('messages', 'listener' ,'admin_avatar'))->render()
+            );
+        }
+
+    }
+
+    public function action_add_message()
+    {
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
+
+
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+
+            unset($post['csrf']);
+
+            try
+            {
+                ORM::factory('Messages')->values($post)->create();
+            }
+            catch(ORM_Validation_Exception $e)
+            {
+                $errors = $e->errors('validation');
+
+                $this->ajax_msg(array_shift($errors), 'error');
+            }
+
+            $admin_avatar = Kohana::$config->load('settings.admin_avatar');
+
+            $this->ajax_data(
+                View::factory('admin/html/message', compact('post', 'admin_avatar'))->render(),
+                'Сообщение отправлено'
             );
         }
 

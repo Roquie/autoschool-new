@@ -11,7 +11,7 @@ class Model_Messages extends ORM
         'listener_id' => array('data_type' => 'int', 'is_nullable' => false),
         'message' => array('data_type' => 'string', 'is_nullable' => false),
         'admin' => array('data_type' => 'int', 'is_nullable' => true),
-        'datetime' => array('data_type' => 'string', 'is_nullable' => false),
+        'datetime' => array('data_type' => 'string', 'is_nullable' => true),
     );
 
     public function rules()

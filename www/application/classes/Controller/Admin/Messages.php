@@ -75,8 +75,6 @@ class Controller_Admin_Messages extends Controller_Admin_Base
         $this->auto_render = false;
         $csrf = $this->request->post('csrf');
 
-
-
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $post = $this->request->post();

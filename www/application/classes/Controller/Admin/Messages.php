@@ -25,7 +25,7 @@ class Controller_Admin_Messages extends Controller_Admin_Base
 
     public function action_index()
     {
-        $list_users = Model::factory('User')->get_user_list(false);
+        $list_users = Model::factory('User')->get_user_list(false, true);
         $list_groups = Model::factory('Groups')->find_all();
 
         $this->template->content = View::factory('admin/messages/index', compact('list_users', 'list_groups'));
@@ -59,10 +59,12 @@ class Controller_Admin_Messages extends Controller_Admin_Base
 
             $messages = $listener->getMessage();
 
+            $profile = false;
+
             $admin_avatar = Kohana::$config->load('settings.admin_avatar');
 
             $this->ajax_data(
-                View::factory('admin/html/messages', compact('messages', 'listener' ,'admin_avatar'))->render()
+                View::factory('admin/html/messages', compact('messages', 'listener' , 'profile', 'admin_avatar'))->render()
             );
         }
 

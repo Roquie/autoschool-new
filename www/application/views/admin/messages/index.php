@@ -1,7 +1,8 @@
 <?=HTML::style('adm/css/listeners.css')?>
-<?=HTML::style('adm/css/messages.css')?>
+<?=HTML::style('global/css/messages.css')?>
 <?=HTML::script('adm/js/listener.js')?>
-<?=HTML::script('adm/js/messages.js')?>
+<?=HTML::script('adm/js/help.js')?>
+<?=HTML::script('global/js/messages.js')?>
 
 <div class="container">
 

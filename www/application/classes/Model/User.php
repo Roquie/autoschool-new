@@ -74,11 +74,14 @@ class Model_User extends Model_Auth_User
      * @param bool $no_approved
      * @return array
      */
-    public function get_user_list($no_approved = true)
+    public function get_user_list($no_approved = true, $all = false)
     {
         $no_approved ? $condition = '<' : $condition = '=';
 
-        $users = ORM::factory('Listeners')->where('status', $condition, 3)->find_all();
+        if ($all)
+            $users = ORM::factory('Listeners')->find_all();
+        else
+            $users = ORM::factory('Listeners')->where('status', $condition, 3)->find_all();
 
         return $this->_filter_user_list($users);
     }

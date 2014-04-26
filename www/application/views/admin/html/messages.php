@@ -1,14 +1,14 @@
 <? if ($messages->count()) : ?>
         <? foreach($messages as $line) : ?>
             <? $datetime = strtotime($line->datetime); ?>
-            <li class="<?=(!$line->admin) ? 'left' : 'right'?> clearfix">
-            <span class="chat-img <?=(!$line->admin) ? 'pull-left' : 'pull-right'?>">
-                <?=HTML::image((!$line->admin) ? $listener->user->photo : $admin_avatar, array('class' => 'img-circle'))?>
-            </span>
+            <li class="<?=($profile) ? ((!$line->admin) ? 'right' : 'left') : ((!$line->admin) ? 'left' : 'right')?> clearfix">
+                <span class="chat-img <?=($profile) ? (($line->admin) ? 'pull-left' : 'pull-right') : ((!$line->admin) ? 'pull-left' : 'pull-right')?>">
+                    <?=HTML::image((!$line->admin) ? $listener->user->photo : $admin_avatar, array('class' => 'img-circle', 'style' => 'box-shadow: 0 1px 1px rgba(0,0,0,0.2);'))?>
+                </span>
                 <div class="chat-body clearfix">
                     <div class="header">
-                        <strong class="<?=(!$line->admin) ? null : 'pull-right'?>"><?=(!$line->admin) ? $listener->famil . ' '.$listener->imya : 'Администратор'?></strong>
-                        <small class="<?=($line->admin) ? null : 'pull-right'?> muted"><span class="icon-time"></span> <?=date('d.m.Y H:i:s', $datetime)?></small>
+                        <strong class="<?=($profile) ? (($line->admin) ? null : 'pull-right') : ((!$line->admin) ? null : 'pull-right')?>"><?=(!$line->admin) ? $listener->famil . ' '.$listener->imya : 'Администратор'?></strong>
+                        <small class="<?=($profile) ? ((!$line->admin) ? null : 'pull-right') : (($line->admin) ? null : 'pull-right')?> muted"><span class="icon-time"></span> <?=date('d.m.Y H:i:s', $datetime)?></small>
                     </div>
                     <p>
                         <?=$line->message?>

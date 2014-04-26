@@ -197,12 +197,54 @@ class Controller_Profile_Index extends Controller_Profile_Base
     public function action_help()
     {
         $a = Auth::instance();
-        $m = new Model_Messages();
+        $user = $a->get_user();
 
-        $messages = $m->getMessage($a->get_user()->id);
+        $listener = $user->listener;
+
+        $messages = $listener->getMessage();
+
+        $profile = true;
+
         $admin_avatar = Kohana::$config->load('settings.admin_avatar');
 
-        $this->_profile->content = View::factory('profile/pages/help', compact('messages', 'admin_avatar'));
+        $this->_profile->content = View::factory('profile/pages/help', compact('messages', 'user', 'listener', 'admin_avatar', 'profile'));
+    }
+
+    public function action_add_message()
+    {
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
+
+
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+
+            unset($post['csrf']);
+
+            $a = Auth::instance();
+            $user = $a->get_user();
+
+            $post['admin'] = 0;
+            $post['listener_id'] = $user->listener->id;
+
+            try
+            {
+                ORM::factory('Messages')->values($post)->create();
+            }
+            catch(ORM_Validation_Exception $e)
+            {
+                $errors = $e->errors('validation');
+
+                $this->ajax_msg(array_shift($errors), 'error');
+            }
+
+            $this->ajax_data(
+                View::factory('admin/html/message', compact('post', 'user'))->render(),
+                'Сообщение отправлено'
+            );
+        }
     }
 
     public function action_settings()

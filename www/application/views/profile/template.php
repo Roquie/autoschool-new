@@ -1,9 +1,9 @@
 <?=HTML::style('profile/css/lk.css')?>
-<?=HTML::style('profile/css/chat.css')?>
 <?=HTML::style('profile/css/lk_statement.css')?>
 
 
-<div class="container" style="margin-top: 110px;">
+<div class="container above_profile" style="margin-top: 110px;">
+
     <?if (Auth::instance()->get_user()->logins == 1):?>
         <div class="row">
             <div class="span12 reg">
@@ -17,13 +17,17 @@
         <!--ой, не хорошо так делать-->
         <?ORM::factory('User', Auth::instance()->get_user()->id)->set('logins', 2)->update()?>
     <?endif?>
+
     <div class="lk">
+
         <div class="row">
+
             <div class="imgprofile">
                 <div class="profile">
                     <?=HTML::image($user['photo'], array('width' => '180px', 'height' => '180px'))?>
                 </div>
             </div>
+
             <div class="span12 back1">
                 <div class="row">
                     <div class="span9 pull-right">
@@ -46,12 +50,12 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="row">
             <?=$content?>
         </div>
-
 
     </div>
 

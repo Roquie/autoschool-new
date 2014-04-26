@@ -53,7 +53,7 @@ class Controller_Api_V1 extends Controller
         );
     }
 
-    public function action_data_ok()
+    public function action_missed_data_ok()
     {
         if (file_exists($this->_file))
         {

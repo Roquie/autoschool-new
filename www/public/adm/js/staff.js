@@ -13,7 +13,26 @@ $(function()
 
     var list_staff = $('#staffs'),
         f_staff = $('#staff'),
-        create_staff =  $('#create_staff');
+        create_staff =  $('#create_staff'),
+        cnt_select = 1;
+
+
+    $('body').on('click', '.add_office', function(e) {
+        e.preventDefault();
+
+        if (cnt_select  > 5)
+            return false;
+
+        cnt_select++;
+
+        var block = $(this).closest('.control-group'),
+            span = block.find('.block_office').first().clone(),
+            select = span.find('select');
+
+        select.after('<span class="help-inline"><i class="icon-remove"></i></span>');
+
+        block.append(span);
+    });
 
 
 

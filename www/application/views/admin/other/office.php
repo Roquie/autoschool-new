@@ -2,7 +2,7 @@
     <div class="span4">
         <div class="well">
             <h5 class="header_block">Добавить </h5>
-            <p class="awesome_text">Эта "должность" будет отображено при заполнении данных слушателя</p>
+            <p class="awesome_text">Эта "должность" будет отображена при заполнении данных сотрудника</p>
             <form  action="<?=URL::site('admin/other/office')?>" method="post" accept-charset="utf-8" novalidate>
                 <!--<label for="office_add">Введите наименование</label>-->
                 <input id="office_add" type="text" name="name" style="width: 94%"/>

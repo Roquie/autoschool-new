@@ -70,13 +70,17 @@
                                     </select>
                                 </div>
                                 <div class="span4">
-                                    <label>Должность</label>
-                                    <select name="office_staff_id" class="span4">
-                                        <option> --- </option>
-                                        <?foreach($positions as $item):?>
-                                            <option value="<?=$item->id?>"><?=$item->name?></option>
-                                        <?endforeach?>
-                                    </select>
+                                    <div class="control-group">
+                                        <label>Должность<span class="help-inline"><a href="#" class="add_office">Добавить должность</a></span></label>
+                                        <span class="block_office">
+                                            <select name="office_staff_id" class="span4">
+                                                <option> --- </option>
+                                                <?foreach($positions as $item):?>
+                                                    <option value="<?=$item->id?>"><?=$item->name?></option>
+                                                <?endforeach?>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

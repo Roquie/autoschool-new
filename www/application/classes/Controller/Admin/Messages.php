@@ -80,6 +80,10 @@ class Controller_Admin_Messages extends Controller_Admin_Base
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $post = $this->request->post();
+            //fix xss
+            $post = Arr::map('Security::xss_clean',
+                Arr::map('trim', $this->request->post())
+            );
 
             unset($post['csrf']);
 

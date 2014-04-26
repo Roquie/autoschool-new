@@ -11,20 +11,26 @@ class Controller_Api_V1 extends Controller
     {
         parent::before();
 
-        $this->_file = APPPATH.'download/xml/missed_requests.xml';
+        $settings = new Model_Settings();
+        $remote_addr = $settings->get('sync_remote_addr');
 
-        $this->_xml = new SimpleXMLElement("<xml version=\"1.0\" encoding=\"utf-8\"/>");
-
-        if (!Kohana::$config->load('settings.sync'))
+        if (!$settings->get('sync') && !$remote_addr)
         {
-            //|| !$remote_addr = Kohana::$config->load('settings.sync_remote_addr')
-           /* if ($_SERVER['REMOTE_ADDR'] !== $remote_addr)
-            {
-                throw new HTTP_Exception_404();
-            }*/
-
-             $this->_response('error', 'sync off');
+            throw new HTTP_Exception_404();
         }
+        else
+        {
+            if ($remote_addr)
+            {
+                if ($_SERVER['REMOTE_ADDR'] !== $remote_addr)
+                {
+                    throw new HTTP_Exception_404();
+                }
+            }
+        }
+
+        $this->_file = APPPATH.'download/xml/missed_requests.xml';
+        $this->_xml = new SimpleXMLElement("<xml version=\"1.0\" encoding=\"utf-8\"/>");
     }
 
 /*    public function action_test_me()

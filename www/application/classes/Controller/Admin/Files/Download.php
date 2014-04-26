@@ -14,6 +14,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_statement',
             'create_contract',
             'create_ticket',
+            'create_personal_card',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -21,44 +22,20 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             if(Request::initial() === Request::current())
                 throw new HTTP_Exception_404();
         }
+        else
+        {
+            $response = Request::factory('admin/files/download/create_'.$this->request->action())
+                ->execute();
+
+            $file = json_decode($response)->file;
+
+            $this->response->send_file(
+                APPPATH.'download/'.$file, null, array('delete' => true)
+            );
+        }
 
     }
 
-    public function action_statement()
-    {
-        $response = Request::factory('admin/files/download/create_statement')
-            ->execute();
-
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
-    }
-
-    public function action_contract()
-    {
-        $response = Request::factory('admin/files/download/create_contract')
-            ->execute();
-
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
-    }
-
-    public function action_ticket()
-    {
-        $response = Request::factory('admin/files/download/create_ticket')
-            ->execute();
-
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
-    }
 
     public function action_create_ticket()
     {
@@ -219,8 +196,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_statement()
     {
-        $this->auto_render = false;
-
         $id = Session::instance()->get('checked_user');
         
         if (!empty($id))
@@ -280,6 +255,56 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             );
         }
         
+    }
+
+    public function action_create_personal_card()
+    {
+        $id = Session::instance()->get('checked_user');
+
+        if (!empty($id))
+        {
+            $user = new Model_User($id);
+
+            $listener = $user->listener;
+
+            $nat = new Model_Nationality($listener->nationality_id);
+            $edu = new Model_Education($listener->education_id);
+
+
+            $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
+
+            $document = new TemplateDocx(APPPATH.'templates/personal_card/personal_card.docx');
+
+
+            $document->setValueArray(
+                array(
+                     'LastName' => $listener->famil,
+                     'FirstName' => $listener->imya,
+                     'DaddyName' => $listener->otch,
+                     'GroupNumber' => $listener->group->name,
+                     'LessonStart' => date('d.m.Y', strtotime($listener->group->data_start)),
+                     'LessonEnd' => date('d.m.Y', strtotime($listener->group->data_end)),
+                     'MarkaTS' => $listener->staff->transport->name,
+                     'GosNumber' => $listener->staff->transport->reg_number,
+                     'StaffInstructor' => Text::format_name($listener->staff->famil, $listener->staff->imya, $listener->staff->otch),
+                     'DriveCategory' => '«'.$listener->group->category->name.'»',
+                     'DATE' => date('Y'),
+                )
+            );
+
+            $file = 'temp/'.
+                Text::translit($listener->famil).'_'.
+                Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
+                'zayavlenie_'.date('d_m_Y_H_i_s').'.docx';
+
+            $document->save(APPPATH.'download/'.$file);
+            unset($document);
+
+            $this->response->body(
+                json_encode(array('file' => $file))
+            );
+        }
     }
 
 

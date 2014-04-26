@@ -1,7 +1,7 @@
 # Turn on URL rewriting
 RewriteEngine On
 
-
+AddDefaultCharset UTF-8
 # Installation directory
 RewriteBase /
 

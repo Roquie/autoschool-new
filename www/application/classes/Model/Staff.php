@@ -42,6 +42,11 @@ class Model_Staff extends ORM
             'model' => 'Staff_group',
             'foreign_key' => 'staff_id',
         ),
+
+        'transport' => array(
+            'model' => 'Transport',
+            'foreign_key' => 'staff_id',
+        ),
     );
 
     protected $_has_many = array(

@@ -17,9 +17,9 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
 
             try
             {
-                ORM::factory('Nationality')
-                    ->values($post)
-                    ->create();
+                $query = ORM::factory('Nationality')
+                            ->values($post)
+                            ->create();
 
                 HTTP::redirect('/admin/other/national');
             }

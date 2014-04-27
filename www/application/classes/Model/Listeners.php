@@ -72,12 +72,18 @@ class Model_Listeners extends ORM
             'model' => 'Staff',
             'foreign_key' => 'staff_id',
         ),
+
     );
 
     protected $_has_one = array(
         'indy' => array(
             'model' => 'Individual',
             'foreign_key' => 'listener_id',
+        ),
+
+        'transport' => array(
+            'model' => 'Transport',
+            'foreign_key' => 'staff_id',
         ),
     );
 

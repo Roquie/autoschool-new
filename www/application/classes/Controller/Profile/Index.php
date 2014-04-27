@@ -220,6 +220,10 @@ class Controller_Profile_Index extends Controller_Profile_Base
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)
         {
             $post = $this->request->post();
+            //fix xss
+            $post = Arr::map('Security::xss_clean',
+                Arr::map('trim', $this->request->post())
+            );
 
             unset($post['csrf']);
 

@@ -3,6 +3,63 @@
 class Controller_Admin_Settings extends Controller_Admin_Base
 {
 
+    public function action_sync()
+    {
+        $setting = new Model_Settings();
+
+        $data = array(
+            'ip_access' => $setting->get('sync_remote_addr'),
+        );
+
+        $post = $this->request->post();
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        {
+            switch ($post['type'])
+            {
+                case 'on_off':
+                    $setting->set('sync', (bool)$post['on_off']);
+
+                    $data = array_merge($data, $post);
+
+                    if ((bool)$post['on_off'])
+                        $success = 'Синхронизация включена';
+                    else
+                        $success = 'Синхронизация отключена';
+
+                break;
+
+                case 'ip_edit':
+                    if (!Valid::not_empty($post['ip_access']))
+                    {
+                        $setting->set('sync_remote_addr', null);
+
+                        $data = array_merge($data, $post);
+                        $success = 'Доступ к скриптам разрешен для всех хостов';
+                    }
+                    else
+                    {
+                        if (Valid::ip($post['ip_access'], 11))
+                        {
+                            $setting->set('sync_remote_addr', $post['ip_access']);
+
+                            $data = array_merge($data, $post);
+                            $success = 'IP изменен.';
+                        }
+                        else
+                        {
+                            $data = array_merge($data, $post);
+                            $error = 'Введите IP правильно';
+                        }
+                    }
+
+                break;
+            }
+
+        }
+
+        $this->template->content = View::factory('admin/settings/sync', compact('data', 'error', 'success'));
+    }
+
     public function action_index()
     {
         $setting = new Model_Settings();

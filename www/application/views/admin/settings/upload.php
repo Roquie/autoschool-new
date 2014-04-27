@@ -11,6 +11,7 @@
             <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
             <li class="active"><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
             <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
+            <li><a href="<?=URL::site('admin/settings/sync')?>">Синхронизация</a></li>
         </ul>
         <div class="tab-content">
             <!--вкладка Главная страница-->

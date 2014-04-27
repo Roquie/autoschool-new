@@ -14,8 +14,8 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
         $this->template->content = View::factory('admin/index', compact('list_users', 'list_groups', 'edu', 'national', 'type_doc'));
 	}
-	
-
 
 
 }
+
+

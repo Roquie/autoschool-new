@@ -24,6 +24,13 @@ class Model_Groups extends ORM
         )
     );
 
+    protected $_has_many = array(
+        'listener' => array(
+            'model' => 'Listeners',
+            'foreign_key' => 'group_id',
+        )
+    );
+
     protected $_has_one = array(
         'staff_group' => array(
             'model' => 'Staff_group',

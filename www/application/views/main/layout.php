@@ -33,7 +33,6 @@
 <?//=HTML::script('global/js/notification.js')?>
 <?=HTML::script('main/js/jquery.pageslide.js')?>
 <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
-<?=HTML::script('main/js/jquery.fancybox.min.js')?>
 <?=HTML::script('global/js/general_fns.js')?>
 <?=HTML::script('main/js/main.js')?>
 <?=HTML::script('global/js/global.js')?>

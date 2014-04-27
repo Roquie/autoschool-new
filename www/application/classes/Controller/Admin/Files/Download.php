@@ -14,6 +14,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_statement',
             'create_contract',
             'create_ticket',
+            'create_personal_card',
+            'create_pay_doc',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -21,43 +23,18 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             if(Request::initial() === Request::current())
                 throw new HTTP_Exception_404();
         }
+        else
+        {
+            $response = Request::factory('admin/files/download/create_'.$this->request->action())
+                ->execute();
 
-    }
+            $file = json_decode($response)->file;
 
-    public function action_statement()
-    {
-        $response = Request::factory('admin/files/download/create_statement')
-            ->execute();
+            $this->response->send_file(
+                APPPATH.'download/'.$file, null, array('delete' => true)
+            );
+        }
 
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
-    }
-
-    public function action_contract()
-    {
-        $response = Request::factory('admin/files/download/create_contract')
-            ->execute();
-
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
-    }
-
-    public function action_ticket()
-    {
-        $response = Request::factory('admin/files/download/create_ticket')
-            ->execute();
-
-        $file = json_decode($response)->file;
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
     }
 
     public function action_create_ticket()
@@ -219,8 +196,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
     public function action_create_statement()
     {
-        $this->auto_render = false;
-
         $id = Session::instance()->get('checked_user');
         
         if (!empty($id))
@@ -282,6 +257,168 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         
     }
 
+    public function action_create_personal_card()
+    {
+        $id = Session::instance()->get('checked_user');
+
+        if (!empty($id))
+        {
+            $user = new Model_User($id);
+
+            $listener = $user->listener;
+
+            $nat = new Model_Nationality($listener->nationality_id);
+            $edu = new Model_Education($listener->education_id);
+
+
+            $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
+
+            $document = new TemplateDocx(APPPATH.'templates/personal_card/personal_card.docx');
+
+
+            $document->setValueArray(
+                array(
+                     'LastName' => $listener->famil,
+                     'FirstName' => $listener->imya,
+                     'DaddyName' => $listener->otch,
+                     'GroupNumber' => $listener->group->name,
+                     'LessonStart' => date('d.m.Y', strtotime($listener->group->data_start)),
+                     'LessonEnd' => date('d.m.Y', strtotime($listener->group->data_end)),
+                     'MarkaTS' => $listener->staff->transport->name,
+                     'GosNumber' => $listener->staff->transport->reg_number,
+                     'StaffInstructor' => Text::format_name($listener->staff->famil, $listener->staff->imya, $listener->staff->otch),
+                     'DriveCategory' => '«'.$listener->group->category->name.'»',
+                     'DATE' => date('Y'),
+                )
+            );
+
+            $file = 'temp/'.
+                Text::translit($listener->famil).'_'.
+                Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
+                Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
+                'zayavlenie_'.date('d_m_Y_H_i_s').'.docx';
+
+            $document->save(APPPATH.'download/'.$file);
+            unset($document);
+
+            $this->response->body(
+                json_encode(array('file' => $file))
+            );
+        }
+    }
+
+    public function action_create_pay_doc()
+    {
+        $id = Session::instance()->get('checked_user');
+
+        if (!empty($id))
+        {
+            $group = new Model_Groups(1);
+
+            $ws = new Spreadsheet(
+                array(
+                     'author'       => 'auto.mpt.ru/admin',
+                     'title'        => 'Список группы № '.$group->name,
+                ));
+
+            $ws->set_active_sheet(0);
+            $as = $ws->get_active_sheet();
+            $as->setTitle('Список группы № '.$group->name);
+
+            $as->mergeCells('A1:G1');
+            $as->mergeCells('A2:D2');
+            $as->setCellValue('A1', 'Список группы № '.$group->name);
+            $as->getStyle("A1:G1")->getFont()->setSize(24);
+            $as->getStyle("A1:G1")->getFont()->setBold(true);
+            $as->getStyle("A1:G1")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $as->getStyle("A1:G1")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            $as->getStyle("A3:G3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $as->getStyle("A3:G3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+            $as->getStyle("A3:G3")->getFont()->setBold(true);
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                ),
+            );
+            $as->getStyle("A3:G3")->applyFromArray($styleArray);
+
+
+            $as->getColumnDimension('A')->setWidth(10);
+            $as->getRowDimension('1')->setRowHeight(40);
+            $as->getRowDimension('2')->setRowHeight(40);
+            $as->getRowDimension('3')->setRowHeight(30);
+
+            $as->getColumnDimension('B')->setWidth(40);
+            $as->getColumnDimension('C')->setWidth(15);
+            $as->getColumnDimension('D')->setWidth(15);
+            $as->getColumnDimension('E')->setWidth(15);
+            $as->getColumnDimension('F')->setWidth(15);
+            $as->getColumnDimension('G')->setWidth(15);
+
+            $data[3] = array(
+                '№',
+                'Фамилия Имя Отчество',
+                'Паспорт',
+                'Фото',
+                'МЕД',
+                Date::rdate('M', strtotime($group->data_start)),
+                Date::rdate('M', strtotime(date('m', strtotime($group->data_start))+1))
+            );
+
+            $i = 0;
+            foreach ($group->listener->find_all() as $k => $value)
+            {
+                ++$i;
+                $data[$row = $k+4] = array(
+                    $i,
+                    $value->famil.' '.$value->imya.' '.$value->otch,
+                    '-',
+                    '-',
+                    '-',
+                    0,
+                    0
+                );
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                    ),
+                );
+
+                $and_formuls = $row + 4;
+                $as->getStyle('A'.$row.':G'.$row)->applyFromArray($styleArray);
+                $as->getStyle('A'.$row.':G'.$and_formuls)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $as->getStyle('A'.$row.':G'.$and_formuls)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+            }
+
+            $formula1 = "=SUM(F4:F$row)";
+            $formula2 = "=SUM(G4:G$row)";
+
+            $sum = $row + 3;
+            $total_formula = "=SUM(F$sum:G$sum)";
+            $total = $sum + 1;
+
+            $as->setCellValue('F'.$sum, $formula1);
+            $as->setCellValue('G'.$sum, $formula2);
+            $as->setCellValue('F'.$total, 'Итого:');
+            $as->setCellValue('G'.$total, $total_formula);
+
+
+            $ws->set_data($data, false);
+
+            $file = $ws->save(array('name' => 'pay_docs.list_group-'.$group->name, 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
+
+            $this->response->body(
+                json_encode(array('file' => 'temp/'.$file))
+            );
+
+        }
+    }
 
 
 

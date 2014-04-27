@@ -13,6 +13,8 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
             'statement',
             'contract',
             'ticket',
+            'personal_card',
+            'pay_doc',
         );
 
         if ($this->request->is_ajax() && in_array($this->request->action(), $access))

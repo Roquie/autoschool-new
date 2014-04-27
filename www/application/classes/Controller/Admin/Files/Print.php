@@ -13,6 +13,8 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
             'statement',
             'contract',
             'ticket',
+            'personal_card',
+            'pay_doc',
         );
 
         if (in_array($this->request->action(), $access))

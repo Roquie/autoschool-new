@@ -71,10 +71,10 @@ $(function() {
                 }
                 if (response.status == 'success') {
                     $this.before(response.data);
+                    var $container = $('.chat-block');
+                    $container[0].scrollTop = $container[0].scrollHeight;
                 }
-                $('.chat').animate({
-                    scrollTop: $('.chat').find('li').last().offset().top
-                }, 500);
+
                 after_wait($this);
             },
             error : function(request) {

@@ -130,6 +130,7 @@ Kohana::modules(array(
     'docxtemplate' => MODPATH.'docxtemplate',
     'transactional' => MODPATH.'transactional',
     'twitterapi' => MODPATH.'twitterapi',
+    'phpexcel' => MODPATH.'phpexcel',
 
 	));
 

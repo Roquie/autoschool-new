@@ -21,7 +21,7 @@
             </div>
             <div class="span7">
                 <textarea name="message" id="admin_msg" style="height: 65px; resize: none" class="input-block-level" placeholder="Введите сообщение"></textarea>
-                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                <input type="hidden" name="csrf" class="csrf" value="<?=Security::token()?>"/>
                 <button type="submit" style="margin-top: 12px" class="btn btn-success">Отправить</button>
                 <!--<input style="margin-top: 12px" type="submit" class="btn btn-success" name="submit"/>-->
             </div>

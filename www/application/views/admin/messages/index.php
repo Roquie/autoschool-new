@@ -38,7 +38,7 @@
                         <div class="span7">
                             <textarea name="message" id="admin_msg" style="height: 65px; resize: none" class="input-block-level" placeholder="Введите сообщение"></textarea>
                             <input type="hidden" name="listener_id" class="user_id"/>
-                            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                            <input type="hidden" name="csrf" class="csrf" value="<?=Security::token()?>"/>
                             <button type="submit" style="margin-top: 12px" class="btn btn-success">Отправить</button>
                             <!--<input style="margin-top: 12px" type="submit" class="btn btn-success" name="submit"/>-->
                         </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="span9 l_info">
             <input type="hidden" value="<?=Security::token()?>"/>
-            <div class="well" id="data" data-url="<?=Request::$current->url().'/get_messages'?>">
+            <div class="well" style="padding-right: 0" id="data" data-url="<?=Request::$current->url().'/get_messages'?>">
                 <h5 class="header_block">Переписка с <span class="current_listener"></span></h5>
                 <div class="chat-block">
                     <ul class="chat"></ul>

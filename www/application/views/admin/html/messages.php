@@ -17,7 +17,7 @@
             </li>
         <? endforeach; ?>
             <? if (count($messages) == 10) : ?>
-                <a href="#" class="btn span8 load" data-url="<?=URL::site('lk/ajax/load_message')?>">Загрузить предыдущие сообщения</a>
+                <a href="#" class="btn btn-info load" data-url="<?=($profile) ? URL::site('profile/load_message') : URL::site('admin/messages/load_message')?>" style="width: 96%">Загрузить предыдущие сообщения</a>
             <? endif;
     else : ?>
 

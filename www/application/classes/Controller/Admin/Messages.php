@@ -104,5 +104,37 @@ class Controller_Admin_Messages extends Controller_Admin_Base
 
     }
 
+    /**
+     * Заргузка сообщений пользователя
+     */
+    public function action_load_message()
+    {
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+
+
+            $id = $this->request->post('user_id');
+
+            $listener = ORM::factory('Listeners', $id);
+
+            $messages = $listener->getMessage($this->request->post('offset'));
+
+            if (!$messages->count())
+                $this->ajax_msg('', 'empty');
+
+
+            $profile = false;
+
+            $admin_avatar = Kohana::$config->load('settings.admin_avatar');
+
+            $this->ajax_data(
+                View::factory('admin/html/messages', compact('messages', 'listener' , 'profile', 'admin_avatar'))->render()
+            );
+        }
+    }
+
 
 }

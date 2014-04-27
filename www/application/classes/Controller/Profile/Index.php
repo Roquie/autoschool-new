@@ -247,6 +247,38 @@ class Controller_Profile_Index extends Controller_Profile_Base
         }
     }
 
+    /**
+     * Заргузка сообщений пользователя
+     */
+    public function action_load_message()
+    {
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
+
+        //$this->ajax_data($this->request->post());
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $a = Auth::instance();
+            $user = $a->get_user();
+
+            $listener = $user->listener;
+
+            $messages = $listener->getMessage($this->request->post('offset'));
+
+            if (!$messages->count())
+                $this->ajax_msg('', 'empty');
+
+            $profile = true;
+
+            $admin_avatar = Kohana::$config->load('settings.admin_avatar');
+
+            $this->ajax_data(
+                View::factory('admin/html/messages', compact('messages', 'listener' , 'profile', 'admin_avatar'))->render()
+            );
+        }
+    }
+
     public function action_settings()
     {
         $a = Auth::instance();

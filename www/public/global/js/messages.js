@@ -1,6 +1,8 @@
 
 $(function() {
 
+    var scroll = 2;
+
     $('#select2').on('change', function() {
         $('.chat').html('');
     });
@@ -43,6 +45,48 @@ $(function() {
                 }
             }
         });
+    });
+
+    $('body').on('click', '.load', function(e) {
+
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $.ajax({
+            type : 'POST',
+            url : $this.data('url'),
+            data : {
+                offset : scroll,
+                csrf : $('.csrf').val(),
+                user_id : $('#listeners').find('input:checkbox:checked').val()
+            },
+            dataType : 'json',
+            beforeSend : function() {
+                wait($this);
+            },
+            success : function(response) {
+                if (response.status == 'empty') {
+                    $this.remove();
+                }
+                if (response.status == 'success') {
+                    $this.before(response.data);
+                }
+                $('.chat').animate({
+                    scrollTop: $('.chat').find('li').last().offset().top
+                }, 500);
+                after_wait($this);
+            },
+            error : function(request) {
+                after_wait($this);
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            }
+        });
+        scroll++;
     });
 
 });

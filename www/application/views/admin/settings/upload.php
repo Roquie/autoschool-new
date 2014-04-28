@@ -1,5 +1,39 @@
 <?=HTML::style('adm/css/settings.css')?>
 <?=HTML::script('adm/js/upload.js')?>
+<style>
+    .b-button {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        position: relative;
+        overflow: hidden;
+    }
+    .b-button__input {
+        cursor: pointer;
+        opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+        top: 0px;
+        right: -50px;
+        font-size: 50px;
+        position: absolute;
+    }
+    .b-button .progress-bar {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: .5;
+        position: absolute;
+    }
+    .b-button .progress-bar .bar {
+        width: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        position: absolute;
+        background-color: #fff;
+    }
+</style>
 
 <div class="container">
 
@@ -25,7 +59,7 @@
             <div class="row" style="overflow-x: hidden">
             <div class="span8" >
                 <div class="well" style="height: 300px;">
-                    <legend>Файлы сайта</legend>
+                    <h5 class="header_block">Файлы сайта</h5>
                     <table class="table table_files">
                         <thead>
                         <tr>
@@ -51,42 +85,8 @@
                 </div>
             </div>
             <div class="span4">
-                <style>
-                    .b-button {
-                        display: inline-block;
-                        *display: inline;
-                        *zoom: 1;
-                        position: relative;
-                        overflow: hidden;
-                    }
-                    .b-button__input {
-                        cursor: pointer;
-                        opacity: 0;
-                        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-                        top: 0px;
-                        right: -50px;
-                        font-size: 50px;
-                        position: absolute;
-                    }
-                    .b-button .progress-bar {
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        opacity: .5;
-                        position: absolute;
-                    }
-                    .b-button .progress-bar .bar {
-                        width: 0;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        position: absolute;
-                        background-color: #fff;
-                    }
-                </style>
                 <div class="well" style="height: 300px;">
-                    <legend>Загрузить</legend>
+                    <h5 class="header_block">Загрузить</h5>
                     <p style="text-align: center">Для загрузки файла выберите в таблице слева файл, который Вы хотите заменить, и загрузите новый.</p>
                     <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-top: 40px; margin-left: 60px">
                         <form action="<?=Route::url('admin', array('controller'=>'settings', 'action'=>'upload'))?>" method="post" enctype="multipart/form-data">

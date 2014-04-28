@@ -28,7 +28,7 @@
                             FORM NEW USER
                         -->
                         <form action="<?=Request::current()->url()?>" method="post" novalidate>
-                            <legend>Новый администратор</legend>
+                            <h5 class="header_block">Новый администратор</h5>
 
                             <label for="famil">Фамилия</label>
                             <input name="family_name" type="text" class="input-block-level" placeholder="" id="famil" value="<?=isset($data['family_name']) ? $data['family_name'] : null?>">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="span8">
                     <div class="well well-large listAdmins">
-                        <legend>Список администраторов</legend>
+                        <h5 class="header_block">Список администраторов</h5>
                         <? if (count($admins) == 0) : ?>
                             <div class="text-center not-found">Администраторы отсутствуют.</div>
                         <? else : ?>

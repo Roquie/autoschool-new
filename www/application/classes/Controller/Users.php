@@ -381,7 +381,6 @@ class Controller_Users extends Controller_Main_Base
         $this->template->content = View::factory('main/register', compact('errors'));
     }
 
-
     public function action_logout()
     {
         !Auth::instance()->logout() ?: HTTP::redirect('/');

@@ -18,6 +18,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_pay_doc',
             'create_group_practice',
             'create_listmed',
+            'create_list_books',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -381,7 +382,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 ++$i;
                 $data[$row = $k+4] = array(
                     $i,
-                    $value->famil.' '.$value->imya.' '.$value->otch,
+                    UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
                     '-',
                     '-',
                     '-',
@@ -500,7 +501,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 ++$i;
                 $data[$row = $k+3] = array(
                     $i,
-                    $value->famil.' '.$value->imya.' '.$value->otch,
+                    UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
                     date('d.m.Y', strtotime($value->data_rojdeniya)),
                     $value->tel,
                     $value->staff->famil.' '.$value->staff->imya.' '.$value->staff->otch,
@@ -604,7 +605,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 ++$i;
                 $data[$row = $k+4] = array(
                     $i,
-                    $value->famil.' '.$value->imya.' '.$value->otch,
+                    UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
                     null,
                     null,
                 );
@@ -633,6 +634,124 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $as->getPageSetup()->setFitToHeight(0);
 
             $file = $ws->save(array('name' => 'list_med.-'.$group->name, 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
+
+            $this->response->body(
+                json_encode(array('file' => 'temp/'.$file))
+            );
+        }
+    }
+
+
+    public function action_create_list_books()
+    {
+        $id = Session::instance()->get('checked_user');
+
+        if (!empty($id))
+        {
+            $group = new Model_Groups(1);
+
+            $ws = new Spreadsheet(
+                array(
+                    'author'       => 'auto.mpt.ru/admin',
+                    'title'        => 'Список группы № '.$group->name,
+                ));
+
+            $ws->set_active_sheet(0);
+            $as = $ws->get_active_sheet();
+            $as->setTitle('Список группы № '.$group->name);
+
+            $as->mergeCells('A1:I1');
+            $as->mergeCells('A2:I2');
+            $as->setCellValue('A1', 'Список группы № '.$group->name);
+            $as->getStyle("A1:I1")->getFont()->setSize(24);
+            $as->getStyle("A1:I1")->getFont()->setBold(true);
+
+            $as->setCellValue('A2', 'ЛИТЕРАТУРА');
+            $as->getStyle("A2:I2")->getFont()->setSize(21);
+            $as->getStyle("A2:I2")->getFont()->setBold(true);
+
+            $as->getStyle("A1:I3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $as->getStyle("A1:I3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                ),
+                'font' => array(
+                    'bold' => true
+                )
+            );
+            $as->getStyle("A3:I3")->applyFromArray($styleArray);
+
+
+            $as->getColumnDimension('A')->setWidth(10);
+            $as->getRowDimension('1')->setRowHeight(40);
+            $as->getRowDimension('2')->setRowHeight(40);
+            $as->getRowDimension('3')->setRowHeight(30);
+
+            $as->getColumnDimension('B')->setWidth(40);
+            $as->getColumnDimension('C')->setWidth(15);
+            $as->getColumnDimension('D')->setWidth(15);
+            $as->getColumnDimension('E')->setWidth(15);
+            $as->getColumnDimension('F')->setWidth(15);
+            $as->getColumnDimension('G')->setWidth(15);
+            $as->getColumnDimension('H')->setWidth(40);
+            $as->getColumnDimension('I')->setWidth(40);
+
+            $data[3] = array(
+                '№',
+                'Фамилия Имя Отчество',
+                'ПДД (100р)',
+                'Задачник (250р)',
+                'Билеты (250р)',
+                'Мед (100р)',
+                'В ГАИ (100р)',
+                'Принял',
+                'Сдал(а)',
+            );
+
+            $i = 0;
+            foreach ($group->listener->find_all() as $k => $value)
+            {
+                ++$i;
+                $data[$row = $k+4] = array(
+                    $i,
+                    UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                );
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+
+                $as->getStyle('A'.$row.':I'.$row)->applyFromArray($styleArray);
+            }
+
+            $ws->set_data($data, false);
+
+            $as->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+            $as->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+            $as->getPageSetup()->setFitToPage(true);
+            $as->getPageSetup()->setFitToWidth(1);
+            $as->getPageSetup()->setFitToHeight(0);
+
+            $file = $ws->save(array('name' => 'list_books.-'.$group->name, 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
 
             $this->response->body(
                 json_encode(array('file' => 'temp/'.$file))

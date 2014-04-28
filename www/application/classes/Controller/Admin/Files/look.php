@@ -15,6 +15,9 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
             'ticket',
             'personal_card',
             'pay_doc',
+            'group_practice',
+            'listmed',
+            'list_books',
         );
 
         if ($this->request->is_ajax() && in_array($this->request->action(), $access))

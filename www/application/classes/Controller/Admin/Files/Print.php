@@ -45,7 +45,7 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
             elseif($file_info['extension'] === 'xlsx')
             {
                 ob_start();
-                $this->_excel_to_html(APPPATH.'download/'.$data->file);
+                    $this->_excel_to_html(APPPATH.'download/'.$data->file);
                 $content = ob_get_clean();
 
                 View::factory('admin/files/print_xlsx', compact('content'))->render();

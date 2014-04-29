@@ -26,9 +26,6 @@
         <div class="well d_status">
             <h5 class="header_block">Статус</h5>
             <div class="progress">
-                <!-- status 0 -->
-                <!--<div class="bar bar-danger" style="width: 2%;"></div>-->
-                <!--остальное так-->
                 <div class="bar" style="width: 0%;"></div>
             </div>
             <a href="#" class="btn disabled" data-url="<?=URL::site('admin/listeners/change_status/')?>" data-width="33%">Информация верна</a>
@@ -41,8 +38,10 @@
                 <div class="btns pull-right">
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
+                    <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></button>
                     <div class="btn-group">
-                        <a id="l_delete" href="#" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></a>
+
+                        <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></button>
                     </div>
                 </div>
             </div>

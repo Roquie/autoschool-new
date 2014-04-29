@@ -7,14 +7,16 @@ class Controller_Api_V1 extends Controller
 
     protected $_xml = null;
 
+    protected $_sttg = null;
+
     public function before()
     {
         parent::before();
 
-        $settings = new Model_Settings();
-        $remote_addr = $settings->get('sync_remote_addr');
+        $this->_sttg = new Model_Settings();
+        $remote_addr = $this->_sttg->get('sync_remote_addr');
 
-        if (!$settings->get('sync') && !$remote_addr)
+        if (!$this->_sttg->get('sync') && !$remote_addr && !$this->request->method() === Request::POST)
         {
             throw new HTTP_Exception_404();
         }
@@ -33,18 +35,6 @@ class Controller_Api_V1 extends Controller
         $this->_xml = new SimpleXMLElement("<xml version=\"1.0\" encoding=\"utf-8\"/>");
     }
 
-/*    public function action_test_me()
-    {
-
-          $lol=  Request::factory('api/v1/data_ok')
-                ->method(Request::POST)
-
-                ->execute();
-          //  echo $lol;
-          $xml = new SimpleXMLElement($lol);
-          $xml->saveXML('asdasdasd.xml');
-
-    }*/
 
     public function action_test()
     {
@@ -57,6 +47,22 @@ class Controller_Api_V1 extends Controller
                     : 'post is empty'
             )
         );
+    }
+
+    public function action_set_remote_host()
+    {
+        $result = $this->_sttg->set('fat_client',
+            $this->request->post('remote_host')
+        );
+
+        if ($result)
+        {
+            $this->_response();
+        }
+        else
+        {
+            $this->_response('error', 'error in database');
+        }
     }
 
     public function action_missed_data_ok()
@@ -92,7 +98,7 @@ class Controller_Api_V1 extends Controller
 
     }
 
-    protected function _response($status = 'success', $msg = '')
+    protected function _response($status = 'success', $msg = 'all be okay')
     {
         $root = $this->_xml->addChild('root');
         $info = $root->addChild('info');

@@ -9,12 +9,18 @@ class Sync
 
     protected $_file = '';
 
+    protected $_type = null;
+
+    protected $_last_insert_id = null;
+
     /**
      * @param $sql_str
      */
-    public function __construct($sql_str)
+    public function __construct($type, $sql_str, $last_insert_id = null)
     {
         $this->_sql_str = $sql_str;
+        $this->_type = $type;
+        $this->_last_insert_id = $last_insert_id;
         $this->_file = APPPATH.'download/xml/missed_requests.xml';
 
         $fat_client = Kohana::$config->load('settings.fat_client');
@@ -31,7 +37,17 @@ class Sync
 
         if ($is_ok)
         {
-            $root->addChild('query', $this->_sql_str);
+            if ($this->_last_insert_id)
+            {
+                $query = $root->addChild('query', $this->_sql_str);
+                $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                $query->addAttribute('last_insert_id', $this->_last_insert_id);
+            }
+            else
+            {
+                $query = $root->addChild('query', $this->_sql_str);
+                $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+            }
 
             return $xml->asXML();
         }
@@ -40,12 +56,34 @@ class Sync
             if (file_exists($this->_file))
             {
                 $load_xml = simplexml_load_file($this->_file);
-                $load_xml->root->addChild('query', $this->_sql_str);
+
+                if ($this->_last_insert_id)
+                {
+                    $query = $load_xml->root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                    $query->addAttribute('last_insert_id', $this->_last_insert_id);
+                }
+                else
+                {
+                    $query = $load_xml->root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                }
+
                 return $load_xml->saveXML($this->_file);
             }
             else
             {
-                $root->addChild('query', $this->_sql_str);
+                if ($this->_last_insert_id)
+                {
+                    $query = $root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                    $query->addAttribute('last_insert_id', $this->_last_insert_id);
+                }
+                else
+                {
+                    $query = $root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                }
 
                 return $xml->saveXML($this->_file);
             }
@@ -73,5 +111,33 @@ class Sync
             }
         }
 
+    }
+
+    protected function _type_word_assoc($type)
+    {
+        switch($type)
+        {
+            case 1:
+                $assoc = 'SELECT';
+            break;
+
+            case 2:
+                $assoc = 'INSERT';
+            break;
+
+            case 3:
+                $assoc = 'UPDATE';
+            break;
+
+            case 4:
+                $assoc = 'DELETE';
+            break;
+
+            default:
+                $assoc = 'unknown';
+            break;
+        }
+
+        return $assoc;
     }
 } 

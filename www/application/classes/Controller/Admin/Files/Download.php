@@ -927,7 +927,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         $as->setTitle('Неутвержденные слушатели');
 
         $as->mergeCells('A1:D1');
-        $as->mergeCells('A2:D2');
         $as->setCellValue('A1', 'Неутвержденные слушатели');
         $as->getStyle("A1:D1")->getFont()->setSize(24);
         $as->getStyle("A1:D1")->getFont()->setBold(true);
@@ -950,7 +949,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
         $as->getColumnDimension('A')->setWidth(10);
         $as->getRowDimension('1')->setRowHeight(40);
-        $as->getRowDimension('2')->setRowHeight(40);
         $as->getRowDimension('3')->setRowHeight(30);
 
         $as->getColumnDimension('B')->setWidth(40);

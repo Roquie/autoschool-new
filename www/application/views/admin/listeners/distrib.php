@@ -1,11 +1,34 @@
 <?=HTML::style('adm/css/distrib.css')?>
 <?=HTML::script('adm/js/distrib.js')?>
 <?=HTML::script('adm/js/listener.js')?>
+<?=HTML::script('global/js/viewdoc.js')?>
 
 <div class="container">
 <div class="row">
-    <div class="span7">
+    <div class="span6">
         <h1><small>Неутвержденные слушатели</small></h1>
+    </div>
+    <style type="text/css">
+        .hrenov_btn_block
+        {
+            margin-top: 25px;
+        }
+        .hrenov_btn_block .desc_status
+        {
+            margin-right: 5px;
+        }
+    </style>
+    <div class="span6 hrenov_btn_block">
+        <div class="btn-group pull-right">
+            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal" rel="tooltip" title="Просмотр отчета" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Просмотр</a>
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="<?=URL::site('admin/files/download/distrib')?>"><i class="icon-download"></i> Скачать</a></li>
+                <li class="divider"></li>
+                <li><a target="_blank" href="<?=URL::site('admin/files/print/distrib')?>"><i class="icon-print"></i> Печать</a></li>
+            </ul>
+        </div>
+        <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" href="#desc_status" role="button" data-toggle="modal" class="btn desc_status pull-right <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i> Примечание</button>
     </div>
 </div>
 
@@ -39,7 +62,6 @@
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
                     <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></button>
-                    <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" href="#desc_status" role="button" data-toggle="modal" class="btn btn-info <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i></button>
                 </div>
             </div>
             <div class="tab-content">
@@ -355,6 +377,6 @@
 </div>
 
 </div>
-
+<?=View::factory('view_doc')?>
 <?=View::factory('admin/html/modal_desc_status')?>
 

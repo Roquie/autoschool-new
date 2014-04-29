@@ -21,7 +21,7 @@
                         <div class="btn-group">
                             <a href="<?=URL::site('admin/files/print/statement')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                             <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/statement')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                         </div>
                     </div>
                 </div>

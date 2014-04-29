@@ -59,7 +59,7 @@ class Database_Query extends Kohana_Database_Query
 
         if ($this->_type === Database::INSERT || $this->_type === Database::UPDATE || $this->_type === Database::DELETE)
         {
-            $obj = new Sync($sql);
+            $obj = new Sync($this->_type, $sql, mysql_insert_id());
             $obj->send();
         }
 

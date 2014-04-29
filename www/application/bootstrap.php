@@ -68,6 +68,8 @@ I18n::lang('ru-RU');
  */
 Cookie::$salt = 'rИVИ5Є"6♀И!╧21◘54є618╪1636☺►☺6♣1Л165☺☺t☺☺65☺65♦6529◘4е☺3213☻1╧♦65♦♦♦♥1♥1♥1adas^&*(+|l/';
 Cookie::$expiration = Date::MONTH;
+// чтоб не стырили куки www.owasp.org/index.php/HttpOnly
+Cookie::$httponly = true;
 
 
 /**

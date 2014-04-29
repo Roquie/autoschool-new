@@ -80,7 +80,6 @@ class Model_Listeners extends ORM
             'model' => 'Individual',
             'foreign_key' => 'listener_id',
         ),
-
         'transport' => array(
             'model' => 'Transport',
             'foreign_key' => 'staff_id',

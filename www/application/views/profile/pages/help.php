@@ -17,7 +17,7 @@
     <form class="form-horizontal" action="<?=URL::site('profile/add_message')?>" id="send" method="post" accept-charset="utf-8" novalidate>
         <div class="row">
             <div class="span1">
-                <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2); height: 60px; width: 60px" class="img-circle" src="<?=(strpos($user->photo, 'public')) ? URL::site($user->photo) : $user->photo?>" alt="admin_logo"/>
+                <img style="box-shadow: 0 1px 1px rgba(0,0,0,0.2); height: 60px; width: 60px" class="img-circle" src="<?=preg_match('/public/i', $user->photo) ? URL::site($user->photo) : $user->photo?>" alt="admin_logo"/>
             </div>
             <div class="span7">
                 <textarea name="message" id="admin_msg" style="height: 65px; resize: none" class="input-block-level" placeholder="Введите сообщение"></textarea>

@@ -28,7 +28,6 @@ class Controller_Twitter extends Controller
 
             $valid->label('message', 'Поле "твит"');
             $valid->rule('message', 'not_empty');
-            $valid->rule('message', 'alpha', array(':value', true));
             $valid->rule('message', 'min_length', array(':value', 1));
             $valid->rule('message', 'max_length', array(':value', 140));
 

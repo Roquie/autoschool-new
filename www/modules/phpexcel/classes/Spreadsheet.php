@@ -13,18 +13,20 @@ class Spreadsheet
 		'PDF'		=> 'pdf',
 		'Excel5' 	=> 'xls',
 		'Excel2007' => 'xlsx',
+		'HTML' => 'html',
 	);
 	private $mimes = array(
         'CSV' 		=> 'text/csv',
         'PDF' 		=> 'application/pdf',
         'Excel5' 	=> 'application/vnd.ms-excel',
         'Excel2007' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'HTML' => 'text/html',
     );
 	protected $options = array(
 		'title'       => 'New Spreadsheet',
 		'subject'     => 'New Spreadsheet',
 		'description' => 'New Spreadsheet',
-		'author'      => 'ClubSuntory',
+		'author'      => 'Roquie',
 		'format'      => 'Excel2007',
 		'path'        => 'assets/downloads/spreadsheets/',
 		'name'        => 'NewSpreadsheet',

@@ -260,9 +260,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         
     }
 
-    /**
-     *  @TODO: Доделать вывод инструктора (его надо както достать)
-     */
 
     public function action_create_personal_card()
     {
@@ -437,7 +434,6 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
     /**
      * Создание списка слушателей по группе, на обучение практическому вождению
      *
-     * @TODO: Доделать вывод инструкторов (их надо както достать)
      */
     public function action_create_group_practice()
     {
@@ -504,7 +500,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                     UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
                     date('d.m.Y', strtotime($value->data_rojdeniya)),
                     $value->tel,
-                    $value->staff->famil.' '.$value->staff->imya.' '.$value->staff->otch,
+                    UTF8::strtoupper($value->staff->famil).' '.UTF8::strtoupper($value->staff->imya).' '.UTF8::strtoupper($value->staff->otch),
                 );
 
                 $styleArray = array(

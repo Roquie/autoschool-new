@@ -16,18 +16,24 @@ class Controller_Api_V1 extends Controller
         $this->_sttg = new Model_Settings();
         $remote_addr = $this->_sttg->get('sync_remote_addr');
 
-        if (!$this->_sttg->get('sync') && !$remote_addr && !$this->request->method() === Request::POST)
+        if (!($this->request->method() === Request::POST))
         {
             throw new HTTP_Exception_404();
         }
-        else
+        elseif(!$this->_sttg->get('sync'))
         {
-            if ($remote_addr)
+            throw new HTTP_Exception_404();
+        }
+        elseif(!$remote_addr)
+        {
+            throw new HTTP_Exception_404();
+        }
+
+        if ($remote_addr)
+        {
+            if ($_SERVER['REMOTE_ADDR'] !== $remote_addr)
             {
-                if ($_SERVER['REMOTE_ADDR'] !== $remote_addr)
-                {
-                    throw new HTTP_Exception_404();
-                }
+                throw new HTTP_Exception_404();
             }
         }
 

@@ -19,6 +19,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_group_practice',
             'create_listmed',
             'create_list_books',
+            'create_ekz_protokol',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -756,5 +757,242 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
     }
 
 
+    public function action_create_ekz_protokol()
+    {
+        $id = Session::instance()->get('checked_user');
+
+        if (!empty($id))
+        {
+            $group = new Model_Groups(1);
+
+            $ws = new Spreadsheet(
+                array(
+                     'author'       => 'auto.mpt.ru/admin',
+                     'title'        => 'ЭКЗАМЕНАЦИОННЫЙ ПРОТОКОЛ, гр. '.$group->name,
+                ));
+
+            $ws->set_active_sheet(0);
+            $as = $ws->get_active_sheet();
+            $as->setTitle('ЭКЗАМЕНАЦИОННЫЙ ПРОТОКОЛ');
+
+            $as->mergeCells('A1:J1');
+            $as->mergeCells('A2:J2');
+            $as->setCellValue('A1', 'ЭКЗАМЕНАЦИОННЫЙ ПРОТОКОЛ');
+            $as->getStyle("A1:J1")->getFont()->setSize(24);
+            $as->getStyle("A1:J1")->getFont()->setBold(true);
+
+            $as->setCellValue('A2', 'ГРУППЫ № '.$group->name);
+            $as->getStyle("A2:J2")->getFont()->setSize(21);
+            $as->getStyle("A2:J2")->getFont()->setBold(true);
+
+            $as->getStyle("A1:J3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $as->getStyle("A1:J3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN
+                    )
+                ),
+                'font' => array(
+                    'bold' => true
+                )
+            );
+            $as->getStyle("A3:J3")->applyFromArray($styleArray);
+
+
+            $as->getColumnDimension('A')->setWidth(10);
+            $as->getRowDimension('1')->setRowHeight(40);
+            $as->getRowDimension('2')->setRowHeight(40);
+            $as->getRowDimension('3')->setRowHeight(30);
+
+            $as->getColumnDimension('B')->setWidth(40);
+            $as->getColumnDimension('C')->setWidth(15);
+            $as->getColumnDimension('D')->setWidth(15);
+            $as->getColumnDimension('E')->setWidth(15);
+            $as->getColumnDimension('F')->setWidth(15);
+            $as->getColumnDimension('G')->setWidth(15);
+            $as->getColumnDimension('H')->setWidth(15);
+            $as->getColumnDimension('I')->setWidth(15);
+            $as->getColumnDimension('J')->setWidth(15);
+
+            $data[3] = array(
+                '№',
+                'Фамилия Имя Отчество',
+                'Дата рождения',
+                'ОЗДД',
+                'УиТ АС',
+                'ОБУ ТС',
+                'ПП',
+                'Вожд.',
+                'Свидетельство',
+                'Подпись',
+            );
+
+
+
+            $i = 0;
+            foreach ($group->listener->find_all() as $k => $value)
+            {
+                ++$i;
+                $data[$row = $k+4] = array(
+                    $i,
+                    UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
+                    date('d.m.Y', strtotime($value->data_rojdeniya)),
+                    'удовл.',
+                    'удовл.',
+                    'удовл.',
+                    'удовл.',
+                    'удовл.',
+                    $value->certificate_seriya.' '.$value->certificate_nomer,
+                );
+
+                $styleArray = array(
+                    'borders' => array(
+                        'allborders' => array(
+                            'style' => PHPExcel_Style_Border::BORDER_THIN,
+                        ),
+                    ),
+                    'alignment' => array(
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                    )
+                );
+
+                $as->getStyle('A'.$row.':J'.$row)->applyFromArray($styleArray);
+
+                $to_text = $row + 3;
+
+            }
+            $start = $to_text;
+
+            $as->setCellValue('A'.$to_text, 'Всего:');
+            $as->setCellValue('B'.$to_text, $i.' чел.');
+
+            $to_text += 1;
+            $as->mergeCells('A'.$to_text.':B'.$to_text);
+            $as->setCellValue('A'.$to_text, 'Из них с оценками');
+
+            $to_text += 1;
+            $as->mergeCells('A'.$to_text.':F'.$to_text);
+            $as->setCellValue('A'.$to_text, '«отлично» 0 чел.,  «хорошо» 0 чел.,  «удовлетворительно» '.$i.' чел.,  «неудовлетворительно»  0 чел.');
+
+            $to_text += 2;
+            $as->mergeCells('A'.$to_text.':B'.$to_text);
+            $as->setCellValue('A'.$to_text, 'Председатель комиссии _______________');
+
+            $to_text += 2;
+            $as->mergeCells('A'.$to_text.':C'.$to_text);
+            $as->setCellValue('A'.$to_text, 'Члены комиссии _________________  _________________');
+
+            $as->mergeCells('E'.$to_text.':G'.$to_text);
+            $as->setCellValue('E'.$to_text, 'Директор а/ш МПТ РГТЭУ _____________');
+
+            $as->getStyle('A'.$start.':G'.$to_text)->getFont()->setBold(true);
+
+            $ws->set_data($data, false);
+
+            $as->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+            $as->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+            $as->getPageSetup()->setFitToPage(true);
+            $as->getPageSetup()->setFitToWidth(1);
+            $as->getPageSetup()->setFitToHeight(0);
+
+            $file = $ws->save(array('name' => 'ekz_protokol.-'.$group->name, 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
+
+            $this->response->body(
+                json_encode(array('file' => 'temp/'.$file))
+            );
+        }
+    }
+
+
 
 }
+
+
+
+
+//create word
+/*
+        $group = new Model_Groups(1);
+
+        $PHPWord = new PhpWord();
+
+        $section = $PHPWord->createSection(
+            array(
+                 'marginLeft' => 600,
+                 'marginRight' => 600,
+                 'marginTop' => 600,
+                 'marginBottom' => 600,
+                 'orientation' => 'landscape'
+            )
+        );
+
+        $styleFont = array(
+            'name' => 'Times New Roman',
+            'size' => 12,
+            'bold' => true,
+            'align' => 'center'
+        );
+        $styleCellFont = array(
+            'name' => 'Times New Roman',
+            'size' => 12,
+            'align' => 'center',
+            'spaceAfter' => 0
+        );
+
+        $styleCellAligment = array(
+            'valign' => 'center',
+            'spaceAfter' => 0,
+            'marginBottom' => 0
+        );
+        $section->addText('ЭКЗАМЕНАЦИОННЫЙ ПРОТОКОЛ', $styleFont,
+            array(
+                 'align' => 'center',
+                 'spaceAfter' => 1
+            )
+        );
+        $section->addText('ГРУППЫ № '.$group->name, $styleFont, array('align' => 'center'));
+
+        $styleTable = array('borderSize' => 6, 'borderColor'=>'000000', 'cellMargin' => 0, 'border' => 'black');
+        $styleFirstRow = array('bold' => true, 'name' => 'Times New Roman', 'size' => 12, 'align' => 'center', );
+
+        $PHPWord->addTableStyle('myOwnTableStyle', $styleTable, $styleFirstRow);
+
+        $table = $section->addTable('myOwnTableStyle');
+
+        $table->addRow(100);
+        $table->addCell(60, $styleCellAligment)->addText('№', $styleFirstRow);
+        $table->addCell(4000, $styleCellAligment)->addText('Фамилия Имя Отчество', $styleFirstRow);
+        $table->addCell(1600, $styleCellAligment)->addText('Дата рождения', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('ОЗДД', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('УиТ АС', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('ОБУ ТС', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('ПП', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('Вожд.', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('Свидетельство', $styleFirstRow);
+        $table->addCell(1500, $styleCellAligment)->addText('Подпись', $styleFirstRow);
+
+
+        $lol = 'удовл.';
+        $i = 0;
+        foreach($group->listener->find_all() as $k => $value)
+        {
+            $table->addRow(0);
+            $name = UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch);
+
+            $table->addCell(60, $styleCellAligment)->addText(++$i, $styleCellFont);
+            $table->addCell(4000, $styleCellAligment)->addText($name, $styleCellFont);
+            $table->addCell(1600, $styleCellAligment)->addText($value->data_rojdeniya, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText($lol, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText($lol, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText($lol, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText($lol, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText($lol, $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText('хз', $styleCellFont);
+            $table->addCell(1500, $styleCellAligment)->addText(null, $styleCellFont);
+        }
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($PHPWord, 'Word2007');
+        $objWriter->save('Section.docx');*/

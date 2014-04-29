@@ -1,4 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+use \PhpOffice\PhpWord\PhpWord;
 
 class Controller_Admin_Index extends Controller_Admin_Base
 {

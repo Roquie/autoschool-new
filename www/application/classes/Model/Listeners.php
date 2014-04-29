@@ -16,6 +16,7 @@ class Model_Listeners extends ORM
 		'staff_id' => array('data_type' => 'int', 'is_nullable' => true),
 		'is_individual' => array('data_type' => 'int', 'is_nullable' => true),
 		'status' => array('data_type' => 'int', 'is_nullable' => true),
+        'description_status' => array('data_type' => 'string', 'is_nullable' => true),
 		'imya' => array('data_type' => 'string', 'is_nullable' => false),
 		'famil' => array('data_type' => 'string', 'is_nullable' => false),
 		'otch' => array('data_type' => 'string', 'is_nullable' => false),
@@ -96,6 +97,11 @@ class Model_Listeners extends ORM
     public function rules()
     {
         return array(
+
+            'description_status' => array(
+                array('not_empty'),
+                array('alpha', array(':value', true)),
+            ),
 
             'famil' => array(
                 array('not_empty'),

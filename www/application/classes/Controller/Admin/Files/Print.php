@@ -22,6 +22,7 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
             'listmed',
             'list_books',
             'ekz_protokol',
+            'distrib',
         );
 
         if (in_array($this->request->action(), $access))

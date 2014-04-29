@@ -20,6 +20,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_listmed',
             'create_list_books',
             'create_ekz_protokol',
+            'create_distrib',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -906,7 +907,104 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         }
     }
 
+    /**
+     * Неутвержденные слушатели
+     */
+    public function action_create_distrib()
+    {
 
+        $listeners = new Model_Listeners();
+        $distrib = $listeners->where('status', '<', 3)->find_all();
+
+        $ws = new Spreadsheet(
+            array(
+                 'author'       => 'auto.mpt.ru/admin',
+                 'title'        => 'Неутвержденные слушатели',
+            ));
+
+        $ws->set_active_sheet(0);
+        $as = $ws->get_active_sheet();
+        $as->setTitle('Неутвержденные слушатели');
+
+        $as->mergeCells('A1:D1');
+        $as->mergeCells('A2:D2');
+        $as->setCellValue('A1', 'Неутвержденные слушатели');
+        $as->getStyle("A1:D1")->getFont()->setSize(24);
+        $as->getStyle("A1:D1")->getFont()->setBold(true);
+
+        $as->getStyle("A1:D3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $as->getStyle("A1:D3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $styleArray = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            ),
+            'font' => array(
+                'bold' => true
+            )
+        );
+        $as->getStyle("A3:D3")->applyFromArray($styleArray);
+
+
+        $as->getColumnDimension('A')->setWidth(10);
+        $as->getRowDimension('1')->setRowHeight(40);
+        $as->getRowDimension('2')->setRowHeight(40);
+        $as->getRowDimension('3')->setRowHeight(30);
+
+        $as->getColumnDimension('B')->setWidth(40);
+        $as->getColumnDimension('C')->setWidth(15);
+        $as->getColumnDimension('D')->setWidth(60);
+
+        $data[3] = array(
+            '№',
+            'Фамилия Имя Отчество',
+            'Дата рождения',
+            'Причина (каких документов не хватает)',
+        );
+
+        $i = 0;
+        foreach ($distrib as $k => $value)
+        {
+            ++$i;
+            $data[$row = $k+4] = array(
+                $i,
+                UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
+                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                $value->description_status,
+            );
+
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    ),
+                ),
+                'alignment' => array(
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                )
+            );
+
+            $as->getStyle('A'.$row.':D'.$row)->applyFromArray($styleArray);
+        }
+
+        $ws->set_data($data, false);
+
+        $as->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        $as->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+        $as->getPageSetup()->setFitToPage(true);
+        $as->getPageSetup()->setFitToWidth(1);
+        $as->getPageSetup()->setFitToHeight(0);
+
+        $file = $ws->save(array('name' => 'distrib', 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
+
+        $this->response->body(
+            json_encode(array('file' => 'temp/'.$file))
+        );
+
+    }
 
 }
 

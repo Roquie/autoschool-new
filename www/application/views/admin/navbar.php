@@ -55,6 +55,8 @@
                         <li><a href="<?=URL::site('admin/news')?>"> Новости для группы</a></li>
                         <li class="divider"></li>
                         <li><a href="<?=URL::site('admin/messages')?>"> Раздел помощи</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#myModal" role="button" data-toggle="modal"> Добавить твит</a></li>
                     </ul>
                 </li>
                 <!--<li><a href="<?/*=URL::site('admin/sync')*/?>"><i class="icon-random"></i> Cинхронизация</a></li>-->

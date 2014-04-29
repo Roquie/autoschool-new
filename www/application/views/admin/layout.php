@@ -29,6 +29,7 @@
 <div id="wrap">
     <?=$navbar.PHP_EOL?>
     <?=$content.PHP_EOL?>
+    <?=View::factory('admin/html/add_tweet')?>
 </div>
 
 

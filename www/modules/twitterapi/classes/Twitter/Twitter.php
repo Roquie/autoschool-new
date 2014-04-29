@@ -44,4 +44,11 @@ class Twitter_Twitter
         return $tweets;
     }
 
+    public function addTweet($message = '')
+    {
+        $account = $this->_twitter->get('account/verify_credentials');
+        $status = $this->_twitter->post('statuses/update', array('status' => $message));
+        return $status;
+    }
+
 }

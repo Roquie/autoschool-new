@@ -75,3 +75,74 @@ h5.header_block {
   line-height: 25px;
   margin-left: 90px;
 }
+
+/*
+  Twitter modal (add tweet)
+*/
+.modal{
+  .twitter {
+    .modal-header {
+      border-bottom: solid 1px rgba(0, 132, 180, .25);
+      .modal-title {
+        width: 75%;
+        margin: 0 auto;
+        overflow: hidden;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 22px;
+        color: #8899a6;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .modal-body {
+      background-color: #0084B4;
+      background: rgba(0, 132, 180, .1);
+      .tweet-button {
+        .tweet-counter {
+          margin-right: 5px;
+          background-color: transparent;
+          color: #999;
+          display: inline-block;
+          width: 35px;
+          border: 0;
+          padding: 0 3px;
+          position: relative;
+          vertical-align: top;
+          top: 7px;
+          text-align: right;
+          font-size: 14px;
+          text-shadow: 0 1px 1px rgba(255,255,255,.75);
+          &.warning {
+            color: #d40d12;
+          }
+        }
+      }
+      .message {
+        width: 97%;
+        resize: none;
+        height: 80px;
+        padding: 8px;
+        vertical-align: top;
+        overflow: scroll;
+        text-shadow: none;
+        display: block;
+        outline: 0;
+        background-color: #fff;
+        border: 1px solid rgba(0,132,180,0.25);
+        .box-shadow(none);
+        .border-radius(3px);
+        del {
+          background: #fcc;
+        }
+      }
+      button[type="submit"] {
+        outline: none;
+        &:active {
+          outline: none;
+        }
+      }
+    }
+  }
+}

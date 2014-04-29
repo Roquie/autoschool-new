@@ -56,10 +56,10 @@ $(function() {
 
     $('.modal')
         .on('show', function() {
-            body.css({'overflow' : 'hidden'});
+            body.css({'overflow-y' : 'hidden'});
         })
         .on('hide', function() {
-            body.css({'overflow' : 'scroll'});
+            body.css({'overflow-y' : 'scroll'});
         });
 
     $('.message')

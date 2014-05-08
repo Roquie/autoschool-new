@@ -33,8 +33,9 @@ $(function() {
             $(this).closest('.input-append').find('input').datepicker( "show" );
         });
 
-
-    $("[rel='tooltip']").tooltip();
+    $("[rel='tooltip']").tooltip({
+        container: 'body'
+    });
 
 
     $(".telephone").mask("8 (999) 999-99-99");

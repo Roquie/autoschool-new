@@ -25,6 +25,7 @@ $(function() {
 function fn_callback(response, $this, f_statement, f_contract, listeners) {
     if (response.status == 'success')
     {
+        var field = '';
         $.each(response.data.listener, function(key, value) {
             field = f_statement.find('[name="'+key+'"]');
             if (key == 'is_individual') {

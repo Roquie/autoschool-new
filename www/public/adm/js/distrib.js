@@ -198,21 +198,50 @@ $(function() {
                 }
 
             });
-
-/*            $.post(
-                form.attr('action'),
-                form.serialize(),
-                function(response) {
-                    if (response.status == 'success' || response.status == 'error')
-                    {
-                        message($('.container'), response.msg, response.status);
-                    }
-                    if (response.status == 'success')
-                        $('#listeners').find('input:checkbox:checked').prop('checked', false).trigger('click');
-                },
-                'json'
-            );*/
         });
+
+    $('#add_desc_status').on('submit', function(e) {
+        e.preventDefault();
+
+        var $this = $(this),
+            btn = $this.find('button[type="submit"]');
+
+        $.ajax({
+            type : 'POST',
+            url  : $this.attr('action'),
+            dataType : 'json',
+            data : {
+                csrf : $('#listeners').prev('input').val(),
+                user_id : $('#listener_id').val(),
+                description_status : $('#description_status').val()
+            },
+            beforeSend : function() {
+                un_message();
+                wait(btn);
+            },
+            success : function(response) {
+                if (response.status == 'success') {
+                    message($('.modal-body'), response.msg, response.status);
+                }
+                if (response.status == 'error') {
+                    var errors = '';
+                    $.each(response.data, function(key, value) {
+                        errors += value + '<br>';
+                    });
+                    message($('.modal-body'), errors, response.status);
+                }
+                after_wait(btn);
+            },
+            error : function(request) {
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+                after_wait(btn);
+            }
+        });
+    });
 
 });
 
@@ -266,6 +295,9 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
             }
             if (key == 'id') {
                 $('#listener_id').val(value);
+            }
+            if (key == 'description_status') {
+                $('#description_status').val(value);
             }
             if (field.attr('type') == 'checkbox') {
                 (value == 0) ? field.prop("checked", false) : field.prop("checked", true);

@@ -305,8 +305,44 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
         }
     }
 
+    public function action_add_desc_status()
+    {
+        $this->auto_render = false;
+
+        $csrf = $this->request->post('csrf');
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        {
+            $post = $this->request->post();
+            $id = $post['user_id'];
+
+            unset($post['csrf'], $post['user_id']);
+
+            $valid = new Validation(
+                Arr::map(
+                    'Security::xss_clean',
+                    Arr::map('trim', $post)
+                )
+            );
+
+            try
+            {
+                DB::update('listeners')
+                    ->set($post)
+                    ->where('id', '=', $id)
+                    ->execute();
+            }
+            catch(Database_Exception $e)
+            {
+                $this->ajax_msg($e->getMessage(), 'error');
+            }
+            $this->ajax_msg('Описание добавлено');
+        }
+    }
+
     public function action_delete()
     {
+        $this->auto_render = false;
         $csrf = $this->request->post('csrf');
 
         if (Security::is_token($csrf) && $this->request->method() === Request::POST)

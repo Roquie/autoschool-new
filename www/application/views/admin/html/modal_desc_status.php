@@ -3,18 +3,16 @@
     <div class="twitter">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 class="modal-title" id="global-tweet-dialog-header">Новый твит</h3>
+            <h3 class="modal-title" id="global-tweet-dialog-header">Описание отсутствующих данных</h3>
         </div>
         <div class="modal-body">
-            <form action="<?=URL::site('twitter/add_tweet')?>" method="post" id="add_tweet">
+            <form action="<?=URL::site('admin/listeners/add_desc_status')?>" method="post" id="add_desc_status">
 
-                <textarea name="message" id="message" class="message" maxlength="140"></textarea>
+                <textarea name="description_status" id="description_status" class="message"></textarea>
 
-                <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                 <div class="tweet-button pull-right">
-                    <span class="tweet-counter">140</span>
                     <button type="submit" class="btn btn-primary">
-                        Твитнуть
+                        Сохранить
                     </button>
                 </div>
             </form>

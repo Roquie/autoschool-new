@@ -62,7 +62,7 @@ $(function() {
             body.css({'overflow-y' : 'scroll'});
         });
 
-    $('.message')
+    $('#add_tweet > .message')
         .on('keydown', function() {
             var curLength = $(this).val().length,
                 remaning = maxLength - curLength,

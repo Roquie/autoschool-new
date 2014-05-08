@@ -318,11 +318,9 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
 
             unset($post['csrf'], $post['user_id']);
 
-            $valid = new Validation(
-                Arr::map(
-                    'Security::xss_clean',
-                    Arr::map('trim', $post)
-                )
+            $post = Arr::map(
+                'Security::xss_clean',
+                Arr::map('trim', $post)
             );
 
             try

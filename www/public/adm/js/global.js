@@ -5,6 +5,14 @@
  */
 $(function() {
 
+
+
+    $(".sms_sender").inputmask({ "mask": "8 (999) 999-99-99, ", "repeat": 100, "greedy": false });
+
+    $('#many_tels').autosize();
+
+
+
     var body = $('body'),
         maxLength = 140;
 
@@ -13,7 +21,41 @@ $(function() {
         delay : 400
     });
 
-    $('#add_tweet').on('submit', function(e) {
+    $('#sendsms_modal').on('click', function()
+    {
+        $('#sendsms_balance').trigger('click');
+    });
+
+    $('#sendsms_balance').on('click', function(e)
+    {
+        e.preventDefault();
+
+        var $this = $(this),
+            sum = $('#sum_sendsms_balance');
+
+        $.ajax({
+            type : 'GET',
+            url  : $this.data('url'),
+            dataType : 'json',
+            beforeSend : function() {},
+            success : function(response)
+            {
+                sum.html(response.msg);
+            },
+            error : function(request)
+            {
+                if (request.status == '200') {
+                    console.log('Исключение: ' + request.responseText);
+                } else {
+                    console.log(request.status + ' ' + request.statusText);
+                }
+            }
+        });
+    });
+
+
+
+    $('#add_tweet, #send_sms_form').on('submit', function(e) {
         e.preventDefault();
 
         var $this = $(this),
@@ -33,6 +75,7 @@ $(function() {
                     message($('.modal-body'), response.msg, response.status);
                     $this[0].reset();
                     $('.message').html('');
+                    $('#sendsms_balance').trigger('click');
                 }
                 if (response.status == 'error') {
                     var errors = '';

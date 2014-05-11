@@ -38,8 +38,11 @@ $(function() {
     });
 
 
-    $(".telephone").mask("8 (999) 999-99-99");
+    $(".telephone").inputmask("8 (999) 999-99-99");
 });
+
+
+
 function message(block, msg, type)
 {
     var html =  '<div class="alert alert-' + type + '">' +

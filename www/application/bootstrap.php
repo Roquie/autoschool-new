@@ -134,6 +134,7 @@ Kohana::modules(array(
     'twitterapi' => MODPATH.'twitterapi',
     'phpexcel' => MODPATH.'phpexcel',
     'phpword' => MODPATH.'phpword',
+    'aramba' => MODPATH.'aramba',
 
 	));
 

@@ -57,6 +57,8 @@
                         <li><a href="<?=URL::site('admin/messages')?>"> Раздел помощи</a></li>
                         <li class="divider"></li>
                         <li><a href="#twitter" role="button" data-toggle="modal"> Добавить твит</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#send_sms" id="sendsms_modal" role="button" data-toggle="modal"> Отправить SMS-сообщеньки</a></li>
                     </ul>
                 </li>
                 <!--<li><a href="<?/*=URL::site('admin/sync')*/?>"><i class="icon-random"></i> Cинхронизация</a></li>-->

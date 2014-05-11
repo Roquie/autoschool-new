@@ -17,6 +17,8 @@
     <?=HTML::script('global/js/popup.js')?>
     <?=HTML::script('global/js/ajaxSend.js')?>
     <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
+    <?=HTML::script('global/js/jquery.inputmask.js')?>
+    <?=HTML::script('adm/js/jquery.autosize.min.js')?>
     <?=HTML::script('adm/js/global.js')?>
     <?=HTML::script('global/js/global.js')?>
 
@@ -30,6 +32,7 @@
     <?=$navbar.PHP_EOL?>
     <?=$content.PHP_EOL?>
     <?=View::factory('admin/html/add_tweet')?>
+    <?=View::factory('admin/html/send_sms')?>
 </div>
 
 

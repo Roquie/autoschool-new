@@ -1,11 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-use \PhpOffice\PhpWord\PhpWord;
 
 class Controller_Admin_Index extends Controller_Admin_Base
 {
 
     public function action_index()
 	{
+        //$this->auto_render = false;
+
+
+        //
+
+
         $list_users = Model::factory('User')->get_user_list(false);
         $list_groups = Model::factory('Groups')->find_all();
         $edu = ORM::factory('Education')->find_all();

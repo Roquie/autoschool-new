@@ -1,3 +1,4 @@
+<?=HTML::style('global/css/view_doc.css')?>
 <?=HTML::style('adm/css/distrib.css')?>
 <?=HTML::script('adm/js/distrib.js')?>
 <?=HTML::script('adm/js/listener.js')?>

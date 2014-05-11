@@ -11,137 +11,243 @@
 
 <div class="container">
     <h1><small>Список всех файлов</small></h1>
-    <div class="backgr">
-        <div class="row">
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Заявление (о поступлении)</h5>
-                    <a href="<?=URL::site('admin/files/download/statement')?>"><img src="<?=URL::site('public/adm/img/print/driving_card.png')?>" width="170px" height="180px" alt="Водительская карточка"/></a>
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('admin/files/print/statement')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Договор</h5>
-                    <a href="<?=URL::site('admin/files/download/contract')?>"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('admin/files/print/contract')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('admin/files/download/contract')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Квитанция</h5>
-                    <a href="<?=URL::site('admin/files/download/ticket')?>"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('admin/files/print/ticket')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('admin/files/download/ticket')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Личная карточка слушателя</h5>
-                    <a href="<?=URL::site('admin/files/download/personal_card')?>"><img src="<?=URL::site('public/img/admin/print/client_card.png')?>" width="170px" height="180px" alt="Личная карточка слушателя"/></a>
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Для слушателя <?=$checked_user?></a></li>
+            <li><a href="#tab2" data-toggle="tab">Для его группы <?=$checked_user_group?></a></li>
+            <li><a href="#tab3" data-toggle="tab">Пустые бланки</a></li>
+        </ul>
+        <div class="tab-content">
+            <!-- tab 1 - docs for listener -->
+            <div class="tab-pane active" id="tab1">
+                <div class="backgr">
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Заявление (о поступлении)</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/statement')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/statement.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('admin/files/print/personal_card')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('admin/files/download/personal_card')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/statement')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Заявление в ГИБДД</h5>
-                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Заявление в ГИБДД"/></a>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Договор</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/contract.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('/download/print/name')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/contract')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/contract')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Письмо в МРЭО ГИБДД</h5>
-                    <a href="#"><img src="<?=URL::site('public/adm/img/print/statement_mreo.png')?>" width="170px" height="180px" alt="Письмо в МРЭО ГИБДД"/></a>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Квитанция</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/ticket.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('/download/print/name')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/ticket')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/ticket')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Экзаменационный протокол</h5>
-                    <a href="#"><img src="<?=URL::site('public/adm/img/print/ekzamen.png')?>" width="170px" height="180px" alt="Экзаменационный протокол"/></a>
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Личная карточка слушателя</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/client_card.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('/download/print/name')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/personal_card')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/personal_card')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Список слушателей группы (образ.)</h5>
-                    <a href="#"><img src="<?=URL::site('public/adm/img/print/list_group_edu.png')?>" width="170px" height="180px" alt="Список слушателей группы (образ.)"/></a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('/download/print/name')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="span4">
-                <div class="doc_print">
-                    <h5>Список слушателей группы (мед.)</h5>
-                    <a href="#"><img src="<?=URL::site('public/adm/img/print/list_group_md.png')?>" width="170px" height="180px" alt="Список слушателей группы (мед.)"/></a>
+            <!-- tab 2 - docs for group -->
+            <div class="tab-pane" id="tab2">
+                <div class="backgr">
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Практика</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/group_practice.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
 
-                    <div class="btn-group-wrap">
-                        <div class="btn-group">
-                            <a href="<?=URL::site('/print/pdf')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
-                            <a href="<?=URL::site('/download/print/name')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                            <a href="#" rel="tooltip" title="Открыть" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a target="_blank" href="<?=URL::site('admin/files/print/group_practice')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/group_practice')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Медкомиссия</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/listmed')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/listmed.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a target="_blank" href="<?=URL::site('admin/files/print/listmed')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/listmed')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/listmed')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Книги</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/list_books')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/list_books.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a target="_blank" href="<?=URL::site('admin/files/print/list_books')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/list_books')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/list_books')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Оплата, документы</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/pay_doc.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a target="_blank" href="<?=URL::site('admin/files/print/pay_doc')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/pay_doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
+
+            <!-- tab 3 - empty blanks -->
+            <div class="tab-pane" id="tab3">
+                <div class="backgr">
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Заявление в АШ</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/statement.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('download/documents/Zaivlenie.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Договор</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/contract.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/Dogovor.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('download/documents/Dogovor.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Квитанция</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/ticket.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('download/documents/kvitanciya.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Путевой лист</h5>
+                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/waybill.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/waybill.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('download/documents/waybill.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
         </div>
     </div>
+
 
 </div>
 

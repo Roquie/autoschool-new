@@ -37,4 +37,16 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
 
     }
 
+    public function action_other()
+    {
+        $url = $this->request->query('url');
+
+        $this->ajax_data(
+            array(
+                 'file' => '',
+                 'url' => $url,
+            )
+        );
+    }
+
 }

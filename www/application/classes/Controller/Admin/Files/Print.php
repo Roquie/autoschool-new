@@ -55,6 +55,18 @@ class Controller_Admin_Files_Print extends Controller_Admin_Base
 
     }
 
+    public function action_other()
+    {
+        $url = $this->request->query('url');
+
+        HTTP::redirect(
+            $this->_convert_docx_url.
+            urlencode(
+                $url
+            ).'&type=printpdf'
+        );
+    }
+
     protected function _excel_to_html($path_to_xlsx)
     {
         $excel = PHPExcel_IOFactory::load($path_to_xlsx);

@@ -28,23 +28,32 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?=URL::site('admin/files')?>"> Список всех файлов</a></li>
                         <li class="divider"></li>
-                        <li><a href="<?=URL::site('admin/files/driver_card')?>"> Водительская карточка</a></li>
-                        <li><a href="<?=URL::site('admin/files/statement_in_gibdd')?>"> Заявление в ГИБДД</a></li>
-                        <li><a href="<?=URL::site('admin/files/mail_in_mreo_gibdd')?>"> Письмо в МРЭО ГИБДД</a></li>
-                        <li><a href="<?=URL::site('admin/files/exam_protocol')?>"> Экзаменационный протокол</a></li>
-                        <li><a href="<?=URL::site('admin/files/listeners_group')?>"> Список слушателей группы (образ. и место раб.)</a></li>
-                        <li><a href="<?=URL::site('admin/files/listeners_md')?>"> Список слушателей группы (медсправка)</a></li>
-                        <li class="divider"></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Слушатель <span style="margin: 0 10px 0 30px" class="badge"><?=$checked_user?></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?=URL::site('admin/files/download/statement')?>"> Заявление (о поступлении)</a></li>
+                                <li><a href="<?=URL::site('admin/files/download/contract')?>"> Договор</a></li>
+                                <li><a href="<?=URL::site('admin/files/download/ticket')?>"> Квитанция </a></li>
+                                <li><a href="<?=URL::site('admin/files/download/personal_card')?>"> Личная карточка </a></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge"><?=$checked_user_group?></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?=URL::site('admin/files/download/group_practice')?>"> Практика</a></li>
+                                <li><a href="<?=URL::site('admin/files/download/listmed')?>"> Медкомиссия</a></li>
+                                <li><a href="<?=URL::site('admin/files/download/list_books')?>"> Книги</a></li>
+                                <li><a href="<?=URL::site('admin/files/download/pay_doc')?>"> Оплата, документы</a></li>
+                            </ul>
+                        </li>
+
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Пустые бланки</a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?=URL::site('/download/documents/Zaivlenie.doc')?>"> Заявление в АШ</a></li>
                                 <li><a href="<?=URL::site('/download/documents/Dogovor.doc')?>"> Договор</a></li>
                                 <li><a href="<?=URL::site('/download/documents/kvitanciya.doc')?>"> Квитанция</a></li>
-                                <li><a href="<?=URL::site('admin/blanks/driver_card')?>"> Водительская карточка</a></li>
-                                <li><a href="<?=URL::site('admin/blanks/statement_in_gibdd')?>"> Заявление в ГИБДД</a></li>
-                                <li><a href="<?=URL::site('admin/blanks/contract')?>"> Договор со слушателем</a></li>
-                                <li><a href="<?=URL::site('admin/blanks/driving_rec')?>"> Карточка учета вождения</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -17,7 +17,7 @@
 
                 <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                 <div class="pull-left" style="margin-top: 5px">
-                    Баланс: <span id="sum_sendsms_balance">0.00</span>р. <a href="#" id="sendsms_balance" data-url="<?=URL::site('aramba/get_balance')?>" rel="tooltip" title="Обновить баланс" class="label"><i class="icon-refresh"></i></a>&nbsp;<a href="https://my.aramba.ru/Payment/AddRubles" target="_blank" rel="tooltip" title="Пополнить баланс" class="label"><i class="icon-plus-sign"></i></a>
+                    Баланс: <span id="sum_sendsms_balance">0.00</span>р. <a href="#" id="sendsms_balance" data-url="<?=URL::site('aramba/get_balance')?>" rel="tooltip1" title="Обновить баланс" class="label"><i class="icon-refresh"></i></a>&nbsp;<a href="https://my.aramba.ru/Payment/AddRubles" target="_blank" rel="tooltip1" title="Пополнить баланс" class="label"><i class="icon-plus-sign"></i></a>
                 </div>
                 <div class="tweet-button pull-right">
                     <button type="submit" class="btn btn-primary">

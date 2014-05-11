@@ -21,7 +21,7 @@
     </style>
     <div class="span6 hrenov_btn_block">
         <div class="btn-group pull-right">
-            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal" rel="tooltip" title="Просмотр отчета" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Просмотр</a>
+            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal" rel="tooltip" title="Просмотр отчета с примечаниями" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Общий список</a>
             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li><a href="<?=URL::site('admin/files/download/distrib')?>"><i class="icon-download"></i> Скачать</a></li>
@@ -29,7 +29,6 @@
                 <li><a target="_blank" href="<?=URL::site('admin/files/print/distrib')?>"><i class="icon-print"></i> Печать</a></li>
             </ul>
         </div>
-        <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" href="#desc_status" role="button" data-toggle="modal" class="btn desc_status pull-right <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i> Примечание</button>
     </div>
 </div>
 
@@ -62,6 +61,7 @@
                 <div class="btns pull-right">
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
+                    <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" href="#desc_status" role="button" data-toggle="modal" class="btn desc_status pull-right <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i></button>
                     <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></button>
                 </div>
             </div>

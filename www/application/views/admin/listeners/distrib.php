@@ -61,7 +61,7 @@
                 <div class="btns pull-right">
                     <a id="l_statement" href="#tab1" class="btn active" data-toggle="tab">Заявление</a>
                     <a id="l_contract" href="#tab2" class="btn" data-toggle="tab">Договор</a>
-                    <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" href="#desc_status" role="button" data-toggle="modal" class="btn desc_status pull-right <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i></button>
+                    <button id="l_delete" href="#desc_status" role="button" data-toggle="modal" class="btn desc_status <?=empty($list_users) ? 'disabled' : 'desc_st'?>" rel="tooltip" title="Описание отсутствующих данных"><i class="icon-edit"></i></button>
                     <button id="l_delete" data-url="<?=URL::site('admin/listeners/delete')?>" class="btn btn-danger <?=empty($list_users) ? 'disabled' : 'enb_dis'?>" rel="tooltip" title="Удалить слушателя"><i class="icon-trash"></i></button>
                 </div>
             </div>

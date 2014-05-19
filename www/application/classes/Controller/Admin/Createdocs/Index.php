@@ -56,6 +56,9 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
 
                     unset($listener['email'], $listener['csrf']);
 
+                    $listener['data_rojdeniya'] = Text::check_date($listener['data_rojdeniya']);
+                    $indy['data_rojdeniya'] = Text::check_date($indy['data_rojdeniya']);
+
                     $columns = array_keys($listener);
                     $columns[] = 'user_id';
 

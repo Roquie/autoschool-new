@@ -73,20 +73,21 @@ class Database_Query extends Kohana_Database_Query
                         break;
 
                         case Database::INSERT:
-                            preg_match('/INSERT INTO `(.*?)` VALUES /i', $sql, $result);
+                            preg_match('/INSERT INTO `(.*?)` /i', $sql, $result);
                         break;
 
                         case Database::DELETE:
                             preg_match('/DELETE FROM `(.*?)` WHERE /i', $sql, $result);
                         break;
                     }
+
+                    list($table) = array_slice($result, 1);
                 }
                 catch(Exception $e)
                 {
                     Log::instance()->add(Log::CRITICAL, 'API REGEPX ERROR - '.$e->getMessage());
                 }
 
-                list($table) = array_slice($result, 1);
 
                 $obj = new Sync($this->_type, $sql, $table, mysql_insert_id());
                 $obj->send();

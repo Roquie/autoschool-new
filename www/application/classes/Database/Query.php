@@ -1,4 +1,7 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php
+use PhpOffice\PhpWord\Exceptions\Exception;
+
+defined('SYSPATH') OR die('No direct script access.');
 
 class Database_Query extends Kohana_Database_Query
 {
@@ -59,8 +62,37 @@ class Database_Query extends Kohana_Database_Query
 
         if ($this->_type === Database::INSERT || $this->_type === Database::UPDATE || $this->_type === Database::DELETE)
         {
-            $obj = new Sync($this->_type, $sql, mysql_insert_id());
-            $obj->send();
+            if (Kohana::$config->load('settings.sync'))
+            {
+                try
+                {
+                    switch($this->_type)
+                    {
+                        case Database::UPDATE:
+                            preg_match('/UPDATE `(.*?)` SET /i', $sql, $result);
+                        break;
+
+                        case Database::INSERT:
+                            preg_match('/INSERT INTO `(.*?)` VALUES /i', $sql, $result);
+                        break;
+
+                        case Database::DELETE:
+                            preg_match('/DELETE FROM `(.*?)` WHERE /i', $sql, $result);
+                        break;
+                    }
+                }
+                catch(Exception $e)
+                {
+                    Log::instance()->add(Log::CRITICAL, 'API REGEPX ERROR - '.$e->getMessage());
+                }
+
+                list($table) = array_slice($result, 1);
+
+                $obj = new Sync($this->_type, $sql, $table, mysql_insert_id());
+                $obj->send();
+            }
+
+
         }
 
         return $result;

@@ -16,9 +16,10 @@ class Sync
     /**
      * @param $sql_str
      */
-    public function __construct($type, $sql_str, $last_insert_id = null)
+    public function __construct($type, $sql_str, $table, $last_insert_id = null)
     {
         $this->_sql_str = $sql_str;
+        $this->_table = $table;
         $this->_type = $type;
         $this->_last_insert_id = $last_insert_id;
         $this->_file = APPPATH.'download/xml/missed_requests.xml';
@@ -41,11 +42,13 @@ class Sync
             {
                 $query = $root->addChild('query', $this->_sql_str);
                 $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                $query->addAttribute('table', $this->_table);
                 $query->addAttribute('last_insert_id', $this->_last_insert_id);
             }
             else
             {
                 $query = $root->addChild('query', $this->_sql_str);
+                $query->addAttribute('table', $this->_table);
                 $query->addAttribute('type', $this->_type_word_assoc($this->_type));
             }
 
@@ -61,11 +64,13 @@ class Sync
                 {
                     $query = $load_xml->root->addChild('query', $this->_sql_str);
                     $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                    $query->addAttribute('table', $this->_table);
                     $query->addAttribute('last_insert_id', $this->_last_insert_id);
                 }
                 else
                 {
                     $query = $load_xml->root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('table', $this->_table);
                     $query->addAttribute('type', $this->_type_word_assoc($this->_type));
                 }
 
@@ -77,11 +82,13 @@ class Sync
                 {
                     $query = $root->addChild('query', $this->_sql_str);
                     $query->addAttribute('type', $this->_type_word_assoc($this->_type));
+                    $query->addAttribute('table', $this->_table);
                     $query->addAttribute('last_insert_id', $this->_last_insert_id);
                 }
                 else
                 {
                     $query = $root->addChild('query', $this->_sql_str);
+                    $query->addAttribute('table', $this->_table);
                     $query->addAttribute('type', $this->_type_word_assoc($this->_type));
                 }
 
@@ -95,43 +102,40 @@ class Sync
      */
     public function send()
     {
-        if (Kohana::$config->load('settings.sync'))
+        try
         {
-            try
+            set_time_limit(0);
+            ob_implicit_flush();
+
+            $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+            if ($socket < 0)
             {
-                set_time_limit(0);
-                ob_implicit_flush();
-
-                $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-
-                if ($socket < 0)
-                {
-                    throw new Exception('socket_create() failed: '.socket_strerror(socket_last_error())."\n");
-                }
-
-                list($address, $port) = explode(':', $this->_host);
-
-                $result = socket_connect($socket, $address, $port);
-
-                if (!$result)
-                {
-                    throw new Exception('socket_connect() failed: '.socket_strerror(socket_last_error())."\n");
-                }
-
-                $xml = $this->_create_xml();
-                socket_write($socket, $xml, strlen($xml));
-                socket_close($socket);
-
-                /*Request::factory($this->_host)
-                    ->method(Request::POST)
-                    ->body()
-                    ->headers('Content-Type', 'text/xml')
-                    ->execute();*/
+                throw new Exception('socket_create() failed: '.socket_strerror(socket_last_error()));
             }
-            catch(Exception $e)
+
+            list($address, $port) = explode(':', $this->_host);
+
+            $result = socket_connect($socket, $address, $port);
+
+            if (!$result)
             {
-                $this->_create_xml(false);
+                throw new Exception('socket_connect() failed: '.socket_strerror(socket_last_error()));
             }
+
+            $xml = $this->_create_xml();
+            socket_write($socket, $xml, strlen($xml));
+            socket_close($socket);
+
+            /*Request::factory($this->_host)
+                ->method(Request::POST)
+                ->body()
+                ->headers('Content-Type', 'text/xml')
+                ->execute();*/
+        }
+        catch(Exception $e)
+        {
+            $this->_create_xml(false);
         }
     }
 

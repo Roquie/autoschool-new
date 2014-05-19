@@ -1,3 +1,4 @@
+<?=HTML::script('adm/js/nav.js')?>
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="nav-collapse">
@@ -31,20 +32,77 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Слушатель <span style="margin: 0 10px 0 30px" class="badge"><?=$checked_user?></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?=URL::site('admin/files/download/statement')?>"> Заявление (о поступлении)</a></li>
-                                <li><a href="<?=URL::site('admin/files/download/contract')?>"> Договор</a></li>
-                                <li><a href="<?=URL::site('admin/files/download/ticket')?>"> Квитанция </a></li>
-                                <li><a href="<?=URL::site('admin/files/download/personal_card')?>"> Личная карточка </a></li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Заявление (о поступлении) </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/statement')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=statement')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/statement')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Договор </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/contract')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=contract')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/contract')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Квитанция </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/ticket')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=ticket')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/ticket')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Личная карточка </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/personal_card')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=personal_card')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/personal_card')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
 
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge"><?=$checked_user_group?></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?=URL::site('admin/files/download/group_practice')?>"> Практика</a></li>
-                                <li><a href="<?=URL::site('admin/files/download/listmed')?>"> Медкомиссия</a></li>
-                                <li><a href="<?=URL::site('admin/files/download/list_books')?>"> Книги</a></li>
-                                <li><a href="<?=URL::site('admin/files/download/pay_doc')?>"> Оплата, документы</a></li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Практика </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/group_practice')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=group_practice')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/group_practice')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Медкомиссия </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/listmed')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=listmed')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/listmed')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Книги </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/list_books')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=list_books')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/list_books')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Оплата, документы </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="<?=URL::site('admin/files/download/pay_doc')?>"> Скачать файл</a></li>
+                                        <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=pay_doc')?>"> Просмотреть</a></li>
+                                        <li><a target="_blank" href="<?=URL::site('admin/files/print/pay_doc')?>"> Распечатать</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
 

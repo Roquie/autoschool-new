@@ -33,7 +33,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/statement')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/statement')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/statement')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/statement')?>" data-type="statement" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/contract')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/contract')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-type="contract"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/ticket')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/ticket')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-type="ticket" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/personal_card')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/personal_card')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-type="personal_card"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                     <div class="btn-group">
                                         <a target="_blank" href="<?=URL::site('admin/files/print/group_practice')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/group_practice')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-type="group_practice"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                     <div class="btn-group">
                                         <a target="_blank" href="<?=URL::site('admin/files/print/listmed')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/listmed')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/listmed')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/listmed')?>" data-type="listmed"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                     <div class="btn-group">
                                         <a target="_blank" href="<?=URL::site('admin/files/print/list_books')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/list_books')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/list_books')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/list_books')?>" data-type="list_books"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +157,7 @@
                                     <div class="btn-group">
                                         <a target="_blank" href="<?=URL::site('admin/files/print/pay_doc')?>" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('admin/files/download/pay_doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-type="pay_doc" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('download/documents/Zaivlenie.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-type="empty_blank_statement" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/Dogovor.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('download/documents/Dogovor.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-type="empty_blank_contract"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('download/documents/kvitanciya.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-type="empty_blank_ticket" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@
                                     <div class="btn-group">
                                         <a href="<?=URL::site('admin/files/print/other?url='.URL::site('download/documents/waybill.doc'))?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
                                         <a href="<?=URL::site('download/documents/waybill.doc')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
-                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-type="empty_blank_waybill" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
                                     </div>
                                 </div>
                             </div>

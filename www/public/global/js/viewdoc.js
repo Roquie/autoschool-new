@@ -19,4 +19,16 @@ $(function() {
      * Перенос модального окна за пределы видимости div#wrap
      */
     $('#view_doc_modal').appendTo($('body'));
+
+    var type_lookjs = getParameterByName('lookjs');
+
+    if(type_lookjs)
+    {
+        setTimeout(function()
+        {
+            $('[data-type='+type_lookjs+']').trigger('click');
+        }, 600);
+    }
+
+
 });

@@ -69,10 +69,10 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
 
             $result = ORM::factory('Listeners', $id);
 
-            if ($this->request->post('distrib') == '0')
+            /*if ($this->request->post('distrib') == '0')
             {
-                Session::instance()->set('checked_user', $result->user_id);
-            }
+            }*/
+            Session::instance()->set('checked_user', $result->user_id);
 
             $data['contract'] = array();
 

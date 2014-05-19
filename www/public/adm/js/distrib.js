@@ -52,6 +52,7 @@ $(function() {
                     status.addClass('disabled').removeClass('click');
                 },
                 success : function(response) {
+
                     if (response.status == 'success') {
                         status.find('i').remove();
                         status.addClass('disabled').removeClass('click').data('increase', false);
@@ -317,7 +318,7 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
                     field.val(value);
                 }
         });
-
+        $('.selected_listener').find('p').text($this.next('span').text());
     }
     if (response.status == 'error')
     {

@@ -1,4 +1,7 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+use PhpOffice\PhpWord\Exceptions\Exception;
+
+defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
 
@@ -138,10 +141,17 @@ Kohana::modules(array(
 
 	));
 
+try
+{
+    File::chmod_recursive(APPPATH.'cache/', 775);
+    File::chmod_recursive(APPPATH.'download/', 775);
+    File::chmod_recursive(APPPATH.'templates/', 775);
+}
+catch (Exception $e)
+{
+    die('Поставьте права 775 на папки 1) '.APPPATH.'cache/'.' 2) '.APPPATH.'download/'.' 3) '.APPPATH.'templates/');
+}
 
-File::chmod_recursive(APPPATH.'cache/', 775);
-File::chmod_recursive(APPPATH.'download/', 775);
-File::chmod_recursive(APPPATH.'templates/', 775);
 
 
 /**

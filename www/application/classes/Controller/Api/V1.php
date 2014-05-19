@@ -42,6 +42,9 @@ class Controller_Api_V1 extends Controller
     }
 
 
+    /**
+     * метод для тестов. Сюда тупо слать запросы
+     */
     public function action_test()
     {
         $post = $this->request->post();
@@ -55,6 +58,9 @@ class Controller_Api_V1 extends Controller
         );
     }
 
+    /**
+     * задать ip адрес куда стучатся сайту с запросами
+     */
     public function action_set_remote_host()
     {
         $result = $this->_sttg->set('fat_client',
@@ -71,6 +77,9 @@ class Controller_Api_V1 extends Controller
         }
     }
 
+    /**
+     *  метод ПОДТВЕРЖДАЕТ что ты забрал данные по методу get_missed_data
+     */
     public function action_missed_data_ok()
     {
         if (file_exists($this->_file))
@@ -86,6 +95,11 @@ class Controller_Api_V1 extends Controller
         }
     }
 
+    /**
+     * забрать все данные,
+     * которые не дошли до толстого клиента.
+     * После того как успешно их забрал обратиться к методу missed_data_ok
+     */
     public function action_get_missed_data()
     {
         if (file_exists($this->_file))
@@ -104,6 +118,11 @@ class Controller_Api_V1 extends Controller
 
     }
 
+    /**
+     * response aga
+     * @param string $status
+     * @param string $msg
+     */
     protected function _response($status = 'success', $msg = 'all be okay')
     {
         $root = $this->_xml->addChild('root');

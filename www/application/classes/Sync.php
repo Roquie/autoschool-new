@@ -99,18 +99,40 @@ class Sync
         {
             try
             {
-                Request::factory($this->_host)
+                set_time_limit(0);
+                ob_implicit_flush();
+
+                $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+
+                if ($socket < 0)
+                {
+                    throw new Exception('socket_create() failed: '.socket_strerror(socket_last_error())."\n");
+                }
+
+                list($address, $port) = explode(':', $this->_host);
+
+                $result = socket_connect($socket, $address, $port);
+
+                if (!$result)
+                {
+                    throw new Exception('socket_connect() failed: '.socket_strerror(socket_last_error())."\n");
+                }
+
+                $xml = $this->_create_xml();
+                socket_write($socket, $xml, strlen($xml));
+                socket_close($socket);
+
+                /*Request::factory($this->_host)
                     ->method(Request::POST)
-                    ->body($this->_create_xml())
+                    ->body()
                     ->headers('Content-Type', 'text/xml')
-                    ->execute();
+                    ->execute();*/
             }
             catch(Exception $e)
             {
                 $this->_create_xml(false);
             }
         }
-
     }
 
     protected function _type_word_assoc($type)

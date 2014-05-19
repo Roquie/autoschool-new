@@ -2,6 +2,19 @@
 
 class File extends Kohana_File
 {
+
+    public static function chmod_recursive($pathname, $filemode)
+    {
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($pathname));
+
+        foreach($iterator as $item)
+        {
+            $r = chmod($item, $filemode);
+        }
+
+        return $r;
+    }
+
     /**
      * @param      $dir папка с файлами в которой сканировать все
      * @param null $byExt указывать расширение без точки

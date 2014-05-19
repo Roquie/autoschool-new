@@ -139,6 +139,10 @@ Kohana::modules(array(
 	));
 
 
+File::chmod_recursive(APPPATH.'cache/', 775);
+File::chmod_recursive(APPPATH.'download/', 775);
+File::chmod_recursive(APPPATH.'templates/', 775);
+
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

@@ -141,16 +141,22 @@ Kohana::modules(array(
 
 	));
 
-try
+/*try
 {
-    File::chmod_recursive(APPPATH.'cache/', 775);
-    File::chmod_recursive(APPPATH.'download/', 775);
-    File::chmod_recursive(APPPATH.'templates/', 775);
+    $dir_writable = substr(sprintf('%o', fileperms(APPPATH.'cache/')), -4) == "0774" ? "true" : "false";
+
+    if (!$dir_writable)
+    {
+        File::chmod_recursive(APPPATH.'cache/', 775);
+        File::chmod_recursive(APPPATH.'download/', 775);
+        File::chmod_recursive(APPPATH.'templates/', 775);
+    }
+
 }
 catch (Exception $e)
 {
     die('Поставьте права 775 на папки 1) '.APPPATH.'cache/'.' 2) '.APPPATH.'download/'.' 3) '.APPPATH.'templates/');
-}
+}*/
 
 
 

@@ -21,12 +21,22 @@
     </style>
     <div class="span6 hrenov_btn_block">
         <div class="btn-group pull-right">
-            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal" rel="tooltip" title="Просмотр отчета с примечаниями" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Общий список</a>
+            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal" rel="tooltip" title="Просмотр отчета с примечаниями" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Опис. недост. док-в</a>
             <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
             <ul class="dropdown-menu">
                 <li><a href="<?=URL::site('admin/files/download/distrib')?>"><i class="icon-download"></i> Скачать</a></li>
                 <li class="divider"></li>
                 <li><a target="_blank" href="<?=URL::site('admin/files/print/distrib')?>"><i class="icon-print"></i> Печать</a></li>
+            </ul>
+        </div>
+
+        <div class="btn-group pull-right" style="margin-right: 5px">
+            <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib_all_info')?>" data-toggle="modal" rel="tooltip" title="Просмотр всей информации" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i> Список всех</a>
+            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="<?=URL::site('admin/files/download/distrib_all_info')?>"><i class="icon-download"></i> Скачать</a></li>
+                <li class="divider"></li>
+                <li><a target="_blank" href="<?=URL::site('admin/files/print/distrib_all_info')?>"><i class="icon-print"></i> Печать</a></li>
             </ul>
         </div>
     </div>

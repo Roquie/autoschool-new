@@ -35,6 +35,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             'create_list_books',
             'create_ekz_protokol',
             'create_distrib',
+            'create_distrib_all_info',
         );
 
         if (in_array($this->request->action(), $internal))
@@ -949,6 +950,139 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             json_encode(array('file' => 'temp/'.$file))
         );
 
+    }
+
+    public function action_create_distrib_all_info()
+    {
+        $listeners = new Model_Listeners();
+        $distrib = $listeners->where('status', '<', 3)->find_all();
+
+        $ws = new Spreadsheet(
+            array(
+                'author'       => 'auto.mpt.ru/admin',
+                'title'        => 'Список всех слушателей подавших заявку',
+            ));
+
+        $ws->set_active_sheet(0);
+        $as = $ws->get_active_sheet();
+        $as->setTitle('Неутвержденные слушатели');
+
+        $as->mergeCells('A1:N1');
+        $as->setCellValue('A1', 'Список всех слушателей подавших заявку');
+        $as->getStyle("A1:N1")->getFont()->setSize(19);
+        $as->getStyle("A1:N1")->getFont()->setBold(true);
+
+        $as->getStyle("A1:N3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $as->getStyle("A1:N3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+        $styleArray = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            ),
+            'font' => array(
+                'bold' => true,
+                'size' => 10
+            )
+        );
+        $as->getStyle("A3:N3")->applyFromArray($styleArray);
+
+
+        $as->getColumnDimension('A')->setWidth(5);
+        $as->getRowDimension('1')->setRowHeight(40);
+        $as->getRowDimension('3')->setRowHeight(30);
+
+        $as->getColumnDimension('B')->setWidth(33);
+        $as->getColumnDimension('C')->setWidth(15);
+        $as->getColumnDimension('D')->setWidth(13);
+        $as->getColumnDimension('E')->setWidth(7);
+        $as->getColumnDimension('F')->setWidth(15);
+        $as->getColumnDimension('G')->setWidth(30);
+        $as->getColumnDimension('H')->setWidth(10);
+        $as->getColumnDimension('I')->setWidth(8);
+        $as->getColumnDimension('J')->setWidth(8);
+        $as->getColumnDimension('K')->setWidth(12);
+        $as->getColumnDimension('L')->setWidth(30);
+        $as->getColumnDimension('M')->setWidth(20);
+
+
+        $data[3] = array(
+            '№',
+            'Фамилия Имя Отчество',
+            'Tел.моб.',
+            'Дата рождения',
+            'Гр-во',
+            'Место рождения',
+            'Адр. регистрации',
+            'Врем. рег-я',
+            'П. серия',
+            'П. номер',
+            'Дата выдачи',
+            'Кем выдан',
+            'Email',
+            'Обр-ие',
+        );
+
+        $i = 0;
+        foreach ($distrib as $k => $value)
+        {
+            $korpys = isset($value->korpys) ? 'к. '.$value->korpys : null;
+            ++$i;
+            $data[$row = $k+4] = array(
+                $i,
+                UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
+                $value->tel,
+                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                $value->national->name,
+                $value->mesto_rojdeniya,
+                'регион: '.$value->region.
+                ' насел. пункт: '.$value->nas_pynkt.
+                ', район: '.$value->rion.
+                ', ул. '.$value->street.
+                ', д. '.$value->dom.
+                $korpys
+                .' кв. '.$value->kvartira,
+                isset($value->vrem_reg) ? 'Да' : 'Нет',
+                $value->document_seriya,
+                $value->document_nomer,
+                $value->document_data_vydachi,
+                $value->document_kem_vydan,
+                $value->user->email,
+                $value->edu->name,
+            );
+
+            $styleArray = array(
+                'borders' => array(
+                    'allborders' => array(
+                        'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    ),
+                ),
+                'alignment' => array(
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                ),
+                'font' => array(
+                    'size' => 10
+                )
+            );
+
+            $as->getStyle('A'.$row.':N'.$row)->applyFromArray($styleArray);
+        }
+
+        $ws->set_data($data, false);
+
+        $as->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        $as->getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+        $as->getPageSetup()->setFitToPage(true);
+        $as->getPageSetup()->setFitToWidth(1);
+        $as->getPageSetup()->setFitToHeight(0);
+
+        $file = $ws->save(array('name' => 'distrib_all_info', 'format' => 'Excel2007', 'path' => APPPATH.'download/temp/'));
+
+        $this->response->body(
+            json_encode(array('file' => 'temp/'.$file))
+        );
     }
 
 }

@@ -82,15 +82,16 @@ class Database_Query extends Kohana_Database_Query
                     }
 
                     list($table) = array_slice($result, 1);
+
+                    $obj = new Sync($this->_type, $sql, $table, mysql_insert_id());
+                    $obj->send();
                 }
                 catch(Exception $e)
                 {
-                    Log::instance()->add(Log::CRITICAL, 'API REGEPX ERROR - '.$e->getMessage());
+                    Log::instance()->add(Log::CRITICAL, 'API REGEX ERROR - '.$e->getMessage());
                 }
 
 
-                $obj = new Sync($this->_type, $sql, $table, mysql_insert_id());
-                $obj->send();
             }
 
 

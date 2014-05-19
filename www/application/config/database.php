@@ -5,7 +5,7 @@ return array(
     (
         'type'       => 'MySQL',
         'connection' => array(
-            'hostname'   => 'pegas.beget.ru',
+            'hostname'   => '5.101.153.30',
             'username'   => 'melnik5g_rqmpt',
             'password'   => '123qweasdzxc123',
             'persistent' => false,

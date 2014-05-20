@@ -30,7 +30,7 @@
                         <li><a href="<?=URL::site('admin/files')?>"> Список всех файлов</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Слушатель <span style="margin: 0 10px 0 30px" class="badge"><?=$checked_user?></span></a>
+                            <a tabindex="-1" href="#">Слушатель <span style="margin: 0 10px 0 30px" class="badge" id="listener_slctd"><?=$checked_user?></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Заявление (о поступлении) </a>
@@ -68,7 +68,7 @@
                         </li>
 
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge"><?=$checked_user_group?></span></a>
+                            <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge" id="group_slctd"><?=$checked_user_group?></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Практика </a>

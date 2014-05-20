@@ -11,21 +11,30 @@
             <div class="row">
                 <div class="span3">
                     <p class="custom_p">Начало занятий:</p>
-                    <a href="#">01.01.13</a>
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="data_start" id="data_rojdeniya" style="width: 75%">
+                        <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
                 <div class="span3">
                     <p class="custom_p">Окончание занятий:</p>
-                    <a href="#">01.01.13</a>
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="data_end" id="data_rojdeniya" style="width: 75%">
+                        <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
                 <div class="span2">
                     <p class="custom_p">Начало вождения:</p>
-                    <a href="#">01.01.13</a>
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
+                        <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 20px">
                 <div class="span3">
                     <p class="custom_p">Преподаватель ПДД</p>
-                    <a href="#">Шуверов В.В.</a>
+                    <select name="pdd_teacher" id=""></select>
                 </div>
                 <div class="span3">
                     <p class="custom_p">Преподаватель ТУ и ТО:</p>

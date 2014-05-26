@@ -69,34 +69,29 @@ class Database_Query extends Kohana_Database_Query
                     switch($this->_type)
                     {
                         case Database::UPDATE:
-                            preg_match('/UPDATE `(.*?)` SET /i', $sql, $result);
+                            preg_match('/UPDATE `(.*?)` SET /i', $sql, $preg_result);
                         break;
 
                         case Database::INSERT:
-                            preg_match('/INSERT INTO `(.*?)` /i', $sql, $result);
+                            preg_match('/INSERT INTO `(.*?)` /i', $sql, $preg_result);
                         break;
 
                         case Database::DELETE:
-                            preg_match('/DELETE FROM `(.*?)` WHERE /i', $sql, $result);
+                            preg_match('/DELETE FROM `(.*?)` WHERE /i', $sql, $preg_result);
                         break;
                     }
 
-                    list($table) = array_slice($result, 1);
+                    list($table) = array_slice($preg_result, 1);
 
-                    $obj = new Sync($this->_type, utf8_decode($sql), $table, mysql_insert_id());
+                    $obj = new Sync($this->_type, utf8_encode($sql), $table, mysql_insert_id());
                     $obj->send();
                 }
                 catch(Exception $e)
                 {
                     Log::instance()->add(Log::CRITICAL, 'API REGEX ERROR - '.$e->getMessage());
                 }
-
-
             }
-
-
         }
-
         return $result;
     }
 }

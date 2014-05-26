@@ -138,7 +138,7 @@ class Controller_Users extends Controller_Main_Base
             $valid->rule('imya', 'alpha', array(':value', true));
             $valid->rule('imya', 'min_length', array(':value', 2));
             $valid->rule('imya', 'max_length', array(':value', 50));
-            $valid->rule('otch', 'not_empty');
+            //$valid->rule('otch', 'not_empty');
             $valid->rule('otch', 'alpha', array(':value', true));
             $valid->rule('otch', 'min_length', array(':value', 2));
             $valid->rule('otch', 'max_length', array(':value', 50));
@@ -162,6 +162,9 @@ class Controller_Users extends Controller_Main_Base
                                     'email',
                                 ))
                              ->pk();
+
+                    $users->add('roles', ORM::factory('role')->where('name', '=', 'login')->find());
+                    $users->add('roles', ORM::factory('role')->where('name', '=', 'admin')->find());
 
                     try
                     {
@@ -190,17 +193,27 @@ class Controller_Users extends Controller_Main_Base
                     try
                     {
                         Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
+                            //->setCfg(Kohana::$config->load('email.smtp')->as_array())
                              ->to($post['email'])
                              ->from('autompt@gmail.ru', 'Автошкола МПТ')
                              ->send();
                     }
                     catch(Swift_SwiftException $e)
                     {
-                        die($e->getMessage());
+
+                       /* Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
+                            //->setCfg(null)
+                            ->to($post['email'])
+                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                            ->send();*/
+
+                        Log::instance()->add(Log::WARNING, __METHOD__.' - '.$e->getMessage());
                     }
 
-                    $role = array(1, 3);
-                    $users->add('roles', $role);
+
+
+                    //$role = array(1, 3);
+                    //$users->add('roles', $role);
 
                     $a->force_login($post['email']);
                     HTTP::redirect('/profile');

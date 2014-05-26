@@ -130,7 +130,7 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
             $valid->rule('imya', 'alpha', array(':value', true));
             $valid->rule('imya', 'min_length', array(':value', 2));
             $valid->rule('imya', 'max_length', array(':value', 50));
-            $valid->rule('otch', 'not_empty');
+            //$valid->rule('otch', 'not_empty');
             $valid->rule('otch', 'alpha', array(':value', true));
             $valid->rule('otch', 'min_length', array(':value', 2));
             $valid->rule('otch', 'max_length', array(':value', 50));

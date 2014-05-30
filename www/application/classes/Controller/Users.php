@@ -277,7 +277,7 @@ class Controller_Users extends Controller_Main_Base
                             try
                             {
                                 Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
-                                    ->to($post['email'])
+                                    ->to($this->request->post('tel_or_email'))
                                     ->from('autompt@gmail.ru', 'Автошкола МПТ')
                                     ->send();
                             }
@@ -308,7 +308,7 @@ class Controller_Users extends Controller_Main_Base
 
                         Aramba::factory()
                             ->to($listener->tel)
-                            ->msg('Новый пароль. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener->tel.', пароль: '.$newpass)
+                            ->msg('Ваш новый пароль. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener->tel.', пароль: '.$newpass)
                             ->send();
 
                         $success = 'Новый пароль отправлен вам в смс.';

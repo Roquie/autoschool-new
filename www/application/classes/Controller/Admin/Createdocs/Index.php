@@ -10,20 +10,15 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $listener = $this->request->post('statement');
         $indy  = $this->request->post('contract');
 
-/*        $this->ajax_data($listener, 'error');
-        exit;*/
-
         if (Security::is_token($listener['csrf']) && $this->request->method() === Request::POST)
         {
-            $newpass = Text::random();
-
             $valid = new Validation(
                 Arr::map(
                     'Security::xss_clean',
                     Arr::map('trim', $listener)
                 )
             );
-            $valid->rule('famil', 'not_empty');
+            //$valid->rule('famil', 'not_empty');
             $valid->rule('famil', 'alpha', array(':value', true));
             $valid->rule('famil', 'min_length', array(':value', 2));
             $valid->rule('famil', 'max_length', array(':value', 50));
@@ -37,9 +32,23 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
             $valid->rule('otch', 'max_length', array(':value', 50));
             $valid->rule('tel', 'not_empty');
             $valid->rule('tel', 'phone', array(':value', 11));
+            $valid->rule('tel', function(Validation $array, $field, $value)
+                {
+                    $l = new Model_Listeners();
+
+                    if ( ! $l->unique($field, $value))
+                    {
+                        $array->error($field, 'found_tel');
+                    }
+
+                },
+                array(':validation', ':field', ':value')
+            );
 
             if ($valid->check())
             {
+                $newpass = Text::random();
+
                 $email = $listener['email'];
                 try
                 {
@@ -49,19 +58,21 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                             array(
                                  'password' => $newpass,
                                  'password_confirm' => $newpass,
-                                 'email' => $email
+                                 'email' => $email,
+                                 'hash' => md5(uniqid())
                             ),
                             array(
                                  'password',
                                  'email',
-                            ))->pk();
-
+                                 'hash'
+                            ))
+                        ->pk();
 
                     unset($listener['email'], $listener['csrf']);
 
-                    $listener['data_rojdeniya'] = Text::getDateUpdate($listener['data_rojdeniya']);
-                    $listener['document_data_vydachi'] = Text::getDateUpdate($listener['document_data_vydachi']);
-                    $indy['document_data_vydachi'] = Text::getDateUpdate($indy['document_data_vydachi']);
+                    $listener['data_rojdeniya'] = Text::check_date($listener['data_rojdeniya']);
+                    $listener['document_data_vydachi'] = Text::check_date($listener['document_data_vydachi']);
+                    $indy['document_data_vydachi'] = Text::check_date($indy['document_data_vydachi']);
 
                     $columns = array_keys($listener);
                     $columns[] = 'user_id';
@@ -95,6 +106,9 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                                 ->columns($columns)
                                 ->values($indy)
                                 ->execute();
+
+                            $role = array(1, 3);
+                            $users->add('roles', $role);
                         }
                         catch(Database_Exception $e)
                         {
@@ -102,28 +116,44 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                         }
                     }
 
-
-                    $mail_content = View::factory('tmpmail/profile/registr')
-                                        ->set('username', $listener['imya'])
-                                        ->set('login', $email)
-                                        ->set('pass', $newpass);
-
-                    $message = View::factory('tmpmail/template', compact('mail_content'));
-
-                    try
+                    if (empty($email))
                     {
-                        Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
-                             ->to($email)
-                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
-                             ->send();
+                        $status = Aramba::factory()
+                            ->to($listener['tel'])
+                            ->msg('Здравствуйте '.$listener['imya'].'! Вас зарегистрировал администратор Автошколы МПТ. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener['tel'].', пароль: '.$newpass)
+                            ->send();
+
+                        if ($status)
+                        {
+                            $this->ajax_msg('Юзер добавлен. Смс-ка отправлена');
+                        }
+                        else
+                        {
+                            $this->ajax_msg('Возникла какая-то ошибка, см. логи ...', 'error');
+                        }
                     }
-                    catch(Swift_SwiftException $e)
+                    else
                     {
-                        $this->ajax_msg($e->getMessage(), 'error');
+                        $mail_content = View::factory('tmpmail/profile/registr')
+                            ->set('username', $listener['imya'])
+                            ->set('login', $email)
+                            ->set('pass', $newpass);
+
+                        $message = View::factory('tmpmail/template', compact('mail_content'));
+
+                        try
+                        {
+                            Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
+                                ->to($email)
+                                ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                ->send();
+                        }
+                        catch(Swift_SwiftException $e)
+                        {
+                            $this->ajax_msg($e->getMessage(), 'error');
+                        }
                     }
 
-                    $role = array(1, 3);
-                    $users->add('roles', $role);
 
                     $this->ajax_msg('Пользователь добавлен');
                 }

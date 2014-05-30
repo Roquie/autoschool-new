@@ -14,9 +14,9 @@
                         <div class="span5 pull-left">
                             <legend>Вход в личный кабинет</legend>
                             <div class="control-group">
-                                <label class="control-label"  for="username">Email</label>
+                                <label class="control-label" for="username">Email (или моб. тел)</label>
                                 <div class="controls">
-                                    <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large" autocomplete="off">
+                                    <input type="text" id="email" name="tel_or_email" class="input-large" autocomplete="off">
                                 </div>
                             </div>
                             <div class="control-group">

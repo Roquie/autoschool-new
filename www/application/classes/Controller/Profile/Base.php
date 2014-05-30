@@ -23,6 +23,8 @@ class Controller_Profile_Base extends Controller_Template
             $user->listener->as_array()
         );
 
+        Session::instance()->set('checked_user', $a->get_user()->id);
+
         View::bind_global('user', $mergered);
 
         $styles = array(

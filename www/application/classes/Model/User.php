@@ -9,6 +9,7 @@ class Model_User extends Model_Auth_User
     protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
         'email' => array('data_type' => 'string', 'is_nullable' => false),
+        'hash' => array('data_type' => 'string', 'is_nullable' => false),
         'photo' => array('data_type' => 'string', 'is_nullable' => false),
         'password' => array('data_type' => 'string', 'is_nullable' => false),
         'logins' => array('data_type' => 'int', 'is_nullable' => false),
@@ -34,7 +35,7 @@ class Model_User extends Model_Auth_User
                 array('digit')
             ),
             'email' => array(
-                array('not_empty'),
+                //array('not_empty'),
                 array('email'),
                 array(array($this, 'unique'), array('email', ':value')),
             ),
@@ -124,4 +125,17 @@ class Model_User extends Model_Auth_User
 
         return $arr;
     }
+
+    /**
+     * Allows a model use both email and username as unique identifiers for login
+     *
+     * @param   string  unique value
+     * @return  string  field name
+     */
+    public function unique_key($value)
+    {
+        return Valid::email($value) ? 'email' : 'hash';
+    }
+
+
 }

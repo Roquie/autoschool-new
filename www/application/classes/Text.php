@@ -2,6 +2,36 @@
 
 class Text extends Kohana_Text
 {
+
+
+
+    public static function format_phone($phone)
+    {
+        $number = static::removeThanDigits($phone);
+
+        return sprintf('+7 (%s) %s-%s-%s',
+                        substr($number, 1, 3),
+                        substr($number, 4, 3),
+                        substr($number, 7, 2),
+                        substr($number, 9, 2)
+        );
+    }
+
+
+
+    /**
+     * удаляет все, кроме цифр из строки
+     * @param $str
+     *
+     * @return mixed
+     */
+    public static function removeThanDigits($str)
+    {
+        return preg_replace('/\D+/', '', $str);
+    }
+
+
+
     /**
      * хэшируем, хэшируем ИБ гарантируем
      * @param $pass

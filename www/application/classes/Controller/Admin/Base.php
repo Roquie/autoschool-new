@@ -8,7 +8,7 @@ class Controller_Admin_Base extends Controller_Template
     {
         parent::before();
 
-        if (!Auth::instance()->logged_in('admin'))
+        if (!Auth::instance()->logged_in('admin') && (Request::initial() === Request::current()))
         {
             throw new HTTP_Exception_404();
         }

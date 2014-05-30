@@ -25,7 +25,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Заявление (о поступлении)</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/statement')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/statement')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/statement.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -41,7 +41,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Договор</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/contract')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/contract.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -57,7 +57,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Квитанция</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/ticket')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/ticket.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -75,7 +75,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Личная карточка слушателя</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/personal_card')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/client_card.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -99,7 +99,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Практика</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/group_practice')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/group_practice.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -115,7 +115,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Медкомиссия</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/listmed')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/listmed')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/listmed.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -131,7 +131,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Книги</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/list_books')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/list_books')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/list_books.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -149,7 +149,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Оплата, документы</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/pay_doc')?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/pay_doc.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -174,7 +174,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Заявление в АШ</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Zaivlenie.doc'))?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/statement.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -190,7 +190,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Договор</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/Dogovor.doc'))?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/contract.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -206,7 +206,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Квитанция</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/kvitanciya.doc'))?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/ticket.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 
@@ -224,7 +224,7 @@
                         <div class="span4">
                             <div class="doc_print">
                                 <h5>Путевой лист</h5>
-                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-toggle="modal">
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('download/documents/waybill.doc'))?>" data-toggle="modal">
                                     <img src="<?=URL::site('public/adm/img/print/waybill.png')?>" width="170px" height="180px" alt=""/>
                                 </a>
 

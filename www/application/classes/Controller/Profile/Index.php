@@ -347,32 +347,17 @@ class Controller_Profile_Index extends Controller_Profile_Base
     public function action_view_doc()
     {
         $type = $this->request->param('id');
-
+        $this->auto_render = false;
         switch($type)
         {
             case 'contract':
-                $this->ajax_data(
-                    array(
-                         'file' => $this->_create_contract(),
-                         'url' => URL::site('viewdoc'),
-                    )
-                );
+                echo Request::factory('admin/files/look/contract')->execute();
             break;
             case 'statement':
-                $this->ajax_data(
-                    array(
-                         'file' => $this->_create_statement(),
-                         'url' => URL::site('viewdoc'),
-                    )
-                );
+                echo Request::factory('admin/files/look/statement')->execute();
             break;
             case 'ticket':
-                $this->ajax_data(
-                    array(
-                         'file' => $this->_create_ticket(),
-                         'url' => URL::site('viewdoc'),
-                    )
-                );
+                echo Request::factory('admin/files/look/ticket')->execute();
             break;
         }
     }
@@ -384,202 +369,21 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
     public function action_download_statement()
     {
-        $file = $this->_create_statement();
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
+        Request::factory('admin/files/download/statement')->execute();
     }
 
     public function action_download_contract()
     {
-        $file = $this->_create_contract();
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
+        Request::factory('admin/files/download/contract')->execute();
     }
 
     public function action_download_ticket()
     {
-        $file = $this->_create_ticket();
-
-        $this->response->send_file(
-            APPPATH.'download/'.$file, null, array('delete' => true)
-        );
+        Request::factory('admin/files/download/ticket')->execute();
     }
 
-    protected function _create_contract()
-    {
-        $listener = ORM::factory('User', Auth::instance()->get_user()->id)->listener;
-        $indy = ORM::factory('User', Auth::instance()->get_user()->id)->listener->indy;
 
-        $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
-
-        $obj = new TemplateDocx(APPPATH.'templates/contract/dogovor.docx');
-
-        if ($listener->is_individual)
-        {
-            $obj->setValueArray(
-                array(
-                     'Customer' => $indy->famil.' '.$indy->imya.' '.$indy->otch,
-                     'CSeriya' => $indy->document_seriya,
-                     'CNomer' => $indy->document_nomer,
-                     'CVidan' => $indy->document_kem_vydan,
-                     'CAddress' =>
-                         'регион: '.$indy->region.
-                         ' насел. пункт: '.$indy->nas_pynkt.
-                         ', район: '.$indy->rion.
-                         ', ул. '.$indy->street.
-                         ', д. '.$indy->dom.
-                         $korpys
-                         .' кв. '.$indy->kvartira,
-                     'CPhone' => $indy->tel,
-
-                     'Listener' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
-                     'LSeriya' => $listener->document_seriya,
-                     'LNomer' => $listener->document_nomer,
-                     'LVidan' => $listener->document_kem_vydan,
-                     'LAddress' =>
-                         'регион: '.$listener->region.
-                         ' насел. пункт: '.$listener->nas_pynkt.
-                         ', район: '.$listener->rion.
-                         ', ул. '.$listener->street.
-                         ', д. '.$listener->dom.
-                         $korpys
-                         .' кв. '.$listener->kvartira,
-                     'LPhone' => $listener->tel,
-                )
-            );
-
-            $file = 'temp/'.
-                Text::translit($indy->famil).'_'.
-                Text::translit(UTF8::substr($indy->imya, 0, 1)).'_'.
-                Text::translit(UTF8::substr($indy->otch, 0, 1)).'_'.
-                'dogovor_'.date('d_m_Y_H_i_s').'.docx';
-        }
-        else
-        {
-            $obj->setValueArray(
-                array(
-                     'Customer' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
-                     'CSeriya' => $listener->document_seriya,
-                     'CNomer' => $listener->document_nomer,
-                     'CVidan' => $listener->document_kem_vydan,
-                     'CAddress' =>
-                         'регион: '.$listener->region.
-                         ' насел. пункт: '.$listener->nas_pynkt.
-                         ', район: '.$listener->rion.
-                         ', ул. '.$listener->street.
-                         ', д. '.$listener->dom.
-                         $korpys
-                         .' кв. '.$listener->kvartira,
-                     'CPhone' => $listener->tel,
-
-                     'Listener' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
-                     'LSeriya' => $listener->document_seriya,
-                     'LNomer' => $listener->document_nomer,
-                     'LVidan' => $listener->document_kem_vydan,
-                     'LAddress' =>
-                         'регион: '.$listener->region.
-                         ' насел. пункт: '.$listener->nas_pynkt.
-                         ', район: '.$listener->rion.
-                         ', ул. '.$listener->street.
-                         ', д. '.$listener->dom.
-                         $korpys
-                         .' кв. '.$listener->kvartira,
-                     'LPhone' => $listener->tel,
-                )
-            );
-
-            $file = 'temp/'.
-                Text::translit($listener->famil).'_'.
-                Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
-                Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
-                'dogovor_'.date('d_m_Y_H_i_s').'.docx';
-        }
-
-        $obj->save(APPPATH.'download/'.$file);
-        unset($document);
-
-        return $file;
-    }
-
-    protected function _create_statement()
-    {
-        $listener = ORM::factory('User', Auth::instance()->get_user()->id)
-                        ->listener;
-
-        $korpys = isset($listener->korpys) ? 'к. '.$listener->korpys : null;
-        $document = new TemplateDocx(APPPATH.'templates/zayavlenie/template.docx');
-
-        $document->setValueArray(
-            array(
-                 'Fam' => $listener->famil,
-                 'Name' => $listener->imya,
-                 'Otchestvo' => $listener->otch,
-                 'DateBirth' => $listener->data_rojdeniya,
-                 'Nationality' => $listener->national->name,
-                 'PlaceBirth' => $listener->mesto_rojdeniya,
-                 'AdresRegPoPasporty' =>
-                     'регион: '.$listener->region.
-                     ' насел. пункт: '.$listener->nas_pynkt.
-                     ', район: '.$listener->rion.
-                     ', ул. '.$listener->street.
-                     ', д. '.$listener->dom.
-                     $korpys
-                     .' кв. '.$listener->kvartira,
-                 'VremReg' => $listener->vrem_reg ? 'Да' : 'Нет',
-                 'Seriya' => $listener->document_seriya,
-                 'Nomer' => $listener->document_nomer,
-                 'Vidacha' => $listener->document_data_vydachi,
-                 'PasportKemVydan' => $listener->document_kem_vydan,
-                 'MobTel' => $listener->tel,
-                 'Email' => Auth::instance()->get_user()->email,
-                 'Obrazovanie' => $listener->edu->name,
-                 'MestoRaboty' => $listener->mesto_raboty,
-                 'About' => $listener->about,
-            )
-        );
-
-        $file = 'temp/'.
-            Text::translit($listener->famil).'_'.
-            Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
-            Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
-            'zayavlenie_'.date('d_m_Y_H_i_s').'.docx';
-
-        $document->save(APPPATH.'download/'.$file);
-        unset($document);
-
-        return $file;
-    }
-
-    protected function _create_ticket()
-    {
-        $indy = ORM::factory('User', Auth::instance()->get_user()->id)->listener->indy;
-        $listener = ORM::factory('User', Auth::instance()->get_user()->id)->listener;
-
-        $obj = new TemplateDocx(APPPATH.'templates/ticket/ticket.docx');
-
-        $famil = UTF8::ucfirst(UTF8::strtolower($listener->famil));
-        $imya = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->imya, 0, 1).'. '));
-        $ot4estvo = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($listener->otch, 0, 1).'.'));
-
-        $obj->setValue('Customer', $famil.' '.$imya.' '.$ot4estvo);
-
-        $file = 'temp/'.
-            Text::translit($listener->famil).'_'.
-            Text::translit(UTF8::substr($listener->imya, 0, 1)).'_'.
-            Text::translit(UTF8::substr($listener->otch, 0, 1)).'_'.
-            'kvitanciya_'.date('d_m_Y_H_i_s').'.docx';
-
-        $obj->save(APPPATH.'download/'.$file);
-        unset($document);
-
-        return $file;
-    }
-
-    public function action_download_zip()
+   /* public function action_download_zip()
     {
         $paths = array(
             APPPATH.'download/'.$this->_create_contract(),
@@ -595,7 +399,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
         $this->response->send_file(
             $str, null, array('delete' => true)
         );
-    }
+    }*/
 
     public function after()
     {

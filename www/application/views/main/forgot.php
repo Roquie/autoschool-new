@@ -18,10 +18,10 @@
                 <fieldset>
                     <legend>Восстановить доступ к аккаунту</legend>
                     <div class="control-group">
-                        <label class="control-label"  for="username">Email</label>
+                        <label class="control-label"  for="username">Email (или моб. тел.)</label>
                         <div class="controls">
-                            <input type="email" id="email" name="email" placeholder="example@gmail.com" class="input-large" autocomplete="off">
-                            <p class="help-block forgot-info" style="margin-top: 0; font-size: 8pt">новый пароль вышлем вам на почту</p>
+                            <input type="email" id="email" name="tel_or_email" class="input-xlarge" autocomplete="off">
+                            <p class="help-block forgot-info" style="margin-top: 0; font-size: 8pt">новый пароль вышлем вам на почту или на моб. телефон</p>
                         </div>
                     </div>
                     <div class="control-group">

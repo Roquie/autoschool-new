@@ -20,7 +20,7 @@ class Auth_ORM extends Kohana_Auth_ORM
             if ($user->unique_key($username) === 'hash')
             {
                 $listeners = new Model_Listeners();
-                $result = $listeners->where('tel', '=', $username)->find();
+                $result = $listeners->where('tel', '=', Text::removeThanDigits($username))->find();
 
                 $user->where($user->unique_key($username), '=', $result->user->hash)->find();
             }
@@ -84,7 +84,7 @@ class Auth_ORM extends Kohana_Auth_ORM
             if ($user->unique_key($username) === 'hash')
             {
                 $listeners = new Model_Listeners();
-                $result = $listeners->where('tel', '=', $username)->find();
+                $result = $listeners->where('tel', '=', Text::removeThanDigits($username))->find();
 
                 $user->where($user->unique_key($username), '=', $result->user->hash)->find();
             }

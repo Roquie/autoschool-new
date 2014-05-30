@@ -2,6 +2,21 @@
 
 class Text extends Kohana_Text
 {
+
+
+    /**
+     * удаляет все, кроме цифр из строки
+     * @param $str
+     *
+     * @return mixed
+     */
+    public static function removeThanDigits($str)
+    {
+        return preg_replace('/\D+/', '', $str);
+    }
+
+
+
     /**
      * хэшируем, хэшируем ИБ гарантируем
      * @param $pass

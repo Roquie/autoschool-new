@@ -222,7 +222,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                  'Fam' => $listener->famil,
                  'Name' => $listener->imya,
                  'Otchestvo' => $listener->otch,
-                 'DateBirth' => $listener->data_rojdeniya,
+                 'DateBirth' => Text::check_date($listener->data_rojdeniya),
                  'Nationality' => $nat->name,
                  'PlaceBirth' => $listener->mesto_rojdeniya,
                  'AdresRegPoPasporty' =>
@@ -236,7 +236,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                  'VremReg' => isset($listener->vrem_reg) ? 'Да' : 'Нет',
                  'Seriya' => $listener->document_seriya,
                  'Nomer' => $listener->document_nomer,
-                 'Vidacha' => $listener->document_data_vydachi,
+                 'Vidacha' => Text::check_date($listener->document_data_vydachi),
                  'PasportKemVydan' => $listener->document_kem_vydan,
                  'MobTel' => $listener->tel,
                  'Email' => $this->_user->email,
@@ -281,8 +281,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                  'FirstName' => $listener->imya,
                  'DaddyName' => $listener->otch,
                  'GroupNumber' => empty($listener->group->name) ? '______' : $listener->group->name,
-                 'LessonStart' => date('d.m.Y', strtotime($listener->group->data_start)),
-                 'LessonEnd' => date('d.m.Y', strtotime($listener->group->data_end)),
+                 'LessonStart' => Text::check_date($listener->group->data_start),
+                 'LessonEnd' => Text::check_date($listener->group->data_end),
                  'MarkaTS' => empty($listener->staff->transport->name) ? '____________' : $listener->staff->transport->name,
                  'GosNumber' => empty($listener->staff->transport->reg_number) ? '____________' : $listener->staff->transport->reg_number,
                  'StaffInstructor' => empty($instruct) ? '__________' : $instruct,
@@ -477,7 +477,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+3] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                Text::check_date($value->data_rojdeniya),
                 $value->tel,
                 UTF8::strtoupper($value->staff->famil).' '.UTF8::strtoupper($value->staff->imya).' '.UTF8::strtoupper($value->staff->otch),
             );
@@ -795,7 +795,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+4] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                Text::check_date($value->data_rojdeniya),
                 'удовл.',
                 'удовл.',
                 'удовл.',
@@ -924,7 +924,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+4] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                Text::check_date($value->data_rojdeniya),
                 $value->description_status,
             );
 
@@ -1040,7 +1040,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
                 $value->tel,
-                date('d.m.Y', strtotime($value->data_rojdeniya)),
+                Text::check_date($value->data_rojdeniya),
                 $value->national->name,
                 $value->mesto_rojdeniya,
                 'регион: '.$value->region.
@@ -1053,7 +1053,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 isset($value->vrem_reg) ? 'Да' : 'Нет',
                 $value->document_seriya,
                 $value->document_nomer,
-                $value->document_data_vydachi,
+                Text::check_date($value->document_data_vydachi),
                 $value->document_kem_vydan,
                 $value->user->email,
                 $value->edu->name,

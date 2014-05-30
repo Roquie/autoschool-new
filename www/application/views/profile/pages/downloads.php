@@ -35,21 +35,6 @@
                         <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
                     </div>
                     <div class="span3 pull-left">
-                        <h2>Договор</h2>
-                        <div class="buttons_gr">
-                            <a class="btn btn-info" href="<?=URL::site('profile/download_contract')?>">Скачать</a>
-                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('profile/view_doc/contract')?>" data-toggle="modal">Просмотр</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dwn_block">
-                <div class="row">
-                    <div class="span1">
-                        <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
-                    </div>
-                    <div class="span3 pull-left">
                         <h2>Квитанция</h2>
                         <div class="buttons_gr">
                             <a class="btn btn-info" href="<?=URL::site('profile/download_ticket')?>">Скачать</a>
@@ -59,22 +44,38 @@
                 </div>
             </div>
         </div>
-
         <div class="span4">
             <div class="dwn_block">
                 <div class="row">
                     <div class="span1">
-                        <img style="height: 60px; padding-left: 18px" src="<?=URL::site('public/img/profile/z.png')?>" alt="zip"/>
+                        <img src="<?=URL::site('public/img/profile/w.png')?>" alt="word"/>
                     </div>
                     <div class="span3 pull-left">
-                        <h2>Скачать все архивом</h2>
+                        <h2>Договор</h2>
                         <div class="buttons_gr">
-                            <a class="btn btn-info" href="<?=URL::site('profile/download_zip')?>">Скачать</a>
+                            <a class="btn btn-info" href="<?=URL::site('profile/download_contract')?>">Скачать</a>
+                            <a class="btn btn-success view_doc_createtmpfile" href="#view_doc_modal" data-url="<?=URL::site('profile/view_doc/contract')?>" data-toggle="modal">Просмотр</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--<div class="span4">
+            <div class="dwn_block">
+                <div class="row">
+                    <div class="span1">
+                        <img style="height: 60px; padding-left: 18px" src="<?/*=URL::site('public/img/profile/z.png')*/?>" alt="zip"/>
+                    </div>
+                    <div class="span3 pull-left">
+                        <h2>Скачать все архивом</h2>
+                        <div class="buttons_gr">
+                            <a class="btn btn-info" href="<?/*=URL::site('profile/download_zip')*/?>">Скачать</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
 
 
     </div>

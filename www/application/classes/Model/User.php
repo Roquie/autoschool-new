@@ -35,7 +35,7 @@ class Model_User extends Model_Auth_User
                 array('digit')
             ),
             'email' => array(
-                array('not_empty'),
+                //array('not_empty'),
                 array('email'),
                 array(array($this, 'unique'), array('email', ':value')),
             ),

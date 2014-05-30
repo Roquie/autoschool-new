@@ -165,6 +165,7 @@ class Controller_Users extends Controller_Main_Base
                                 array(
                                     'password',
                                     'email',
+                                    'hash'
                                 ))
                              ->pk();
 
@@ -336,6 +337,7 @@ class Controller_Users extends Controller_Main_Base
                                  'photo',
                                  'password',
                                  'email',
+                                 'hash'
                             ))->pk();
 
                         try

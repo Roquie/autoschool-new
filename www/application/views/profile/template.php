@@ -44,7 +44,14 @@
                         </div>
                         <div class="row">
                             <div class="span6 settings">
-                                <i class="icon-envelope-alt"></i> <span id="userEmail"><?=$user['email']?></span>, <a href="<?=URL::site('profile/settings')?>"><i class="icon-cog"></i> Настройки</a>
+                                <?if(!empty($user['email'])):?>
+                                    <i class="icon-envelope-alt"></i>
+                                    <span id="userEmail"><?=$user['email']?></span>,
+                                <?endif?>
+                                <a href="<?=URL::site('profile/settings')?>">
+                                    <i class="icon-cog"></i> Настройки
+                                </a>
+
                             </div>
                         </div>
                     </div>

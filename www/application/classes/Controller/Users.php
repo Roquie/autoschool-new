@@ -269,7 +269,7 @@ class Controller_Users extends Controller_Main_Base
 
                             $mail_content = View::factory('tmpmail/profile/forgot')
                                 ->set('name', $users->listener->imya)
-                                ->set('login', $post['email'])
+                                ->set('login', $this->request->post('tel_or_email'))
                                 ->set('pass', $newpass);
 
                             $message = View::factory('tmpmail/template', compact('mail_content'));

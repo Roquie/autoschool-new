@@ -20,7 +20,11 @@ class Controller_Users extends Controller_Main_Base
         {
             try
             {
-                $status = $a->login($this->request->post('email'), $this->request->post('password'), (bool)$this->request->post('remember'));
+                $status = $a->login(
+                    $this->request->post('tel_or_email'),
+                    $this->request->post('password'),
+                    (bool)$this->request->post('remember')
+                );
 
                 if ($status)
                 {
@@ -155,7 +159,8 @@ class Controller_Users extends Controller_Main_Base
                                 array(
                                     'password' => $newpass,
                                     'password_confirm' => $newpass,
-                                    'email' => $post['email']
+                                    'email' => $post['email'],
+                                    'hash' => md5(uniqid())
                                 ),
                                 array(
                                     'password',
@@ -163,8 +168,7 @@ class Controller_Users extends Controller_Main_Base
                                 ))
                              ->pk();
 
-                    $users->add('roles', ORM::factory('role')->where('name', '=', 'login')->find());
-                    $users->add('roles', ORM::factory('role')->where('name', '=', 'admin')->find());
+                    $users->add('roles', array(1,3));
 
                     try
                     {
@@ -319,7 +323,8 @@ class Controller_Users extends Controller_Main_Base
                         'photo' => $user['photo_big'],
                         'password' => $newpass,
                         'password_confirm' => $newpass,
-                        'email' => $user['email']
+                        'email' => $user['email'],
+                        'hash' => md5(uniqid())
                     );
 
                     try

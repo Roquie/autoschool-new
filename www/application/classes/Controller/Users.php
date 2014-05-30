@@ -247,49 +247,78 @@ class Controller_Users extends Controller_Main_Base
             $newpass = Text::random();
 
             $data = array(
-                'email' => $this->request->post('email'),
+              /*  'email' => !Valid::email($this->request->post('tel_or_email')) ?: $this->request->post('tel_or_email'),*/
                 'password' => $newpass,
                 'password_confirm' => $newpass,
             );
 
             try
             {
-
-                $users = ORM::factory('User')->where('email', '=', $data['email'])->find();
-                if ($users->loaded())
+                if (Valid::email($this->request->post('tel_or_email')))
                 {
-                    $users->update_user(
-                        $data,
-                        array(
-                            'email',
-                            'password',
-                        ));
-
-                    $mail_content = View::factory('tmpmail/profile/forgot')
-                        ->set('name', $users->listener->imya)
-                        ->set('login', $post['email'])
-                        ->set('pass', $newpass);
-
-                    $message = View::factory('tmpmail/template', compact('mail_content'));
-
-                    try
+                    $users = ORM::factory('User')->where('email', '=', $this->request->post('tel_or_email'))->find();
+                    if ($users->loaded())
                     {
-                        Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
-                            ->to($post['email'])
-                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
-                            ->send();
-                    }
-                    catch(Swift_SwiftException $e)
-                    {
-                        die($e->getMessage());
-                    }
+                        $users->update_user(
+                            $data,
+                            array(
+                                /*'email',*/
+                                'password',
+                            ));
 
-                    $success = Kohana::message('users', 'forgot_ok');
+
+                            $mail_content = View::factory('tmpmail/profile/forgot')
+                                ->set('name', $users->listener->imya)
+                                ->set('login', $post['email'])
+                                ->set('pass', $newpass);
+
+                            $message = View::factory('tmpmail/template', compact('mail_content'));
+
+                            try
+                            {
+                                Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
+                                    ->to($post['email'])
+                                    ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                    ->send();
+                            }
+                            catch(Swift_SwiftException $e)
+                            {
+                                die($e->getMessage());
+                            }
+
+                        $success = Kohana::message('users', 'forgot_ok');
+                    }
+                    else
+                    {
+                        $errors = array('forgot_not_found' => Kohana::message('users', 'forgot_not_found'));
+                    }
                 }
                 else
                 {
-                    $errors = array('forgot_not_found' => Kohana::message('users', 'forgot_not_found'));
+                    $listener = ORM::factory('Listeners')->where('tel', '=', Text::format_phone($this->request->post('tel_or_email')))->find();
+                    if ($listener->user->loaded())
+                    {
+                        $listener->user->update_user(
+                            $data,
+                            array(
+                                /*'email',*/
+                                'password',
+                            ));
+
+
+                        Aramba::factory()
+                            ->to($listener->tel)
+                            ->msg('Новый пароль. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener->tel.', пароль: '.$newpass)
+                            ->send();
+
+                        $success = 'Новый пароль отправлен вам в смс.';
+                    }
+                    else
+                    {
+                        $errors = array('forgot_not_found' => Kohana::message('users', 'forgot_not_found'));
+                    }
                 }
+
             }
             catch(ORM_Validation_Exception $e)
             {

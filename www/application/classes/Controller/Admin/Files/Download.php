@@ -107,6 +107,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->setValueArray(
                 array(
                      'Customer' => $indy->famil.' '.$indy->imya.' '.$indy->otch,
+                     'NumberContract' => $listener->number_contract,
                      'CSeriya' => $indy->document_seriya,
                      'CNomer' => $indy->document_nomer,
                      'CVidan' => $indy->document_kem_vydan,
@@ -150,6 +151,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->setValueArray(
                 array(
                      'Customer' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
+                     'NumberContract' => $listener->number_contract,
                      'CSeriya' => $listener->document_seriya,
                      'CNomer' => $listener->document_nomer,
                      'CVidan' => $listener->document_kem_vydan,

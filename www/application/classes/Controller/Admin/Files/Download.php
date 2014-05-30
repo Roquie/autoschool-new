@@ -65,7 +65,12 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         $imya = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($this->_listener->imya, 0, 1).'. '));
         $ot4estvo = UTF8::ucfirst(UTF8::strtolower(UTF8::substr($this->_listener->otch, 0, 1).'.'));
 
-        $obj->setValue('Customer', $famil.' '.$imya.' '.$ot4estvo);
+        $obj->setValueArray(array(
+            'BigName' => $famil.' '.UTF8::ucfirst(UTF8::strtolower($this->_listener->imya)).' '.UTF8::ucfirst(UTF8::strtolower($this->_listener->otch)),
+            'Customer' => $famil.' '.$imya.' '.$ot4estvo,
+            'NumberContract' => $this->_listener->number_contract,
+            'GroupNumber' => $this->_listener->group->name,
+        ));
 
         $file = 'temp/'.
             Text::translit($this->_listener->famil).'_'.

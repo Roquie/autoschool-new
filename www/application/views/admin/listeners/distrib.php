@@ -134,7 +134,7 @@
                                         <div class="span2">
                                             <label for="data_rojdeniya">Дата рождения</label>
                                             <div class="input-append">
-                                                <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
+                                                <input type="text" class="datepicker_adm" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
                                                 <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@
                         <div class="span2 pull-right">
                             <label for="document_data_vydachi">Дата</label>
                             <div class="input-append">
-                                <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                <input type="text" class="datepicker_adm" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
                                 <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                             </div>
                         </div>
@@ -366,7 +366,7 @@
                             <div class="span2 pull-right">
                                 <label for="document_data_vydachi">Дата</label>
                                 <div class="input-append">
-                                    <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                    <input type="text" class="datepicker_adm" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
                                     <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                 </div>
                             </div>

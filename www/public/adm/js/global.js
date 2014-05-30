@@ -6,6 +6,14 @@
 $(function() {
 
 
+    $('.datepicker_adm').datepicker({
+        nextText: "&raquo;",
+        prevText: "&laquo;",
+        yearRange: "1950:<?=date('Y')?>",
+        dateFormat: 'dd.mm.yy',
+        changeMonth: true,
+        changeYear: true
+    }).mask('99.99.9999');
 
     $(".sms_sender").inputmask({ "mask": "8 (999) 999-99-99, ", "repeat": 100, "greedy": false });
 

@@ -66,6 +66,9 @@ $(function(){
             {
                 btn_loader.hide();
                 $this.show();
+                f_statement[0].reset();
+                f_contract[0].reset();
+                $('.nav-tabs a:first').tab('show');
                 message($('.container'), response.msg, response.status)
             },
             'json'

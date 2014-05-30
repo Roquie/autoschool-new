@@ -10,6 +10,9 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
         $listener = $this->request->post('statement');
         $indy  = $this->request->post('contract');
 
+/*        $this->ajax_data($listener, 'error');
+        exit;*/
+
         if (Security::is_token($listener['csrf']) && $this->request->method() === Request::POST)
         {
             $newpass = Text::random();
@@ -51,14 +54,14 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                             array(
                                  'password',
                                  'email',
-                            ))
-                        ->pk();
+                            ))->pk();
+
 
                     unset($listener['email'], $listener['csrf']);
 
-                    $listener['data_rojdeniya'] = Text::check_date($listener['data_rojdeniya']);
-                    $listener['document_data_vydachi'] = Text::check_date($listener['document_data_vydachi']);
-                    $indy['document_data_vydachi'] = Text::check_date($indy['document_data_vydachi']);
+                    $listener['data_rojdeniya'] = Text::getDateUpdate($listener['data_rojdeniya']);
+                    $listener['document_data_vydachi'] = Text::getDateUpdate($listener['document_data_vydachi']);
+                    $indy['document_data_vydachi'] = Text::getDateUpdate($indy['document_data_vydachi']);
 
                     $columns = array_keys($listener);
                     $columns[] = 'user_id';

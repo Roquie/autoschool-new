@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Staff_group extends ORM
+class Model_StaffGroup extends ORM
 {
     protected $_db = 'default';
     protected $_table_name  = 'staff_group';
@@ -11,13 +11,13 @@ class Model_Staff_group extends ORM
         'staff_id' => array('data_type' => 'int', 'is_nullable' => false),
         'group_id' => array('data_type' => 'int', 'is_nullable' => false),
     );
-
+/*
     protected $_belongs_to = array(
         'group' => array(
             'model' => 'Groups',
             'foreign_key' => 'group_id',
         )
-    );
+    );*/
 
     public function rules()
     {

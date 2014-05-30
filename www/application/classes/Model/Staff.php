@@ -38,11 +38,6 @@ class Model_Staff extends ORM
             'model' => 'Listeners',
             'foreign_key' => 'staff_id',
         ),
-        'staff_group' => array(
-            'model' => 'Staff_group',
-            'foreign_key' => 'staff_id',
-        ),
-
         'transport' => array(
             'model' => 'Transport',
             'foreign_key' => 'staff_id',
@@ -53,6 +48,10 @@ class Model_Staff extends ORM
         'office' => array(
             'model' => 'Office',
             'through' => 'office_staff'
+        ),
+        'staff' => array(
+            'model' => 'Group',
+            'through' => 'staff_group',
         ),
 
     );

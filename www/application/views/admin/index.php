@@ -61,28 +61,32 @@
                         <form action="<?=URL::site('admin/listeners/update_user')?>" method="post" id="statement" style="margin-bottom: 0">
                             <div class="row">
                                 <div class="span3 data">
+                                    <label for="number_contract">Номер договора</label>
+                                    <input type="text" name="number_contract" id="number_contract" style="width: 103%">
+                                </div>
+                                <div class="span3 data">
                                     <label for="date_contract">Договор от</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="date_contract" id="date_contract" style="width: 95%">
+                                        <input type="text" class="datepicker_adm" name="date_contract" id="date_contract" style="width: 95%">
                                         <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                 </div>
                                 <div class="span3 data">
                                     <label>Группа №</label>
                                     <select name="group_id" id="group_id">
-                                        <option value="0" selected="selected"> --- </option>
+                                        <option value="" selected="selected"> --- </option>
                                         <?foreach($list_groups as $item):?>
                                             <option value="<?=$item->id?>"><?=$item->name?></option>
                                         <?endforeach?>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="span3 data">
                                     <label>Водитель-инструктор</label>
-                                    <select name="staff_id">
-                                        <option value="0" selected="selected"> --- </option>
-                                        <?/*foreach($list_groups as $item):*/?><!--
-                                        <option value="<?/*=$item->id*/?>"><?/*=$item->name*/?></option>
-                                        --><?/*endforeach*/?>
+                                    <select name="staff_id" id="staff_id" style="width: 110%">
+                                        <option value="" selected="selected"> --- </option>
                                     </select>
                                 </div>
                             </div>
@@ -142,7 +146,7 @@
                                                 <div class="span2">
                                                     <label for="data_rojdeniya">Дата рождения</label>
                                                     <div class="input-append">
-                                                        <input type="text" class="datepicker" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
+                                                        <input type="text" class="datepicker_adm" name="data_rojdeniya" id="data_rojdeniya" style="width: 75%">
                                                         <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                                     </div>
                                                 </div>
@@ -173,7 +177,7 @@
                                 <div class="span2">
                                     <label for="data_med">Дата</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="data_med" id="data_med" style="width: 95%">
+                                        <input type="text" class="datepicker_adm" name="data_med" id="data_med" style="width: 95%">
                                         <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                 </div>
@@ -239,7 +243,7 @@
                                 <div class="span4">
                                     <label>Тип</label>
                                     <select name="document_id" class="span4">
-                                        <option> --- </option>
+                                        <option value="NULL"> --- </option>
                                         <?foreach($type_doc as $item):?>
                                             <option value="<?=$item->id?>"><?=$item->name?></option>
                                         <?endforeach?>
@@ -264,7 +268,7 @@
                                 <div class="span2 pull-right">
                                     <label for="document_data_vydachi">Дата</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                        <input type="text" class="datepicker_adm" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
                                         <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                 </div>
@@ -420,7 +424,7 @@
                                 <div class="span4">
                                     <label>Тип</label>
                                     <select name="document_id" class="span4">
-                                        <option> --- </option>
+                                        <option value=""> --- </option>
                                         <?foreach($type_doc as $item):?>
                                             <option value="<?=$item->id?>"><?=$item->name?></option>
                                         <?endforeach?>
@@ -445,7 +449,7 @@
                                 <div class="span2 pull-right">
                                     <label for="document_data_vydachi">Дата</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
+                                        <input type="text" class="datepicker_adm" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%">
                                         <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@ class Model_Timelessons extends ORM
     protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
         'group_id' => array('data_type' => 'int', 'is_nullable' => false),
-        'lesson_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'lesson' => array('data_type' => 'string', 'is_nullable' => false),
         'day_of_week' => array('data_type' => 'string', 'is_nullable' => true),
         'time_start' => array('data_type' => 'string', 'is_nullable' => true),
         'time_end' => array('data_type' => 'string', 'is_nullable' => true),

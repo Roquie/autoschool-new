@@ -26,7 +26,7 @@ class Controller_Admin_Messages extends Controller_Admin_Base
     public function action_index()
     {
         $list_users = Model::factory('User')->get_user_list(false, true);
-        $list_groups = Model::factory('Groups')->find_all();
+        $list_groups = Model::factory('Group')->find_all();
 
         $this->template->content = View::factory('admin/messages/index', compact('list_users', 'list_groups'));
     }

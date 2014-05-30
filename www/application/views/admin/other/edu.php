@@ -1,3 +1,4 @@
+<?=HTML::style('adm/css/global_other.css')?>
 <div class="row">
     <div class="span4">
         <div class="well">
@@ -26,9 +27,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?$i=$edu->count();foreach($edu as $v):?>
+                    <?$i=1/*$edu->count()*/;foreach($edu as $v):?>
                         <tr id="<?=$v->id?>">
-                            <td><?=$i--?></td>
+                            <td><?=$i++?></td>
                             <td><?=$v->name?></td>
                             <td><a href="<?=URL::site('admin/other/edu/remove/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
                         </tr>

@@ -10,7 +10,7 @@ class Controller_Admin_News extends Controller_Admin_Base
         $news = new Model_News();
 
         $list_users = Model::factory('User')->get_user_list(false);
-        $list_groups = Model::factory('Groups')->find_all();
+        $list_groups = Model::factory('Group')->find_all();
         $this->template->content =
             View::factory('admin/messages/news', compact('list_users', 'list_groups'));
     }

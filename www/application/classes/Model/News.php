@@ -38,7 +38,7 @@ class Model_News extends ORM
     {
         // $admin = ORM::factory('Administrators')->where('email', '=', $email)->find();
         //  return (bool)!$admin->email;
-        $result = ORM::factory('Groups')->where('id', '=', $id)->find();
+        $result = ORM::factory('Group')->where('id', '=', $id)->find();
         return (bool)$result->id;
     }
 

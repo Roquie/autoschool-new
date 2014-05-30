@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Groups extends ORM
+class Model_Group extends ORM
 {
     protected $_db = 'default';
     protected $_table_name  = 'groups';
@@ -28,18 +28,18 @@ class Model_Groups extends ORM
         'listener' => array(
             'model' => 'Listeners',
             'foreign_key' => 'group_id',
-        )
-    );
-
-    protected $_has_one = array(
-        'staff_group' => array(
-            'model' => 'Staff_group',
-            'foreign_key' => 'group_id',
+        ),
+        'staff' => array(
+            'model' => 'Staff',
+            'through' => 'staff_group',
         ),
         'timelessons' => array(
             'model' => 'Timelessons',
             'foreign_key' => 'group_id',
         ),
+    );
+
+    protected $_has_one = array(
         'exam' => array(
             'model' => 'Exam',
             'foreign_key' => 'group_id',
@@ -57,7 +57,7 @@ class Model_Groups extends ORM
                 array('max_length', array(':value', 50))
             ),
             'category_id' => array(
-                array('not_empty'),
+                //array('not_empty'),
                 array('digit')
             ),
             'data_start' => array(
@@ -68,7 +68,32 @@ class Model_Groups extends ORM
                 array('not_empty'),
                 array('date')
             ),
+            'pdd_teacher' => array(
+                array('not_empty'),
+                array('digit')
+            ),
+            'tyto_teacher' => array(
+                array('not_empty'),
+                array('digit')
+            ),
+            'med_teacher' => array(
+                array('not_empty'),
+                array('digit')
+            ),
 
+
+        );
+    }
+
+    public function labels()
+    {
+        return array(
+            'pdd_teacher' => 'Поле "Преподаватель ПДД"',
+            'tyto_teacher' => 'Поле "Преподаватель ТУ и ТО"',
+            'med_teacher' => 'Поле "Преподаватель ОПМТ"',
+            'data_start' => 'Начало занятий',
+            'data_end' => 'Окончание занятий',
+            'name' => 'Название группы'
         );
     }
 

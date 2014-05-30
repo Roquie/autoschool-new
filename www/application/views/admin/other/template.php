@@ -1,5 +1,3 @@
-<?=HTML::style('adm/css/nat_and_edu.css')?>
-
 <div class="container">
     <div class="row">
         <div class="span12 pull-left">

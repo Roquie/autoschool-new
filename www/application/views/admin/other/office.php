@@ -1,3 +1,4 @@
+<?=HTML::style('adm/css/global_other.css')?>
 <div class="row">
     <div class="span4">
         <div class="well">
@@ -22,15 +23,19 @@
                     <tr>
                         <th>#</th>
                         <th>Наименование</th>
-                        <th>Удалить</th>
+                        <th><?= ($info->is_root) ? 'Удалить' : null?></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?$i=$office->count();foreach($office as $v):?>
+                    <?$i=1/*$office->count()*/;foreach($office as $v):?>
                         <tr id="<?=$v->id?>">
-                            <td><?=$i--?></td>
+                            <td><?=$i++?></td>
                             <td><?=$v->name?></td>
-                            <td><a href="<?=URL::site('admin/other/office/remove/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a></td>
+                            <td>
+                                <? if ($info->is_root) : ?>
+                                <a href="<?=URL::site('admin/other/office/remove/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a>
+                                <? endif; ?>
+                            </td>
                         </tr>
                     <?endforeach?>
                     </tbody>

@@ -87,6 +87,14 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
             $data['listener']['date_contract'] = Text::check_date($data['listener']['date_contract']);
             $data['listener']['data_med'] = Text::check_date($data['listener']['data_med']);
 
+            $result = ORM::factory('Group', $data['listener']['group_id']);
+
+            $staffs = $result->staff->find_all();
+
+            foreach ($staffs as $key => $value) {
+                $data['instructors'][$value->id] = $value->famil . ' '. UTF8::substr($value->imya,0, 1).'. ' . UTF8::substr($value->otch,0, 1).'.';;
+            }
+
             $this->ajax_data($data);
         }
     }
@@ -143,6 +151,11 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
                 $post['date_contract'] = Text::getDateUpdate($post['date_contract']);
             if (isset($post['data_med']))
                 $post['data_med'] = Text::getDateUpdate($post['data_med']);
+
+            foreach ($post as $key => $value) {
+                if ($value == '')
+                    $post[$key] = NULL;
+            }
 
             if ($valid->check())
             {

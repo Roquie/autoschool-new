@@ -40,7 +40,7 @@
                                     <br/>
                                     <label for="data_rojdeniya">Дата рождения</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="statement[data_rojdeniya]" id="data_rojdeniya" style="width: 385px" >
+                                        <input type="text" class="datepicker_adm" name="statement[data_rojdeniya]" id="data_rojdeniya" style="width: 385px" >
                                         <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
                                     <br/>
@@ -61,7 +61,7 @@
                                     <br/>
                                     <label for="document_data_vydachi">Дата выдачи</label>
                                     <div class="input-append">
-                                        <input type="text" class="datepicker" name="statement[document_data_vydachi]" id="document_data_vydachi" style="width: 385px" >
+                                        <input type="text" class="datepicker_adm" name="statement[document_data_vydachi]" id="document_data_vydachi" style="width: 385px" >
                                         <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
                                     </div>
 
@@ -86,6 +86,8 @@
                                             <input type="text" style="width: 207px" class="input-medium" name="statement[document_nomer]" id="document_nomer" />
                                         </div>
                                     </div>
+                                    <label for="document_kem_vydan">Кем выдан документ</label>
+                                    <input type="text" style="width: 102%" name="statement[document_kem_vydan]" id="document_kem_vydan" />
                                     <label for="mesto_rojdeniya">Место рождения</label>
                                     <input type="text" style="width: 102%" name="statement[mesto_rojdeniya]" id="mesto_rojdeniya" />
                                     <br/>
@@ -125,12 +127,10 @@
                                             <label for="nas_pynkt">Насел. пункт</label>
                                             <input type="text"  class="input-medium" name="statement[nas_pynkt]" id="nas_pynkt" />
                                         </div>
-                                        <div class="span2" style="margin-left: 20px; width: 180px; margin-top: 20px">
+                                        <div class="span2" style="margin-left: 20px; width: 190px; margin-top: 20px">
                                             <label for="vrem_reg"><input style="width: 16px; margin-bottom: 5px" type="checkbox" name="statement[vrem_reg]" id="vrem_reg"/> У слушателя временная регистрация</label>
                                         </div>
                                     </div>
-                                    <label for="document_kem_vydan">Кем выдан документ</label>
-                                    <input type="text" style="width: 102%" name="statement[document_kem_vydan]" id="document_kem_vydan" />
 
                                     <div class="row">
                                         <div class="span3" style="width: 207px">
@@ -196,7 +196,7 @@
                                     <div class="span2">
                                         <label for="document_data_vydachi">Дата выдачи</label>
                                         <div class="input-append">
-                                            <input type="text" class="datepicker" name="contract[document_data_vydachi]" id="document_data_vydachi" style="width: 181px; margin-left: -9px" >
+                                            <input type="text" class="datepicker_adm" name="contract[document_data_vydachi]" id="document_data_vydachi" style="width: 181px; margin-left: -9px" >
                                             <span class="add-on btn" style="margin-top: 0" id="calendar"><i class="icon-calendar"></i></span>
                                         </div>
                                     </div>
@@ -211,6 +211,9 @@
                                         <input type="text" style="width: 207px" class="input-medium" name="contract[document_nomer]" id="document_nomer" />
                                     </div>
                                 </div>
+
+                                <label for="document_kem_vydan">Кем выдан документ</label>
+                                <input type="text" style="width: 102%" name="contract[document_kem_vydan]" id="document_kem_vydan" />
 
                                 <div class="row">
                                     <div class="span3" style="width: 207px">
@@ -247,12 +250,11 @@
                                         <label for="nas_pynkt">Насел. пункт</label>
                                         <input type="text"  class="input-medium" name="contract[nas_pynkt]" id="nas_pynkt" />
                                     </div>
-                                    <div class="span2" style="margin-left: 20px; width: 180px; margin-top: 20px; float: right">
-                                        <label for="vrem_reg"><input style="width: 16px; margin-bottom: 5px" type="checkbox" name="contract[vrem_reg]" id="vrem_reg"> У слушателя временная регистрация</label>
+                                    <div class="span2" style="margin-left: 20px; width: 190px; margin-top: 20px; float: right">
+                                        <label for="vrem_reg"><input style="width: 16px; margin-bottom: 5px" type="checkbox" name="contract[vrem_reg]" id="vrem_reg"> У заказчика временная регистрация</label>
                                     </div>
                                 </div>
-                                <label for="document_kem_vydan">Кем выдан документ</label>
-                                <input type="text" style="width: 102%" name="contract[document_kem_vydan]" id="document_kem_vydan" />
+
 
                                 <input type="hidden" name="contract[csrf]" value="<?=Security::token()?>"/>
                             </div>

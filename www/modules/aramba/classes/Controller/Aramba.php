@@ -30,8 +30,16 @@ class Controller_Aramba extends Controller
 
             if (empty($errors))
             {
+                $to = explode(', ', rtrim($this->request->post('to'), ', '));
+
+                $format_tels = array();
+                foreach($to as $k => $v)
+                {
+                    $format_tels[] = Text::format_phone($v);
+                }
+
                 $status = Aramba::factory()
-                    ->to(explode(', ', rtrim($this->request->post('to'), ', ')))
+                    ->to($format_tels)
                     ->msg($this->request->post('message'))
                     ->send();
 

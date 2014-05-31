@@ -68,7 +68,7 @@
                         </li>
 
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge" id="group_slctd"><?=$checked_user_group?></span></a>
+                            <a tabindex="-1" href="#">Группа &nbsp;&nbsp;<span style="margin: 0 10px 0 50px" class="badge group_slctd"><?=$checked_user_group?></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Практика </a>
@@ -125,7 +125,7 @@
                         <li class="divider"></li>
                         <li><a href="#twitter" role="button" data-toggle="modal"> Добавить твит</a></li>
                         <li class="divider"></li>
-                        <li><a href="#send_sms" id="sendsms_modal" role="button" data-toggle="modal"> Отправить SMS-сообщеньки</a></li>
+                        <li><a href="#send_sms" id="sendsms_modal" role="button" data-toggle="modal"> Отправить SMS группе&nbsp;<span style="margin: 0 0 0 10px" class="badge group_slctd"><?=$checked_user_group?></span></a></li>
                     </ul>
                 </li>
                 <!--<li><a href="<?/*=URL::site('admin/sync')*/?>"><i class="icon-random"></i> Cинхронизация</a></li>-->

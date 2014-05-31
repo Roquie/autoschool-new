@@ -320,7 +320,7 @@ function fn_callback(response, $this, f_statement, f_contract, listeners) {
         });
         $('.selected_listener').find('p').text($this.next('span').text());
         $('#listener_slctd').text($this.next('span').text());
-        $('#group_slctd').text('---');
+        $('.group_slctd').text('---');
     }
     if (response.status == 'error')
     {

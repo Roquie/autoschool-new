@@ -88,7 +88,7 @@
                     <div class="span4 instructors_slct">
                         <label for="">Водители - инструкторы:</label>
                         <div class="input-append">
-                            <select style="width: 225px" name="instructors[]" class="first_inst">
+                            <select style="width: 225px" name="instructors[]">
                                 <option value="0" selected="selected"> --- </option>
                                 <? foreach ($staffs['instructors'] as $key => $item) : ?>
                                     <option value="<?=$key?>"><?=$item?></option>
@@ -118,7 +118,7 @@
                             <tbody>
                             <tr>
                                 <td>
-                                    <select name="day_of_week" id="day_of_week" style="width: 150px">
+                                    <select name="lessons[1][day_of_week]" class="day_of_week" id="day_of_week" style="width: 150px">
                                         <option selected="selected"> --- </option>
                                         <option value="1">Понедельник</option>
                                         <option value="2">Вторник</option>
@@ -127,9 +127,9 @@
                                         <option value="5">Пятница</option>
                                     </select>
                                 </td>
-                                <td><input type="text" name="time_start" placeholder="17:00" style="width: 70px"/></td>
-                                <td><input type="text" name="time_end" placeholder="20:00" style="width: 70px"/></td>
-                                <td><input type="text" name="lesson" placeholder="ПДД" style="width: 70px"/></td>
+                                <td><input type="text" name="lessons[1][time_start]" class="time_start" placeholder="17:00" style="width: 70px"/></td>
+                                <td><input type="text" name="lessons[1][time_end]" class="time_end" placeholder="20:00" style="width: 70px"/></td>
+                                <td><input type="text" name="lessons[1][lesson]" class="lesson" placeholder="ПДД" style="width: 70px"/></td>
                                 <td style="text-align: center"></td>
                             </tr>
                             </tbody>
@@ -148,6 +148,7 @@
                 <div class="row">
                     <div class="span8">
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+                        <input type="hidden" name="group_id" id="group_id"/>
 
                         <button type="submit" class="btn btn-primary">
                             Сохранить

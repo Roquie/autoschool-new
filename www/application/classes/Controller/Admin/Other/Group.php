@@ -68,26 +68,21 @@ class Controller_Admin_Other_Group extends Controller_Admin_Other_Base
 
             $instructors = $post['instructors'];
 
-            unset($post['instructors']);
+            $lessons = $post['lessons'];
+
+            unset($post['instructors'], $post['lessons']);
 
             try
             {
                 ORM::factory('Group', $post['group_id'])
-                    ->values(/*array(
-                        'name' => $post['name'],
-                        'data_start' => $post['data_start'],
-                        'data_end' => $post['data_end'],
-                        'pdd_teacher' => $post['pdd_teacher'],
-                        'tyto_teacher' => $post['tyto_teacher'],
-                        'med_teacher' => $post['med_teacher']
-                    )*/$post)
+                    ->values($post)
                     ->update();
             }
             catch (ORM_Validation_Exception  $e)
             {
                 $errors = $e->errors('validation');
                 $error = array_shift($errors);
-                $this->ajax_msg($error, 'error');
+                $this->ajax_msg('<strong>Раписание занятий:</strong> '.$error, 'error');
             }
 
             $staff_group = ORM::factory('StaffGroup');
@@ -106,6 +101,32 @@ class Controller_Admin_Other_Group extends Controller_Admin_Other_Base
                     ))->create();
             }
 
+            try
+            {
+                $timelessons = ORM::factory('Timelessons')
+                                    ->where('group_id', '=', $post['group_id'])
+                                    ->find_all();
+
+                foreach($timelessons as $option)
+                {
+                    $option->delete();
+                }
+
+                foreach ($lessons as $key => $value)
+                {
+                    $value['group_id'] = $post['group_id'];
+                    ORM::factory('Timelessons')
+                        ->values($value)
+                        ->create();
+                }
+
+            }
+            catch (ORM_Validation_Exception  $e)
+            {
+                $errors = $e->errors('validation');
+                $error = array_shift($errors);
+                $this->ajax_msg('<strong>Раписание занятий:</strong> '.$error, 'error');
+            }
 
             $this->ajax_msg('Данные успешно сохранены');
 

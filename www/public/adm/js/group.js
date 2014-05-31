@@ -75,13 +75,18 @@ $(function() {
                 tbody = table.find('tbody'),
                 tr = tbody.find('tr').first(),
                 new_tr = tr.clone();
+            alert(cnt_lessons);
             if (cnt_lessons < 5)
             {
-                new_tr.find('td').last().html('<a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a>');
-                new_tr.find('input').val('');
-                new_tr.find('select').val('');
-                tbody.append(new_tr);
                 cnt_lessons++;
+                new_tr.addClass('new_tr').find('td').last().html('<a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a>');
+                var inp = new_tr.find('input'),
+                    select = new_tr.find('select');
+                $.each(inp, function() {
+                    $(this).val('').attr('name', 'lessons['+(cnt_lessons)+']['+$(this).attr('class')+']');
+                });
+                select.val('').attr('name', 'lessons['+(cnt_lessons)+']['+select.attr('class')+']');
+                tbody.append(new_tr);
             }
         })
     /**
@@ -90,6 +95,27 @@ $(function() {
         .on('click', '.remove_lessons', function(e) {
             e.preventDefault();
             $(this).closest('tr').remove();
+
+            var table = $('.table'),
+                tbody = table.find('tbody'),
+                tr = tbody.find('tr');
+
+            $.each(tr, function(k, v) {
+
+                var field_inp = $(this).find('input'),
+                    field_slct = $(this).find('select'),
+                    num = ++k;
+
+                field_slct.each(function() {
+                    $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
+                });
+
+                field_inp.each(function() {
+                    $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
+                });
+
+            });
+
             cnt_lessons--;
         });
 
@@ -113,6 +139,7 @@ $(function() {
                 if (response.status == 'success' || response.status == 'error')
                 {
                     message($('.container'), response.msg, response.status);
+                    $('#groups').find('input:checkbox:checked').prop('checked', false).trigger('click');
                 }
             },
             error : function(request) {
@@ -168,7 +195,7 @@ $(function() {
                 if (response.status == 'success')
                 {
                     var field = '',
-                        first_inst = $('.first_inst').closest('.input-append'),
+                        first_inst = $('.instructors_slct').find('.input-append').first(),
                         first_tr = $('.table').find('tbody').find('tr').first();
                     $('.instructors_slct').find('.new_slct').remove();
                     $('.table').find('.new_tr').remove();
@@ -202,7 +229,9 @@ $(function() {
                             }
                             else if (key == 'lessons')
                             {
-                                var new_tr;
+                                var new_tr,
+                                    pole,
+                                    num;
                                 cnt_lessons = 1;
                                 $.each(value, function(k, v) {
 
@@ -210,17 +239,21 @@ $(function() {
                                     {
                                         new_tr = first_tr.clone();
                                         new_tr.addClass('new_tr').find('td').last().html('<a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a>');
-                                        new_tr.insertAfter(first_tr);
-                                        cnt_lessons++;
+                                        $('.table').find('tbody').append(new_tr);
+                                        cnt_lessons+=1;
+                                        num = ++k;
                                     }
 
                                     $.each(v, function(index, p) {
                                         if (k == 0)
                                         {
-                                            first_tr.find('[name="'+index+'"]').val(p);
+                                            first_tr.find('.'+index).val(p);
                                         }
-                                        else if (new_tr.length > 0)
-                                            new_tr.find('[name="'+index+'"]').val(p);
+                                        else if (new_tr.length > 0) {
+                                            pole = new_tr.find('.'+index);
+                                            pole.attr('name', 'lessons['+(num)+']['+index+']');
+                                            pole.val(p);
+                                        }
                                     });
 
                                 });

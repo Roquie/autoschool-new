@@ -29,9 +29,8 @@ class Model_Timelessons extends ORM
                 array('not_empty'),
                 array('digit')
             ),
-            'lesson_id' => array(
+            'lesson' => array(
                 array('not_empty'),
-                array('digit')
             ),
             'day_of_week' => array(
                 array('not_empty'),
@@ -46,6 +45,17 @@ class Model_Timelessons extends ORM
                 array('date'),
             ),
 
+        );
+    }
+
+    public function labels()
+    {
+        return array(
+            'group_id' => 'Номер группы',
+            'day_of_week' => 'День недели',
+            'time_start' => 'Время начала занятий',
+            'time_end' => 'Время окончания занятий',
+            'lesson' => 'Предмет',
         );
     }
 

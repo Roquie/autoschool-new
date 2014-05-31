@@ -10,7 +10,8 @@ class Controller_Admin_Base extends Controller_Template
 
         if (!Auth::instance()->logged_in('admin') && (Request::initial() === Request::current()))
         {
-            throw new HTTP_Exception_404();
+            //throw new HTTP_Exception_404();
+            HTTP::redirect('users/login');
         }
 
         $a = Auth::instance();

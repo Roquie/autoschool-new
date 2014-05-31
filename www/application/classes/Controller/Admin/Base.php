@@ -29,6 +29,20 @@ class Controller_Admin_Base extends Controller_Template
 
         !empty($gr_name) ? $gr_name : '"Не выбрано"';
 
+        $list_users = Model::factory('User')->get_user_list(false);
+        $list_groups = Model::factory('Group')->find_all();
+
+        View::set_global('list_users', $list_groups);
+        View::set_global('list_groups', $list_groups);
+
+        if (!empty($id))
+        {
+            $group_id = ORM::factory('User', $id)->listener->group->id;
+            $g = new Model_Group($group_id);
+
+            View::set_global('list_checked_listeners', $g->listener->find_all());
+        }
+
         View::set_global('checked_user', $checked_user);
         View::set_global('checked_user_group', $gr_name);
 

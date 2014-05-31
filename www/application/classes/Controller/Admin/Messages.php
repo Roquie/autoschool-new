@@ -138,5 +138,13 @@ class Controller_Admin_Messages extends Controller_Admin_Base
         }
     }
 
+    public function action_reload_checked_listeners()
+    {
+        $this->auto_render = false;
+        $this->ajax_data(
+            View::factory('admin/html/list_sms_listeners')->render()
+        );
+    }
+
 
 }

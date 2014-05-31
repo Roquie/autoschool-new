@@ -82,7 +82,7 @@ class Controller_Admin_Other_Group extends Controller_Admin_Other_Base
             {
                 $errors = $e->errors('validation');
                 $error = array_shift($errors);
-                $this->ajax_msg('<strong>Раписание занятий:</strong> '.$error, 'error');
+                $this->ajax_msg('<strong>Данные группы:</strong> '.$error, 'error');
             }
 
             $staff_group = ORM::factory('StaffGroup');
@@ -129,12 +129,13 @@ class Controller_Admin_Other_Group extends Controller_Admin_Other_Base
             }
 
             $this->ajax_msg('Данные успешно сохранены');
-
-            //$this->ajax_data($post);
         }
     }
 
-    //Cannot add or update a child row: a foreign key constraint fails (`melnik5g_rqmpt`.`listeners`, CONSTRAINT `listeners_ibfk_5` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`)) [ UPDATE `listeners` SET `number_contract` = 'wer', `date_contract` = '2014-05-13', `group_id` = 'NULL', `famil` = 'Блядович', `imya` = 'Лооол', `otch` = 'Гг', `tel` = '8 (986) 278-41-54', `mesto_raboty` = NULL, `mesto_rojdeniya` = 'Мухосранск', `nationality_id` = '1', `education_id` = '1', `data_rojdeniya` = '1970-01-01', `sex` = '1', `seriya_med` = NULL, `nomer_med` = NULL, `data_med` = '1970-01-01', `kem_vydana_med` = NULL, `region` = NULL, `rion` = NULL, `nas_pynkt` = NULL, `street` = NULL, `dom` = NULL, `korpys` = NULL, `kvartira` = NULL, `document_id` = '1', `document_seriya` = NULL, `document_nomer` = NULL, `document_kem_vydan` = NULL, `document_data_vydachi` = '1970-01-01', `certificate_seriya` = NULL, `certificate_nomer` = NULL WHERE `user_id` = '39' ]
+    public function action_add()
+    {
+
+    }
 
 
 }

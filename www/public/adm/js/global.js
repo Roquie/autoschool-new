@@ -96,7 +96,7 @@ $(function() {
         if ($(this).prop('checked'))
         {
             send_to.append(
-                '<span class="sms-listener-'+ id_listener +'">' + $(this).parent().find('span').text() + ' ( ' + tel + ' ), </span>'
+                '<span class="sms-listener-'+ id_listener +'">' + $(this).parent().find('span').text() + ' ( ' + tel + ' ), <br></span>'
             );
 
             var height = send_to[0].scrollHeight;

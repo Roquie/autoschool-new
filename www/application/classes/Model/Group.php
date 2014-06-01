@@ -9,7 +9,7 @@ class Model_Group extends ORM
     protected $_table_columns = array(
         'id' => array('data_type' => 'int', 'is_nullable' => false),
         'name' => array('data_type' => 'string', 'is_nullable' => false),
-        'category_id' => array('data_type' => 'int', 'is_nullable' => false),
+        'category_id' => array('data_type' => 'int', 'is_nullable' => true),
         'data_start' => array('data_type' => 'string', 'is_nullable' => true),
         'data_end' => array('data_type' => 'string', 'is_nullable' => true),
         'pdd_teacher' => array('data_type' => 'int', 'is_nullable' => true),
@@ -105,5 +105,14 @@ class Model_Group extends ORM
                 array('Security::xss_clean', array(':value')),
             )
         );
+    }
+
+    public function isset_group($name)
+    {
+        $group = ORM::factory('Group')
+                    ->where('name', '=', $name)
+                    ->find_all();
+
+        return $group->as_array();
     }
 }

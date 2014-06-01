@@ -29,12 +29,16 @@ $(function() {
                         else
                             $(this).val('');
                 });
+                form.find('#button').data('action', 'add');
             }
             else if ($(this).hasClass('edit'))
             {
                 groups.find('input').prop('disabled', false);
                 groups.find('input:checkbox:checked').prop('checked', false).trigger('click');
+                form.find('#button').data('action', 'edit');
             }
+            form.attr('action', $(this).data('url'));
+
         })
     /**
      * Доблавние селекта с выбором инструктора
@@ -75,11 +79,11 @@ $(function() {
                 tbody = table.find('tbody'),
                 tr = tbody.find('tr').first(),
                 new_tr = tr.clone();
-            alert(cnt_lessons);
+
             if (cnt_lessons < 5)
             {
                 cnt_lessons++;
-                new_tr.addClass('new_tr').find('td').last().html('<a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a>');
+                new_tr.addClass('new_tr');
                 var inp = new_tr.find('input'),
                     select = new_tr.find('select');
                 $.each(inp, function() {
@@ -94,29 +98,39 @@ $(function() {
      */
         .on('click', '.remove_lessons', function(e) {
             e.preventDefault();
-            $(this).closest('tr').remove();
 
-            var table = $('.table'),
-                tbody = table.find('tbody'),
-                tr = tbody.find('tr');
+            var table_tr = $(this).closest('tr');
+            if (table_tr.hasClass('new_tr'))
+            {
+                table_tr.remove();
 
-            $.each(tr, function(k, v) {
+                var table = $('.table'),
+                    tbody = table.find('tbody'),
+                    tr = tbody.find('tr');
 
-                var field_inp = $(this).find('input'),
-                    field_slct = $(this).find('select'),
-                    num = ++k;
+                $.each(tr, function(k, v) {
 
-                field_slct.each(function() {
-                    $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
+                    var field_inp = $(this).find('input'),
+                        field_slct = $(this).find('select'),
+                        num = ++k;
+
+                    field_slct.each(function() {
+                        $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
+                    });
+
+                    field_inp.each(function() {
+                        $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
+                    });
+
                 });
 
-                field_inp.each(function() {
-                    $(this).attr('name', 'lessons['+(num)+']['+$(this).attr('class')+']');
-                });
-
-            });
-
-            cnt_lessons--;
+                cnt_lessons--;
+            }
+            else
+            {
+                table_tr.find('input').val('');
+                table_tr.find('select').val('');
+            }
         });
 
     /**
@@ -125,7 +139,9 @@ $(function() {
     $('#group_form').on('submit', function(e) {
         e.preventDefault();
 
-        var $this = $(this);
+        var $this = $(this),
+            btn = $this.find('#button'),
+            groups = $('#groups');
 
         $.ajax({
             type : 'POST',
@@ -134,13 +150,32 @@ $(function() {
             dataType : 'json',
             beforeSend : function() {
                 console.log($this.serialize());
+                un_message();
+                wait(btn);
             },
             success : function(response) {
                 if (response.status == 'success' || response.status == 'error')
                 {
                     message($('.container'), response.msg, response.status);
-                    $('#groups').find('input:checkbox:checked').prop('checked', false).trigger('click');
                 }
+                if (response.status == 'success')
+                {
+                    if (btn.data('action') == 'add')
+                    {
+                        groups.append(
+                            '<label class="checkbox">' +
+                                '<input type="checkbox" value="'+response.data.id+'" name="group_name"/>' +
+                                '<span class="pull-left">'+response.data.name+'</span>' +
+                            '</label>'
+                        );
+                    }
+                    else
+                    {
+                        groups.find('input:checkbox:checked').next().text($this.find('[name="name"]').val());
+                    }
+                    $('.edit').trigger('click');
+                }
+                after_wait(btn);
             },
             error : function(request) {
                 if (request.status == '200') {
@@ -148,6 +183,7 @@ $(function() {
                 } else {
                     console.log(request.status + ' ' + request.statusText);
                 }
+                after_wait(btn);
             }
         });
     });
@@ -159,7 +195,9 @@ $(function() {
 
         var group_block = $('#groups'),
             $this = $(this),
-            form = $('#group_form');
+            form = $('#group_form'),
+            btn = form.find('#button'),
+            btn_del_group = $('.del_group');
 
         if ($(this).is(":checked")) {
             var group = "input:checkbox[name='" + $(this).attr("name") + "']";
@@ -199,6 +237,9 @@ $(function() {
                         first_tr = $('.table').find('tbody').find('tr').first();
                     $('.instructors_slct').find('.new_slct').remove();
                     $('.table').find('.new_tr').remove();
+
+                    btn_del_group.attr('href', btn_del_group.data('url')+group_block.find('input:checkbox:checked').val());
+
                     $.each(response.data, function(key, value) {
                         field = form.find('[name="'+key+'"]');
                         if (field.attr('type') == 'checkbox') {
@@ -231,14 +272,15 @@ $(function() {
                             {
                                 var new_tr,
                                     pole,
-                                    num;
+                                    num,
+                                    link;
                                 cnt_lessons = 1;
                                 $.each(value, function(k, v) {
 
                                     if (k > 0)
                                     {
                                         new_tr = first_tr.clone();
-                                        new_tr.addClass('new_tr').find('td').last().html('<a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a>');
+                                        link = new_tr.addClass('new_tr');
                                         $('.table').find('tbody').append(new_tr);
                                         cnt_lessons+=1;
                                         num = ++k;

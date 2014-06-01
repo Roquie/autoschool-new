@@ -36,19 +36,20 @@ class Controller_Main_Mail extends Controller_Main_Base
 
                 $path = APPPATH.'uploads/';
 
-                if (!empty($_FILES['file']['name']))
+                if (!empty($_FILES['files']['name']))
                 {
-
                     $valid = new Validation($_FILES);
-                    $valid->rule('file', 'Upload::valid')
-                          ->rule('file', 'Upload::not_empty')
-                          ->rule('file', 'Upload::type', array(':value', array('docx','doc', 'pdf', 'jpg', 'jpeg,', 'png', 'gif', 'tiff', 'psd', 'txt', 'rtf', 'zip', 'rar', '7z', 'pages')))
-                          ->rule('file', 'Upload::size', array(':value', '5M'));
+                    $valid->rule('files', 'Upload::valid')
+                          ->rule('files', 'Upload::not_empty')
+                          ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf', 'jpg', 'jpeg,', 'png', 'gif', 'tiff', 'psd', 'txt', 'rtf', 'zip', 'rar', '7z', 'pages', 'numbers')))
+                          ->rule('files', 'Upload::size', array(':value', '5M'));
 
                     if ($valid->check())
                     {
-                        $status = Upload::save($_FILES['files'], $_FILES['file']['name'], APPPATH.'uploads/', 0444);
-                        $file_name = $_FILES['file']['name'];
+                        $status = Upload::save($_FILES['files'], $_FILES['files']['name'], APPPATH.'uploads/', 0444);
+                        $file_name = $_FILES['files']['name'];
+                        //файлы с пробелами не отправляет
+                        $file_name = $string = preg_replace('/\s+/', '_', $file_name);
 
                         if ($status)
                         {
@@ -58,7 +59,7 @@ class Controller_Main_Mail extends Controller_Main_Base
                                      ->to(array(
                                                'vik.melnikov@gmail.com',
                                                'roquie0@gmail.com',
-                                             //  'auto@mpt.ru'
+                                               'auto@mpt.ru'
                                           ))
                                      ->from($post['email'], $post['name'])
                                      ->attach_file($path.$file_name)
@@ -67,7 +68,8 @@ class Controller_Main_Mail extends Controller_Main_Base
                             }
                             catch(Swift_SwiftException $e)
                             {
-                                die($e->getMessage());
+                                $error = 'Ошибка отправки сообщения. Попробуйте немного попозже или позвоните нам по телефону.';
+                                //die($e->getMessage());
                             }
 
                             $success = 'Спасибо. Письмо отправлено!';
@@ -86,8 +88,6 @@ class Controller_Main_Mail extends Controller_Main_Base
                         $errors = $valid->errors('upload');
                         $error = array_shift($errors);
                     }
-
-
                 }
                 else
                 {
@@ -97,22 +97,19 @@ class Controller_Main_Mail extends Controller_Main_Base
                              ->to(array(
                                        'vik.melnikov@gmail.com',
                                        'roquie0@gmail.com',
-                                       //  'auto@mpt.ru'
+                                       'auto@mpt.ru'
                                   ))
                              ->from($post['email'], $post['name'])
                              ->send();
                     }
                     catch(Swift_SwiftException $e)
                     {
-                        die($e->getMessage());
+                        $error = 'Ошибка отправки сообщения. Попробуйте немного попозже или позвоните нам по телефону.';
+                        //die($e->getMessage());
                     }
 
                     $success = 'Спасибо. Письмо отправлено!';
-
                 }
-
-
-
             }
             else
             {

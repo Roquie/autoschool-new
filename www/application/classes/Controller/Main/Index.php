@@ -3,6 +3,11 @@
 class Controller_Main_Index extends Controller_Main_Base
 {
 
+    public function action_cron()
+    {
+        file_put_contents(APPPATH.'lol.txt', "echo gg \n", FILE_APPEND);
+        die('ok');
+    }
 
     public function action_index()
     {

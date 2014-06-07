@@ -5,7 +5,7 @@ return array(
     (
         'type'       => 'MySQL',
         'connection' => array(
-            'hostname'   => 'localhost',
+            'hostname'   => 'auto.mpt.ru',
             'username'   => 'root',
             'password'   => 'BarrAcuda,2426',
             'persistent' => false,

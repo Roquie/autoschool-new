@@ -11,11 +11,11 @@ class Model_Category extends ORM
         'name' => array('data_type' => 'string', 'is_nullable' => false),
     );
 
-    protected $_has_one = array(
-        'category_prav' => array(
-            'model' => 'Category_prav',
-            'foreign_key' => 'category_id',
-        )
+    protected $_has_many = array(
+        'category' => array(
+            'model' => 'Staff',
+            'through' => 'staff_group',
+        ),
     );
 
     public function rules()

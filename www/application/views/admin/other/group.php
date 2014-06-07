@@ -3,12 +3,13 @@
 <div class="row">
     <div class="span12" style="margin: 0 19px 20px">
         <div class="pull-right">
-            <a href="#" class="btn btn-change edit active">Просмотр/Редакт.</a>
-            <a href="#" class="btn btn-change add">Добавление</a>
+            <a href="#" class="btn btn-change edit active" data-url="<?=URL::site('admin/other/group/edit')?>">Просмотр/Редакт.</a>
+            <a href="#" class="btn btn-change add" data-url="<?=URL::site('admin/other/group/add')?>">Добавление</a>
             <div class="btn-group">
                 <a href="<?=URL::site('/print/pdf')?>" target="_blank" data-placement="bottom" rel="tooltip" title="Распечатать список слушателей" class="btn"><i class="icon-print"></i></a>
                 <a href="<?=URL::site('/download/print/name')?>" data-placement="bottom" rel="tooltip" title="Загрузить документ со списоком слушателей" class="btn btn-success"><i class="icon-download"></i></a>
                 <a href="#" data-placement="bottom" rel="tooltip" title="Открыть список слушателей" class="btn btn-info"><i class="icon-eye-open"></i></a>
+                <a href="#" data-url="<?=URL::site('admin/other/group/del_group?csrf='.bin2hex(Security::token()).'&id=')?>" data-placement="bottom" rel="tooltip" title="Удалить группу" class="btn btn-danger del_group"><i class="icon-trash"></i></a>
             </div>
         </div>
     </div>
@@ -18,7 +19,7 @@
         <div class="well" id="list_groups">
             <h5 class="header_block">Наименование группы</h5>
             <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-            <div class="wrap" id="groups" data-url="<?=URL::site('admin/other/group/getGroup')?>">
+            <div class="wrap" id="groups" data-url="<?=URL::site('admin/other/group/getGroup')?>" style="height: 515px">
                 <?=View::factory('admin/html/groups_index', compact('groups'))?>
             </div>
         </div>
@@ -79,17 +80,19 @@
             <div class="well">
                 <div class="row">
                     <div class="span4">
-                        <label for="">Директор автошколы:</label>
-                        <div class="input-append">
-                            <input id="" name="" type="text" style="width: 205px" placeholder="">
-                            <span class="add-on"><i class="icon-user"></i></span>
-                        </div>
+                        <label for="category">Категория прав:</label>
+                        <select style="width: 225px" id="category" name="category_id">
+                            <option value="0" selected="selected"> --- </option>
+                            <? foreach ($category as $key => $item) : ?>
+                                <option value="<?=$item->id?>"><?=$item->name?></option>
+                            <? endforeach ?>
+                        </select>
                     </div>
                     <div class="span4 instructors_slct">
-                        <label for="">Водители - инструкторы:</label>
+                        <label for="instructors">Водители - инструкторы:</label>
                         <div class="input-append">
-                            <select style="width: 225px" name="instructors[]">
-                                <option value="0" selected="selected"> --- </option>
+                            <select style="width: 225px" id="instructors" name="instructors[]">
+                                <option value="" selected="selected"> --- </option>
                                 <? foreach ($staffs['instructors'] as $key => $item) : ?>
                                     <option value="<?=$key?>"><?=$item?></option>
                                 <? endforeach ?>
@@ -119,7 +122,7 @@
                             <tr>
                                 <td>
                                     <select name="lessons[1][day_of_week]" class="day_of_week" id="day_of_week" style="width: 150px">
-                                        <option selected="selected"> --- </option>
+                                        <option selected="selected" value=""> --- </option>
                                         <option value="1">Понедельник</option>
                                         <option value="2">Вторник</option>
                                         <option value="3">Среда</option>
@@ -130,7 +133,7 @@
                                 <td><input type="text" name="lessons[1][time_start]" class="time_start" placeholder="17:00" style="width: 70px"/></td>
                                 <td><input type="text" name="lessons[1][time_end]" class="time_end" placeholder="20:00" style="width: 70px"/></td>
                                 <td><input type="text" name="lessons[1][lesson]" class="lesson" placeholder="ПДД" style="width: 70px"/></td>
-                                <td style="text-align: center"></td>
+                                <td style="text-align: center"><a href="#" class="btn btn-danger remove_lessons"><i class="icon-remove"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -150,7 +153,7 @@
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
                         <input type="hidden" name="group_id" id="group_id"/>
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" id="button" class="btn btn-primary">
                             Сохранить
                         </button>
                     </div>

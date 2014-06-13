@@ -1,5 +1,4 @@
 <?php
-use PhpOffice\PhpWord\Exceptions\Exception;
 
 defined('SYSPATH') or die('No direct script access.');
 
@@ -138,6 +137,7 @@ Kohana::modules(array(
     'phpexcel' => MODPATH.'phpexcel',
     'phpword' => MODPATH.'phpword',
     'aramba' => MODPATH.'aramba',
+    'crontab-manager' => MODPATH.'crontab-manager',
 
 	));
 

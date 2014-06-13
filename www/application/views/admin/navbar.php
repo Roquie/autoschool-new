@@ -10,8 +10,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?=URL::site('admin/other/group')?>"> Группы</a></li>
                         <li><a href="<?=URL::site('admin/other')?>"> Вспомогательная информация</a></li>
-                        <li class="divider"></li>
                         <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники</a></li>
+                        <li class="divider"></li>
                         <!--<li class="dropdown-submenu">
                             <a tabindex="-1" href="<?/*=URL::site('admin/staff')*/?>">Сотрудники</a>
                             <ul class="dropdown-menu">

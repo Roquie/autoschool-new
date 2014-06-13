@@ -162,7 +162,7 @@ catch (Exception $e)
 /**
  * Раскоментировать в случае работы с локальной базой данных
  */
-// Database::$default = 'localhost';
+/* Database::$default = 'localhost'; */
 
 
 /**

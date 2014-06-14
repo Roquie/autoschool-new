@@ -46,6 +46,8 @@ class Controller_Admin_Base extends Controller_Template
 
         View::set_global('checked_user', $checked_user);
         View::set_global('checked_user_group', $gr_name);
+        View::set_global('message', Session::instance()->get_once('message'));
+        View::set_global('message_type', Session::instance()->get_once('message_type'));
 
         $this->template->title = 'Администратор "МПТ Автошкола"';
         $this->template->navbar = View::factory('admin/navbar', compact('admin', 'info'));

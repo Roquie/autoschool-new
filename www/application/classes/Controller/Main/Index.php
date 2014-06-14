@@ -5,9 +5,72 @@ class Controller_Main_Index extends Controller_Main_Base
 
     public function action_create_backup()
     {
-        $this->auto_render = false;
-        $name = Database::instance()->create_backup();
         $setting = new Model_Settings();
+        $this->auto_render = false;
+
+        try
+        {
+            $name = Database::instance()->create_backup();
+
+            if ($setting->get('backup_email'))
+            {
+                $message = View::factory('tmpmail/template', array(
+                      'mail_content' => View::factory('tmpmail/admin/backup_ok',
+                              array(
+                                   'backup_path' => $name,
+                              ))
+                 ));
+
+                try
+                {
+                    Email::factory('Резервное копирование успешно выполнено',$message, 'text/html')
+                        ->to(array(
+                                  'vik.melnikov@gmail.com',
+                                  'roquie0@gmail.com',
+                                  'auto@mpt.ru'
+                             ))
+                        ->from('autompt1@gmail.com', 'Резервное копирование')
+                        ->send();
+
+                }
+                catch(Swift_SwiftException $e)
+                {
+                    //die($e->getMessage());
+                }
+            }
+        }
+        catch(Exception $e)
+        {
+            if ($setting->get('backup_email'))
+            {
+                try
+                {
+                    $message = View::factory('tmpmail/template', array(
+                          'mail_content' => View::factory('tmpmail/admin/backup_bad',
+                                  array(
+                                       'error_msg' => $e->getMessage(),
+                                       'error_line' => $e->getLine(),
+                                       'trace' => $e->getTraceAsString(),
+                                  ))
+                     ));
+
+                    Email::factory('Ошибка резервного копирования', $message, 'text/html')
+                        ->to(array(
+                                  'vik.melnikov@gmail.com',
+                                  'roquie0@gmail.com',
+                                  'auto@mpt.ru'
+                             ))
+                        ->from('autompt1@gmail.com', 'Резервное копирование')
+                        ->send();
+                }
+                catch(Swift_SwiftException $e)
+                {
+                    //die($e->getMessage());
+                }
+            }
+        }
+
+
 
         /*$scopes = array(
             'https://www.googleapis.com/auth/drive.file',
@@ -32,25 +95,7 @@ class Controller_Main_Index extends Controller_Main_Base
         $this->upload_file($service, 'humans.txt', 'none', File::mime_by_ext('txt'));*/
 
 
-        if ($setting->get('email_ok'))
-        {
-            try
-            {
-                Email::factory('Бэкап БД Автошколы МПТ успешно создан!', 'Бэкап базы '.$name.' успешно создан в '.date('d.m.Y H:i').' <br>', 'text/html')
-                    ->to(array(
-                              'vik.melnikov@gmail.com',
-                              'roquie0@gmail.com',
-                              'auto@mpt.ru'
-                         ))
-                    ->from('autompt@gmail.com', 'BACKUP')
-                    ->send();
 
-            }
-            catch(Swift_SwiftException $e)
-            {
-                //die($e->getMessage());
-            }
-        }
     }
 
     /*protected function upload_file($service, $path, $description = 'none', $mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')

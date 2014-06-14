@@ -18,7 +18,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
     {
         parent::before();
 
-
+        $this->template->success = null;
         /*$this->_gclient = new Google_Client();*/
     }
 
@@ -71,6 +71,29 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 'Каждый месяц (первого числа)',
                 'Каждые два месяца (первого числа)',
         );
+
+
+        if ($this->request->query('remove') && $this->request->query('csrf'))
+        {
+            $csrf = pack('H*', $this->request->query('csrf'));
+
+            if (Security::is_token($csrf))
+            {
+                if (file_exists(APPPATH.'backups/'.$this->request->query('remove')))
+                {
+                    unlink(APPPATH.'backups/'.$this->request->query('remove'));
+
+                    $this->msg('Архив '.Security::xss_clean($this->request->query('remove')).' удален');
+                }
+                else
+                {
+                    HTTP::redirect(
+                        $this->request->current()->url()
+                    );
+                }
+            }
+        }
+
 
         $post = $this->request->post();
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
@@ -128,43 +151,43 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                             case self::BACKUP_EVERY_DAY:
                                 $setting->set('backup_first_type', self::BACKUP_EVERY_DAY);
                                 $this->_set_cron_job($min, $hours, '*', '*', '*', $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
 
                             case self::BACKUP_THREE_DAY:
                                 $setting->set('backup_first_type', self::BACKUP_THREE_DAY);
                                 $this->_set_cron_job($min, $hours, '*/3', '*', '*', $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
 
                             case self::BACKUP_WEEK:
                                 $setting->set('backup_first_type', self::BACKUP_WEEK);
                                 $this->_set_cron_job($min, $hours, '*', '*', 0, $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
 
                             case self::BACKUP_TWO_WEEK:
                                 $setting->set('backup_first_type', self::BACKUP_TWO_WEEK);
                                 $this->_set_cron_job($min, $hours, '*', '*', 'Sun expr `date +\%W` \% 2 > /dev/null ||', $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
 
                             case self::BACKUP_MONTH:
                                 $setting->set('backup_first_type', self::BACKUP_MONTH);
                                 $this->_set_cron_job($min, $hours, 1, '*', '*', $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
 
                             case self::BACKUP_TWO_MONTH:
                                 $setting->set('backup_first_type', self::BACKUP_TWO_MONTH);
                                 $this->_set_cron_job($min, $hours, 1, '*/2', '*', $backup_url);
-                                $success = 'Резервное копирование успешно настроено';
+                                $this->msg('Резервное копирование успешно настроено');
                             break;
                         }
                     }
                     else
                     {
-                        $error = 'Не верно задан формат времени';
+                        $this->msg('Не верно задан формат времени', 'danger');
                     }
                 }
 
@@ -174,7 +197,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             {
                 $setting->set('backup_first_type', self::BACKUP_EVERY_DAY);
                 $this->_delete_cron_job($backup_url);
-                $success = 'Резервное копирование выключено';
+                $this->msg('Резервное копирование выключено');
             }
 
         }

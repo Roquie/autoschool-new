@@ -14,14 +14,9 @@
             <li><a href="<?=URL::site('admin/settings/backup')?>">Резервное копирование</a></li>
         </ul>
         <div class="tab-content">
-            <!--вкладка Главная страница-->
 
-            <? if(isset($errors)) : ?>
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?=array_shift($errors)?>
-                </div>
-            <? endif ?>
+            <?=View::factory('errors/msg')?>
+
             <div class="row admins">
                 <div class="span4">
                     <div class="well well-large newAdmin">

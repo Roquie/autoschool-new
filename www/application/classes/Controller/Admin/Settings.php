@@ -480,11 +480,11 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
                 $admin->delete();
 
-                HTTP::redirect(Request::initial()->uri());
+                $this->msg('Администратор удален.', 'danger');
             }
             else
             {
-                $errors = array('error' => Kohana::message('users', 'admin_not_found'));
+                $this->msg(Kohana::message('users', 'admin_not_found'), 'danger');
             }
         }
         /**
@@ -504,12 +504,14 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                             'photo' => $data['photo'],
                             'password' => $newpass,
                             'password_confirm' => $newpass,
-                            'email' => $data['email']
+                            'email' => $data['email'],
+                            'hash' => md5(uniqid())
                         ),
                         array(
                             'photo',
                             'password',
                             'email',
+                            'hash'
                         ))
                     ->pk();
 
@@ -537,17 +539,18 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 }
                 catch(Swift_SwiftException $e)
                 {
-                    die($e->getMessage());
+                    $this->msg($e->getMessage(), 'danger');
                 }
 
                 $role = array(1, 2);
                 $users->add('roles', $role);
-                HTTP::redirect(Request::initial()->uri());
 
+                $this->msg('Администратор добавлен. Ему выслано уведомление на почту.');
             }
             catch(ORM_Validation_Exception $e)
             {
                 $errors = $e->errors('validation');
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
@@ -576,7 +579,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             }
         }
 
-        $this->template->content = View::factory('admin/settings/admins', compact('errors', 'data', 'admins'));
+        $this->template->content = View::factory('admin/settings/admins', compact('data', 'admins'));
     }
 
     public function action_upload()

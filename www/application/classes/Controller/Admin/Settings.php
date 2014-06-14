@@ -300,9 +300,13 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     $data = array_merge($data, $post);
 
                     if ((bool)$post['on_off'])
-                        $success = 'Синхронизация включена';
+                    {
+                        $this->msg('Синхронизация включена');
+                    }
                     else
-                        $success = 'Синхронизация отключена';
+                    {
+                        $this->msg('Синхронизация отключена', 'danger');
+                    }
 
                 break;
 
@@ -312,7 +316,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                         $setting->set('sync_remote_addr', null);
 
                         $data = array_merge($data, $post);
-                        $success = 'Доступ к скриптам разрешен для всех хостов';
+                        $this->msg('Доступ к скриптам разрешен для всех хостов');
                     }
                     else
                     {
@@ -321,12 +325,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                             $setting->set('sync_remote_addr', $post['ip_access']);
 
                             $data = array_merge($data, $post);
-                            $success = 'IP изменен.';
+                            $this->msg('IP изменен.');
                         }
                         else
                         {
                             $data = array_merge($data, $post);
-                            $error = 'Введите IP правильно';
+                            $this->msg('Введите IP правильно', 'danger');
                         }
                     }
 
@@ -335,7 +339,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
         }
 
-        $this->template->content = View::factory('admin/settings/sync', compact('data', 'error', 'success'));
+        $this->template->content = View::factory('admin/settings/sync', compact('data'));
     }
 
     public function action_index()
@@ -590,10 +594,10 @@ class Controller_Admin_Settings extends Controller_Admin_Base
             }
 
             $validate = Validation::factory($_FILES)
-                ->rule('files', 'Upload::valid')
-                ->rule('files', 'Upload::not_empty')
-                ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf')))
-                ->rule('files', 'Upload::size', array(':value', '5M'));
+                                  ->rule('files', 'Upload::valid')
+                                  ->rule('files', 'Upload::not_empty')
+                                  ->rule('files', 'Upload::type', array(':value', array('docx','doc', 'pdf')))
+                                  ->rule('files', 'Upload::size', array(':value', '5M'));
 
             if ($validate->check())
             {

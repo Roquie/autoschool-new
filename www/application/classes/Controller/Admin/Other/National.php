@@ -17,20 +17,20 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
 
             try
             {
-                $query = ORM::factory('Nationality')
-                            ->values($post)
-                            ->create();
+                ORM::factory('Nationality')
+                   ->values($post)
+                   ->create();
 
-                HTTP::redirect('/admin/other/national');
+                $this->msg('Гражданство добавлено');
             }
             catch (ORM_Validation_Exception  $e)
             {
                 $errors = $e->errors('validation');
-                $error = array_shift($errors);
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/nat', compact('national', 'error'));
+        $this->_other->content = View::factory('admin/other/nat', compact('national'));
     }
 
     /**
@@ -48,15 +48,15 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
             if ($nat->loaded())
             {
                 $nat->delete();
-                HTTP::redirect('/admin/other/national');
+                $this->msg('Гражданство '.$nat->name.' удалено');
             }
             else
             {
-                $error = Kohana::message('validation', 'nat_not_found');
+                $this->msg(Kohana::message('validation', 'nat_not_found'), 'danger');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/nat', compact('error'));
+        $this->_other->content = View::factory('admin/other/nat');
     }
 
 

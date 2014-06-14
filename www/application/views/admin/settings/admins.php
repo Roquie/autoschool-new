@@ -48,6 +48,7 @@
                         <? if (count($admins) == 0) : ?>
                             <div class="text-center not-found">Администраторы отсутствуют.</div>
                         <? else : ?>
+
                         <table id="table_admins" class="table table_admins">
                             <thead>
                             <tr>
@@ -60,12 +61,14 @@
                             <tbody>
 
                             <? foreach($admins as $admin): ?>
-                                <tr id="<?=$admin['id']?>">
+                                <tr class="content_rows" id="<?=$admin['id']?>">
                                     <td><?=$admin['info']['family_name']?></td>
                                     <td><?=$admin['info']['first_name']?></td>
                                     <td><?=$admin['email']?></td>
                                     <td>
-                                        <a class="badge badge-important" href="<?=Request::current()->url().'?id='.$admin['id'].'&csrf='.bin2hex(Security::token())?>"><i class="icon-remove"></i></a>
+                                        <div class="btn-group" style="height: 25px">
+                                            <a style="padding: 2px 10px 5px 10px" href="<?=Request::current()->url().'?id='.$admin['id'].'&csrf='.bin2hex(Security::token())?>" rel="tooltip" title="Удаляется без предупреждения!" class="btn btn-danger btn-upl_tmpl"><i class="icon-trash"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             <? endforeach ?>

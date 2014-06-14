@@ -48,7 +48,7 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
             if ($nat->loaded())
             {
                 $nat->delete();
-                $this->msg('Гражданство '.$nat->name.' удалено');
+                $this->msg('Гражданство '.$nat->name.' удалено', 'danger', 'admin/other/national');
             }
             else
             {

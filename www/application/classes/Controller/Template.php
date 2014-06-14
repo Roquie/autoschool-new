@@ -15,9 +15,11 @@ abstract class Controller_Template extends Kohana_Controller_Template
      * @param        $text
      * @param string $type
      *
+     * @param null   $redirect_url
+     *
      * @return bool
      */
-    public function msg($text, $type = 'success')
+    public function msg($text, $type = 'success', $redirect_url = null)
     {
         Session::instance()
                ->set('message', $text)
@@ -25,7 +27,7 @@ abstract class Controller_Template extends Kohana_Controller_Template
 
 
         HTTP::redirect(
-            $this->request->current()->url(), 303
+            !$redirect_url ? $this->request->current()->url() : $redirect_url, 303
         );
 
         return true;

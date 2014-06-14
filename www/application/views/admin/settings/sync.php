@@ -36,10 +36,8 @@
                     <div class="well">
                         <form action="<?=Request::current()->url()?>" method="post" novalidate>
                             <h5 class="header_block">Включить/Выключить</h5>
-
-                            <p>Синхронизация с толстым клиентом. <br/>
-
-                                Lorem Ipsum is simply dummy text of the printing and
+                            <p><!--Синхронизация с толстым клиентом.--> <!--<br/>-->
+                                Механизм предполагает отправку данных в локальное хранилище, при этом не нагружая сильно систему.
                             </p>
                             <input type="hidden" name="type" value="on_off"/>
                             <input type="hidden" name="csrf" value="<?=Security::token()?>"/>

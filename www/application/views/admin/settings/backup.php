@@ -69,7 +69,7 @@
                                     <?endif?>
                                 </div>
                                 <div class="span8" style="padding-left: 20px" id="google_drive">
-                                    <h5 class="header_block">Список резервных архивов</h5>
+                                    <h5 class="header_block">Список созданных резервных архивов</h5>
 
                                     <table class="table table_files" style="margin-top: -10px">
                                         <thead style="margin-top: -20px">

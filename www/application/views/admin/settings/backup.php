@@ -16,12 +16,8 @@
             <li class="active"><a href="<?=URL::site('admin/settings/backup')?>">Резервное копирование</a></li>
         </ul>
         <div class="tab-content">
-            <?if($message):?>
-                <div class="alert alert-<?=$message_type?>">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?=$message?>
-                </div>
-            <?endif?>
+
+            <?=View::factory('errors/msg')?>
 
             <div class="row" style="overflow-x: hidden">
                 <div class="span12">

@@ -1,0 +1,6 @@
+<?if($message):?>
+    <div class="alert alert-<?=$message_type?>">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <?=$message?>
+    </div>
+<?endif?>

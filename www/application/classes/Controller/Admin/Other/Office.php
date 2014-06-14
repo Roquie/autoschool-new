@@ -27,16 +27,16 @@ class Controller_Admin_Other_Office extends Controller_Admin_Other_Base
                     ->values($post)
                     ->create();
 
-                HTTP::redirect('/admin/other/office');
+                $this->msg('Должность добавлена');
             }
             catch (ORM_Validation_Exception  $e)
             {
                 $errors = $e->errors('validation');
-                $error = array_shift($errors);
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/office', compact('office', 'error', 'info'));
+        $this->_other->content = View::factory('admin/other/office', compact('office', 'info'));
     }
 
     /**
@@ -50,20 +50,20 @@ class Controller_Admin_Other_Office extends Controller_Admin_Other_Base
         {
             $id = $this->request->query('id');
 
-            $nat = ORM::factory('Office', $id);
+            $of = ORM::factory('Office', $id);
 
-            if ($nat->loaded())
+            if ($of->loaded())
             {
-                $nat->delete();
-                HTTP::redirect('/admin/other/office');
+                $of->delete();
+                $this->msg('Должность '.$of->name.' удалена', 'danger', 'admin/other/office');
             }
             else
             {
-                $error = Kohana::message('validation', 'edu_not_found');
+                $this->msg(Kohana::message('validation', 'office_not_found'), 'danger', 'admin/other/office');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/office', compact('office', 'error'));
+        $this->_other->content = View::factory('admin/other/office', compact('office'));
     }
 
 

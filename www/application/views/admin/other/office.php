@@ -1,4 +1,5 @@
 <?=HTML::style('adm/css/global_other.css')?>
+<?=View::factory('errors/msg')?>
 <div class="row">
     <div class="span4">
         <div class="well">
@@ -13,7 +14,7 @@
         </div>
     </div>
     <div class="span8">
-        <div class="well">
+        <div class="well" style="height: 203px">
             <h5 class="header_block">Список созданных</h5>
             <?if(count($office) == 0):?>
                 <div class="text-center not-found">Должности не найдены.</div>
@@ -27,13 +28,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?$i=1/*$office->count()*/;foreach($office as $v):?>
-                        <tr id="<?=$v->id?>">
-                            <td><?=$i++?></td>
+                    <?$count = $office->count(); foreach($office as $v):?>
+                        <tr class="content_rows" id="<?=$v->id?>">
+                            <td><?=$count--?></td>
                             <td><?=$v->name?></td>
                             <td>
                                 <? if ($info->is_root) : ?>
-                                <a href="<?=URL::site('admin/other/office/remove/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" style="display: table; margin: 0 auto; width: 27px; height: 18px" class="badge badge-important delete"><i class="icon-remove"></i></a>
+                                    <a style="height: 21px; padding: 2px 10px 2px 10px" href="<?=URL::site('admin/other/office/remove/?id='.$v->id.'&csrf='.bin2hex(Security::token()))?>" rel="tooltip" title="Удаляется без предупреждения!" class="btn btn-danger"><i class="icon-trash"></i></a>
                                 <? endif; ?>
                             </td>
                         </tr>

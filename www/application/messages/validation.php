@@ -30,5 +30,6 @@ return array(
     'check_group' => 'Группа не найдена',
     'nat_not_found' => 'Гражданство не найдено',
     'edu_not_found' => 'Образование не найдено',
+    'office_not_found' => 'Должность не найдена',
 
 );

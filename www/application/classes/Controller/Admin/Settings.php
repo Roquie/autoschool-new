@@ -370,12 +370,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                         $setting->set('tel2', $post['telephone_2']);
 
                         $data = array_merge($data, $post);
-                        $success = 'Номер(а) изменены.';
+                        $this->msg('Номер(а) изменены.');
                     }
                     else
                     {
                         $data = array_merge($data, $post);
-                        $error = 'Введите оба телефона правильно';
+                        $this->msg('Введите оба телефона правильно', 'danger');
                     }
 
                 break;
@@ -387,12 +387,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                         $setting->set('email', $post['email']);
 
                         $data = array_merge($data, $post);
-                        $success = 'Email изменен.';
+                        $this->msg('Email изменен.');
                     }
                     else
                     {
                         $data = array_merge($data, $post);
-                        $error = 'Введите email правильно';
+                        $this->msg('Введите email правильно', 'danger');
                     }
 
                 break;
@@ -403,13 +403,13 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     $setting->set('address', $post['address']);
 
                     $data = array_merge($data, $post);
-                    $success = 'Основные данные изменены.';
+                    $this->msg('Основные данные изменены.');
 
                 break;
             }
         }
 
-        $this->template->content = View::factory('admin/settings/index', compact('data', 'error', 'success'));
+        $this->template->content = View::factory('admin/settings/index', compact('data'));
     }
 
     public function action_smtp()

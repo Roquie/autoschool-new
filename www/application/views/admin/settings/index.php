@@ -18,18 +18,7 @@
         <div class="tab-content">
             <!--вкладка Главная страница-->
 
-            <? if(isset($error)) : ?>
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?=$error?>
-                </div>
-            <? endif ?>
-            <? if(isset($success)) : ?>
-                <div class="alert alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?=$success?>
-                </div>
-            <? endif ?>
+            <?=View::factory('errors/msg')?>
 
             <div class="row" style="overflow-x: hidden">
                 <div class="span4">

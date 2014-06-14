@@ -546,7 +546,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 {
                     Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
                         ->to($data['email'])
-                        ->from('auto@mpt.ru', 'Автошкола МПТ')
+                        ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                         ->send();
                 }
                 catch(Swift_SwiftException $e)

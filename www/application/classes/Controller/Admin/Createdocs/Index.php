@@ -145,7 +145,7 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                         {
                             Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
                                 ->to($email)
-                                ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                 ->send();
                         }
                         catch(Swift_SwiftException $e)

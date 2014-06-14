@@ -5,7 +5,6 @@ class Controller_Admin_Index extends Controller_Admin_Base
 
     public function action_index()
 	{
-
         /*$this->auto_render = false;
 
         echo exec('chmod +x '.__FILE__);

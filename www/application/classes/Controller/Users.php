@@ -200,18 +200,11 @@ class Controller_Users extends Controller_Main_Base
                         Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
                             //->setCfg(Kohana::$config->load('email.smtp')->as_array())
                              ->to($post['email'])
-                             ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                             ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                              ->send();
                     }
                     catch(Swift_SwiftException $e)
                     {
-
-                       /* Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
-                            //->setCfg(null)
-                            ->to($post['email'])
-                            ->from('autompt@gmail.ru', 'Автошкола МПТ')
-                            ->send();*/
-
                         Log::instance()->add(Log::WARNING, __METHOD__.' - '.$e->getMessage());
                     }
 
@@ -278,7 +271,7 @@ class Controller_Users extends Controller_Main_Base
                             {
                                 Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
                                     ->to($this->request->post('tel_or_email'))
-                                    ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                    ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                     ->send();
                             }
                             catch(Swift_SwiftException $e)
@@ -399,7 +392,7 @@ class Controller_Users extends Controller_Main_Base
                         {
                             Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
                                 ->to($user['email'])
-                                ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                 ->send();
                         }
                         catch(Swift_SwiftException $e)

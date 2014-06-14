@@ -81,7 +81,7 @@ class Controller_Admin_News extends Controller_Admin_Base
                             {
                                 Email::factory('Новости. Автошкола МПТ', $message, 'text/html')
                                     ->to($value['email'])
-                                    ->from('autompt@gmail.ru', 'Автошкола МПТ')
+                                    ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                     ->send();
                             }
                             catch(Swift_SwiftException $e)

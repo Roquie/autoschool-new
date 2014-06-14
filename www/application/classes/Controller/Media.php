@@ -24,4 +24,21 @@ class Controller_Media extends Controller
         }
     }
 
+    public function action_template_download()
+    {
+        $path = $this->request->param('path');
+        $type = $this->request->param('type');
+        $name = explode('@!', $path);
+        switch($type)
+        {
+            case 'template':
+                $this->response->send_file(APPPATH.'templates/'.substr($name[1], 10));
+            break;
+
+            case 'file':
+                $this->response->send_file(APPPATH.'download/documents/'.$name[1]);
+            break;
+        }
+    }
+
 }

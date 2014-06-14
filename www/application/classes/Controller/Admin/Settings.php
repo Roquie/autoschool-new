@@ -12,6 +12,8 @@ class Controller_Admin_Settings extends Controller_Admin_Base
     const BACKUP_MONTH = 4;
     const BACKUP_TWO_MONTH = 5;
 
+    const UPLOAD_TYPE_TEMPLATE = 2;
+
     public function before()
     {
         parent::before();
@@ -120,6 +122,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     list($hours, $min) = explode(':', $this->request->post('time'));
                     if (Valid::range($min, 0, 60) && Valid::range($hours, 0, 24))
                     {
+                        $setting->set('backup_time', $hours.':'.$min);
                         switch($this->request->post('type_task'))
                         {
                             case self::BACKUP_EVERY_DAY:
@@ -573,14 +576,28 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 if ($validate->check())
                 {
                     $file_info = ORM::factory('Files')->where('id', '=', $file_type_id)->find();
-                    if ($file_info->filename === $_FILES['files']['name'])
+                    if ($file_info->loaded())
                     {
-                        Upload::save($_FILES['files'], $file_info->filename, APPPATH.$file_info->path, 0444);
+                        //$file_info->filename,
+
+                        $status = Upload::save($_FILES['files'], $file_info->filename, APPPATH.$file_info->path, 0775);
+
+                        $status ? $success = 'Файл загружен и успешно заменён.' : $errors = array('Ошибка загрузки');
+                    }
+                    else
+                    {
+                        $errors = array('Файл не найден');
+                    }
+
+                   /* if ($file_info->filename === $_FILES['files']['name'])
+                    {
+
+
                     }
                     else
                     {
                         $errors = array('not_equal' => 'Имя загружаемого файла не соответствует выбранному');
-                    }
+                    }*/
                 }
                 else
                 {
@@ -590,7 +607,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         }
 
         $files = ORM::factory('Files')->find_all();
-        $this->template->content = View::factory('admin/settings/upload', compact('files', 'errors'));
+        $this->template->content = View::factory('admin/settings/upload', compact('files', 'errors', 'success'));
     }
 
 }

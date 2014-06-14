@@ -177,6 +177,16 @@ Route::set('backup_download', 'backup_download(/<path>)',
         'action'     => 'backup_download',
    ));
 
+Route::set('upload_template_dwn', 'tdownload/<type>(/<path>)',
+    array(
+         'path' => '.+',
+         'type' => '(template|file)'
+    ))
+    ->defaults(array(
+        'controller' => 'Media',
+        'action'     => 'template_download',
+   ));
+
 Route::set('viewdoc', 'viewdoc(/<path>)',
     array(
          'path' => '.+'

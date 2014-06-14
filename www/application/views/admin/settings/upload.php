@@ -1,5 +1,7 @@
 <?=HTML::style('adm/css/settings.css')?>
 <?=HTML::script('adm/js/upload.js')?>
+<?=HTML::style('global/css/view_doc.css')?>
+<?=HTML::script('global/js/viewdoc.js')?>
 <style>
     .b-button {
         display: inline-block;
@@ -57,30 +59,52 @@
                     <?=array_shift($errors)?>
                 </div>
             <? endif ?>
+            <? if(isset($success)) : ?>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <?=$success?>
+                </div>
+            <? endif ?>
             <div class="row" style="overflow-x: hidden">
             <div class="span8" >
                 <div class="well" style="height: 300px;">
                     <h5 class="header_block">Файлы сайта</h5>
-                    <table class="table table_files">
+                    <style type="text/css">
+                        .btn-upl_tmpl {
+                            padding: 2px 10px 2px 10px;
+                        }
+                    </style>
+                    <table id="upload_templ_table" class="table table_files">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Выбрать</th>
-                            <th>Имя</th>
-                            <th>Описание</th>
+                            <th>Тип</th>
+                            <th>Скачивание/Просмотр</th>
                         </tr>
                         </thead>
 
-                        <tbody>
-
-                        <?foreach ($files as $file):?>
-                            <tr>
-                                <td><?=$file->id?></td>
-                                <td><input type="checkbox" value="<?=$file->id?>" name="rd_file" /></td>
-                                <td><?=$file->filename?></td>
-                                <td><?=$file->desc?></td>
-                            </tr>
-                        <?endforeach?>
+                        <tbody style="height: 216px">
+                            <?foreach ($files as $file):?>
+                                <tr>
+                                    <td style="line-height: 26px"><?=$file->id?></td>
+                                    <td><input type="checkbox" value="<?=$file->id?>" name="rd_file" /></td>
+                                    <td rel="tooltip" title="<?=$file->filename?>" style="line-height: 26px"><?=$file->desc?></td>
+                                    <td>
+                                        <div class="btn-group" style="height: 25px">
+                                            <?if($file->type == Controller_Admin_Settings::UPLOAD_TYPE_TEMPLATE):?>
+                                                <a href="<?=URL::site('tdownload/template/'.time().'@!'.$file->path.$file->filename)?>" rel="tooltip" title="Загрузить" class="btn btn-success btn-upl_tmpl"><i class="icon-download"></i></a>
+                                                <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('tdownload/template/'.time().'@!'.$file->path.$file->filename))?>" data-type="statement" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info btn-upl_tmpl view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                            <?else:?>
+                                                <a href="<?=URL::site('tdownload/file/'.time().'@!'.$file->filename)?>" rel="tooltip" title="Загрузить" class="btn btn-success btn-upl_tmpl"><i class="icon-download"></i></a>
+                                                <?if(strtolower(pathinfo($file->filename, PATHINFO_EXTENSION)) !== 'pdf'):?>
+                                                    <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/other?url='.URL::site('tdownload/file/'.time().'@!'.$file->filename))?>" data-type="statement" data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info btn-upl_tmpl view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                                <?endif?>
+                                            <?endif?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?endforeach?>
                         </tbody>
                     </table>
                 </div>
@@ -88,7 +112,7 @@
             <div class="span4">
                 <div class="well" style="height: 300px;">
                     <h5 class="header_block">Загрузить</h5>
-                    <p style="text-align: center">Для загрузки файла выберите в таблице слева файл, который Вы хотите заменить, и загрузите новый.</p>
+                    <p style="text-align: center">Для замены шаблона выберите файл в таблице слева. <br/><br/>При необходимости можно скачать или просмотреть существующие.</p>
                     <div class="b-button js-fileapi-wrapper" style="margin-bottom: 10px; margin-top: 40px; margin-left: 60px">
                         <form action="<?=Route::url('admin', array('controller'=>'settings', 'action'=>'upload'))?>" method="post" enctype="multipart/form-data">
                             <div class="browse">
@@ -110,3 +134,6 @@
     </div>
 
 </div>
+
+
+<?=View::factory('view_doc')->render()?>

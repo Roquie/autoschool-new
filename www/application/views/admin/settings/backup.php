@@ -39,7 +39,7 @@
                                 <div class="span3">
                                     <h5 class="header_block">Резервное копирование <?/*=date('d.m.Y H:i:s')*/?></h5>
                                     <label for="time">Время выполнения</label>
-                                    <input id="time" type="time" name="time" value="05:00" />
+                                    <input id="time" type="time" name="time" value="<?=$settings->get('backup_time')?>" />
                                     <label for="type_task">Когда выполнять</label>
                                     <select name="type_task" id="type_task">
                                         <?foreach($type_tasks as $k => $value):?>

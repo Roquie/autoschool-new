@@ -10,6 +10,7 @@ class Model_Files extends ORM
         'id' => array('data_type' => 'int', 'is_nullable' => false),
         'filename' => array('data_type' => 'string', 'is_nullable' => false),
         'desc' => array('data_type' => 'string', 'is_nullable' => false),
+        'type' => array('data_type' => 'int', 'is_nullable' => false),
         'path' => array('data_type' => 'string', 'is_nullable' => false),
     );
 

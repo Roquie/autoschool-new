@@ -10,7 +10,7 @@
             <div class="pull-right">
                 <a href="#" class="btn btn-change edit active" data-url="<?=URL::site('admin/cars/edit')?>">Просмотр/Редакт.</a>
                 <a href="#" class="btn btn-change add" data-url="<?=URL::site('admin/cars/add')?>">Добавление</a>
-                <a href="#" data-url="<?=URL::site('admin/other/group/del_group?csrf='.bin2hex(Security::token()).'&id=')?>" data-placement="bottom" rel="tooltip" title="Удалить группу" class="btn btn-danger del_car"><i class="icon-trash"></i></a>
+                <a href="#" data-url="<?=URL::site('admin/cars/del_car?csrf='.bin2hex(Security::token()).'&id=')?>" data-placement="bottom" rel="tooltip" title="Удалить машину" class="btn btn-danger del_car"><i class="icon-trash"></i></a>
             </div>
         </div>
     </div>

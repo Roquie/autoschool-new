@@ -16,7 +16,7 @@ class Controller_Admin_Cars extends Controller_Admin_Base
             ->find_all();
         $staffs = Model::factory('Office')->getStaffs('инструктор');
 
-        $this->template->content = View::factory('admin/other/car', compact('cars', 'staffs'));
+        $this->template->content = View::factory('admin/car', compact('cars', 'staffs'));
     }
 
     public function action_getCar()
@@ -109,7 +109,7 @@ class Controller_Admin_Cars extends Controller_Admin_Base
                 $this->ajax_data(array(
                     'id' => $query[0],
                     'name' => $post['name']
-                ), 'Группа успешно добавлена');
+                ), 'Машина успешно добавлена');
 
             }
             catch(Database_Exception $e)
@@ -118,6 +118,23 @@ class Controller_Admin_Cars extends Controller_Admin_Base
             }
 
         }
+    }
+
+    public function action_del_car()
+    {
+        $csrf = pack('H*', $this->request->query('csrf'));
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::GET)
+        {
+            $id = $this->request->query('id');
+
+            ORM::factory('Transport', $id)->delete();
+
+            HTTP::redirect('admin/cars');
+        }
+        else
+            throw new HTTP_Exception_403('access denied');
+
     }
 
 

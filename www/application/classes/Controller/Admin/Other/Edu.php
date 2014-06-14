@@ -21,16 +21,16 @@ class Controller_Admin_Other_Edu extends Controller_Admin_Other_Base
                     ->values($post)
                     ->create();
 
-                HTTP::redirect('/admin/other/edu');
+                $this->msg('Образование добавлено');
             }
             catch (ORM_Validation_Exception  $e)
             {
                 $errors = $e->errors('validation');
-                $error = array_shift($errors);
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/edu', compact('edu', 'error'));
+        $this->_other->content = View::factory('admin/other/edu', compact('edu'));
     }
 
     /**
@@ -44,20 +44,20 @@ class Controller_Admin_Other_Edu extends Controller_Admin_Other_Base
         {
             $id = $this->request->query('id');
 
-            $nat = ORM::factory('Education', $id);
+            $edu = ORM::factory('Education', $id);
 
-            if ($nat->loaded())
+            if ($edu->loaded())
             {
-                $nat->delete();
-                HTTP::redirect('/admin/other/edu');
+                $edu->delete();
+                $this->msg('Образование '.$edu->name.' удалено', 'danger', 'admin/other/edu');
             }
             else
             {
-                $error = Kohana::message('validation', 'edu_not_found');
+                $this->msg(Kohana::message('validation', 'edu_not_found'), 'danger', 'admin/other/edu');
             }
         }
 
-        $this->_other->content = View::factory('admin/other/edu', compact('edu', 'error'));
+        $this->_other->content = View::factory('admin/other/edu');
     }
 
 

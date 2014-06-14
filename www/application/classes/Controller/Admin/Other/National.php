@@ -52,7 +52,7 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
             }
             else
             {
-                $this->msg(Kohana::message('validation', 'nat_not_found'), 'danger');
+                $this->msg(Kohana::message('validation', 'nat_not_found'), 'danger', 'admin/other/national');
             }
         }
 

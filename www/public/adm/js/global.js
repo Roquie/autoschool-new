@@ -15,9 +15,9 @@ $(function() {
         changeYear: true
     }).mask('99.99.9999');
 
-    $(".sms_sender").inputmask({ "mask": "8 (999) 999-99-99, ", "repeat": 100, "greedy": false });
+    /*$(".sms_sender").inputmask({ "mask": "8 (999) 999-99-99, ", "repeat": 100, "greedy": false });
 
-    $('#many_tels').autosize();
+    $('#many_tels').autosize();*/
 
 
 

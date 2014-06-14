@@ -146,7 +146,7 @@
                 <li class="divider-vertical"></li>
                 <li style="position: relative">
                     <a href="#" id="user_name"><span class="login"><i class="icon-bolt"></i> <?=$info->first_name.'&nbsp;'.$info->family_name?></span><strong class="caret" style="margin-left: 5px;margin-top: 8px; border-top: 4px solid #ffffff;"></strong></a>
-                    <div id="popup" class="hide">
+                    <div id="popup" style="width: 300px" class="hide">
                         <div class="pull-left">
                             <?if($admin->photo == 'public/img/photo.jpg' || $admin->photo == 'public/img/admin/admin_avatar.png'):?>
                                 <img class="img-login" style="width: 95px; height: 95px" src="<?=URL::site($admin->photo)?>"/>
@@ -154,13 +154,27 @@
                                 <img class="img-login" style="width: 95px; height: 95px" src="<?=$admin->photo?>"/>
                             <?endif?>
                         </div>
-                        <div class="pull-right" style="width: 180px">
+                        <div class="pull-right" style="width: 197px; margin-top: -5px">
                             <span style="font-weight: bolder"">  <?=$info->first_name.'&nbsp;'.$info->family_name?></span><br>
                             <span class="muted"><?=$admin->email?></span><br>
                             Администратор
                             <div class="buttons">
-                                <a href="<?=URL::site('admin/settings/')?>"><button class="btn">Настройки</button></a>
-                                <a href="<?=URL::site('users/logout')?>"><button class="btn">Выйти</button></a>
+                                    <div class="btn-group">
+                                        <a class="btn" href="<?=URL::site('admin/settings/')?>">Настройки</a>
+                                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                            <span style="border-top-color: #474747; border-bottom-color: #474747" class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?=URL::site('admin/settings')?>">Главная страница</a></li>
+                                            <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
+                                            <li><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
+                                            <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="<?=URL::site('admin/settings/sync')?>">Синхронизация</a></li>
+                                            <li><a href="<?=URL::site('admin/settings/backup')?>">Резервное копирование</a></li>
+                                        </ul>
+                                    </div>
+                                <a class="btn" href="<?=URL::site('users/logout')?>">Выйти</a>
                             </div>
                         </div>
                     </div>

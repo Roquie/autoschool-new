@@ -25,12 +25,26 @@
             <div class="well l_select_group">
                 <h5 class="header_block">Номер группы</h5>
                 <label for="">Выберите:</label>
-                <select name="select2" id="select2" data-url="<?=URL::site('admin/listeners/users_by_group')?>">
+                <select name="select2" id="select2" style="width: 136px" data-url="<?=URL::site('admin/listeners/users_by_group')?>">
                     <option value="0" selected="selected">Все ...</option>
                     <?foreach($list_groups as $item):?>
                         <option value="<?=$item->id?>"><?=$item->name?></option>
                     <?endforeach?>
                 </select>
+                <a class="btn" href="<?=URL::site('admin/other/group')?>" data-toggle="modal" style="margin: -10px 0 0 0"><i class="icon-plus"></i></a>
+                <!--<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Modal header</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body…</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>-->
             </div>
             <div class="well l_fio">
                 <h5 class="header_block">Фамилия И.О.</h5>

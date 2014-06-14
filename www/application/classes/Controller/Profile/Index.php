@@ -383,23 +383,6 @@ class Controller_Profile_Index extends Controller_Profile_Base
     }
 
 
-   /* public function action_download_zip()
-    {
-        $paths = array(
-            APPPATH.'download/'.$this->_create_contract(),
-            APPPATH.'download/'.$this->_create_statement(),
-            APPPATH.'download/'.$this->_create_ticket(),
-        );
-
-        $str = File::createZip(APPPATH.'download/temp/documents_exports', $paths);
-
-        foreach ($paths as $value)
-            unlink($value);
-
-        $this->response->send_file(
-            $str, null, array('delete' => true)
-        );
-    }*/
 
     public function after()
     {

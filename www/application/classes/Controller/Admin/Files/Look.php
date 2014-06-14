@@ -2,7 +2,7 @@
 
 class Controller_Admin_Files_Look extends Controller_Admin_Base
 {
-    public $_temp_file = null;
+    protected $_temp_file = null;
 
     public function before()
     {

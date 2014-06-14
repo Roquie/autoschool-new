@@ -137,26 +137,14 @@ Kohana::modules(array(
     'phpexcel' => MODPATH.'phpexcel',
     'phpword' => MODPATH.'phpword',
     'aramba' => MODPATH.'aramba',
-    'crontab-manager' => MODPATH.'crontab-manager',
+   // 'GoogleClientApi' => MODPATH.'GoogleClientApi',
+    //'google-api-php-client' => MODPATH.'google-api-php-client',
 
 	));
 
-/*try
-{
-    $dir_writable = substr(sprintf('%o', fileperms(APPPATH.'cache/')), -4) == "0774" ? "true" : "false";
-
-    if (!$dir_writable)
-    {
-        File::chmod_recursive(APPPATH.'cache/', 775);
-        File::chmod_recursive(APPPATH.'download/', 775);
-        File::chmod_recursive(APPPATH.'templates/', 775);
-    }
-
-}
-catch (Exception $e)
-{
+/*
     die('Поставьте права 775 на папки 1) '.APPPATH.'cache/'.' 2) '.APPPATH.'download/'.' 3) '.APPPATH.'templates/');
-}*/
+*/
 
 
 /**
@@ -178,6 +166,15 @@ Route::set('download', 'download(/<path>)',
     ->defaults(array(
         'controller' => 'Media',
         'action'     => 'download',
+   ));
+
+Route::set('backup_download', 'backup_download(/<path>)',
+    array(
+         'path' => '.+'
+    ))
+    ->defaults(array(
+        'controller' => 'Media',
+        'action'     => 'backup_download',
    ));
 
 Route::set('viewdoc', 'viewdoc(/<path>)',

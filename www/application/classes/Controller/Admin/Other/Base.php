@@ -28,7 +28,7 @@ class Controller_Admin_Other_Base extends Controller_Admin_Base
     }
 
 
-    public function after()
+        public function after()
     {
         $this->template->content = $this->_other->render();
         parent::after();

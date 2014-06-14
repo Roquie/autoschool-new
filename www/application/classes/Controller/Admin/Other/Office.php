@@ -40,7 +40,7 @@ class Controller_Admin_Other_Office extends Controller_Admin_Other_Base
     }
 
     /**
-     * Удаление образования
+     * Удаление должности
      */
     public function action_remove()
     {

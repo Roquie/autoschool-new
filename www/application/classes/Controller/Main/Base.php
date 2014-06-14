@@ -18,6 +18,9 @@ class Controller_Main_Base extends Controller_Template
             URL::site('public/main/css/flexslider.css'),
         );
 
+        View::bind_global('message', Session::instance()->get_once('message'));
+        View::bind_global('message_type', Session::instance()->get_once('message_type'));
+
         $this->template->styles = $styles;
 
         $this->template->title = 'МПТ Автошкола';

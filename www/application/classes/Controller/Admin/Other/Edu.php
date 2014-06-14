@@ -29,7 +29,7 @@ class Controller_Admin_Other_Edu extends Controller_Admin_Other_Base
                 $this->msg(array_shift($errors), 'danger');
             }
         }
-
+//
         $this->_other->content = View::factory('admin/other/edu', compact('edu'));
     }
 

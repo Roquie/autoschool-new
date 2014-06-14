@@ -414,46 +414,58 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
     public function action_smtp()
     {
-        $data = Kohana::$config->load('settings.smtp');
-        if (!empty($data))
-            $data = unserialize($data);
+        $setting = new Model_Settings();
 
-        $csrf = $this->request->post('csrf');
-        if (Security::is_token($csrf) && $this->request->method() === Request::POST)
+        $post = $this->request->post();
+
+        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            $data= $this->request->post();
-            unset($data['csrf']);
-            $values = array_filter($data);
-            if (!empty($values))
+            if ( ! $setting->get('smtp'))
             {
-                $validate = Validation::factory(Arr::map('trim', $data));
+                $validate = Validation::factory($post);
                 $validate->labels(array(
                     'server' => 'Поле "сервер"',
                     'port' => 'Поле "порт"',
-                    'email' => 'Поле "e-mail"'
+                    'login' => 'Поле "e-mail"'
                 ))
                     ->rule('server', 'not_empty')
                     ->rule('port', 'not_empty')
                     ->rule('port', 'digit')
                     ->rule('port', 'min_length', array(':value', 1))
                     ->rule('port', 'max_length', array(':value', 65536))
-                    ->rule('email', 'email');
+                    ->rule('login', 'not_empty')
+                    ->rule('login', 'email')
+                    ->rule('password', 'not_empty');
 
                 if ($validate->check())
                 {
-                    Model::factory('Settings')->set('smtp', serialize($data));
-                    HTTP::redirect(Request::initial()->uri());
+                    unset($post['csrf']);
+                    $setting->set('smtp', true);
+                    $setting->set('smtp_data', json_encode($post));
+
+                    $this->msg('Для отправки всех писем включено SMTP');
                 }
                 else
                 {
+                    Session::instance()->set('smtp_data', $post);
                     $errors = $validate->errors('validation');
+                    $this->msg(array_shift($errors), 'danger');
                 }
-            } else {
-                Model::factory('Settings')->set('smtp', 0);
-                HTTP::redirect(Request::initial()->uri());
+            }
+            else
+            {
+                //$setting->set('smtp_data', null);
+                $setting->set('smtp', false);
+                $this->msg('SMTP отключено. Возможны проблемы при отправке писем! Рекомендуется заново его включить!', 'danger');
             }
         }
-        $this->template->content = View::factory('admin/settings/smtp', compact('data', 'errors'));
+
+        if ($setting->get('smtp'))
+        {
+            Session::instance()->set('smtp_data', json_decode($setting->get('smtp_data'), true));
+        }
+
+        $this->template->content = View::factory('admin/settings/smtp')->set('post', Session::instance()->get('smtp_data'));
     }
 
     public function action_administrators()

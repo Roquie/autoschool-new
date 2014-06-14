@@ -15,31 +15,34 @@
             <li><a href="<?=URL::site('admin/settings/backup')?>">Резервное копирование</a></li>
         </ul>
         <div class="tab-content">
-            <!--вкладка Главная страница-->
 
-            <? if(isset($errors)) : ?>
-                <div class="alert alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <?=array_shift($errors)?>
-                </div>
-            <? endif ?>
+            <?=View::factory('errors/msg')?>
+
             <div class="row" style="overflow-x: hidden">
                 <div class="span4">
-                    <div class="well" style="height: 346px">
+                    <div class="well" >
                         <div>
                             <h5 class="header_block">Настройки SMTP</h5>
-                            <form action="<?=Route::url('admin', array('controller' => 'settings', 'action' => 'smtp'))?>" method="post">
+                            <form action="<?=Route::to('admin', 'settings#smtp')?>" method="post">
                                 <label for="server">Сервер:</label>
-                                <input name="server" id="server" class="input-block-level" type="text" placeholder="smtp.gmail.com" value="<?=isset($data['server'])?$data['server']:null?>">
+                                <input name="server" id="server" class="input-block-level" type="text" placeholder="smtp.gmail.com" value="<?=isset($post['server']) ? $post['server'] : null?>">
                                 <label for="port">Порт:</label>
-                                <input name="port" id="port" type="text" class="input-block-level" placeholder="25" value="<?=isset($data['port'])?$data['port']:null?>">
+                                <input name="port" id="port" type="text" class="input-block-level" placeholder="25" value="<?=isset($post['port']) ? $post['port'] : null?>">
                                 <label for="login">E-mail:</label>
-                                <input name="login" id="login" type="text" class="input-block-level" placeholder="example@gmail.com" value="<?=isset($data['login'])?$data['login']:null?>">
+                                <input name="login" id="login" type="text" class="input-block-level" placeholder="example@gmail.com" value="<?=isset($post['login']) ? $post['login'] : null?>">
                                 <label for="password">Пароль:</label>
-                                <input name="password" id="password" type="password" class="input-block-level" placeholder="Пароль" value="<?=isset($data['password'])?'*************':null?>"><br>
+                                <?if($settings->get('smtp')):?>
+                                    <input name="password" id="password" type="password" class="input-block-level" placeholder="Пароль скрыт в целях безопасности" value="<?=isset($post['password']) ? null : null?>"><br>
+                                <?else:?>
+                                    <input name="password" id="password" type="password" class="input-block-level" placeholder="Пароль" value="<?=isset($post['password']) ? null : null?>"><br>
+                                <?endif?>
                                 <input type="hidden" name="csrf" value="<?=Security::token()?>" class="csrf"/>
-                                <input class="btn btn-info pull-right" id="reset" type="reset" value="Очистить">
-                                <input type="submit" class="btn btn-success" value="Сохранить">
+                                <!--<input class="btn btn-info pull-right" id="reset" type="reset" value="Очистить">-->
+                                <?if($settings->get('smtp')):?>
+                                    <input type="submit" class="btn btn-danger" style="width: 100%" value="Выключить SMTP">
+                                <?else:?>
+                                    <input type="submit" class="btn btn-success" style="width: 100%" value="Включить SMTP">
+                                <?endif?>
                             </form>
                         </div>
 

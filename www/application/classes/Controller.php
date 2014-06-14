@@ -13,6 +13,9 @@ abstract class Controller extends Kohana_Controller
             'settings',
             new Model_Settings()
         );
+        View::set_global(
+            'session', Session::instance()
+        );
 
     }
 

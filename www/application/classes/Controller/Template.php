@@ -25,7 +25,7 @@ abstract class Controller_Template extends Kohana_Controller_Template
 
 
         HTTP::redirect(
-            $this->request->current()->url()
+            $this->request->current()->url(), 303
         );
 
         return true;

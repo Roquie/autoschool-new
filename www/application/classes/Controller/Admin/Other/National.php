@@ -43,17 +43,26 @@ class Controller_Admin_Other_National extends Controller_Admin_Other_Base
         if (Security::is_token($csrf) && $this->request->method() === Request::GET)
         {
             $id = $this->request->query('id');
-            $nat = ORM::factory('Nationality', $id);
 
-            if ($nat->loaded())
+            try
             {
-                $nat->delete();
-                $this->msg('Гражданство '.$nat->name.' удалено', 'success', 'admin/other/national');
+                $nat = ORM::factory('Nationality', $id);
+
+                if ($nat->loaded())
+                {
+                    $nat->delete();
+                    $this->msg('Гражданство '.$nat->name.' удалено', 'success', 'admin/other/national');
+                }
+                else
+                {
+                    $this->msg(Kohana::message('validation', 'nat_not_found'), 'danger', 'admin/other/national');
+                }
             }
-            else
+            catch (Database_Exception $e)
             {
-                $this->msg(Kohana::message('validation', 'nat_not_found'), 'danger', 'admin/other/national');
+                $this->msg('Ошибка удаления. Возможно имеются связанные данные.', 'danger', 'admin/other/national');
             }
+
         }
 
         $this->_other->content = View::factory('admin/other/nat');

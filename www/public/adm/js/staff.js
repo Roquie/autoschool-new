@@ -17,22 +17,41 @@ $(function()
         cnt_select = 1;
 
 
-    $('body').on('click', '.add_office', function(e) {
-        e.preventDefault();
+    $('body')
+        /**
+         * Добавление селекта с выбором должности
+         */
+        .on('click', '.add_office', function(e) {
+            e.preventDefault();
+            var $this = $(this),
+                cur = $this.closest('.input-append'),
+                select = cur.clone();
 
-        if (cnt_select  > 5)
-            return false;
+            if (cnt_select < 5)
+            {
+                $('.l_data').height($('.l_data').height() + 40);
+                $('.l_fio').height($('.l_fio').height() + 40);
+                select.find('a').remove();
+                select.addClass('new_slct');
+                select.append('<a href="#" class="btn btn-danger del_office" style="margin-left: 15px"><i class="icon-remove"></i></a>').insertAfter(cur);
+                cnt_select++;
+            }
+            else
+            {
+                alert('На группу можно не больше 5 инструкторов');
+            }
 
-        cnt_select++;
-
-        var block = $(this).closest('.control-group'),
-            span = block.find('.block_office').first().clone(),
-            select = span.find('select');
-
-        select.after('<span class="help-inline"><i class="icon-remove"></i></span>');
-
-        block.append(span);
-    });
+        })
+    /**
+     * Удаление селекта с должностью
+     */
+        .on('click', '.del_office', function(e) {
+            e.preventDefault();
+            $(this).closest('.input-append').remove();
+            $('.l_data').height($('.l_data').height() - 40);
+            $('.l_fio').height($('.l_fio').height() - 40);
+            cnt_select--;
+        });
 
 
 
@@ -65,6 +84,7 @@ $(function()
             $('#update_staff_id').val(0);
             $('#position_filter').trigger('change');
             f_staff.attr('action', create.data('url'));
+            $('.instructors_slct').find('.new_slct').remove();
             $this.html('Режим просмотра/редакт.');
             $this.addClass('active');
             save.hide();
@@ -83,7 +103,7 @@ $(function()
         $.ajax({
             type : 'POST',
             url  : $(this).closest('form').attr('action'),
-            data : f_staff.serialize() + '&position_id=' + $('#position_filter').val(),
+            data : f_staff.serialize(),
             dataType : 'json',
             beforeSend : function()
             {
@@ -94,6 +114,7 @@ $(function()
             {
                 if (response.status == 'success')
                 {
+                    create_staff.trigger('click');
                     $('#position_filter').trigger('change');
                 }
 
@@ -107,6 +128,9 @@ $(function()
             },
             error : function(request)
             {
+                btn_loader.hide();
+                btn_submit.show();
+
                 if (request.status == '200') {
                     console.log('Исключение: ' + request.responseText);
                 } else {
@@ -115,55 +139,6 @@ $(function()
             }
         });
     });
-
-
-    $('#remove_staff').on('click', function(e)
-    {
-        e.preventDefault();
-
-        var $this = $(this);
-
-        $.ajax({
-            type : 'POST',
-            url  : $this.data('url'),
-            data :
-            {
-                staff_id : $('#update_staff_id').val(),
-                csrf :  $this.data('csrf')
-            },
-            dataType : 'json',
-            beforeSend : function()
-            {
-                $this.attr('disabled', true);
-                $this.html('<div class="loader"><i class="icon-refresh icon-spin icon-small"></i></div>');
-            },
-            success : function(response)
-            {
-                if (response.status == 'success')
-                {
-                    $('#position_filter').trigger('change');
-                    list_staff.find('input:checkbox').first().trigger('click');
-                }
-
-                if (response.status == 'success' || response.status == 'error')
-                {
-                    message($('.container'), response.msg, response.status);
-                }
-
-                $this.attr('disabled', false);
-                $this.html(' <i class="icon-trash"></i>');
-            },
-            error : function(request)
-            {
-                if (request.status == '200') {
-                    console.log('Исключение: ' + request.responseText);
-                } else {
-                    console.log(request.status + ' ' + request.statusText);
-                }
-            }
-        });
-    });
-
 
     list_staff.on('click', 'input:checkbox', function()
     {
@@ -185,7 +160,8 @@ $(function()
 
 
         var $this = $(this),
-            field;
+            field,
+            btn_del_staff = $('.del_staff');
 
         $.ajax({
             type : 'POST',
@@ -208,11 +184,19 @@ $(function()
                         else
                             $(this).val('');
                 });
+
             },
             success : function(response)
             {
                 if (response.status == 'success')
                 {
+                    var first_inst = $('.instructors_slct').find('.input-append').first();
+
+                    $('.instructors_slct').find('.new_slct').remove();
+
+                    btn_del_staff.attr('href', btn_del_staff.data('url')+$this.val());
+
+
                     $.each(response.data, function(key, value)
                     {
                         field = f_staff.find('[name="'+key+'"]');
@@ -220,13 +204,42 @@ $(function()
                         if (key == 'id') {
                             $('#update_staff_id').val(value);
                         }
-                        if (field.attr('type') == 'checkbox')
+                        else if (field.attr('type') == 'checkbox')
                         {
                             (value == '0') ? field.prop("checked", false) : field.prop("checked", true);
                         }
                         else
                         {
-                            field.val(value);
+                            if (key == 'offices')
+                            {
+                                var new_slct,
+                                    i = 0;
+                                cnt_select = 1;
+
+                                $('.l_data').height(792);
+                                $('.l_fio').height(630);
+
+                                $.each(value, function(k, v)
+                                {
+                                    if (i == 0)
+                                    {
+                                        first_inst.find('select').val(v);
+                                    }
+                                    else
+                                    {
+                                        $('.l_data').height($('.l_data').height() + 40);
+                                        $('.l_fio').height($('.l_fio').height() + 40);
+                                        new_slct = first_inst.clone();
+                                        new_slct.find('a').remove();
+                                        new_slct.addClass('new_slct').append('<a href="#" class="btn btn-danger del_office" style="margin-left: 15px"><i class="icon-remove"></i></a>').find('select').val(v);
+                                        new_slct.insertAfter(first_inst);
+                                        cnt_select++;
+                                    }
+                                    i++;
+                                });
+                            }
+                            else
+                                field.val(value);
                         }
                     });
 
@@ -364,6 +377,9 @@ $(function()
             },
             error : function(request)
             {
+                btn_loader.hide();
+                btn_submit.show();
+
                 if (request.status == '200') {
                     console.log('Исключение: ' + request.responseText);
                 } else {

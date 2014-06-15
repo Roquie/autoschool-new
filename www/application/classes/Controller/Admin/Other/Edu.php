@@ -44,18 +44,28 @@ class Controller_Admin_Other_Edu extends Controller_Admin_Other_Base
         {
             $id = $this->request->query('id');
 
-            $edu = ORM::factory('Education', $id);
 
-            if ($edu->loaded())
+            try
             {
-                $edu->delete();
-                $this->msg('Образование '.$edu->name.' удалено', 'success', 'admin/other/edu');
+                $edu = ORM::factory('Education', $id);
+
+                if ($edu->loaded())
+                {
+                    $edu->delete();
+                    $this->msg('Образование '.$edu->name.' удалено', 'success', 'admin/other/edu');
+                }
+                else
+                {
+                    $this->msg(Kohana::message('validation', 'edu_not_found'), 'danger', 'admin/other/edu');
+                }
             }
-            else
+            catch (Database_Exception $e)
             {
-                $this->msg(Kohana::message('validation', 'edu_not_found'), 'danger', 'admin/other/edu');
+                $this->msg('Ошибка удаления. Возможно имеются связанные данные.', 'danger', 'admin/other/edu');
             }
         }
+        else
+            throw new HTTP_Exception_403('access denied');
 
         $this->_other->content = View::factory('admin/other/edu');
     }

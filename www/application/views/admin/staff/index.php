@@ -1,17 +1,20 @@
 <?=HTML::style('adm/css/listeners.css')?>
+<?=HTML::style('adm/css/group.css')?>
 <?=HTML::style('global/css/datepicker.css')?>
 <?=HTML::script('adm/js/staff.js')?>
 <?=HTML::script('global/js/jquery.maskedinput.min.js')?>
 
-
 <div class="container">
+
+    <?=View::factory('errors/msg')?>
+
     <div class="row">
         <div class="span4">
             <h1><small>Сотрудники</small></h1>
         </div>
         <div class="span8 btn_actions">
-            <button id="remove_staff" href="#" data-csrf="<?=Security::token()?>" data-url="<?=URL::site('/admin/staff/remove')?>" class="btn btn-danger pull-right" data-placement="bottom" rel="tooltip" title="Удалить сотрудника"> <i class="icon-trash"></i></button>
-            <button style="margin-right: 5px" id="create_staff" href="#" data-url="<?=URL::site('/admin/staff/create')?>" class="btn btn-warning pull-right" data-placement="bottom" rel="tooltip" title="Добавить сотрудника в БД">Режим добавления</button>
+            <a href="#" data-url="<?=URL::site('admin/staff/del_staff/del_group?csrf='.bin2hex(Security::token()).'&id=')?>" data-placement="bottom" rel="tooltip" title="Удалить сотрудника" class="btn btn-danger del_staff pull-right"><i class="icon-trash"></i></a>
+            <button style="margin-right: 5px" id="create_staff" href="#" data-url="<?=URL::site('/admin/staff/create')?>" class="btn btn-warning pull-right" data-placement="bottom">Режим добавления</button>
         </div>
     </div>
 
@@ -69,17 +72,16 @@
                                         <option value="0">Женский</option>
                                     </select>
                                 </div>
-                                <div class="span4">
-                                    <div class="control-group">
-                                        <label>Должность<span class="help-inline"><a href="#" class="add_office">Добавить должность</a></span></label>
-                                        <span class="block_office">
-                                            <select name="office_staff_id" class="span4">
-                                                <option> --- </option>
-                                                <?foreach($positions as $item):?>
-                                                    <option value="<?=$item->id?>"><?=$item->name?></option>
-                                                <?endforeach?>
-                                            </select>
-                                        </span>
+                                <div class="span4 instructors_slct">
+                                    <label for="offices">Должность (-и)</label>
+                                    <div class="input-append">
+                                        <select style="width: 250px" id="offices" name="offices[]">
+                                            <option value="" selected="selected"> --- </option>
+                                            <? foreach ($positions as $item) : ?>
+                                                <option value="<?=$item->id?>"><?=$item->name?></option>
+                                            <? endforeach ?>
+                                        </select>
+                                        <a href="#" class="btn add_office" style="margin-left: 15px"><i class="icon-plus"></i></a>
                                     </div>
                                 </div>
                             </div>

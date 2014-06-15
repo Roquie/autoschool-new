@@ -12,7 +12,7 @@ class Controller_Admin_Staff extends Controller_Admin_Base
 
 
         $this->template->content =
-            View::factory('admin/staff/index', compact('list_groups', 'edu', 'national', 'type_doc'))
+            View::factory('admin/staff/index', compact('type_doc'))
                 ->set('positions', $office->find_all())
                 ->set('list_staff', $this->_get_names_staffs());
     }
@@ -85,11 +85,9 @@ class Controller_Admin_Staff extends Controller_Admin_Base
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
             $staff = new Model_Staff($post['staff_id']);
-            $position = $staff->office->find_all();
-
             $data = $staff->as_array();
 
-            if ($position->count() > 0)
+/*            if ($position->count() > 0)
             {
                 foreach ($position as $k =>$v)
                 {
@@ -97,9 +95,18 @@ class Controller_Admin_Staff extends Controller_Admin_Base
                 }
 
                 //$data['office_staff_id'] = $office_staff_id;
-            }
+            }*/
 
             $data['document_data_vydachi'] = Text::check_date($data['document_data_vydachi']);
+
+            /**
+             * Инструктора группы
+             */
+            $offices = $staff->office->find_all();
+
+            foreach ($offices as $key => $value) {
+                $data['offices'][] = $value->id;
+            }
 
             $this->ajax_data($data);
         }
@@ -114,6 +121,10 @@ class Controller_Admin_Staff extends Controller_Admin_Base
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
             $post['document_data_vydachi'] = Text::getDateUpdate($post['document_data_vydachi']);
+
+            $offices = (isset($post['offices'])) ? $this->clear_array($post['offices']) : null;
+            $staff_id = (int)$post['update_staff_id'];
+
             if (isset($post['vrem_reg']))
             {
                 $post['vrem_reg'] = 1;
@@ -125,18 +136,49 @@ class Controller_Admin_Staff extends Controller_Admin_Base
 
             try
             {
-                $staff = new Model_Staff( (int)$post['update_staff_id'] );
-                unset($post['csrf'], $post['update_staff_id']);
+                $staff = new Model_Staff( $staff_id );
+                unset($post['csrf'], $post['update_staff_id'], $post['offices']);
 
                 $staff->values($post);
                 $staff->update();
-
-                $this->ajax_msg('Данные успешно обновлены');
             }
             catch(ORM_Validation_Exception $e)
             {
                 $errors = $e->errors('validation');
                 $this->ajax_msg(array_shift($errors), 'error');
+            }
+
+            $staff_group = ORM::factory('OfficeStaff')
+                ->where('staff_id', '=', $staff_id)
+                ->find_all();
+
+            foreach($staff_group as $option)
+            {
+                $option->delete();
+            }
+
+            if (!empty($offices))
+            {
+                try
+                {
+
+                    foreach ($offices as $key => $value)
+                    {
+                        ORM::factory('OfficeStaff')
+                            ->values(array(
+                                'office_id' => $value,
+                                'staff_id' => $staff_id
+                            ))->create();
+                    }
+                }
+                catch (ORM_Validation_Exception  $e)
+                {
+                    $errors = $e->errors('validation');
+                    $error = array_shift($errors);
+                    $this->ajax_msg($error, 'error');
+                }
+
+                $this->ajax_msg('Данные успешно обновлены');
             }
         }
     }
@@ -160,18 +202,21 @@ class Controller_Admin_Staff extends Controller_Admin_Base
                 $post['vrem_reg'] = 0;
             }
 
-            unset($post['csrf'], $post['update_staff_id']);
+            $offices = (isset($post['offices'])) ? $this->clear_array($post['offices']) : null;
+
+            unset($post['csrf'], $post['update_staff_id'], $post['offices']);
+
             try
             {
-                if (isset($post['position_id']) && $post['position_id'] != 0)
+                if (!empty($offices))
                 {
                     $staff = new Model_Staff();
                     $staff->values($post);
                     $staff->create();
 
-                    $staff->add('office', $post['position_id']);
+                    $staff->add('office', $offices);
 
-                    $this->ajax_msg('Сотрудник добавлен с присвоением должности ...');
+                    $this->ajax_msg('Сотрудник добавлен с присвоением должности (-ей)');
                 }
                 else
                 {
@@ -192,27 +237,51 @@ class Controller_Admin_Staff extends Controller_Admin_Base
         }
     }
 
-    public function action_remove()
+    public function action_del_staff()
     {
-        $this->auto_render = false;
+        $csrf = pack('H*', $this->request->query('csrf'));
 
-        $post = $this->request->post();
-
-        if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
+        if (Security::is_token($csrf) && $this->request->method() === Request::GET)
         {
-            $staff = new Model_Staff($post['staff_id']);
+            $id = $this->request->query('id');
 
-            if ($staff->loaded())
+            try
             {
-                $staff->delete();
+                $staff = ORM::factory('Staff', $id);
 
-                $this->ajax_msg('Сотрудник удален');
+                $s = array($staff->famil, $staff->imya, $staff->otch);
+
+                if ($staff->loaded())
+                {
+                    $staff->delete();
+                    $this->msg('Сотрудник '.Text::format_name($s[0], $s[1], $s[2]).' удален', 'success', 'admin/staff');
+                }
             }
-            else
+            catch (Database_Exception $e)
             {
-                $this->ajax_msg('Сотрудник не найден', 'error');
+                $this->msg('Ошибка удаления. Возможно сотрудник закреплен за слушателем или группой', 'danger', 'admin/staff');
             }
         }
+        else
+            throw new HTTP_Exception_403('access denied');
+
+    }
+
+
+    private function clear_array($arr)
+    {
+        foreach ($arr as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $arr[$key] = $this->clear_array($value);
+            }
+            else if (empty($value))
+            {
+                unset($arr[$key]);
+            }
+        }
+        return array_filter($arr);
     }
 
 

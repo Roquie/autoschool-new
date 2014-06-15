@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
-class Model_Office_staff extends ORM
+class Model_OfficeStaff extends ORM
 {
     protected $_db = 'default';
     protected $_table_name  = 'office_staff';

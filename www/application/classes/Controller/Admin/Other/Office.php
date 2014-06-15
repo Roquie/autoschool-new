@@ -50,16 +50,23 @@ class Controller_Admin_Other_Office extends Controller_Admin_Other_Base
         {
             $id = $this->request->query('id');
 
-            $of = ORM::factory('Office', $id);
+            try
+            {
+                $of = ORM::factory('Office', $id);
 
-            if ($of->loaded())
-            {
-                $of->delete();
-                $this->msg('Должность '.$of->name.' удалена', 'success', 'admin/other/office');
+                if ($of->loaded())
+                {
+                    $of->delete();
+                    $this->msg('Должность '.$of->name.' удалена', 'danger', 'admin/other/office');
+                }
+                else
+                {
+                    $this->msg(Kohana::message('validation', 'office_not_found'), 'success', 'admin/other/office');
+                }
             }
-            else
+            catch (Database_Exception $e)
             {
-                $this->msg(Kohana::message('validation', 'office_not_found'), 'danger', 'admin/other/office');
+                $this->msg('Ошибка удаления. Возможно имеются связанные данные.', 'danger', 'admin/other/office');
             }
         }
 

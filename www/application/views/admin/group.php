@@ -6,7 +6,7 @@
         <div class="span4">
             <h1><small>Слушатели</small></h1>
         </div>
-        <div class="span8 btn_actions pull-right" style="width: 298px">
+        <div class="span8 btn_actions pull-right" style="width: 301px">
             <a href="#" class="btn btn-change edit active" data-url="<?=URL::site('admin/group/edit')?>">Просмотр/Редакт.</a>
             <a href="#" class="btn btn-change add" data-url="<?=URL::site('admin/group/add')?>">Добавление</a>
             <div class="btn-group">

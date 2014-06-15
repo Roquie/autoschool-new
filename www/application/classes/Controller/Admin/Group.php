@@ -194,7 +194,7 @@ class Controller_Admin_Group extends Controller_Admin_Base
         {
             $post = $this->request->post();
 
-            $instructors = (isset($post['instructors'])) ? $post['instructors'] : null;
+            $instructors = (isset($post['instructors'])) ? $this->clear_array($post['instructors']) : null;
 
             $lessons = (isset($post['lessons'])) ? $this->clear_array($post['lessons']) : null;
 

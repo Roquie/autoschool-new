@@ -1,7 +1,7 @@
 
 <?=HTML::script('adm/js/cars.js')?>
 
-<div class="container">
+<div class="container wrap_car">
     <div class="row">
         <div class="span6">
             <h1><small>Транспорт</small></h1>

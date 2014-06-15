@@ -66,7 +66,7 @@ $(function() {
             success : function(response) {
                 if (response.status == 'success' || response.status == 'error')
                 {
-                    message($('.container'), response.msg, response.status);
+                    message($('.wrap_car'), response.msg, response.status);
                 }
                 if (response.status == 'success')
                 {

@@ -16,12 +16,7 @@
         <?=HTML::script('main/js/statement.js')?>
         <?=HTML::script('main/js/stylizationForm.js')?>
 
-        <?if(isset($errors)):?>
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <?=array_shift($errors)?>
-            </div>
-        <?endif?>
+        <?=View::factory('errors/msg')?>
         <div class="well form-block">
             <div class="row-fluid">
                 <div class="span6 separator">
@@ -34,7 +29,7 @@
                         <label for="otch">Отчество</label>
                         <input type="text" name="otch" id="otch" tabindex="3" value="<?=isset($post['otch']) ? $post['otch'] : null?>">
                         <label id="tel">Мобильный телефон</label>
-                        <input type="text" id="tel" name="tel" placeholder="8 (926) 123-45-67" tabindex="4" value="<?=isset($post['tel']) ? $post['tel'] : null?>">
+                        <input type="text" id="tel" name="tel" class="telephone" placeholder="8 (926) 123-45-67" tabindex="4" value="<?=isset($post['tel']) ? $post['tel'] : null?>">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" tabindex="5" value="<?=isset($post['email']) ? $post['email'] : null?>">
                         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>

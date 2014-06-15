@@ -63,6 +63,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-tasks"></i> Файлы<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?=URL::site('admin/files')?>"> Список всех файлов</a></li>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Подавшие заявку </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?=URL::site('admin/files/download/distrib_all_info')?>"> Скачать файл</a></li>
+                                    <li><a class="nav_lookjs" href="#" data-url="<?=URL::site('admin/files?lookjs=distrib_all_info')?>"> Просмотреть</a></li>
+                                    <li><a target="_blank" href="<?=URL::site('admin/files/print/distrib_all_info')?>"> Распечатать</a></li>
+                                </ul>
+                            </li>
                             <li class="divider"></li>
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">Слушатель <span style="margin: 0 10px 0 30px" class="badge" id="listener_slctd"><?=$checked_user?></span></a>

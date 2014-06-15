@@ -39,17 +39,18 @@ class Controller_Users extends Controller_Main_Base
                 }
                 else
                 {
-                    $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                    $this->msg(Kohana::message('users', 'no_user'), 'danger');
                 }
 
             }
             catch (ORM_Validation_Exception $e)
             {
                 $errors = $e->errors('validation');
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
-        $this->template->content = View::factory('main/login', compact('errors'));
+        $this->template->content = View::factory('main/login');
     }
 
     public function action_social_login()
@@ -67,7 +68,6 @@ class Controller_Users extends Controller_Main_Base
             {
                 if (isset($user['verified_email']))
                 {
-
                     try
                     {
                         $human = ORM::factory('User', array('email' => $user['email']));
@@ -93,28 +93,27 @@ class Controller_Users extends Controller_Main_Base
                         }
                         else
                         {
-                            $errors = array('no_user' => Kohana::message('users', 'no_user'));
+                            $this->msg(Kohana::message('users', 'no_user'), 'danger', 'users/login');
                         }
 
                     }
                     catch(Database_Exception $e)
                     {
-                        $errors = array('error_social_login', Kohana::message('users', 'error_social_login'));
+                        $this->msg(Kohana::message('users', 'error_social_login'), 'danger', 'users/login');
                     }
                 }
                 else
                 {
-                    $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
+                    $this->msg(Kohana::message('users', 'no_verifed_email'), 'danger', 'users/login');
                 }
             }
             else
             {
-                die('authentication ulogin error');
+                $this->msg('authentication ulogin error', 'danger', 'users/login');
             }
-
         }
 
-        $this->template->content = View::factory('main/login', compact('errors'));
+        $this->template->content = View::factory('main/login');
     }
 
     public function action_register()
@@ -148,6 +147,20 @@ class Controller_Users extends Controller_Main_Base
             $valid->rule('otch', 'max_length', array(':value', 50));
             $valid->rule('tel', 'not_empty');
             $valid->rule('tel', 'phone', array(':value', 11));
+            $valid->rule('email', 'not_empty');
+            $valid->rule('email', 'email');
+            $valid->rule('email', function(Validation $array, $field, $value)
+                {
+                    $l = new Model_User();
+
+                    if ( ! $l->unique($field, $value))
+                    {
+                        $array->error($field, 'found_email');
+                    }
+
+                },
+                array(':validation', ':field', ':value')
+            );
 
             if ($valid->check())
             {
@@ -186,6 +199,7 @@ class Controller_Users extends Controller_Main_Base
                     catch(Database_Exception $e)
                     {
                         $errors = $e->getMessage();
+                        $this->msg(array_shift($errors), 'danger');
                     }
 
                     $mail_content = View::factory('tmpmail/profile/registr')
@@ -198,37 +212,39 @@ class Controller_Users extends Controller_Main_Base
                     try
                     {
                         Email::factory('Регистрация в Автошколе МПТ', $message, 'text/html')
-                            //->setCfg(Kohana::$config->load('email.smtp')->as_array())
                              ->to($post['email'])
                              ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                              ->send();
+
+                        Session::instance()->delete('register_data');
+                        $a->force_login($post['email']);
+                        HTTP::redirect('/profile');
                     }
                     catch(Swift_SwiftException $e)
                     {
                         Log::instance()->add(Log::WARNING, __METHOD__.' - '.$e->getMessage());
+                        $this->msg('Ошибка отправки письма с логином и паролем. Попробуйте позже.', 'danger');
                     }
-
-
 
                     //$role = array(1, 3);
                     //$users->add('roles', $role);
-
-                    $a->force_login($post['email']);
-                    HTTP::redirect('/profile');
                 }
                 catch(ORM_Validation_Exception $e)
                 {
                     $errors = $e->errors('validation');
+                    $this->msg(array_shift($errors), 'danger');
                 }
             }
             else
             {
+                Session::instance()->set('register_data', $post);
                 $errors = $valid->errors('register');
+                $this->msg(array_shift($errors), 'danger');
             }
 
         }
 
-        $this->template->content = View::factory('main/register', compact('errors', 'post'));
+        $this->template->content = View::factory('main/register')->set('post', Session::instance()->get('register_data'));
     }
 
     public function action_forgot()
@@ -261,29 +277,29 @@ class Controller_Users extends Controller_Main_Base
 
 
                             $mail_content = View::factory('tmpmail/profile/forgot')
-                                ->set('name', $users->listener->imya)
-                                ->set('login', $this->request->post('tel_or_email'))
-                                ->set('pass', $newpass);
+                                                ->set('name', $users->listener->imya)
+                                                ->set('login', $this->request->post('tel_or_email'))
+                                                ->set('pass', $newpass);
 
                             $message = View::factory('tmpmail/template', compact('mail_content'));
 
                             try
                             {
                                 Email::factory('Новый пароль, Автошкола МПТ', $message, 'text/html')
-                                    ->to($this->request->post('tel_or_email'))
-                                    ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
-                                    ->send();
+                                     ->to($this->request->post('tel_or_email'))
+                                     ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
+                                     ->send();
+
+                                $this->msg(Kohana::message('users', 'forgot_ok'));
                             }
                             catch(Swift_SwiftException $e)
                             {
-                                die($e->getMessage());
+                                $this->msg('Ошибка отправки письма с новым паролем. Попробуйте позже.', 'danger');
                             }
-
-                        $success = Kohana::message('users', 'forgot_ok');
                     }
                     else
                     {
-                        $errors = array('forgot_not_found' => Kohana::message('users', 'forgot_not_found'));
+                        $this->msg(Kohana::message('users', 'forgot_not_found'), 'danger');
                     }
                 }
                 else
@@ -298,17 +314,23 @@ class Controller_Users extends Controller_Main_Base
                                 'password',
                             ));
 
+                        try
+                        {
+                            Aramba::factory()
+                                ->to($listener->tel)
+                                ->msg('Ваш новый пароль. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener->tel.', пароль: '.$newpass)
+                                ->send();
 
-                        Aramba::factory()
-                            ->to($listener->tel)
-                            ->msg('Ваш новый пароль. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener->tel.', пароль: '.$newpass)
-                            ->send();
-
-                        $success = 'Новый пароль отправлен вам в смс.';
+                            $this->msg('Новый пароль отправлен вам в смс.');
+                        }
+                        catch(Exception $e)
+                        {
+                            $this->msg('Ошибка отправки смс с новым паролем. Попробуйте позже.', 'danger');
+                        }
                     }
                     else
                     {
-                        $errors = array('forgot_not_found' => Kohana::message('users', 'forgot_not_found'));
+                        $this->msg(Kohana::message('users', 'forgot_not_found'), 'danger');
                     }
                 }
 
@@ -316,10 +338,11 @@ class Controller_Users extends Controller_Main_Base
             catch(ORM_Validation_Exception $e)
             {
                 $errors = $e->errors('validation');
+                $this->msg(array_shift($errors), 'danger');
             }
         }
 
-        $this->template->content = View::factory('main/forgot', compact('errors', 'success'));
+        $this->template->content = View::factory('main/forgot');
     }
 
     public function action_social()
@@ -397,7 +420,7 @@ class Controller_Users extends Controller_Main_Base
                         }
                         catch(Swift_SwiftException $e)
                         {
-                            die($e->getMessage());
+                            $this->msg('Ошибка отправки письма о том, что вы зарегистрированы. Попробуйте позже.', 'danger');
                         }
 
                         $a->force_login($data['email']);
@@ -406,21 +429,22 @@ class Controller_Users extends Controller_Main_Base
                     catch(ORM_Validation_Exception $e)
                     {
                         $errors = $e->errors('validation');
+                        $this->msg(array_shift($errors), 'danger');
                     }
                 }
                 else
                 {
-                    $errors = array('no_verifed_email' => Kohana::message('users', 'no_verifed_email'));
+                    $this->msg(Kohana::message('users', 'no_verifed_email'), 'danger');
                 }
             }
             else
             {
-                die('authentication ulogin error');
+                $this->msg('authentication ulogin error', 'danger', 'users/login');
             }
 
         }
 
-        $this->template->content = View::factory('main/register', compact('errors'));
+        $this->template->content = View::factory('main/register');
     }
 
     public function action_logout()

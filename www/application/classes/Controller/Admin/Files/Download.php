@@ -979,8 +979,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         $as->getStyle("A1:N1")->getFont()->setSize(19);
         $as->getStyle("A1:N1")->getFont()->setBold(true);
 
-        $as->getStyle("A1:N3")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $as->getStyle("A1:N3")->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
 
         $styleArray = array(
             'borders' => array(
@@ -1012,6 +1011,7 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
         $as->getColumnDimension('K')->setWidth(12);
         $as->getColumnDimension('L')->setWidth(30);
         $as->getColumnDimension('M')->setWidth(20);
+        $as->getColumnDimension('N')->setWidth(26);
 
 
         $data[3] = array(
@@ -1039,10 +1039,10 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+4] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                $value->tel,
-                Text::check_date($value->data_rojdeniya),
-                $value->national->name,
-                $value->mesto_rojdeniya,
+                $value->tel ?: '-',
+                Text::check_date($value->data_rojdeniya) ?: '-',
+                $value->national->name ?: '-',
+                $value->mesto_rojdeniya  ?: '-',
                 'регион: '.$value->region.
                 ' насел. пункт: '.$value->nas_pynkt.
                 ', район: '.$value->rion.
@@ -1051,12 +1051,12 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 $korpys
                 .' кв. '.$value->kvartira,
                 isset($value->vrem_reg) ? 'Да' : 'Нет',
-                $value->document_seriya,
-                $value->document_nomer,
-                Text::check_date($value->document_data_vydachi),
-                $value->document_kem_vydan,
-                $value->user->email,
-                $value->edu->name,
+                $value->document_seriya ?: '-',
+                $value->document_nomer ?: '-',
+                Text::check_date($value->document_data_vydachi) ?: '-',
+                $value->document_kem_vydan ?: '-',
+                $value->user->email ?: '-',
+                $value->edu->name ?: '-',
             );
 
             $styleArray = array(

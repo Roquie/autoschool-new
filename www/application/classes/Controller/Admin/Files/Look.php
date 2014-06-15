@@ -20,6 +20,7 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
             'list_books',
             'ekz_protokol',
             'distrib',
+            'distrib_all_info',
         );
 
         if ($this->request->is_ajax() && in_array($this->request->action(), $access))

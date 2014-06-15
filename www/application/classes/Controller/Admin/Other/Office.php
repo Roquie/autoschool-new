@@ -55,7 +55,7 @@ class Controller_Admin_Other_Office extends Controller_Admin_Other_Base
             if ($of->loaded())
             {
                 $of->delete();
-                $this->msg('Должность '.$of->name.' удалена', 'danger', 'admin/other/office');
+                $this->msg('Должность '.$of->name.' удалена', 'success', 'admin/other/office');
             }
             else
             {

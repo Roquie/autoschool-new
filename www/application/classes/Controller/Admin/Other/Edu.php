@@ -49,7 +49,7 @@ class Controller_Admin_Other_Edu extends Controller_Admin_Other_Base
             if ($edu->loaded())
             {
                 $edu->delete();
-                $this->msg('Образование '.$edu->name.' удалено', 'danger', 'admin/other/edu');
+                $this->msg('Образование '.$edu->name.' удалено', 'success', 'admin/other/edu');
             }
             else
             {

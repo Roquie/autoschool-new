@@ -15,9 +15,7 @@
                 <a href="#" data-placement="bottom" rel="tooltip" title="Открыть список слушателей" class="btn btn-info"><i class="icon-eye-open"></i></a>-->
                 <a href="#" data-url="<?=URL::site('admin/group/del_group?csrf='.bin2hex(Security::token()).'&id=')?>" data-placement="bottom" rel="tooltip" title="Удалить группу" class="btn btn-danger del_group"><i class="icon-trash"></i></a>
             </div>
-
         </div>
-
     </div>
     <div class="row">
         <div class="span3">

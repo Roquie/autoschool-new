@@ -4,9 +4,9 @@
 
 <style type="text/css">
     .modal {
-        margin-left: -350px;
-        width: 700px;
-        /*   min-height: 500px;*/
+        width: 550px;
+        margin-left: -275px;
+        overflow: hidden;
     }
     .modal-body {
         /*float: right;
@@ -41,7 +41,7 @@
 <?=HTML::script('adm/js/distribution.js')?>
 
 <!-- Modal -->
-<div id="distribution" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 550px; margin-left: -275px">
+<div id="distribution" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="twitter">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

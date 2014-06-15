@@ -12,7 +12,7 @@ class Controller_Admin_Group extends Controller_Admin_Base
         ));
 
         $category = Model::factory('Category')->find_all();
-        $this->template->content = View::factory('admin/other/group', compact('groups', 'staffs', 'category'));
+        $this->template->content = View::factory('admin/group', compact('groups', 'staffs', 'category'));
     }
 
     public function action_getGroup()
@@ -242,9 +242,9 @@ class Controller_Admin_Group extends Controller_Admin_Base
                         {
                             ORM::factory('StaffGroup')
                                 ->values(array(
-                                              'group_id' => $query[0],
-                                              'staff_id' => $value
-                                         ))->create();
+                                  'group_id' => $query[0],
+                                  'staff_id' => $value
+                            ))->create();
                         }
                     }
 
@@ -260,9 +260,9 @@ class Controller_Admin_Group extends Controller_Admin_Base
                     }
 
                     $this->ajax_data(array(
-                                          'id' => $query[0],
-                                          'name' => $post['name']
-                                     ), 'Группа успешно добавлена');
+                          'id' => $query[0],
+                          'name' => $post['name']
+                    ), 'Группа успешно добавлена');
                 }
                 else
                 {
@@ -290,7 +290,7 @@ class Controller_Admin_Group extends Controller_Admin_Base
 
             ORM::factory('Group', $id)->delete();
 
-            HTTP::redirect('admin/other/group');
+            $this->msg('Группа удалена', 'success', 'admin/group');
         }
         else
             throw new HTTP_Exception_403('access denied');

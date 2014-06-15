@@ -12,7 +12,6 @@ class Controller_Admin_Other_Base extends Controller_Admin_Base
             'national' => 'Гражданство',
             'edu' => 'Образование',
             'office' => 'Должность',
-            'group' => 'Группы'
         );
 
         $this->_other = View::factory('admin/other/template', compact('menu'));

@@ -30,7 +30,7 @@
                     <div class="row">
 
                         <div class="span8">
-                            <legend>Информация о машине</legend>
+                            <h5 class="header_block">Информация о машине</h5>
                         </div>
 
                         <div class="span4">

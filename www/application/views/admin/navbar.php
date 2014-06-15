@@ -41,22 +41,22 @@
                     <li class="active"><a href="<?=URL::site('/admin')?>"><i class="icon-bar-chart"></i> Админка</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Данные<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?=URL::site('admin/other/group')?>"> Группы</a></li>
-                            <li><a href="<?=URL::site('admin/cars')?>">Машины</a></li>
-                            <li><a href="<?=URL::site('admin/other')?>"> Вспомогательная информация</a></li>
-                            <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники</a></li>
+                        <ul class="dropdown-menu" style="width: 250px">
+                            <li><a href="<?=URL::site('admin/createdocs')?>"> Добавить слушателя</a></li>
+                            <li><a href="<?=URL::site('admin/listeners/distrib')?>"> Подавшие заявку</a></li>
                             <li class="divider"></li>
-                            <!--<li class="dropdown-submenu">
-                            <a tabindex="-1" href="<?/*=URL::site('admin/staff')*/?>">Сотрудники</a>
+                            <li><a href="<?=URL::site('admin/group')?>"> Группы</a></li>
+                            <li><a href="<?=URL::site('admin/cars')?>">Транспортные средства</a></li>
+                            <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники автошколы</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-submenu">
+                            <a tabindex="-1" href="<?=URL::site('admin/other')?>">Прочее</a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?/*=URL::site('admin/teachers')*/?>"> Общий список</a></li>
-                                <li><a href="<?/*=URL::site('admin/teachers#pdd')*/?>"> Преподаватели ПДД</a></li>
-                                <li><a href="<?/*=URL::site('admin/teachers#tu_and_to')*/?>"> Преподаватели ТУ и ТО</a></li>
-                                <li><a href="<?/*=URL::site('admin/teachers#opmt')*/?>"> Преподаватели ОПМТ</a></li>
-                                <li><a href="<?/*=URL::site('admin/teachers#driver_instructor')*/?>"> Водители - инструкторы</a></li>
+                                <li><a href="<?=URL::site('admin/other/national')?>"> Гражданство</a></li>
+                                <li><a href="<?=URL::site('admin/other/edu')?>"> Образование</a></li>
+                                <li><a href="<?=URL::site('admin/other/office')?>"> Должность</a></li>
                             </ul>
-                        </li>-->
+                        </li>
                         </ul>
                     </li>
                     <li class="dropdown">

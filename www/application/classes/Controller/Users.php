@@ -21,8 +21,8 @@ class Controller_Users extends Controller_Main_Base
             try
             {
                 $status = $a->login(
-                    $this->request->post('tel_or_email'),
-                    $this->request->post('password'),
+                    trim($this->request->post('tel_or_email')),
+                    trim($this->request->post('password')),
                     (bool)$this->request->post('remember')
                 );
 

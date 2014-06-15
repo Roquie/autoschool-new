@@ -23,7 +23,7 @@ class Controller_Admin_Files_Look extends Controller_Admin_Base
             'distrib_all_info',
         );
 
-        if ($this->request->is_ajax() && in_array($this->request->action(), $access))
+        if (in_array($this->request->action(), $access))
         {
             $response = Request::factory('admin/files/download/create_'.$this->request->action())
                                ->execute();

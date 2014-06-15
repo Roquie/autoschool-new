@@ -8,7 +8,7 @@ class Model_Listeners extends ORM
 
     protected $_table_columns = array(
 		'id' => array('data_type' => 'int', 'is_nullable' => false),
-		'user_id' => array('data_type' => 'int', 'is_nullable' => false),
+		'user_id' => array('data_type' => 'int', 'is_nullable' => true),
 		'about' => array('data_type' => 'string', 'is_nullable' => true),
 		'nationality_id' => array('data_type' => 'int', 'is_nullable' => true),
 		'education_id' => array('data_type' => 'int', 'is_nullable' => true),

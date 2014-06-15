@@ -277,12 +277,12 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
 
         $document->setValueArray(
             array(
-                 'LastName' => $listener->famil,
-                 'FirstName' => $listener->imya,
-                 'DaddyName' => $listener->otch,
+                 'LastName' => $listener->famil ?: '-',
+                 'FirstName' => $listener->imya ?: '-',
+                 'DaddyName' => $listener->otch ?: '-',
                  'GroupNumber' => empty($listener->group->name) ? '______' : $listener->group->name,
-                 'LessonStart' => Text::check_date($listener->group->data_start),
-                 'LessonEnd' => Text::check_date($listener->group->data_end),
+                 'LessonStart' => Text::check_date($listener->group->data_start) ?: '-',
+                 'LessonEnd' => Text::check_date($listener->group->data_end) ?: '-',
                  'MarkaTS' => empty($listener->staff->transport->name) ? '____________' : $listener->staff->transport->name,
                  'GosNumber' => empty($listener->staff->transport->reg_number) ? '____________' : $listener->staff->transport->reg_number,
                  'StaffInstructor' => empty($instruct) ? '__________' : $instruct,
@@ -477,8 +477,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+3] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                Text::check_date($value->data_rojdeniya),
-                $value->tel,
+                Text::check_date($value->data_rojdeniya) ?: '-',
+                $value->tel ?: '-',
                 UTF8::strtoupper($value->staff->famil).' '.UTF8::strtoupper($value->staff->imya).' '.UTF8::strtoupper($value->staff->otch),
             );
 
@@ -795,13 +795,13 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+4] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                Text::check_date($value->data_rojdeniya),
+                Text::check_date($value->data_rojdeniya)   ?: '-',
                 'удовл.',
                 'удовл.',
                 'удовл.',
                 'удовл.',
                 'удовл.',
-                $value->certificate_seriya.' '.$value->certificate_nomer,
+                $value->certificate_seriya ?: '-' .' '.$value->certificate_nomer ?: '-',
             );
 
             $styleArray = array(
@@ -924,8 +924,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $data[$row = $k+4] = array(
                 $i,
                 UTF8::strtoupper($value->famil).' '.UTF8::strtoupper($value->imya).' '.UTF8::strtoupper($value->otch),
-                Text::check_date($value->data_rojdeniya),
-                $value->description_status,
+                Text::check_date($value->data_rojdeniya)   ?: '-',
+                $value->description_status   ?: '-',
             );
 
             $styleArray = array(

@@ -34,6 +34,7 @@
         padding: 10px;
         border-radius: 3px;
     }
+    .sms_list_listeners .loader{text-align:center}
     .check_all {
         border-bottom: 1px dashed darkgray;
         padding-bottom: 4px;

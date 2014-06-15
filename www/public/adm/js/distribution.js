@@ -12,7 +12,8 @@ $(function() {
 
         var $this= $(this),
             block = $this.next('.dist_list_user'),
-            column = $('.dist_groups').index(this);
+            column = $('.dist_groups').index(this),
+            container = $this.closest('.modal-body');
 
         ///block.html('q');
 
@@ -25,7 +26,9 @@ $(function() {
                 group_id : $this.val(),
                 csrf : $('.csrf').val()
             },
-            beforeSend : function() {},
+            beforeSend : function() {
+                block.html('<div class="loader"><i class="icon-refresh icon-spin icon-large"></i></div>');
+            },
             success : function(response)
             {
                 if (response.status == 'success')
@@ -38,6 +41,7 @@ $(function() {
                         $( "#sortable1, #sortable2" ).sortable({
                             connectWith: ".connectedSortable",
                             placeholder: "ui-state-highlight",
+                            dropOnEmpty : true,
                             start : function(event, ui) {
                                 if (ui.item.parent().hasClass('connectedSortable')) {
                                     r_col = 1;
@@ -46,11 +50,36 @@ $(function() {
                             stop: function( event, ui ) {
                                 if ($(ui.item).parent('ul').hasClass('connectedSortable') && r_col == 0)
                                 {
-                                    alert('перенесен в группу (заглушка - пока нихуя нет :))');
+                                    //alert('перенесен в группу (заглушка - пока нихуя нет :))');
+                                    $.ajax({
+                                        type : 'POST',
+                                        url  : $('.url-add').data('url'),
+                                        dataType : 'json',
+                                        data : {
+                                            group_id : $(ui.item).closest('.sms_list_listeners').prev('select').val(),
+                                            user_id : $(ui.item).data('id'),
+                                            csrf : $('.csrf').val()
+                                        },
+                                        success : function(response)
+                                        {
+                                            if (response.status == 'success' || response.status == 'error')
+                                            {
+                                                message(container, response.msg, response.status);
+                                            }
+                                        },
+                                        error : function(request)
+                                        {
+                                            if (request.status == '200') {
+                                                console.log('Исключение: ' + request.responseText);
+                                            } else {
+                                                console.log(request.status + ' ' + request.statusText);
+                                            }
+                                        }
+                                    });
                                 }
                                 r_col = 0;
                             }
-                        }).disableSelection();
+                        });
                     }
                 }
             },

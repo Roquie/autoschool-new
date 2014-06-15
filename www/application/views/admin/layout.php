@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <title><?=$title?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="<?=$description?>">
+    <meta name="description" content="<?=$title?>">
 
     <?=HTML::style('adm/css/global.css')?>
     <?=HTML::style('global/css/popup.css')?>

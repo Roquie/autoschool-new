@@ -7,13 +7,13 @@
                     <img src="<?=URL::site('public/img/main/logo.png')?>" alt="Автошкола МПТ"/>
                 </a>
                 <div class="text">
-                    <div class="phone">
+                    <div class="phone" style="width: 300px">
                         <span><?=$settings->get('tel1')?></span>
-                        <span><?=$settings->get('tel2')?></span><br>
+                        <span><?=$settings->get('tel2')?></span>
                     </div>
-                        <span class="email">
-                            <?=HTML::mailto('&#97;&#117;&#116;&#111;&#64;&#109;&#112;&#116;&#46;&#114;&#117;?subject=Вопрос по Автошколе МПТ', $settings->get('email'), array('target' => '_blank'))?>
-                        </span>
+                    <span class="email">
+                        <?=HTML::mailto('&#97;&#117;&#116;&#111;&#64;&#109;&#112;&#116;&#46;&#114;&#117;?subject=Вопрос по Автошколе МПТ', $settings->get('email'), array('target' => '_blank'))?>
+                    </span>
                 </div>
             </ul>
             <nav class="nav-collapse">

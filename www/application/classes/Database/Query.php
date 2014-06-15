@@ -80,7 +80,7 @@ class Database_Query extends Kohana_Database_Query
 
                     list($table) = array_slice($preg_result, 1);
 
-                    $obj = new Sync($this->_type, utf8_encode($sql), $table, mysql_insert_id());
+                    $obj = new Sync($this->_type, $sql, $table, mysql_insert_id());
                     $obj->send();
                 }
                 catch(Exception $e)

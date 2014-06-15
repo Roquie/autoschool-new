@@ -6,13 +6,11 @@
     .modal {
         width: 550px;
         margin-left: -275px;
-        overflow: hidden;
     }
     .modal-body {
         /*float: right;
         width: 400px;*/
-
-        max-height: 460px;
+        overflow: hidden;
     }
 
     #sortable1, #sortable2 { padding: 5px; width: 173px;}

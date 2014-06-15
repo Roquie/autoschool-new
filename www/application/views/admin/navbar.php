@@ -5,6 +5,22 @@
             position: relative;
             top: auto;
         }
+        .navbar-collapse {
+            max-height: none;
+        }
+        body {
+            margin: 0;
+        }
+
+        #wrap {
+            margin-top: 0 !important;
+        }
+    }
+    @media(max-width:991px) {
+        .navbar-fixed-top {
+            position: relative;
+            top: auto;
+        }
         #wrap {
             margin-top: 0 !important;
         }
@@ -18,9 +34,8 @@
     }
 </style>
 <header class="navbar navbar-fixed-top navbar-inverse">
-    <div class="navbar-inner">
-        <div class="container" style="width: 100%; min-width: 960px">
-            <div class="nav-collapse">
+    <div class="navbar-inner" style="width: 100%; min-width: 1000px; ">
+        <div class="nav-collapse">
                 <ul class="nav">
                     <li><a href="<?=URL::site()?>"><i class="icon-home"></i> Главная</a></li>
                     <li class="active"><a href="<?=URL::site('/admin')?>"><i class="icon-bar-chart"></i> Админка</a></li>
@@ -28,7 +43,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Данные<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?=URL::site('admin/other/group')?>"> Группы</a></li>
-                            <li><a href="<?=URL::site('admin/cars')?>"></a></li>
+                            <li><a href="<?=URL::site('admin/cars')?>">Машины</a></li>
                             <li><a href="<?=URL::site('admin/other')?>"> Вспомогательная информация</a></li>
                             <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники</a></li>
                             <li class="divider"></li>
@@ -201,8 +216,6 @@
                     </li>
                 </ul>
             </div><!-- /.nav-collapse -->
-        </div>
-
     </div><!-- /navbar-inner -->
 </header><!-- /navbar -->
 

@@ -31,7 +31,7 @@
                         <option value="<?=$item->id?>"><?=$item->name?></option>
                     <?endforeach?>
                 </select>
-                <a class="btn" href="<?=URL::site('admin/other/group')?>" data-toggle="modal" style="margin: -10px 0 0 0"><i class="icon-plus"></i></a>
+                <a class="btn" href="<?=URL::site('admin/other/group')?>" rel="tooltip" title="Перейти на страницу добавления групп" data-toggle="modal" style="margin: -10px 0 0 0"><i class="icon-plus"></i></a>
                 <!--<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

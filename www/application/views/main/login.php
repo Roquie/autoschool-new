@@ -4,12 +4,7 @@
         <div class="span10 offset1 wrap">
             <form class="form-horizontal" action="<?=Request::current()->url()?>" method="POST" accept-charset="utf-8" novalidate>
                 <fieldset>
-                    <?if(isset($errors)):?>
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <?=array_shift($errors)?>
-                        </div>
-                    <?endif?>
+                    <?=View::factory('errors/msg')?>
                     <div class="row">
                         <div class="span5 pull-left">
                             <legend>Вход в личный кабинет</legend>

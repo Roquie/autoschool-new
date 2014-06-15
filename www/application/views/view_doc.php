@@ -1,5 +1,5 @@
 <!-- View Document Modal -->
-<div id="view_doc_modal" class="modal hide fade" style="margin-left: -260px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="view_doc_modal" class="modal hide fade" style="margin-left: -295px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 class="modal_header" id="myModalLabel" style="font-weight: normal">Просмотр документа</h3>

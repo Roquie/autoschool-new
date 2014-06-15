@@ -88,7 +88,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Список всех подавших заявку</h5>
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/distrib_all_info')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/distrib_all_info.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/distrib_all_info')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/distrib_all_info')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib_all_info')?>" data-type="distrib_all_info"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            <div class="doc_print">
+                                <h5>Подавшие заявку с Примечанием</h5>
+                                <a href="#view_doc_modal" class="view_doc_createtmpfile" data-url="<?=URL::site('admin/files/look/distrib')?>" data-toggle="modal">
+                                    <img src="<?=URL::site('public/adm/img/print/distrib.png')?>" width="170px" height="180px" alt=""/>
+                                </a>
+
+                                <div class="btn-group-wrap">
+                                    <div class="btn-group">
+                                        <a href="<?=URL::site('admin/files/print/distrib')?>" target="_blank" rel="tooltip" title="Распечатать" class="btn"><i class="icon-print"></i></a>
+                                        <a href="<?=URL::site('admin/files/download/distrib')?>" rel="tooltip" title="Загрузить" class="btn btn-success"><i class="icon-download"></i></a>
+                                        <a href="#view_doc_modal" data-url="<?=URL::site('admin/files/look/distrib')?>" data-type="distrib"  data-toggle="modal" rel="tooltip" title="Открыть" class="btn btn-info view_doc_createtmpfile"><i class="icon-eye-open"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 

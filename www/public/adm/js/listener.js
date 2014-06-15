@@ -128,7 +128,7 @@ $(function() {
                         if (checkbox.length == 0)
                             $('#listeners').find('input:checkbox').first().trigger('click');
                         else
-                        checkbox.trigger('click');
+                            checkbox.trigger('click');
                     }
                 }
                 if (response.status == 'error')

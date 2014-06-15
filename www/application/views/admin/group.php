@@ -126,11 +126,11 @@
                                     <td>
                                         <select name="lessons[1][day_of_week]" class="day_of_week" id="day_of_week" style="width: 150px">
                                             <option selected="selected" value=""> --- </option>
-                                            <option value="1">Понедельник</option>
-                                            <option value="2">Вторник</option>
-                                            <option value="3">Среда</option>
-                                            <option value="4">Четверг</option>
-                                            <option value="5">Пятница</option>
+                                            <option value="0">Понедельник</option>
+                                            <option value="1">Вторник</option>
+                                            <option value="2">Среда</option>
+                                            <option value="3">Четверг</option>
+                                            <option value="4">Пятница</option>
                                         </select>
                                     </td>
                                     <td><input type="text" name="lessons[1][time_start]" class="time_start" placeholder="17:00" style="width: 70px"/></td>

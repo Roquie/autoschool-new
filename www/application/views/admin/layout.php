@@ -33,6 +33,7 @@
     <?=$content.PHP_EOL?>
     <?=View::factory('admin/html/add_tweet')?>
     <?=View::factory('admin/html/send_sms')?>
+    <?=View::factory('admin/html/distribution')->render()?>
 </div>
 
 

@@ -40,4 +40,18 @@ class Controller_Admin_Index extends Controller_Admin_Base
         $this->template->content = View::factory('admin/index', compact('list_users', 'instructors', 'list_groups', 'edu', 'national', 'type_doc'));
 	}
 
+    public function action_get_user_dist()
+    {
+        $this->auto_render = false;
+        $csrf = $this->request->post('csrf');
+        if ($this->request->method() === Request::POST && Security::is_token($csrf))
+        {
+            $post = $this->request->post();
+            $list_users = ((int)$post['group_id'] === 0) ? Model::factory('User')->get_user_list(true) : Model::factory('User')->by_group_id($post['group_id']);
+            $this->ajax_data(
+                View::factory('admin/html/dist_list_user', compact('list_users', 'post'))->render()
+            );
+        }
+    }
+
 }

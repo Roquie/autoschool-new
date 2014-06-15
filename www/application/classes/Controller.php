@@ -37,8 +37,7 @@ abstract class Controller extends Kohana_Controller
             'csrf' => Security::token()
         );
 
-        echo json_encode($response);
-        exit;
+        exit(json_encode($response));
     }
 
     /**
@@ -57,7 +56,6 @@ abstract class Controller extends Kohana_Controller
             'csrf' => Security::token()
         );
 
-        echo json_encode($response);
-        exit;
+        exit(json_encode($response));
     }
 }

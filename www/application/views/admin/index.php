@@ -139,21 +139,23 @@
                                         </div>
                                         <div class="span4">
                                             <label>Гражданство</label>
-                                            <select name="nationality_id" class="span4">
+                                            <select name="nationality_id" style="width: 258px" class="span4">
                                                 <option> --- </option>
                                                 <?foreach($national as $item):?>
                                                     <option value="<?=$item->id?>"><?=$item->name?></option>
                                                 <?endforeach?>
                                             </select>
+                                            <a class="btn" href="<?=URL::site('admin/other/national')?>" rel="tooltip" title="Перейти на страницу добавления гражданства" data-toggle="modal" style="margin: -10px 0 0 0"><i class="icon-plus"></i></a>
                                         </div>
                                         <div class="span4">
                                             <label>Образование</label>
-                                            <select name="education_id" class="span4">
+                                            <select name="education_id" style="width: 258px" class="span4">
                                                 <option> --- </option>
                                                 <?foreach($edu as $item):?>
                                                     <option value="<?=$item->id?>"><?=$item->name?></option>
                                                 <?endforeach?>
                                             </select>
+                                            <a class="btn" href="<?=URL::site('admin/other/edu')?>" rel="tooltip" title="Перейти на страницу добавления образования" data-toggle="modal" style="margin: -10px 0 0 0"><i class="icon-plus"></i></a>
                                         </div>
                                         <div class="span4">
                                             <div class="row">

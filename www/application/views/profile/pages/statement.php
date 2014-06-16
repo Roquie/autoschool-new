@@ -8,10 +8,11 @@
     </ul>
 </div>
 <div class="span8" style="margin-top: 30px">
+
     <?if(isset($errors)):?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <?=array_shift($errors)?>
+            <?=is_array($errors) ? array_shift($errors) : $errors?>
         </div>
     <?endif?>
     <?if(isset($success)):?>

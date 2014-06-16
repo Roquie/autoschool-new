@@ -38,7 +38,7 @@ $(function() {
     });
 
 
-   // $(".telephone").inputmask("+7 (999) 999-99-99");
+    $(".telephone").mask("+7 (999) 999-99-99");
 });
 
 function getParameterByName(name)

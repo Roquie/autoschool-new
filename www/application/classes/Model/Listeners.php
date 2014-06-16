@@ -99,7 +99,7 @@ class Model_Listeners extends ORM
         return array(
 
             'description_status' => array(
-                array('not_empty'),
+                //array('not_empty'),
                 array('alpha', array(':value', true)),
             ),
 

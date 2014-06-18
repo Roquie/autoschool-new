@@ -3,7 +3,7 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 
 <style type="text/css">
-    .modal {
+    #distribution .modal {
         width: 550px;
         margin-left: -275px;
     }

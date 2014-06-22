@@ -53,7 +53,7 @@ class Aramba_Aramba
 
     public function to($to)
     {
-        $this->_to = implode(',', (array)$to);
+        $this->_to = (array)$to;
 
         return $this;
     }
@@ -75,7 +75,7 @@ class Aramba_Aramba
     public function send()
     {
         $smstemplate= array(
-            'PhoneNumber' => $this->_to,   // номер получателя
+            'PhoneNumbers' => $this->_to,   // номер получателя
             'Text' => $this->_msg,
             'SenderId' => $this->_from,          // ваше имя отправителя, должно быть зарегистрировано в личном кабинете
             'SendDateTime' => '', //RFC3339
@@ -84,7 +84,7 @@ class Aramba_Aramba
 
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL,'https://api.aramba.ru/singleSms');
+        curl_setopt($ch, CURLOPT_URL,'https://api.aramba.ru/singleSms/multiple');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_POST, 1);

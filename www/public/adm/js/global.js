@@ -133,7 +133,7 @@ $(function() {
                     $this[0].reset();
                     $('.message').html('');
 
-                    setInterval(function()
+                    setTimeout(function()
                     {
                         $('#sendsms_balance').trigger('click');
 

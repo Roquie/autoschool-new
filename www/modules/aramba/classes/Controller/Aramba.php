@@ -18,6 +18,7 @@ class Controller_Aramba extends Controller
         {
             $errors = array();
 
+            //validation ...
             if (!Valid::not_empty($this->request->post('to')))
             {
                 $errors[] = ' - Напишите номер или несколько номеров для отправки';
@@ -30,18 +31,19 @@ class Controller_Aramba extends Controller
 
             if (empty($errors))
             {
-                $to = explode(', ', rtrim($this->request->post('to'), ', '));
+                //remove spaces
+                $string = preg_replace('/\s+/', '', $this->request->post('to'));
+                //explode string by ','
+                $to = explode(',', rtrim($string, ','));
+                //remove trash in string
+                $format_tels = array_map('Text::removeThanDigits', $to);
 
-                $format_tels = array();
-                foreach($to as $k => $v)
-                {
-                    $format_tels[] = Text::format_phone($v);
-                }
-
+                //send many sms
                 $status = Aramba::factory()
-                    ->to($format_tels)
-                    ->msg($this->request->post('message'))
-                    ->send();
+                                ->to($format_tels)
+                                ->msg($this->request->post('message'))
+                                ->send();
+                //sms status
 
                 if ($status)
                 {

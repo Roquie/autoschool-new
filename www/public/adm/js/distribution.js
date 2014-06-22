@@ -8,7 +8,7 @@ $(function() {
         $('.dist_groups').trigger('change');
     });
 
-    $('body').on('change', '.dist_groups', function() {
+    $('body').on('change', '.dist_groups', function(e) {
 
         var $this= $(this),
             block = $this.next('.dist_list_user'),
@@ -16,6 +16,27 @@ $(function() {
             container = $this.closest('.modal-body');
 
         ///block.html('q');
+
+        if (column == 1)
+        {
+            if ($this.val() == $('.dist_groups').first().val())
+            {
+                message(container, 'Нельзя выбирать одинаковую группу в двух колонках', 'error');
+                $this.val($this.data('current'));
+                return false;
+            }
+        }
+        else
+        {
+            if ($this.val() == $('.dist_groups').last().val())
+            {
+                message(container, 'Нельзя выбирать одинаковую группу в двух колонках', 'error');
+                $this.val($this.data('current'));
+                return false;
+            }
+        }
+
+        $this.data('current', $this.val());
 
         $.ajax({
             type : 'POST',

@@ -48,6 +48,9 @@ class Controller_Profile_Index extends Controller_Profile_Base
 
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
+
+            unset($post['csrf']);
+
             if (isset($post['vrem_reg']))
             {
                 $post['vrem_reg'] = (bool)$post['vrem_reg'];
@@ -75,7 +78,7 @@ class Controller_Profile_Index extends Controller_Profile_Base
             }
             catch(ORM_Validation_Exception $e)
             {
-                $errors = $e->errors('validation');
+                $errors = $e->errors('');
             }
         }
 

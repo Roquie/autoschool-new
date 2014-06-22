@@ -47,7 +47,7 @@ class Controller_Admin_Index extends Controller_Admin_Base
         if ($this->request->method() === Request::POST && Security::is_token($csrf))
         {
             $post = $this->request->post();
-            $list_users = ((int)$post['group_id'] === 0) ? Model::factory('User')->by_group_id(NULL) : Model::factory('User')->by_group_id($post['group_id']);
+            $list_users = ((int)$post['group_id'] === 0) ? Model::factory('User')->get_user_list(true) : Model::factory('User')->by_group_id($post['group_id']);
             $this->ajax_data(
                 View::factory('admin/html/dist_list_user', compact('list_users', 'post'))->render()
             );
@@ -63,6 +63,9 @@ class Controller_Admin_Index extends Controller_Admin_Base
             $post = $this->request->post();
             $id = $post['user_id'];
             unset($post['csrf'], $post['user_id']);
+
+            $post['status'] = 3;
+
             try
             {
                 DB::update('listeners')

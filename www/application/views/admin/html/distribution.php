@@ -3,16 +3,14 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
 
 <style type="text/css">
-    .modal {
-        margin-left: -350px;
-        width: 700px;
-        /*   min-height: 500px;*/
+    #distribution.modal {
+        width: 550px;
+        margin-left: -275px;
     }
     .modal-body {
         /*float: right;
         width: 400px;*/
-
-        max-height: 460px;
+        overflow: hidden;
     }
 
     #sortable1, #sortable2 { padding: 5px; width: 173px;}
@@ -41,7 +39,7 @@
 <?=HTML::script('adm/js/distribution.js')?>
 
 <!-- Modal -->
-<div id="distribution" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width: 550px; margin-left: -275px">
+<div id="distribution" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="twitter">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

@@ -210,7 +210,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href="<?=URL::site('admin/settings')?>">Главная страница</a></li>
                                             <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
-                                            <li><a href="<?=URL::site('admin/settings/upload')?>">Загрузка файлов</a></li>
+                                            <li><a href="<?=URL::site('admin/settings/upload')?>">Замена шаблонов</a></li>
                                             <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
                                             <li class="divider"></li>
                                             <li><a href="<?=URL::site('admin/settings/sync')?>">Синхронизация</a></li>

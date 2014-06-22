@@ -105,6 +105,9 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
                 ? ' - (временная)'
                 : null;
 
+        $dateContract = Text::check_date($listener->date_contract);
+        !empty($dateContract) ?: $dateContract = '«_____»_____________201___года';
+
         $obj = new TemplateDocx(APPPATH.'templates/contract/dogovor.docx');
 
         if ($listener->is_individual)
@@ -112,7 +115,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->setValueArray(
                 array(
                      'Customer' => $indy->famil.' '.$indy->imya.' '.$indy->otch,
-                     'NumberContract' => $listener->number_contract,
+                     'NumberContract' => isset($listener->number_contract) ?  $listener->number_contract : '_______________',
+                     'DateContract' => $dateContract,
                      'CSeriya' => $indy->document_seriya,
                      'CNomer' => $indy->document_nomer,
                      'CVidan' => $indy->document_kem_vydan,
@@ -156,7 +160,8 @@ class Controller_Admin_Files_Download extends Controller_Admin_Base
             $obj->setValueArray(
                 array(
                      'Customer' => $listener->famil.' '.$listener->imya.' '.$listener->otch,
-                     'NumberContract' => $listener->number_contract,
+                     'NumberContract' =>  isset($listener->number_contract) ?  $listener->number_contract : '_______________',
+                     'DateContract' => $dateContract,
                      'CSeriya' => $listener->document_seriya,
                      'CNomer' => $listener->document_nomer,
                      'CVidan' => $listener->document_kem_vydan,

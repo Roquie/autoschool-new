@@ -104,18 +104,21 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                 {
                     try
                     {
+                        //create current database backup
                         $path_actual_db = Database::instance()->create_backup('before_restore_dump');
                         $config = Kohana::$config->load('database.default.connection');
                         $old_name = 'autoschool_backup_restore_'.date('dmY_His');
-
+                        //create db for data in current db
                         Database::instance()->query(null, 'CREATE DATABASE `'.$old_name.'`');
+                        //import current db (autoschool) to "new old db"
                         shell_exec(
                             "gunzip < {$path_actual_db} | mysql --user={$config['username']} --password={$config['password']} {$old_name}"
                         );
-
+                        //drop autoschool
                         Database::instance()->query(null, 'DROP DATABASE `autoschool`');
+                        //create db autoschool
                         Database::instance()->query(null, 'CREATE DATABASE `autoschool`');
-
+                        //import to current db clicked dump-name
                         shell_exec(
                             "gunzip < {$path_restore_db} | mysql --user={$config['username']} --password={$config['password']} autoschool"
                         );

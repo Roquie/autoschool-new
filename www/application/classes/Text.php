@@ -48,9 +48,10 @@ class Text extends Kohana_Text
      */
     public static function format_name($last_name, $first_name, $daddy_name)
     {
-        return UTF8::ucfirst(UTF8::strtolower($last_name)).' '.
-        UTF8::ucfirst(UTF8::strtolower(UTF8::substr($first_name, 0, 1).'. ')).' '.
-        UTF8::ucfirst(UTF8::strtolower(UTF8::substr($daddy_name, 0, 1).'.'));
+        return
+            Text::limit_chars(UTF8::ucfirst(UTF8::strtolower($last_name)), 10, '*').' '.
+            UTF8::ucfirst(UTF8::strtolower(UTF8::substr($first_name, 0, 1).'. ')).' '.
+            UTF8::ucfirst(UTF8::strtolower(UTF8::substr($daddy_name, 0, 1).'.'));
     }
 
     public static function translit($str)

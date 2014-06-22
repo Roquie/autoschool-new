@@ -260,14 +260,25 @@
                             </div>
                         </div>
                         <div class="line"></div>
-                        <div class="row pull-right">
-                            <div class="span3">
-                                <a href="#" style="margin-top: 0;" id="generateContract" class="btn btn-success pull-right" name="contract[ok]">&dArr; Скачать договор &dArr;</a>
+                        <div class="row">
+                            <div class="span5">
+                                <nobr>
+                                    <label class="checkbox" style="margin-left: 0; padding-left: 15px; width: 30px">
+                                        <input type="checkbox" name="send_noty" checked/> Отправить уведомление
+                                    </label>
+                                </nobr>
+
                             </div>
-                            <div class="span3" style="width: 160px">
-                                <button id="btn_loader" style="display: none; margin-top: 0" class="btn btn-info" disabled><i class="icon-refresh icon-spin icon-small"></i> &nbsp;Секунду...</button>
-                                <a href="#" style="margin-top: 0;" class="btn btn-info" id="save_to_db" data-url="<?=URL::site('admin/createdocs/save_to_db')?>"> Сохранить в базе &raquo;</a>
+                            <div class=" pull-right">
+                                <div class="span3">
+                                    <a href="#" style="margin-top: 0;" id="generateContract" class="btn btn-success pull-right" name="contract[ok]">&dArr; Скачать договор &dArr;</a>
+                                </div>
+                                <div class="span3" style="width: 160px">
+                                    <button id="btn_loader" style="display: none; margin-top: 0" class="btn btn-info" disabled><i class="icon-refresh icon-spin icon-small"></i> &nbsp;Секунду...</button>
+                                    <a href="#" style="margin-top: 0;" class="btn btn-info" id="save_to_db" data-url="<?=URL::site('admin/createdocs/save_to_db')?>"> Сохранить в базе &raquo;</a>
+                                </div>
                             </div>
+
                         </div>
                     </form>
 

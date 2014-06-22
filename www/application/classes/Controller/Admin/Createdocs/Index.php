@@ -116,44 +116,46 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                         }
                     }
 
-                    if (empty($email))
+                    if ($this->request->post('send_noty'))
                     {
-                        $status = Aramba::factory()
-                            ->to($listener['tel'])
-                            ->msg('Здравствуйте '.$listener['imya'].'! Вас зарегистрировал администратор Автошколы МПТ. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener['tel'].', пароль: '.$newpass)
-                            ->send();
-
-                        if ($status)
+                        if (empty($email))
                         {
-                            $this->ajax_msg('Юзер добавлен. Смс-ка отправлена');
+                            $status = Aramba::factory()
+                                ->to($listener['tel'])
+                                ->msg('Здравствуйте '.$listener['imya'].'! Вас зарегистрировал администратор Автошколы МПТ. Данные для входа в личный кабинет ('.URL::site('users/login').'), логин: '.$listener['tel'].', пароль: '.$newpass)
+                                ->send();
+
+                            if ($status)
+                            {
+                                $this->ajax_msg('Юзер добавлен. Смс-ка отправлена');
+                            }
+                            else
+                            {
+                                $this->ajax_msg('Возникла какая-то ошибка, см. логи ...', 'error');
+                            }
                         }
                         else
                         {
-                            $this->ajax_msg('Возникла какая-то ошибка, см. логи ...', 'error');
+                            $mail_content = View::factory('tmpmail/profile/registr')
+                                ->set('username', $listener['imya'])
+                                ->set('login', $email)
+                                ->set('pass', $newpass);
+
+                            $message = View::factory('tmpmail/template', compact('mail_content'));
+
+                            try
+                            {
+                                Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
+                                    ->to($email)
+                                    ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
+                                    ->send();
+                            }
+                            catch(Swift_SwiftException $e)
+                            {
+                                $this->ajax_msg($e->getMessage(), 'error');
+                            }
                         }
                     }
-                    else
-                    {
-                        $mail_content = View::factory('tmpmail/profile/registr')
-                            ->set('username', $listener['imya'])
-                            ->set('login', $email)
-                            ->set('pass', $newpass);
-
-                        $message = View::factory('tmpmail/template', compact('mail_content'));
-
-                        try
-                        {
-                            Email::factory('Вас зарегистрировал администратор Автошколы МПТ', $message, 'text/html')
-                                ->to($email)
-                                ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
-                                ->send();
-                        }
-                        catch(Swift_SwiftException $e)
-                        {
-                            $this->ajax_msg($e->getMessage(), 'error');
-                        }
-                    }
-
 
                     $this->ajax_msg('Пользователь добавлен');
                 }

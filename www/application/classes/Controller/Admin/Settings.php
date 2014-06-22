@@ -17,7 +17,7 @@ class Controller_Admin_Settings extends Controller_Admin_Base
     public function before()
     {
         parent::before();
-
+        set_time_limit(0);
         $this->template->success = null;
         /*$this->_gclient = new Google_Client();*/
     }
@@ -84,6 +84,48 @@ class Controller_Admin_Settings extends Controller_Admin_Base
                     unlink(APPPATH.'backups/'.$this->request->query('remove'));
 
                     $this->msg('Архив '.Security::xss_clean($this->request->query('remove')).' удален');
+                }
+                else
+                {
+                    HTTP::redirect(
+                        $this->request->current()->url()
+                    );
+                }
+            }
+        }
+
+        if ($this->request->query('restore') && $this->request->query('csrf'))
+        {
+            $csrf = pack('H*', $this->request->query('csrf'));
+
+            if (Security::is_token($csrf))
+            {
+                if (file_exists($path_restore_db = APPPATH.'backups/'.$this->request->query('restore')))
+                {
+                    try
+                    {
+                        $path_actual_db = Database::instance()->create_backup('before_restore_dump');
+                        $config = Kohana::$config->load('database.default.connection');
+                        $old_name = 'autoschool_backup_restore_'.date('dmY_His');
+
+                        Database::instance()->query(null, 'CREATE DATABASE `'.$old_name.'`');
+                        shell_exec(
+                            "gunzip < {$path_actual_db} | mysql --user={$config['username']} --password={$config['password']} {$old_name}"
+                        );
+
+                        Database::instance()->query(null, 'DROP DATABASE `autoschool`');
+                        Database::instance()->query(null, 'CREATE DATABASE `autoschool`');
+
+                        shell_exec(
+                            "gunzip < {$path_restore_db} | mysql --user={$config['username']} --password={$config['password']} autoschool"
+                        );
+                    }
+                    catch(Exception $e)
+                    {
+                        $this->msg('Ошибка отката: '.$e->getMessage(), 'danger');
+                    }
+
+                    $this->msg('Текущая база скопирована в новую <b>'.$old_name.'.</b> <br> Выбранный архив БД <b>'.Security::xss_clean($this->request->query('restore')).'</b> восстановлен!');
                 }
                 else
                 {

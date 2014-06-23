@@ -37,8 +37,8 @@
     <div class="navbar-inner" style="width: 100%; min-width: 1000px; ">
         <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="<?=URL::site()?>"><i class="icon-home"></i> Главная</a></li>
-                    <li class="active"><a href="<?=URL::site('/admin')?>"><i class="icon-bar-chart"></i> Админка</a></li>
+                    <li><a href="<?=URL::site()?>"><i class="icon-home"></i> На сайт</a></li>
+                    <li class="active"><a href="<?=URL::site('/admin')?>"><i class="icon-bar-chart"></i> Главная</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-briefcase"></i> Данные<b class="caret"></b></a>
                         <ul class="dropdown-menu" style="width: 250px">

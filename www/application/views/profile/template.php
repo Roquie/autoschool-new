@@ -1,5 +1,6 @@
 <?=HTML::style('profile/css/lk.css')?>
 <?=HTML::style('profile/css/lk_statement.css')?>
+<?=HTML::script('profile/js/lk.js')?>
 
 
 <div class="container above_profile" style="margin-top: 110px;">
@@ -14,7 +15,6 @@
                 </div>
             </div>
         </div>
-        <!--ой, не хорошо так делать-->
         <?ORM::factory('User', Auth::instance()->get_user()->id)->set('logins', 2)->update()?>
     <?endif?>
 

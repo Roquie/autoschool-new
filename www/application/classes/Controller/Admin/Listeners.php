@@ -318,6 +318,23 @@ class Controller_Admin_Listeners extends Controller_Admin_Base
         }
     }
 
+    public function action_del_listener()
+    {
+        $csrf = pack('H*', $this->request->query('csrf'));
+
+        if (Security::is_token($csrf) && $this->request->method() === Request::GET)
+        {
+            $id = $this->request->query('id');
+
+            ORM::factory('Listeners', $id)->delete();
+
+            $this->msg('Слушатель удален', 'success', 'admin');
+        }
+        else
+            throw new HTTP_Exception_403('access denied');
+
+    }
+
     public function action_add_desc_status()
     {
         $this->auto_render = false;

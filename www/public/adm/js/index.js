@@ -14,9 +14,11 @@ $(function() {
             if ($(this).attr('href') == '#tab2') {
                 data.css({'height' : '744px'});
                 listeners.css({'height' : '584px'});
+                $('#listeners').css({'height' : '554px'});
             } else {
                 data.css({'height' : '1530'});
                 listeners.css({'height' : '1369'});
+                $('#listeners').css({'height' : '1369'});
             }
         });
 
@@ -25,8 +27,12 @@ $(function() {
 function fn_callback(response, $this, f_statement, f_contract, listeners) {
     if (response.status == 'success')
     {
+
         var field = '',
-            slct = $('#staff_id');
+            slct = $('#staff_id'),
+            btn_del_listener = $('.del_listener');
+
+        btn_del_listener.attr('href', btn_del_listener.data('url')+listeners.find('input:checkbox:checked').val());
 
         slct.empty();
 

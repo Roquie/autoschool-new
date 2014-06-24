@@ -4,7 +4,7 @@
     <?=View::factory('errors/msg')?>
     <div class="row">
         <div class="span4">
-            <h1><small>Слушатели</small></h1>
+            <h1><small>Группы</small></h1>
         </div>
         <div class="span8 btn_actions pull-right" style="width: 301px">
             <a href="#" class="btn btn-change edit active" data-url="<?=URL::site('admin/group/edit')?>">Просмотр/Редакт.</a>

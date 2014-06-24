@@ -47,7 +47,7 @@
                             <li class="divider"></li>
                             <li><a href="<?=URL::site('admin/group')?>"> Группы</a></li>
                             <li><a href="#distribution" id="cl_distribution" role="button" data-toggle="modal">Распределение по группам</a></li>
-                            <li><a href="<?=URL::site('admin/cars')?>">Транспортные средства</a></li>
+                            <!--<li><a href="<?/*=URL::site('admin/cars')*/?>">Транспортные средства</a></li>-->
                             <li><a href="<?=URL::site('admin/staff')?>"> Сотрудники автошколы</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-submenu">

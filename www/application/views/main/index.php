@@ -19,7 +19,7 @@
                     <?if(!Auth::instance()->logged_in('admin')):?>
                         <a class="btn btn-success btn-docum" href="<?=Route::to('users', 'users#register')?>">Подать документы</a>
                     <?else:?>
-                        <a class="btn btn-success btn-docum span2" href="<?=Route::to('users', 'users#login')?>">В админку</a>
+                        <a class="btn btn-success btn-docum span2" href="<?=Route::to('users', 'users#login')?>">В админ-панель</a>
                     <?endif?>
                 <?endif?>
             </div>

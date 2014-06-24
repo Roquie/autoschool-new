@@ -8,6 +8,7 @@
     </ul>
 </div>
 <div class="span8" style="margin-top: 30px" >
+    <?if($status < 3):?>
     <form action="<?=Route::to('profile', 'profile#contract_check')?>" method="post" name="contract_check">
         <?if(Auth::instance()->get_user()->listener->is_individual == 0):?>
             <label for="customer"><input onclick="document.contract_check.submit()" style="margin-bottom: 5px" type="checkbox" name="customer" id="customer" checked/> Заказчиком буду я</label>
@@ -16,6 +17,7 @@
         <?endif?>
         <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
     </form>
+    <?endif?>
     <?if(isset($errors)):?>
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -30,119 +32,128 @@
     <?endif?>
     <?if(Auth::instance()->get_user()->listener->is_individual):?>
         <form action="<?=Route::to('profile', 'profile#contract')?>" method="post" accept-charset="utf-8" novalidate>
+            <legend>Анкетные данные</legend>
             <div class="row">
-                <div class="span3">
-                    <label for="famil">Фамилия</label>
-                    <input type="text" class="input-medium" name="famil" id="famil" value="<?=$contract['famil']?>"/>
-                    <br/>
-                    <label for="imya">Имя</label>
-                    <input type="text" class="input-medium" name="imya" id="imya" value="<?=$contract['imya']?>"/>
-                    <br/>
-                    <label for="otch">Отчество</label>
-                    <input type="text" class="input-medium" name="otch" id="otch" value="<?=$contract['otch']?>"/>
-                    <br/>
-                    <label for="tel">Телефон</label>
-                    <input type="tel" class="input-medium telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" value="<?=$contract['tel']?>" />
-                    <br/>
+                <div class="span4">
+                    <div class="row">
+                        <div class="span4">
+                            <label for="famil">Фамилия</label>
+                            <input type="text" class="span4" name="famil" id="famil" value="<?=$contract['famil']?>"/>
+                        </div>
+                        <div class="span4">
+                            <label for="otch">Отчество</label>
+                            <input type="text" class="span4" name="otch" id="otch" value="<?=$contract['otch']?>"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="span5">
+                <div class="span4 pull-right">
                     <div class="row">
-                        <div class="span3" style="width: 180px">
-                            <label for="type_document">Тип документа</label>
-                            <select style="width: 165px" name="document_id" id="type_document">
-                                <?if(!empty($type_doc)):?>
-                                    <?foreach($type_doc as $k => $v):?>
-                                        <?if($v->id == $contract['document_id']):?>
-                                            <option value="<?=$v->id?>" selected><?=$v->name?></option>
-                                        <?else:?>
-                                            <option value="<?=$v->id?>"><?=$v->name?></option>
-                                        <?endif?>
-                                    <?endforeach?>
-                                <?endif?>
-                            </select>
+                        <div class="span4">
+                            <label for="imya">Имя</label>
+                            <input type="text" class="span4" name="imya" id="imya" value="<?=$contract['imya']?>"/>
                         </div>
-                        <div class="span2">
-                            <label for="document_data_vydachi">Дата выдачи</label>
-                            <div class="input-append">
-                                <input type="text" style="width: 163px" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" value="<?=$contract['document_data_vydachi']?>">
-                                <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
-                            </div>
+                        <div class="span4">
+                            <label for="tel">Телефон</label>
+                            <input type="text" class="span4 telephone" name="tel" id="tel" placeholder="8 (926) 123-45-67" value="<?=$contract['tel']?>"/>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="span3" style="width: 180px">
-                            <label for="document_seriya">Серия документа</label>
-                            <input type="text" class="input-medium" name="document_seriya" id="document_seriya" value="<?=$contract['document_seriya']?>"/>
-                        </div>
-                        <div class="span2">
-                            <label for="document_nomer">Номер документа</label>
-                            <input type="text" style="width: 190px" class="input-medium" name="document_nomer" id="document_nomer" value="<?=$contract['document_nomer']?>"/>
-                        </div>
-                    </div>
-
-                    <label>Адрес регистрации (Место жительства)</label>
-                    <div class="row">
-                        <div class="span3" style="width: 180px">
-                            <label for="region">Регион</label>
-                            <input type="text" class="input-medium" name="region" id="region" value="<?=$contract['region']?>"/>
-                        </div>
-                        <div class="span2">
-                            <label for="street">Улица</label>
-                            <input type="text" style="width: 190px" class="input-medium" name="street" id="street" value="<?=$contract['street']?>"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="span6">
-                            <div class="span2" style="margin-left:  0;">
-                                <label for="rion">Район</label>
-                                <input type="text" class="input-medium" name="rion" id="rion" value="<?=$contract['rion']?>"/>
-                            </div>
-                            <div style="display: table-cell; padding-left: 40px">
-                                <div class="span1">
-                                    <label for="dom">Дом</label>
-                                    <input type="text" style="width: 40px" name="dom" id="dom" value="<?=$contract['dom']?>"/>
-                                </div>
-                                <div class="span1">
-                                    <label for="korpys">Корп.</label>
-                                    <input type="text" style="width: 30px" name="korpys" id="korpys" value="<?=$contract['korpys']?>"/>
-                                </div>
-                                <div class="span1">
-                                    <label for="kvartira">Кв.</label>
-                                    <input type="text" style="width: 30px" name="kvartira" id="kvartira" value="<?=$contract['kvartira']?>"/>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-                        <div class="span3" style="width: 200px">
-                            <label for="nas_pynkt">Насел. пункт</label>
-                            <input type="text"  class="input-medium" name="nas_pynkt" id="nas_pynkt" value="<?=$contract['nas_pynkt']?>"/>
-                        </div>
-                        <div class="span2" style="margin-left: 0; width: 180px; margin-top: 20px">
-                            <?if($contract['vrem_reg'] == 1):?>
-                                <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg" checked/> У меня временная регистрация</label>
-                            <?else:?>
-                                <label for="vrem_reg"><input style="margin-bottom: 5px" type="checkbox" name="vrem_reg" id="vrem_reg"/> У меня временная регистрация</label>
-                            <?endif?>
-                        </div>
-                    </div>
-                    <label for="document_kem_vydan">Кем выдан документ</label>
-                    <input type="text" style="width: 102%" name="document_kem_vydan" id="document_kem_vydan" value="<?=$contract['document_kem_vydan']?>"/>
-
-
-
-                    <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
-                    <?if($status < 3):?>
-                        <?if(!$contract_exists):?>
-                            <input type="submit" class="btn btn-success span3" style="margin-top: 25px" value="Добавить"/>
-                        <?else:?>
-                            <input type="submit" class="btn btn-info span3" style="margin-top: 25px" value="Обновить данные"/>
-                        <?endif?>
-                    <?endif?>
                 </div>
             </div>
+
+            <legend>Место жительства</legend>
+            <div class="row">
+                <div class="span4">
+                    <div class="row">
+                        <div class="span4">
+                            <label for="region">Регион</label>
+                            <input type="text" class="span4" name="region" id="region" value="<?=$contract['region']?>"/>
+                        </div>
+                        <div class="span4">
+                            <label for="rion">Район</label>
+                            <input type="text" class="span4" name="rion" id="rion" value="<?=$contract['rion']?>"/>
+                        </div>
+                        <div class="span4">
+                            <label for="nas_pynkt">Населенный пункт</label>
+                            <input type="text" class="span4" name="nas_pynkt" id="nas_pynkt" value="<?=$contract['nas_pynkt']?>"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4 pull-right">
+                    <div class="row">
+                        <div class="span4">
+                            <label for="street">Улица</label>
+                            <input type="text" class="span4" name="street" id="street" value="<?=$contract['street']?>"/>
+                        </div>
+                        <div class="span4">
+                            <div class="row">
+                                <div class="span1">
+                                    <label for="dom">Дом</label>
+                                    <input type="text" class="span1" name="dom" id="dom" value="<?=$contract['dom']?>"/>
+                                </div>
+                                <div class="span1">
+                                    <label for="korpys">Корпус</label>
+                                    <input type="text" class="span1" name="korpys" id="korpys" value="<?=$contract['korpys']?>"/>
+                                </div>
+                                <div class="span2">
+                                    <label for="kvartira">Квартира</label>
+                                    <input type="text" class="span2" name="kvartira" id="kvartira" value="<?=$contract['kvartira']?>"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4" style="margin-top: 30px">
+                            <label class="checkbox" for="vrem_reg">
+                                <input type="checkbox" name="vrem_reg" style="margin-bottom: 5px" id="vrem_reg" <?=($contract['vrem_reg'] == 1) ? 'checked' : null?>>
+                                У меня временная регистрация
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <legend>Удостоверение личности</legend>
+            <div class="row">
+                <div class="span4">
+                    <label>Тип</label>
+                    <select name="document_id" class="span4">
+                        <option value=""> --- </option>
+                        <?foreach($type_doc as $item):?>
+                            <option value="<?=$item->id?>" <?=($item->id == $contract['document_id']) ? 'selected' : null?>><?=$item->name?></option>
+                        <?endforeach?>
+                    </select>
+                </div>
+                <div class="pull-right">
+                    <div class="span2">
+                        <label for="document_seriya">Серия</label>
+                        <input type="text" class="span2" name="document_seriya" id="document_seriya" value="<?=$contract['document_seriya']?>"/>
+                    </div>
+                    <div class="span2">
+                        <label for="document_nomer">Номер</label>
+                        <input type="text" class="span2" name="document_nomer" id="document_nomer" value="<?=$contract['document_nomer']?>"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <label for="document_kem_vydan">Выдано</label>
+                    <input type="text" class="span6" name="document_kem_vydan" id="document_kem_vydan" value="<?=$contract['document_kem_vydan']?>"/>
+                </div>
+                <div class="span2 pull-right">
+                    <label for="document_data_vydachi">Дата</label>
+                    <div class="input-append">
+                        <input type="text" class="datepicker" name="document_data_vydachi" id="document_data_vydachi" style="width: 70%" value="<?=$contract['document_data_vydachi']?>">
+                        <span class="add-on btn" id="calendar"><i class="icon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="csrf" value="<?=Security::token()?>"/>
+            <?if($status < 3):?>
+                <?if(!$contract_exists):?>
+                    <input type="submit" class="btn btn-success span3" style="margin-top: 25px" value="Добавить"/>
+                <?else:?>
+                    <input type="submit" class="btn btn-info span3" style="margin-top: 25px" value="Обновить данные"/>
+                <?endif?>
+            <?endif?>
 
         </form>
     <?else:?>

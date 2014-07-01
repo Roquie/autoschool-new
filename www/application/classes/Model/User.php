@@ -123,7 +123,7 @@ class Model_User extends Model_Auth_User
                 UTF8::substr($value->imya,0, 1).'. ' .
                 UTF8::substr($value->otch,0, 1).'.';
 
-        sort($arr);
+        asort($arr);
 
         return $arr;
     }

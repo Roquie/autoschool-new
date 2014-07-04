@@ -56,7 +56,12 @@ class Controller_Admin_Settings extends Controller_Admin_Base
 
     }*/
 
+    public function action_notification()
+    {
+        $settings = new Model_Settings();
 
+        $this->template->content = View::factory('admin/settings/notification', compact('settings'));
+    }
 
     public function action_backup()
     {

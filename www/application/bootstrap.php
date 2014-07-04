@@ -150,7 +150,7 @@ Kohana::modules(array(
 /**
  * Раскоментировать в случае работы с локальной базой данных
  */
-/* Database::$default = 'localhost'; */
+ //Database::$default = 'localhost';
 
 
 /**

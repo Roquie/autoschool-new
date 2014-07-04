@@ -68,6 +68,8 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                             ))
                         ->pk();
 
+                    $users->add('roles', array(1,3));
+
                     unset($listener['email'], $listener['csrf']);
 
                     $listener['data_rojdeniya'] = Text::getDateUpdate($listener['data_rojdeniya']);
@@ -107,8 +109,8 @@ class Controller_Admin_Createdocs_Index extends Controller_Admin_Base
                                 ->values($indy)
                                 ->execute();
 
-                            $role = array(1, 3);
-                            $users->add('roles', $role);
+/*                            $role = array(1, 3);
+                            $users->add('roles', $role);*/
                         }
                         catch(Database_Exception $e)
                         {

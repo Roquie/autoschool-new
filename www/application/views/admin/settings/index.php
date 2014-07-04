@@ -12,8 +12,9 @@
             <li><a href="<?=URL::site('admin/settings/administrators')?>">Администраторы</a></li>
             <li><a href="<?=URL::site('admin/settings/upload')?>">Замена шаблонов</a></li>
             <li><a href="<?=URL::site('admin/settings/smtp')?>">SMTP</a></li>
-            <li><a href="<?=URL::site('admin/settings/sync')?>">Синхронизация</a></li>
-            <li><a href="<?=URL::site('admin/settings/backup')?>">Резервное копирование</a></li>
+            <li><a href="<?=URL::site('admin/settings/sync')?>">Синх.</a></li>
+            <li><a href="<?=URL::site('admin/settings/backup')?>">Резервные копии</a></li>
+            <li><a href="<?=URL::site('admin/settings/notification')?>">Уведомления</a></li>
         </ul>
         <div class="tab-content">
             <!--вкладка Главная страница-->

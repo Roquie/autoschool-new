@@ -119,6 +119,7 @@ class Controller_Users extends Controller_Main_Base
     public function action_register()
     {
         $a = Auth::instance();
+        $settings = new Model_Settings();
 
         $csrf = $this->request->post('csrf');
 
@@ -215,6 +216,22 @@ class Controller_Users extends Controller_Main_Base
                              ->to($post['email'])
                              ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                              ->send();
+
+                        if ($settings->get('notification_sms'))
+                        {
+                            Aramba::factory()
+                                ->to($settings->get('notification_phone'))
+                                ->msg('Новый пользователь: '.$post['famil'].' '.$post['imya'].' '.$post['otch'].'. Телефон: '.$post['tel'])
+                                ->send();
+                        }
+
+                        if ($settings->get('notification_email'))
+                        {
+                            Email::factory('Новый пользователь', 'Новый пользователь: '.$post['famil'].' '.$post['imya'].' '.$post['otch'].'. Телефон: '.$post['tel'])
+                                ->to($settings->get('notification_phone'))
+                                ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
+                                ->send();
+                        }
 
                         Session::instance()->delete('register_data');
                         $a->force_login($post['email']);
@@ -348,6 +365,7 @@ class Controller_Users extends Controller_Main_Base
     public function action_social()
     {
         $a = Auth::instance();
+        $settings = new Model_Settings();
 
         if ($this->request->method() === Request::POST)
         {
@@ -417,6 +435,23 @@ class Controller_Users extends Controller_Main_Base
                                 ->to($user['email'])
                                 ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                 ->send();
+
+
+                            if ($settings->get('notification_sms'))
+                            {
+                                Aramba::factory()
+                                    ->to($settings->get('notification_phone'))
+                                    ->msg('Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'])
+                                    ->send();
+                            }
+
+                            if ($settings->get('notification_email'))
+                            {
+                                Email::factory('Новый пользователь', 'Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'])
+                                    ->to($settings->get('notification_phone'))
+                                    ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
+                                    ->send();
+                            }
                         }
                         catch(Swift_SwiftException $e)
                         {

@@ -228,7 +228,7 @@ class Controller_Users extends Controller_Main_Base
                         if ($settings->get('notification_email'))
                         {
                             Email::factory('Новый пользователь', 'Новый пользователь: '.$post['famil'].' '.$post['imya'].' '.$post['otch'].'. Телефон: '.$post['tel'])
-                                ->to($settings->get('notification_phone'))
+                                ->to($settings->get('notification_email_address'))
                                 ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                 ->send();
                         }
@@ -448,7 +448,7 @@ class Controller_Users extends Controller_Main_Base
                             if ($settings->get('notification_email'))
                             {
                                 Email::factory('Новый пользователь', 'Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'])
-                                    ->to($settings->get('notification_phone'))
+                                    ->to($settings->get('notification_email_address'))
                                     ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                     ->send();
                             }

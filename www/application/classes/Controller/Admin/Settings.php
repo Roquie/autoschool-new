@@ -63,14 +63,14 @@ class Controller_Admin_Settings extends Controller_Admin_Base
         $post = $this->request->post();
         if (Security::is_token($post['csrf']) && $this->request->method() === Request::POST)
         {
-            $this->request->post('sms_ok') ? $settings->set('notification_sms', true) : $settings->set('notification_sms', false);
-            $this->request->post('email_ok') ? $settings->set('notification_email', true) : $settings->set('notification_email', false);
-
             if ($this->request->post('sms_ok') && empty($post['phone']))
                 $this->msg('Для отправки sms уведомлений укажите номер', 'error');
 
             if ($this->request->post('email_ok') && empty($post['email']))
                 $this->msg('Для отправки e-mail уведомлений укажите e-mail адрес', 'error');
+
+            $this->request->post('sms_ok') ? $settings->set('notification_sms', true) : $settings->set('notification_sms', false);
+            $this->request->post('email_ok') ? $settings->set('notification_email', true) : $settings->set('notification_email', false);
 
             $settings->set('notification_phone', $post['phone']);
             $settings->set('notification_email_address', $post['email']);

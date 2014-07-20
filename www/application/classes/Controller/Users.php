@@ -454,7 +454,7 @@ class Controller_Users extends Controller_Main_Base
                             {
                                 $msg = '
                         <p>Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'].'</p>
-                        <p><a href="mailto:'.$post['email'].'">Ответить</a></p>
+                        <p><a href="mailto:'.$user['email'].'">Ответить</a></p>
                         ';
 
                                 Email::factory('Новый пользователь', $msg, 'text/html')

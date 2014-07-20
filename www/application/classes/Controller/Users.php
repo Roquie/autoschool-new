@@ -225,9 +225,14 @@ class Controller_Users extends Controller_Main_Base
                                 ->send();
                         }
 
+                        $msg = '
+                        <p>Новый пользователь: '.$post['famil'].' '.$post['imya'].' '.$post['otch'].'. Телефон: '.$post['tel'].'</p>
+                        <p><a href="mailto:"'.$post['email'].'>Ответить</a></p>
+                        ';
+
                         if ($settings->get('notification_email'))
                         {
-                            Email::factory('Новый пользователь', 'Новый пользователь: '.$post['famil'].' '.$post['imya'].' '.$post['otch'].'. Телефон: '.$post['tel'])
+                            Email::factory('Новый пользователь', $msg, 'text/html')
                                 ->to($settings->get('notification_email_address'))
                                 ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                 ->send();
@@ -447,7 +452,12 @@ class Controller_Users extends Controller_Main_Base
 
                             if ($settings->get('notification_email'))
                             {
-                                Email::factory('Новый пользователь', 'Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'])
+                                $msg = '
+                        <p>Новый пользователь: '.$user['last_name'].' '.$user['first_name'].'. Телефон: '.$user['phone'].'</p>
+                        <p><a href="mailto:"'.$user['email'].'>Ответить</a></p>
+                        ';
+
+                                Email::factory('Новый пользователь', $msg, 'text/html')
                                     ->to($settings->get('notification_email_address'))
                                     ->from(Kohana::$config->load('settings.email'), 'Автошкола МПТ')
                                     ->send();
